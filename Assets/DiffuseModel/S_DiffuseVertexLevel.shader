@@ -1,4 +1,6 @@
-﻿Shader "HCS/S_DiffuseVertexLevel" 
+﻿// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
+
+Shader "HCS/S_DiffuseVertexLevel" 
 {
 	Properties
 	{
@@ -19,9 +21,9 @@
 
 			#include "Lighting.cginc"
 
-			UNITY_INSTANCING_CBUFFER_START(Props)
+			UNITY_INSTANCING_BUFFER_START(Props)
 
-			UNITY_INSTANCING_CBUFFER_END
+			UNITY_INSTANCING_BUFFER_END(Props)
 			
 			fixed4 _Diffuse;
 
@@ -56,7 +58,7 @@
 
 			fixed4 frag(v2f i):SV_TARGET
 			{
-				return fixed4(i.color,0.5);
+				return fixed4(i.color,1);
 			}
 
 			ENDCG
