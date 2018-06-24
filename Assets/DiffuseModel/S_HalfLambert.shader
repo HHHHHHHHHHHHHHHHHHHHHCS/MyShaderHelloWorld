@@ -2,7 +2,7 @@
 
 // Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
 
-Shader "HCS/S_DiffusePixelLevel"
+Shader "HCS/S_HalfLambert"
 {
 	Properties
 	{
@@ -46,7 +46,7 @@ Shader "HCS/S_DiffusePixelLevel"
 				v2f o;
 
 				o.pos = UnityObjectToClipPos(v.pos);
-				o.worldNormal = mul(unity_ObjectToWorld,v.normal);
+				o.worldNormal = mul(v.normal, unity_WorldToObject);
 				return o;
 			}
 
@@ -56,7 +56,8 @@ Shader "HCS/S_DiffusePixelLevel"
 
 				fixed3 worldNormal = normalize(i.worldNormal);
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0);
-				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
+				fixed halfLambert = dot(worldNormal, worldLightDir)*0.5 + 0.5;
+				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*halfLambert;
 				fixed3 color = ambient + diffuse;
 				return fixed4(color, 1);
 			}
