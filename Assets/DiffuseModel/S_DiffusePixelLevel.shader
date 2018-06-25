@@ -8,7 +8,8 @@ Shader "HCS/S_DiffusePixelLevel"
 	{
 		_Diffuse("Diffuse",Color) = (1,1,1,1)
 	}
-		SubShader
+
+	SubShader
 	{
 		pass
 		{
@@ -19,7 +20,7 @@ Shader "HCS/S_DiffusePixelLevel"
 
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma target 3.0
+			#pragma target 3.5
 
 			#include "Lighting.cginc"
 
@@ -64,5 +65,5 @@ Shader "HCS/S_DiffusePixelLevel"
 			ENDCG
 		}
 	}
-		FallBack "Diffuse"
+	FallBack "Diffuse"
 }

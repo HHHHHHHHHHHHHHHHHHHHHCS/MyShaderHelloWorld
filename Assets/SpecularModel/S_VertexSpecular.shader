@@ -7,51 +7,62 @@
 		_Gloss("Gloss", Range(8.0,256)) = 20
 
 	}
-	SubShader{
-		Tags { "RenderType" = "Opaque" }
-		LOD 200
-
-		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
-
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
-
-
-
-		fixed4 _Diffuse;
-		fixed4 _Specular;
-		float _Gloss;
-
-		struct a2v
+	SubShader
+	{
+		pass
 		{
-			float4 vertex:POSITION;
-			float3 normal:NORMAL;
-		};
+			Tags { "RenderType" = "Opaque" }
+			LOD 200
 
-		struct v2f
-		{
-			float4 vertex:SV_POSITION;
-			fixed3 color:COLOR;
-		};
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma target 3.5
 
-		UNITY_INSTANCING_BUFFER_START(Props)
+			#include "Lighting.cginc"
 
-		UNITY_INSTANCING_BUFFER_END(Props)
+			fixed4 _Diffuse;
+			fixed4 _Specular;
+			float _Gloss;
 
-		v2f vert(a2v v)
-		{
-			v2f o;
-			o.pos = UnityObjectToClipPos(v.vertex);
+			struct a2v
+			{
+				float4 vertex:POSITION;
+				float3 normal:NORMAL;
+			};
 
-			fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-			fixed3 worldNormal = normalize(mul(unity_ObjectToWorld, v.normal));
-			fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+			struct v2f
+			{
+				float4 vertex:SV_POSITION;
+				fixed3 color:COLOR;
+			};
 
+
+			v2f vert(a2v v)
+			{
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+				fixed3 worldNormal = normalize(mul(unity_ObjectToWorld, v.normal));
+				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+
+				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
+
+				fixed3 reflectDir = normalize(reflect(-worldLightDir, worldNormal));
+
+				fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - UnityObjectToClipPos(v.vertex).xyz);
+				fixed3 specular = _LightColor0.rgb*_Specular.rgb*pow(saturate(dot(reflectDir, viewDir)), _Gloss);
+				o.color = ambient + diffuse + specular;
+				return o;
+			}
+
+			fixed4 frag(v2f i):SV_Target
+			{
+				return fixed4(i.color,1);
+			}
+			ENDCG
 		}
-
-		ENDCG
 	}
 	FallBack "Diffuse"
 }
