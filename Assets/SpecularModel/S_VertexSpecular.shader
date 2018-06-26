@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_VertexSpecular" 
+﻿Shader "HCS/S_VertexSpecular"
 {
 	Properties
 	{
@@ -7,7 +7,7 @@
 		_Gloss("Gloss", Range(8.0,256)) = 20
 
 	}
-	SubShader
+		SubShader
 	{
 		pass
 		{
@@ -34,7 +34,7 @@
 			struct v2f
 			{
 				float4 vertex:SV_POSITION;
-				fixed3 color:COLOR;
+				fixed3 color : COLOR;
 			};
 
 
@@ -51,18 +51,19 @@
 
 				fixed3 reflectDir = normalize(reflect(-worldLightDir, worldNormal));
 
-				fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - UnityObjectToClipPos(v.vertex).xyz);
+				fixed3 viewDir = normalize(_WorldSpaceCameraPos - UnityObjectToClipPos(v.vertex));
 				fixed3 specular = _LightColor0.rgb*_Specular.rgb*pow(saturate(dot(reflectDir, viewDir)), _Gloss);
+
 				o.color = ambient + diffuse + specular;
 				return o;
 			}
 
-			fixed4 frag(v2f i):SV_Target
+			fixed4 frag(v2f i) :SV_Target
 			{
 				return fixed4(i.color,1);
 			}
 			ENDCG
 		}
 	}
-	FallBack "Diffuse"
+		FallBack "Diffuse"
 }
