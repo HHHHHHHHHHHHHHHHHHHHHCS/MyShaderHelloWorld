@@ -44,14 +44,15 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-				fixed3 worldNormal = normalize(mul(unity_ObjectToWorld, v.normal));
+
+				fixed3 worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 
 				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
 
 				fixed3 reflectDir = normalize(reflect(-worldLightDir, worldNormal));
 
-				fixed3 viewDir = normalize(_WorldSpaceCameraPos - UnityObjectToClipPos(v.vertex));
+				fixed3 viewDir = normalize(_WorldSpaceCameraPos - mul(unity_ObjectToWorld,v.vertex));
 				fixed3 specular = _LightColor0.rgb*_Specular.rgb*pow(saturate(dot(reflectDir, viewDir)), _Gloss);
 
 				o.color = ambient + diffuse + specular;
