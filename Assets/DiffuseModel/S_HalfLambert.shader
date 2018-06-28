@@ -23,10 +23,6 @@ Shader "HCS/S_HalfLambert"
 
 			#include "Lighting.cginc"
 
-			UNITY_INSTANCING_BUFFER_START(Props)
-
-			UNITY_INSTANCING_BUFFER_END(Props)
-
 			fixed4 _Diffuse;
 
 			struct a2v

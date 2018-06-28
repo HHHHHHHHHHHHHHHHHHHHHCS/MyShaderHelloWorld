@@ -21,10 +21,6 @@ Shader "HCS/S_DiffuseVertexLevel"
 
 			#include "Lighting.cginc"
 
-			UNITY_INSTANCING_BUFFER_START(Props)
-
-			UNITY_INSTANCING_BUFFER_END(Props)
-			
 			fixed4 _Diffuse;
 
 			struct a2v
@@ -48,9 +44,9 @@ Shader "HCS/S_DiffuseVertexLevel"
 				fixed3  ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
 				fixed3 worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
-				fixed3 worldlLight = normalize(_WorldSpaceLightPos0.xyz);
+				fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
 
-				fixed3 diffuse =_LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal,worldlLight));
+				fixed3 diffuse =_LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLight));
 
 				o.color= ambient+diffuse;
 				return o;

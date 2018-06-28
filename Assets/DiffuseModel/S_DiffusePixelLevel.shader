@@ -24,10 +24,6 @@ Shader "HCS/S_DiffusePixelLevel"
 
 			#include "Lighting.cginc"
 
-			UNITY_INSTANCING_BUFFER_START(Props)
-
-			UNITY_INSTANCING_BUFFER_END(Props)
-
 			fixed4 _Diffuse;
 
 			struct a2v
