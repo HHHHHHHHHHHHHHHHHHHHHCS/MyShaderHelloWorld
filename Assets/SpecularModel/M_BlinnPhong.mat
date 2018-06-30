@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: M_VertexSpecular
-  m_Shader: {fileID: 4800000, guid: 1a2806c8fdf590d4cb53de93a8248dc4, type: 3}
+  m_Name: M_BlinnPhong
+  m_Shader: {fileID: 4800000, guid: 1626a26056f08df488508ab3a4a0df79, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Gloss: 8
+    - _Gloss: 20
     m_Colors:
     - _Diffuse: {r: 0, g: 0, b: 1, a: 1}
     - _Specular: {r: 1, g: 0, b: 0, a: 1}
