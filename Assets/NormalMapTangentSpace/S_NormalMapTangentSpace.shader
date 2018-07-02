@@ -1,9 +1,8 @@
-﻿Shader "HCS/S_SingleTexture" 
-{
+﻿Shader "HCS/S_NormalMapTangentSpace" {
 	Properties 
 	{
-		_Color("Color Tint",Color) = (1,1,1,1)
-		_MainTex("Main Texuture", 2D) = "white"{}
+		_Color ("Color", Color) = (1,1,1,1)
+		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Specular("Specular", Color) = (1,1,1,1)
 		_Gloss("Gloss", Range(8.0,256)) = 20
 	}
@@ -52,32 +51,30 @@
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-
-				//o.uv = v.TEXCOORD0*_MainTex_TS.xy + _MainTex.zw;
 				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 				return o;
 			}
 
-			fixed4 frag(v2f i):SV_TARGET
+			fixed4 frag(v2f i) :SV_TARGET
 			{
-				fixed3 albedo = tex2D(_MainTex,i.uv)*_Color;
+				fixed3 albedo = _Color * tex2D(_MainTex,i.uv);
+				fixed3 ambient = albedo * UNITY_LIGHTMODEL_AMBIENT;
 
-				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT*albedo;
-				
-				float3 worldNormal = normalize(i.worldNormal);
-				float3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
-				
-				fixed3 diffuse = _LightColor0* albedo*max(0,dot(worldNormal, worldLightDir));
-				
+				fixed3 worldNormal = normalize(i.worldNormal);
+				fixed3 worldLightDir = normalize( UnityWorldSpaceLightDir(i.worldPos));
+
+
+				fixed3 diffuse = _LightColor0 * albedo *max( 0 , dot(worldNormal, worldLightDir))   ;
+
 				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
 				fixed3 halfDir = normalize(worldLightDir + viewDir);
-				fixed3 specular = _LightColor0 * _Specular.rgb*pow(max(0,dot(halfDir, worldNormal)), _Gloss);
+				fixed3 specular = _LightColor0 * _Specular.rgb*pow(max(0, dot(halfDir, worldNormal)), _Gloss);
+
 				
-				fixed3 color = ambient + diffuse + specular;
-				
+				fixed3 color = ambient + diffuse+specular;
+
 				return fixed4(color,1);
 			}
-
 			ENDCG
 		}
 	}
