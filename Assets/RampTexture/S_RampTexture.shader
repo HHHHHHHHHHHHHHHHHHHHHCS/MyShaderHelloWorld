@@ -51,11 +51,25 @@
 				return o;
 			}
 
+
 			fixed4 frag(v2f i):SV_TARGET
 			{
-				//fixed3 worldNormal = normalize
+				fixed3 worldNormal = normalize(i.worldNormal);
+				fixed3 worldLightDir= normalize(UnityWorldSpaceLightDir(i.worldPos));
+				
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
-				return fixed4(1,0.5,0,1);
+				fixed halfLambert = 0.5*dot(i.worldNormal,worldLightDir)+0.5;
+				fixed3 diffuseColor = tex2D(_RampTex,fixed2(halfLambert,halfLambert)).rgb*_Color.rgb;
+
+				fixed3 diffuse  = _LightColor0.rgb*diffuseColor;
+
+				fixed3 viewDir=normalize(UnityWorldSpaceViewDir(i.worldPos));
+				fixed3 halfDir = normalize( worldLightDir+viewDir);
+				fixed3 specular = _LightColor0*_Specular*pow(max(0,dot(halfDir,worldNormal)),_Gloss);
+
+				fixed3 color = ambient+diffuse+specular;
+				return fixed4(color,1);
 			}
 
 			ENDCG
