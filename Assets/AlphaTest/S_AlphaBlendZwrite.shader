@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_AlphaBlend"
+﻿Shader "HCS/S_AlphaBlendZwrite"
 {
 	Properties 
 	{
@@ -8,11 +8,18 @@
 	}
 	SubShader 
 	{
-
+		Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="Transparent" }
 
 		pass
 		{
-			Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="Transparent" }
+			ZWrite On
+			ColorMask 0
+
+		}
+
+		pass
+		{
+
 
 			ZWrite Off
 			Blend SrcAlpha OneMinusSrcAlpha

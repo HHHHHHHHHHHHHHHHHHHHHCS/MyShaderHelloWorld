@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_AlphaBlend"
+﻿Shader "HCS/OneOne"
 {
 	Properties 
 	{
@@ -8,14 +8,21 @@
 	}
 	SubShader 
 	{
-
+		Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="Transparent" }
 
 		pass
 		{
-			Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="Transparent" }
+			ZWrite On
+			ColorMask 0
+
+		}
+
+		pass
+		{
+
 
 			ZWrite Off
-			Blend SrcAlpha OneMinusSrcAlpha
+			Blend One One
 			
 			LOD 200
 
