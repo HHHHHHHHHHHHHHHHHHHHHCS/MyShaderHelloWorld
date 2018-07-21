@@ -1,94 +1,152 @@
 ﻿// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "HCS/S_AdditionalPass" {
-	Properties {
-		_Diffuse ("Diffuse Color", Color) = (1,1,1,1)
-		_Specular("Specular Color", Color) = (1,1,1,1)
-		_Gloss("Gloss", Range(8.0,256)) = 20
+Shader "Unity Shaders Book/Chapter 9/Forward Rendering" {
+	Properties{
+		_Diffuse("Diffuse", Color) = (1, 1, 1, 1)
+		_Specular("Specular", Color) = (1, 1, 1, 1)
+		_Gloss("Gloss", Range(8.0, 256)) = 20
 	}
-	SubShader 
-	{
-		Tags { "LightMode"="ForwardBase" }
+		SubShader{
+		Tags{ "RenderType" = "Opaque" }
 
-		LOD 200
+		Pass{
+		// Pass for ambient light & first pixel light (directional light)
+		Tags{ "LightMode" = "ForwardBase" }
 
-		pass
-		{
-			Blend One One
+		CGPROGRAM
 
-			CGPROGRAM
-			
-			#include "AutoLight.cginc"
-			#include "Lighting.cginc"
+		// Apparently need to add this declaration 
+#pragma multi_compile_fwdbase	
 
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma multi_compile_fwdadd
+#pragma vertex vert
+#pragma fragment frag
 
-			fixed4 _Diffuse;
-			fixed4 _Specular;
-			float _Gloss;
+#include "Lighting.cginc"
 
-			struct a2v
-			{
-				float4 vertex:POSITION;
-				float3 normal:NORMAL;
-			};
+		fixed4 _Diffuse;
+	fixed4 _Specular;
+	float _Gloss;
 
-			struct v2f
-			{
-				float4 pos:SV_POSITION;
-				float3 worldPos:TEXCOORD0;
-				float3 worldNormal:TEXCOORD1;
-			};
+	struct a2v {
+		float4 vertex : POSITION;
+		float3 normal : NORMAL;
+	};
 
-			v2f vert(a2v i)
-			{
-				v2f o;
-				o.pos=UnityObjectToClipPos(i.vertex);
+	struct v2f {
+		float4 pos : SV_POSITION;
+		float3 worldNormal : TEXCOORD0;
+		float3 worldPos : TEXCOORD1;
+	};
 
-				o.worldPos = mul(unity_ObjectToWorld,i.vertex);
-				o.worldNormal = UnityObjectToWorldNormal(i.normal);
+	v2f vert(a2v v) {
+		v2f o;
+		o.pos = UnityObjectToClipPos(v.vertex);
 
-				return o;
-			}
+		o.worldNormal = UnityObjectToWorldNormal(v.normal);
 
-			fixed4 frag(v2f v):SV_TARGET
-			{
-				float3 worldPos = v.worldPos;
-				fixed3 worldNormal=normalize(v.worldNormal);
+		o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 
-				#ifdef USING_DIRECTIONAL_LIGHT
-					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-				#else
-					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz-worldPos.xyz);		
-				#endif
-
-
-
-				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-
-				fixed3 diffuse =_LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal,worldLightDir));
-
-				fixed3 viewDir = normalize( UnityWorldSpaceViewDir(worldPos));
-				fixed3 halfDir = normalize(viewDir+worldLightDir);
-
-				fixed3 specular=_LightColor0*_Specular*pow(max(0,dot(worldNormal, halfDir)) ,_Gloss);
-
-				#ifdef USING_DIRECTIONAL_LIGHT
-					fixed atten =1.0; 
-				#else
-					float3 lightCoord = mul(unity_WorldToLight, float4(worldPos, 1)).xyz;
-				    fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;		
-				#endif
-
-				fixed3 color=ambient+(diffuse+specular)*atten;
-
-				return fixed4(color,1);
-			}
-
-			ENDCG
-		}
+		return o;
 	}
-	FallBack "Diffuse"
+
+	fixed4 frag(v2f i) : SV_Target{
+		fixed3 worldNormal = normalize(i.worldNormal);
+	fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+
+	fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+
+	fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
+
+	fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
+	fixed3 halfDir = normalize(worldLightDir + viewDir);
+	fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
+
+	fixed atten = 1.0;
+
+	return fixed4(ambient + (diffuse + specular) * atten, 1.0);
+	}
+
+		ENDCG
+	}
+
+		Pass{
+		// Pass for other pixel lights
+		Tags{ "LightMode" = "ForwardAdd" }
+
+		Blend One One
+
+		CGPROGRAM
+
+		// Apparently need to add this declaration
+#pragma multi_compile_fwdadd
+
+#pragma vertex vert
+#pragma fragment frag
+
+#include "Lighting.cginc"
+#include "AutoLight.cginc"
+
+		fixed4 _Diffuse;
+	fixed4 _Specular;
+	float _Gloss;
+
+	struct a2v {
+		float4 vertex : POSITION;
+		float3 normal : NORMAL;
+	};
+
+	struct v2f {
+		float4 pos : SV_POSITION;
+		float3 worldNormal : TEXCOORD0;
+		float3 worldPos : TEXCOORD1;
+	};
+
+	v2f vert(a2v v) {
+		v2f o;
+		o.pos = UnityObjectToClipPos(v.vertex);
+
+		o.worldNormal = UnityObjectToWorldNormal(v.normal);
+
+		o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+		return o;
+	}
+
+	fixed4 frag(v2f i) : SV_Target{
+		fixed3 worldNormal = normalize(i.worldNormal);
+#ifdef USING_DIRECTIONAL_LIGHT
+	fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+#else
+	fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos.xyz);
+#endif
+
+	fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
+
+	fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
+	fixed3 halfDir = normalize(worldLightDir + viewDir);
+	fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
+
+#ifdef USING_DIRECTIONAL_LIGHT
+	fixed atten = 1.0;
+#else
+#if defined (POINT)
+	float3 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1)).xyz;
+	fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
+#elif defined (SPOT)
+	float4 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1));
+	fixed atten = (lightCoord.z > 0) * tex2D(_LightTexture0, lightCoord.xy / lightCoord.w + 0.5).w * tex2D(_LightTextureB0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
+#else
+	fixed atten = 1.0;
+#endif
+#endif
+
+	return fixed4((diffuse + specular) * atten, 1.0);
+	}
+
+		ENDCG
+	}
+	}
+		FallBack "Specular"
 }
