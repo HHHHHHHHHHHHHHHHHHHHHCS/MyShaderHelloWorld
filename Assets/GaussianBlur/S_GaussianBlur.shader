@@ -76,6 +76,8 @@
 
 		pass
 		{
+			//name 记得大写  UNITY 会把name全部转换成大写
+			//防止报错直接全部大写算了
 			NAME "GAUSSIAN_BLUR_VERTICAL"
 
 			CGPROGRAM
