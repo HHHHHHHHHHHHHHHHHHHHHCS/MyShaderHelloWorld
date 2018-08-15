@@ -40,7 +40,7 @@ public class DepthMotionBlur : PostEffectsBase
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        if(Mat==null)
+        if(Mat!=null)
         {
             Mat.SetFloat("_BlurSize", blurSize);
 
@@ -49,6 +49,8 @@ public class DepthMotionBlur : PostEffectsBase
             Matrix4x4 inverseMatrix = newMatrix.inverse;
             Mat.SetMatrix("_CurrentViewProjectInverseMatrix", inverseMatrix);
             previousViewProjectionMatrix = newMatrix;
+
+            Graphics.Blit(src, dest, Mat);
         }
         else
         {
