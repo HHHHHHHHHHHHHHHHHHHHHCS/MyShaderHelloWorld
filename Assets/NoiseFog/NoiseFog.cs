@@ -12,7 +12,10 @@ public class NoiseFog : PostEffectsBase
     {
         get
         {
-            fogMaterial = CheckShaderAndCreateMaterial(fogShader, fogMaterial);
+            if(fogMaterial==null)
+            {
+                fogMaterial = CheckShaderAndCreateMaterial(fogShader, fogMaterial);
+            }
             return fogMaterial;
         }
     }
