@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Glow_Main : PostEffectsBase
 {
@@ -27,7 +28,7 @@ public class Glow_Main : PostEffectsBase
     {
         get
         {
-            if (cam)
+            if (!cam)
             {
                 cam = GetComponent<Camera>();
             }
@@ -36,12 +37,17 @@ public class Glow_Main : PostEffectsBase
     }
 
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (Cam != null && replaceShader != null)
+        if (Cam && replaceShader)
         {
+            //RenderWithShader 是一帧替换一次
             Cam.RenderWithShader(replaceShader, "RenderType");
+            //SetReplacementShader 是永久替换
+            //Cam.SetReplacementShader(replaceShader, "RenderType");
         }
+        //GameObject.Find("Canvas/RawImage").GetComponent<RawImage>()
+        //    .texture = Cam.targetTexture;
     }
 
     [Range(1, 10)]

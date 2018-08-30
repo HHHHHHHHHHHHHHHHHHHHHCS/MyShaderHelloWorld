@@ -46,7 +46,7 @@
 			{
 				fixed4 col = tex2D(_MainTex,i.uv);
 				fixed4 blur = tex2D(_BlurTex,i.uv);
-				fixed4 final = blur*_MixValue;
+				fixed4 final = col+blur*_MixValue;
 
 				return final;
 			}
