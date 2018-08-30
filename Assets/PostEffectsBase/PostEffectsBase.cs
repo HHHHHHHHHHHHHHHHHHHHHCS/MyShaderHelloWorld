@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class PostEffectsBase : MonoBehaviour
 {
-    protected void Start()
+    protected virtual void Start()
     {
         CheckResources();
     }
