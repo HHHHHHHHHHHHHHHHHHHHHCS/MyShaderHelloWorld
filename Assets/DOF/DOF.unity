@@ -522,10 +522,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1148283943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 338d63cbc77373d41aa4f27846f8aab1, type: 3}
+  m_Script: {fileID: 11500000, guid: fab403908f157314788af04736815589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  replaceShader: {fileID: 4800000, guid: acb10cfbc5e24934ab5d120466e6be16, type: 3}
+  blurShader: {fileID: 4800000, guid: 58aa4e131b36fb140a349ab9d0ad4913, type: 3}
+  dofShader: {fileID: 4800000, guid: 0a1c37c8e6763454ca5087c87c24a2b2, type: 3}
+  focalDistance: 0.5
+  downSample: 1
 --- !u!1 &1288445926
 GameObject:
   m_ObjectHideFlags: 0
