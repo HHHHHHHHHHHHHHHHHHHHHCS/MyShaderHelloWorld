@@ -50,6 +50,8 @@ public class CustDOF : PostEffectsBase
 
     [Range(0,1.0f)]
     public float focalDistance = 0.5f;
+    [Range(0, 1.0f)]
+    public float lerpDistance = 0.2f;
 
     public int downSample = 1;
 
@@ -72,7 +74,8 @@ public class CustDOF : PostEffectsBase
 
             DOFMat.SetTexture("_BlurTex", blurTex);
             DOFMat.SetFloat("_FocalDistance", focalDistance);
-            
+            DOFMat.SetFloat("_LerpDistance", lerpDistance);
+
             Graphics.Blit(src, dest, DOFMat);
             
             RenderTexture.ReleaseTemporary(blurTex);

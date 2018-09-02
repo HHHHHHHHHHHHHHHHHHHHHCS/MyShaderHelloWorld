@@ -30,6 +30,7 @@
 			sampler2D _BlurTex;
 			sampler2D _CameraDepthTexture;
 			float _FocalDistance;
+			float _LerpDistance;
 
 			v2f vert(appdata_img v)
 			{
@@ -47,7 +48,11 @@
 				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,i.uv);
 				depth=Linear01Depth(depth);
 
-				fixed4 final=(depth<=_FocalDistance)?ori:blur;
+				float dis =  depth-_FocalDistance;
+
+				float blurLerp = dis/_LerpDistance;
+
+				fixed4 final=(dis<=0.0)?ori:lerp(ori,blur,clamp( blurLerp,0,1));
 
 				return final;
 			}
