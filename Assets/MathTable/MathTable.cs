@@ -77,7 +77,14 @@ public class MathTable : MonoBehaviour
 
     private float Cal(float x)
     {
-        return Mathf.Sin(x) + Mathf.Cos(x);
+
+        float y = Mathf.Sin(Mathf.PI * (x ));
+        y += Mathf.Sin(2f * Mathf.PI * (x )) / 2f;
+        y *= 2f / 3f;
+        return y;
+
+        //return Mathf.Sin(x) + Mathf.Cos(x);
+
         //return Mathf.Pow((x - 1), 4) + 5 * x * x * x - 8 * x * x + 3 * x;
     }
 }

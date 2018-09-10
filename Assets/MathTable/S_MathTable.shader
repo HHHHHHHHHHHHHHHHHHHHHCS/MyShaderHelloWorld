@@ -1,4 +1,4 @@
-Shader "HCS/S_MathTable" 
+Shader "HCS/MathTable" 
 {
     Properties
     {
