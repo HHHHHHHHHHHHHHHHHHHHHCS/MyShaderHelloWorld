@@ -231,6 +231,8 @@ public class RoundedCube : MonoBehaviour
         mesh.SetTriangles(trianglesZ, 0);
         mesh.SetTriangles(trianglesX, 1);
         mesh.SetTriangles(trianglesY, 2);
+
+        mesh.RecalculateNormals();
     }
 
     private void OnDrawGizmos()
