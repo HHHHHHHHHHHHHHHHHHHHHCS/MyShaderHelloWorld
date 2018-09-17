@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83117535f058934b9d5d76ef86aa244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 10
-  ySize: 12
+  xSize: 12
+  ySize: 10
   zSize: 8
   roundness: 3
