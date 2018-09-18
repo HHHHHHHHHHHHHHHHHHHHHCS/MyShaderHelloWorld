@@ -30,6 +30,7 @@
 			{
 				float4 vertex : POSITION;
 				float2 uv : TEXCOORD0;
+				float4 color:COLOR;
 			};
 
 			struct v2f
@@ -46,11 +47,11 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
 				#if defined(_FACES_X)
-					o.uv = v.vertex.yz;
+					o.uv = v.color.yz*255;
 				#elif defined(_FACES_Y)
-					o.uv = v.vertex.xz;
+					o.uv = v.color.xz*255;
 				#elif defined(_FACES_Z)
-					o.uv = v.vertex.xy;
+					o.uv = v.color.xy*255;
 				#endif
 				o.uv=TRANSFORM_TEX(o.uv,_MainTex);
 				return o;
