@@ -1,15 +1,18 @@
-﻿Shader "HCS/S_MultipleLights" 
+﻿Shader "HCS/S_Bumpiness" 
 {
 	Properties 
 	{
-		_Tint("Main Color",color)=(1,1,1,1)
-		_MainTex ("Main Map", 2D) = "white" {}
+		_Tint("Tint ",Color)=(1,1,1,1)
+		_MainTex("Albedo",2D)="white"{}
+		[NoScaleOffset] _NormalMap ("Normals", 2D) = "bump" {}
+		_BumpScale ("Bump Scale", Float) = 1
+		//[NoScaleOffset] _HeightMap("Heights",2D)="gray"{}
 		[Gamma] _Metallic("Metallic",Range(0,1))=0
-		_Smoothness ("Smoothness", Range(0, 1)) = 0.5
+		_Smoothness("Smoothness",Range(0,1))=0.1
 	}
 	SubShader 
 	{
-		pass
+			pass
 		{
 			Tags {"LightMode" = "ForwardBase"}
 
@@ -24,7 +27,7 @@
 
 			#define FORWARD_BASE_PASS
 
-			#include "MultipleLights.cginc"
+			#include "BumpLight.cginc"
 
 			ENDCG
 		}
@@ -45,7 +48,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#include "MultipleLights.cginc"
+			#include "BumpLight.cginc"
 
 			ENDCG
 		}
