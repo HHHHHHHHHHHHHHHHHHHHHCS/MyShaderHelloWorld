@@ -1,6 +1,5 @@
-﻿Shader "HCS/S_Shadows" 
+﻿Shader "HCS/S_Reflections" 
 {
-
 	Properties 
 	{
 		_Tint ("Tint", Color) = (1, 1, 1, 1)
@@ -31,16 +30,15 @@
 
 			#pragma target 3.0
 
-
 			#pragma multi_compile _ SHADOWS_SCREEN
 			#pragma multi_compile _ VERTEXLIGHT_ON
 
-			#pragma vertex vert
-			#pragma fragment frag
+			#pragma vertex MyVertexProgram
+			#pragma fragment MyFragmentProgram
 
 			#define FORWARD_BASE_PASS
 
-			#include "Shadows_Light.cginc"
+			#include "Reflections_Lighting.cginc"
 
 			ENDCG
 		}
@@ -57,18 +55,18 @@
 			#pragma target 3.0
 
 			#pragma multi_compile_fwdadd_fullshadows
+			
+			#pragma vertex MyVertexProgram
+			#pragma fragment MyFragmentProgram
 
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#include "Shadows_Light.cginc"
+			#include "Reflections_Lighting.cginc"
 
 			ENDCG
 		}
 
-		pass
+		Pass 
 		{
-			Tags{"LightMode"="ShadowCaster"}
+			Tags {"LightMode" = "ShadowCaster"}
 
 			CGPROGRAM
 
@@ -76,10 +74,10 @@
 
 			#pragma multi_compile_shadowcaster
 
-			#pragma vertex vert
-			#pragma fragment frag
-			
-			#include "Shadows_Shadows.cginc"
+			#pragma vertex MyShadowVertexProgram
+			#pragma fragment MyShadowFragmentProgram
+
+			#include "Reflections_Shadows.cginc"
 
 			ENDCG
 		}
