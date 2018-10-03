@@ -16,6 +16,8 @@ float _BumpScale, _DetailBumpScale;
 sampler2D _MetallicMap;
 float _Metallic;
 float _Smoothness;
+sampler2D _EmissionMap;
+float3 _Emission;
 
 struct VertexData {
 	float4 vertex : POSITION;
@@ -115,6 +117,39 @@ float3 BoxProjection (
 	return direction;
 }
 
+float GetMetallic(Interpolators i)
+{
+	#if defined(_METALLIC_MAP)
+		return tex2D(_MetallicMap,i.uv.xy).r;
+	#else
+		return _Metallic;
+	#endif
+}
+
+float GetSmoothness(Interpolators i)
+{
+	float smoothness =1;
+	#if defined(_SMOOTHNESS_ALBEDO)
+		return tex2D(_MetallicMap,i.uv.xy).a * _Smoothness;
+	#elif defined(_SMOOTHNESS_METALLIC) && defined(_METALLIC_MAP)
+		smoothness=tex2D(_MetallicMap,i.uv.xy).a;
+	#endif
+	return smoothness* _Smoothness;
+}
+
+float3 GetEmission(Interpolators i)
+{
+	#if defined(FORWARD_BASE_PASS)
+		#if defined(_EMISSION_MAP)
+			return tex2D(_EmissionMap,i.uv.xy)*_Emission;
+		#else
+			return _Emission;
+		#endif
+	#else
+		return 0;
+	#endif
+}
+
 UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 	UnityIndirect indirectLight;
 	indirectLight.diffuse = 0;
@@ -128,7 +163,7 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 		indirectLight.diffuse += max(0, ShadeSH9(float4(i.normal, 1)));
 		float3 reflectionDir = reflect(-viewDir, i.normal);
 		Unity_GlossyEnvironmentData envData;
-		envData.roughness = 1 - _Smoothness;
+		envData.roughness = 1 - GetSmoothness(i);
 		envData.reflUVW = BoxProjection(
 			reflectionDir, i.worldPos,
 			unity_SpecCube0_ProbePosition,
@@ -183,10 +218,7 @@ void InitializeFragmentNormal(inout Interpolators i) {
 	);
 }
 
-float GetMetallic(Interpolators i)
-{
-	return tex2D(_MetallicMap,i.uv.xy).r*_Metallic;
-}
+
 
 float4 MyFragmentProgram (Interpolators i) : SV_TARGET {
 	InitializeFragmentNormal(i);
@@ -202,12 +234,14 @@ float4 MyFragmentProgram (Interpolators i) : SV_TARGET {
 		albedo, GetMetallic(i), specularTint, oneMinusReflectivity
 	);
 
-	return UNITY_BRDF_PBS(
+	float4 color = UNITY_BRDF_PBS(
 		albedo, specularTint,
-		oneMinusReflectivity, _Smoothness,
+		oneMinusReflectivity, GetSmoothness(i),
 		i.normal, viewDir,
 		CreateLight(i), CreateIndirectLight(i, viewDir)
 	);
+	color.rgb += GetEmission(i);
+	return color;
 }
 
 #endif
