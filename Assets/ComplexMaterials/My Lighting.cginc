@@ -1,17 +1,18 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-#if !defined(MY_LIGHTING_INCLUDED)
+﻿#if !defined(MY_LIGHTING_INCLUDED)
 #define MY_LIGHTING_INCLUDED
 
 #include "UnityPBSLighting.cginc"
 #include "AutoLight.cginc"
 
 float4 _Tint;
-sampler2D _MainTex, _DetailTex;
+sampler2D _MainTex, _DetailTex,_DetailMask;
 float4 _MainTex_ST, _DetailTex_ST;
 
 sampler2D _NormalMap, _DetailNormalMap;
 float _BumpScale, _DetailBumpScale;
+
+sampler2D _OcclusionMap;
+float _OcclusionStrength;
 
 sampler2D _MetallicMap;
 float _Metallic;
@@ -19,14 +20,18 @@ float _Smoothness;
 sampler2D _EmissionMap;
 float3 _Emission;
 
-struct VertexData {
+
+
+struct VertexData 
+{
 	float4 vertex : POSITION;
 	float3 normal : NORMAL;
 	float4 tangent : TANGENT;
 	float2 uv : TEXCOORD0;
 };
 
-struct Interpolators {
+struct Interpolators 
+{
 	float4 pos : SV_POSITION;
 	float4 uv : TEXCOORD0;
 	float3 normal : TEXCOORD1;
@@ -47,75 +52,8 @@ struct Interpolators {
 	#endif
 };
 
-void ComputeVertexLightColor (inout Interpolators i) {
-	#if defined(VERTEXLIGHT_ON)
-		i.vertexLightColor = Shade4PointLights(
-			unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
-			unity_LightColor[0].rgb, unity_LightColor[1].rgb,
-			unity_LightColor[2].rgb, unity_LightColor[3].rgb,
-			unity_4LightAtten0, i.worldPos, i.normal
-		);
-	#endif
-}
 
-float3 CreateBinormal (float3 normal, float3 tangent, float binormalSign) {
-	return cross(normal, tangent.xyz) *
-		(binormalSign * unity_WorldTransformParams.w);
-}
 
-Interpolators MyVertexProgram (VertexData v) {
-	Interpolators i;
-	i.pos = UnityObjectToClipPos(v.vertex);
-	i.worldPos = mul(unity_ObjectToWorld, v.vertex);
-	i.normal = UnityObjectToWorldNormal(v.normal);
-
-	#if defined(BINORMAL_PER_FRAGMENT)
-		i.tangent = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
-	#else
-		i.tangent = UnityObjectToWorldDir(v.tangent.xyz);
-		i.binormal = CreateBinormal(i.normal, i.tangent, v.tangent.w);
-	#endif
-
-	i.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
-	i.uv.zw = TRANSFORM_TEX(v.uv, _DetailTex);
-
-	TRANSFER_SHADOW(i);
-
-	ComputeVertexLightColor(i);
-	return i;
-}
-
-UnityLight CreateLight (Interpolators i) {
-	UnityLight light;
-
-	#if defined(POINT) || defined(POINT_COOKIE) || defined(SPOT)
-		light.dir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos);
-	#else
-		light.dir = _WorldSpaceLightPos0.xyz;
-	#endif
-
-	UNITY_LIGHT_ATTENUATION(attenuation, i, i.worldPos);
-
-	light.color = _LightColor0.rgb * attenuation;
-	light.ndotl = DotClamped(i.normal, light.dir);
-	return light;
-}
-
-float3 BoxProjection (
-	float3 direction, float3 position,
-	float4 cubemapPosition, float3 boxMin, float3 boxMax
-) {
-	#if UNITY_SPECCUBE_BOX_PROJECTION
-		UNITY_BRANCH
-		if (cubemapPosition.w > 0) {
-			float3 factors =
-				((direction > 0 ? boxMax : boxMin) - position) / direction;
-			float scalar = min(min(factors.x, factors.y), factors.z);
-			direction = direction * scalar + (position - cubemapPosition);
-		}
-	#endif
-	return direction;
-}
 
 float GetMetallic(Interpolators i)
 {
@@ -149,6 +87,122 @@ float3 GetEmission(Interpolators i)
 		return 0;
 	#endif
 }
+
+float GetOcclusion(Interpolators i)
+{
+	#if defined(_OCCLUSION_MAP)
+		return lerp(1, tex2D(_OcclusionMap, i.uv.xy).g, _OcclusionStrength);
+	#else 
+		return 1;
+	#endif
+}
+
+float GetDetailMask(Interpolators i)
+{
+	#if defined(_DETAIL_MASK)
+		return tex2D(_DetailMask,i.uv.xy).a;
+	#else
+		return 1;
+	#endif
+}
+
+float3 GetAlbedo(Interpolators i)
+{
+	float3 albedo = tex2D(_MainTex,i.uv.xy).rgb*_Tint.rgb;
+	#if defined(_DETAIL_ALBEDO_MAP)
+		float3 details =tex2D(_DetailTex,i.uv.zw)*unity_ColorSpaceDouble;
+		albedo=lerp(albedo,albedo*details,GetDetailMask(i));
+	#endif
+	return albedo;
+}
+
+float3 GetTangentSpaceNormal(Interpolators i)
+{
+	float3 normal = float3(0, 0, 1);
+	#if defined(_NORMAL_MAP)
+		normal = UnpackScaleNormal(tex2D(_NormalMap, i.uv.xy), _BumpScale);
+	#endif
+	#if defined(_DETAIL_NORMAL_MAP)
+		float3 detailNormal =
+			UnpackScaleNormal(
+				tex2D(_DetailNormalMap, i.uv.zw), _DetailBumpScale
+			);
+		detailNormal = lerp(float3(0, 0, 1), detailNormal, GetDetailMask(i));
+		normal = BlendNormals(normal, detailNormal);
+	#endif
+	return normal;
+}
+
+void ComputeVertexLightColor (inout Interpolators i) {
+	#if defined(VERTEXLIGHT_ON)
+		i.vertexLightColor = Shade4PointLights(
+			unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
+			unity_LightColor[0].rgb, unity_LightColor[1].rgb,
+			unity_LightColor[2].rgb, unity_LightColor[3].rgb,
+			unity_4LightAtten0, i.worldPos, i.normal
+		);
+	#endif
+}
+
+Interpolators MyVertexProgram (VertexData v) {
+	Interpolators i;
+	i.pos = UnityObjectToClipPos(v.vertex);
+	i.worldPos = mul(unity_ObjectToWorld, v.vertex);
+	i.normal = UnityObjectToWorldNormal(v.normal);
+
+	#if defined(BINORMAL_PER_FRAGMENT)
+		i.tangent = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
+	#else
+		i.tangent = UnityObjectToWorldDir(v.tangent.xyz);
+		i.binormal = CreateBinormal(i.normal, i.tangent, v.tangent.w);
+	#endif
+
+	i.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
+	i.uv.zw = TRANSFORM_TEX(v.uv, _DetailTex);
+
+	TRANSFER_SHADOW(i);
+
+	ComputeVertexLightColor(i);
+	return i;
+}
+
+
+UnityLight CreateLight (Interpolators i) {
+	UnityLight light;
+
+	#if defined(POINT) || defined(POINT_COOKIE) || defined(SPOT)
+		light.dir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos);
+	#else
+		light.dir = _WorldSpaceLightPos0.xyz;
+	#endif
+
+	UNITY_LIGHT_ATTENUATION(attenuation, i, i.worldPos);
+	//attenuation *= GetOcclusion(i);
+	light.color = _LightColor0.rgb * attenuation;
+	light.ndotl = DotClamped(i.normal, light.dir);
+	return light;
+}
+
+float3 BoxProjection (float3 direction, float3 position,float4 cubemapPosition, float3 boxMin, float3 boxMax) 
+{
+	#if UNITY_SPECCUBE_BOX_PROJECTION
+		UNITY_BRANCH
+		if (cubemapPosition.w > 0) {
+			float3 factors =
+				((direction > 0 ? boxMax : boxMin) - position) / direction;
+			float scalar = min(min(factors.x, factors.y), factors.z);
+			direction = direction * scalar + (position - cubemapPosition);
+		}
+	#endif
+	return direction;
+}
+
+
+float3 CreateBinormal (float3 normal, float3 tangent, float binormalSign) {
+	return cross(normal, tangent.xyz) *
+		(binormalSign * unity_WorldTransformParams.w);
+}
+
 
 UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 	UnityIndirect indirectLight;
@@ -193,17 +247,18 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 		#else
 			indirectLight.specular = probe0;
 		#endif
+
+		float occlusion = GetOcclusion(i);
+		indirectLight.diffuse*=occlusion;
+		indirectLight.specular*=occlusion;
 	#endif
 
 	return indirectLight;
 }
 
 void InitializeFragmentNormal(inout Interpolators i) {
-	float3 mainNormal =
-		UnpackScaleNormal(tex2D(_NormalMap, i.uv.xy), _BumpScale);
-	float3 detailNormal =
-		UnpackScaleNormal(tex2D(_DetailNormalMap, i.uv.zw), _DetailBumpScale);
-	float3 tangentSpaceNormal = BlendNormals(mainNormal, detailNormal);
+
+	float3 tangentSpaceNormal = GetTangentSpaceNormal(i);
 
 	#if defined(BINORMAL_PER_FRAGMENT)
 		float3 binormal = CreateBinormal(i.normal, i.tangent.xyz, i.tangent.w);
@@ -231,7 +286,7 @@ float4 MyFragmentProgram (Interpolators i) : SV_TARGET {
 	float3 specularTint;
 	float oneMinusReflectivity;
 	albedo = DiffuseAndSpecularFromMetallic(
-		albedo, GetMetallic(i), specularTint, oneMinusReflectivity
+		GetAlbedo(i), GetMetallic(i), specularTint, oneMinusReflectivity
 	);
 
 	float4 color = UNITY_BRDF_PBS(

@@ -10,9 +10,12 @@
 		_Smoothness ("Smoothness", Range(0, 1)) = 0.1
 		[NoScaleOffest] _EmissionMap("Emission",2D)="black"{}
 		_Emission("Emission",Color)=(0,0,0)
+		[NoScaleOffest] _OcclusionMap("Occlusion",2D)="white"{}
+		_OcclusionStrength("Occlusion Strength",Range(0,1))=1
 		_DetailTex ("Detail Albedo", 2D) = "gray" {}
 		[NoScaleOffset] _DetailNormalMap ("Detail Normals", 2D) = "bump" {}
 		_DetailBumpScale ("Detail Bump Scale", Float) = 1
+		[NoScaleOffset] _DetailMask("Detail Mask",2D)="white"{}
 	}
 
 	CGINCLUDE
@@ -34,7 +37,13 @@
 
 			#pragma shader_feature _METALLIC_MAP
 			#pragma shader_feature _ _SMOOTHNESS_ALBEDO _SMOOTHNESS_METALLIC
+			#pragma shader_feature _NORMAL_MAP
+			#pragma shader_feature _OCCLUSION_MAP
 			#pragma shader_feature _EMISSION_MAP
+			#pragma shader_feature _DETAIL_ALBEDO_MAP
+			#pragma shader_feature _DETAIL_NORMAL_MAP
+			#pragma shader_feature _DETAIL_MASK
+
 			#pragma multi_compile _ SHADOWS_SCREEN
 			#pragma multi_compile _ VERTEXLIGHT_ON
 
@@ -60,6 +69,12 @@
 
 			#pragma target 3.0
 
+			#pragma shader_feature _METALLIC_MAP
+			#pragma shader_feature _ _SMOOTHNESS_ALBEDO _SMOOTHNESS_METALLIC
+			#pragma shader_feature _NORMAL_MAP
+			#pragma shader_feature _DETAIL_MASK
+			#pragma shader_feature _DETAIL_ALBEDO_MAP
+			#pragma shader_feature _DETAIL_NORMAL_MAP
 			#pragma multi_compile_fwdadd_fullshadows
 			
 			#pragma vertex MyVertexProgram
