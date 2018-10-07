@@ -11,6 +11,7 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
         Opaque,
         Cutout,
         Fade,
+        Transparent
     }
 
     private enum SmoothnessSource
@@ -40,26 +41,37 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
 
     private static GUIContent staticLabel = new GUIContent();
     private static RenderingSettings[] modes = {
-            new RenderingSettings() {
+            new RenderingSettings()
+            {
                 queue = RenderQueue.Geometry,
                 renderType = "",
                 srcBlend = BlendMode.One,
                 dstBlend = BlendMode.Zero,
                 zWrite = true
             },
-            new RenderingSettings() {
+            new RenderingSettings()
+            {
                 queue = RenderQueue.AlphaTest,
                 renderType = "TransparentCutout",
                 srcBlend = BlendMode.One,
                 dstBlend = BlendMode.Zero,
                 zWrite = true
             },
-            new RenderingSettings() {
+            new RenderingSettings()
+            {
                 queue = RenderQueue.Transparent,
                 renderType = "Transparent",
                 srcBlend = BlendMode.SrcAlpha,
                 dstBlend = BlendMode.OneMinusSrcAlpha,
                 zWrite = false
+            },
+            new RenderingSettings
+            {
+                queue=RenderQueue.Transparent,
+                renderType="Transparent",
+                srcBlend=BlendMode.One,
+                dstBlend=BlendMode.OneMinusDstAlpha,
+                zWrite=false
             }
         };
 
@@ -130,6 +142,11 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
         {
             mode = RenderingMode.Fade;
         }
+        else if(IsKeywordEnable("_RENDERING_TRANSPARENT"))
+        {
+            mode = RenderingMode.Transparent;
+        }
+
         EditorGUI.BeginChangeCheck();
         mode = (RenderingMode)EditorGUILayout.EnumPopup(MakeLabel("Rendering Mode"), mode);
         if (EditorGUI.EndChangeCheck())
@@ -137,7 +154,7 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
             RecordAction("Rendering Mode");
             SetKeyword("_RENDERING_CUTOUT", mode == RenderingMode.Cutout);
             SetKeyword("_RENDERING_FADE", mode == RenderingMode.Fade);
-
+            SetKeyword("_RENDERING_TRANSPARENT", mode == RenderingMode.Transparent);
 
             RenderingSettings settings = modes[(int)mode];
             foreach (Material m in editor.targets)
