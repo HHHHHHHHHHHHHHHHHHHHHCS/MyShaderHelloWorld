@@ -3,14 +3,25 @@
 
 #include "UnityCG.cginc"
 
-#if defined(_RENDERING_CUTOUT) && !defined(_SMOOTHNESS_ALBEDO)
-	#define SHADOWS_NEED_UV 1//这里 1 直接代表true
+#if defined(_RENDERING_FADE)||defined(_RENDERING_TRANSPARENT)
+	#if defined (_SEMITRANSPARENT_SHADOWS)
+		#define SHADOWS_SEMITRANSPARENT 1
+	#else 
+		#define _RENDERING _CUTOUT
+	#endif
+#endif
+
+#if SHADOWS_SEMITRANSPARENT || !defined(_SMOOTHNESS_ALBEDO)
+	#if !defined (_SMOOTHNESS_ALBEDO)
+		#define SHADOWS_NEED_UV 1//这里 1 直接代表true
+	#endif
 #endif
 
 float4 _Tint;
 sampler2D _MainTex;
 float4 _MainTex_ST;
 float _AlphaCutoff;
+sampler3D _DitherMaskLOD;
 
 struct VertexData {
 	float4 position : POSITION;
@@ -18,13 +29,30 @@ struct VertexData {
 	float2 uv :TEXCOORD0;
 };
 
-struct Interpolators {
+struct InterpolatorsVertex {
 	float4 position : SV_POSITION;
 	#if SHADOWS_NEED_UV
 		float2 uv :TEXCOORD0;
 	#endif
 	#if defined(SHADOWS_CUBE)
 		float3 lightVec : TEXCOORD1;
+	#endif
+};
+
+struct Interpolators
+{
+	#if SHADOWS_SEMITRANSPARENT
+		UNITY_VPOS_TYPE vpos:VPOS;
+	#else
+		float4 positions:SV_POSITION;
+	#endif
+
+	#if SHADOWS_NEED_UV
+		float2 uv : TEXCOORD0;
+	#endif
+
+	#if defined(SHADOWS_CUBE)
+		float3 lightVec:TEXCOORD1;
 	#endif
 };
 
@@ -37,9 +65,9 @@ float GetAlpha(Interpolators i)
 	return alpha;
 }
 
-Interpolators MyShadowVertexProgram(VertexData v)
+InterpolatorsVertex MyShadowVertexProgram(VertexData v)
 {
-	Interpolators i;
+	InterpolatorsVertex i;
 	#if defined(SHADOWS_CUBE)
 		i.position=UnityObjectToClipPos(v.position);
 		i.lightVec=mul(unity_ObjectToWorld,v.positon).xyz-_LightPositionRange.xyz;
@@ -58,6 +86,11 @@ float4 MyShadowFragmentProgram (Interpolators i) : SV_TARGET
 	float alpha = GetAlpha(i);
 	#if defined(_RENDERING_CUTOUT)
 		clip(alpha - _AlphaCutoff);
+	#endif
+
+	#if SHADOWS_SEMITRANSPARENT
+		float dither = tex3D(_DitherMaskLOD,float3(i.vpos.xy* 0.25,alpha * 0.9375)).a;
+		clip(dither-0.01);
 	#endif
 
 	#if defined(SHADOWS_CUBE)

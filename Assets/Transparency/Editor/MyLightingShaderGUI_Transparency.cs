@@ -142,7 +142,7 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
         {
             mode = RenderingMode.Fade;
         }
-        else if(IsKeywordEnable("_RENDERING_TRANSPARENT"))
+        else if (IsKeywordEnable("_RENDERING_TRANSPARENT"))
         {
             mode = RenderingMode.Transparent;
         }
@@ -166,6 +166,11 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
                 m.SetInt("_ZWrite", settings.zWrite ? 1 : 0);
             }
         }
+
+        if (mode == RenderingMode.Fade || mode == RenderingMode.Transparent)
+        {
+            DoSemitransparentShadows();
+        }
     }
 
     private void DoMain()
@@ -186,6 +191,24 @@ public class MyLightingShaderGUI_Transparency : ShaderGUI
         editor.TextureScaleOffsetProperty(mainTex);
     }
 
+    private void DoSemitransparentShadows()
+    {
+        EditorGUI.BeginChangeCheck();
+        bool semitransparentShadows
+            = EditorGUILayout.Toggle(
+                MakeLabel("Semitransp. Shadows", "Semitransparent Shadows"),
+                IsKeywordEnable("_SEMITRANSPARENT_SHADOWS")
+                );
+        if (EditorGUI.EndChangeCheck())
+        {
+            SetKeyword("_SEMITRANSPARENT_SHADOWS", semitransparentShadows);
+        }
+
+        if (!semitransparentShadows)
+        {
+            shouldShowAlphaCutoff = true;
+        }
+    }
 
 
     private void DoAlphaCutoff()

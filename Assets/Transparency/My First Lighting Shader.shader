@@ -110,7 +110,8 @@
 
 			#pragma target 3.0
 
-			#pragma shader_feature _RENDERING_CUTOUT
+			#pragma shader_feature _ _RENDERING_CUTOUT _RENDERING_FADE _RENDERING_TRANSPARENT
+			#pragma shader_feature _SEMITRANSPARENT_SHADOWS
 			#pragma shader_feature _SMOOTHNESS_ALBEDO
 			#pragma multi_compile_shadowcaster
 
