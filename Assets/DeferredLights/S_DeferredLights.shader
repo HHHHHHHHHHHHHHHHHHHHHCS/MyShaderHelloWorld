@@ -6,8 +6,9 @@
 	}
 	SubShader 
 	{
-		pass
+		Pass
 		{
+			Blend One One
 			Cull Off
 			ZTest Always
 			ZWrite Off
@@ -18,38 +19,17 @@
 			#pragma vertex vert
 			#pragma fragment frag
 
-
-
 			#pragma exclude_renderers nomrt
 
-			#include "UnityCG.cginc"
+			#pragma multi_compile_lightpass
+			#pragma multi_compile _ UNITY_HDR_ON
 
-			struct a2v
-			{
-				float4 vertex :POSITION;
-			};
-
-			struct v2f
-			{
-				float4 pos:SV_POSITION;
-			};
-
-			v2f vert(a2v v)
-			{
-				v2f o;
-				o.pos = UnityObjectToClipPos(v.vertex);
-				return o;
-			}
-
-			float4 frag(v2f i):SV_TARGET
-			{
-				return 0;
-			}
+			#include "MyDeferredShading.cginc"
 
 			ENDCG
 		}
 
-		pass
+		Pass
 		{
 			Cull Off
 			ZTest Always
