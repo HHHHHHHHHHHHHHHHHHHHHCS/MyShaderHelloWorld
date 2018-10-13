@@ -6,11 +6,11 @@
 	}
 	SubShader 
 	{
-		Pass
+		pass
 		{
-			Blend One One
-			Cull Off
-			ZTest Always
+			Blend [_SrcBlend] [_DstBlend]
+			//Cull Off
+			//ZTest Always
 			ZWrite Off
 
 			CGPROGRAM
@@ -26,10 +26,11 @@
 
 			#include "MyDeferredShading.cginc"
 
+
 			ENDCG
 		}
 
-		Pass
+				pass
 		{
 			Cull Off
 			ZTest Always
@@ -37,10 +38,10 @@
 
 			Stencil
 			{
-				Ref[_StencilNonBackground]
-				ReadMask[_StenilNonBackground]
+				Ref [_StencilNonBackground]
+				ReadMask [_StencilNonBackground]
 				CompBack Equal
-				CompFront Equal
+				CompFront Equal 
 			}
 
 			CGPROGRAM
@@ -55,14 +56,14 @@
 
 			struct a2v
 			{
-				float4 vertex :POSITION;
+				float4 vertex : POSITION;
 				float2 uv:TEXCOORD0;
 			};
 
 			struct v2f
 			{
 				float4 pos:SV_POSITION;
-				float2 uv:TEXCOORD0;
+				float2 uv:TANGENT0;
 			};
 
 			sampler2D _LightBuffer;
@@ -70,14 +71,14 @@
 			v2f vert(a2v v)
 			{
 				v2f o;
-				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv=v.uv;
-				return o;
+				o.pos=UnityObjectToClipPos(v.vertex);
+				v.uv=v.uv;
+				return v;
 			}
 
-			float4 frag(v2f i):SV_TARGET
+			float4 frag (v2f i):SV_TARGET
 			{
-				return -log2(tex2D(_LightBuffer, i.uv));
+				return -log2(tex2D(_LightBuffer, i.uv));;
 			}
 
 			ENDCG
