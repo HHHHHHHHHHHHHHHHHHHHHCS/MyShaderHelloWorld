@@ -22,7 +22,12 @@ sampler2D _CameraGBufferTexture1;
 sampler2D _CameraGBufferTexture2;
 float _LightAsQuad;
 float4 _LightColor,_LightDir,_LightPos;
-sampler2D _LightTexture0, _LightTextureB0;
+sampler2D  _LightTextureB0;
+#if defined(POINT_COOKIE)
+	samplerCUBE	_LightTexture0;
+#else
+	sampler2D _LightTexture0;
+#endif
 float4x4 unity_WorldToLight;
 #if defined (SHADOWS_SCREEN)
 	sampler2D _ShadowMapTexture;
@@ -40,8 +45,7 @@ UnityLight CreateLight(float2 uv,float3 worldPos,float viewZ)
 		light.dir=-_LightDir;
 
 		#if defined (DIRECTIONAL_COOKIE)
-			float2 uvCookie = mul(unity_WorldToLight,float4(worldPos,1)).xy;
-			attenuation *= tex2Dbias(_LightTexture0, float4(uvCookie, 0, -8)).w;
+
 		#endif
 
 		#if defined(SHADOWS_SCREEN)
@@ -49,34 +53,57 @@ UnityLight CreateLight(float2 uv,float3 worldPos,float viewZ)
 			shadowAttenuation = tex2D(_ShadowMapTexture, uv).r;
 		#endif
 	#else
-		float3 lightVec = _LightPos.xyz-worldPos;
-		light.dir=normalize(lightVec);
+		float3 lightVec = _LightPos.xyz - worldPos; 
+		light.dir = normalize(lightVec);
 
-		attenuation *= tex2D(
+		attenuation*=tex2D(
 			_LightTextureB0,
-			(dot(lightVec, lightVec) * _LightPos.w).rr
+			(dot(lightVec,lightVec)*_LightPos.w).rr
 		).UNITY_ATTEN_CHANNEL;
 
-		float4 uvCookie=mul(unity_WorldToLight,float4(worldPos,1));
-		uvCookie.xy /= uvCookie.w;
-		attenuation*=tex2Dbias(_LightTexture0,float4(uvCookie.xy,0,8)).w;
-		
-		#if defined(SHADOWS_DEPTH)
-			shadowed = true;
-			shadowAttenuation = UnitySampleShadowmap(
-				mul(unity_WorldToShadow[0], float4(worldPos, 1))
-			);
+
+		#if defined(SPOT)
+			float4 uvCookie = mul(unity_WorldToLight,float4(worldPos,1));
+			uvCookie.xy/=uvCookie.w;
+			attenuation *= tex2Dbias(_LightTexture0, float4(uvCookie.xy, 0, -8)).w;
+			attenuation *= uvCookie.w < 0;
+
+			#if defined(SHADOWS_DEPTH)
+				shadowed = true;
+				shadowAttenuation = UnitySampleShadowmap(
+					mul(unity_WorldToShadow[0], float4(worldPos, 1))
+				);
+			#endif
+		#else
+			#if defined(POINT_COOKIE)
+				float3 uvCookie = mul(unity_WorldToLight,flaot4(worldPos,1)).xyz;
+				attenuation * = texCUBEbias(_LightTexture0,float4(uvCookie,-8)).w;
+			#endif
+
+			#if defined(SHADOWS_CUBE)
+				shadowed=true;
+				shadowAttenuation=UnitySampleShadowmap(-lightVec);
+			#endif
 		#endif
 	#endif
 
 	if (shadowed)
 	{
-		float shadowFadeDistance = UnityComputeShadowFadeDistance(worldPos, viewZ);
+		float shadowFadeDistance = UnityComputeShadowFadeDistance(worldPos,viewZ);
 		float shadowFade = UnityComputeShadowFade(shadowFadeDistance);
 		shadowAttenuation=saturate(shadowAttenuation+shadowFade);
 	}
 
 	light.color = _LightColor.rgb *(attenuation* shadowAttenuation);
+
+	#if defined (UNITY_FASE_COHERENT)&&defined(SHADOWS_SOPT)
+		UNITY_BRANCH
+		if (shadowFade>0.99)
+		{
+			shadowAttenuation=1;
+		}
+	#endif
+
 	return light;
 }
 
@@ -85,8 +112,8 @@ v2f vert(a2v v)
 	v2f o;
 	o.pos=UnityObjectToClipPos(v.vertex);
 	o.uv=ComputeScreenPos(o.pos);
-	o.ray = lerp(
-		UnityObjectToViewPos(v.vertex) * float3(-1, -1, 1),
+	o.ray =lerp(
+		UnityObjectToViewPos(v.vertex)*float3(-1,-1,1),
 		v.normal,
 		_LightAsQuad
 	);
