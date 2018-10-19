@@ -1,4 +1,4 @@
-#if !defined(MY_LIGHTMAPPING_INCLUDED)
+﻿#if !defined(MY_LIGHTMAPPING_INCLUDED)
 #define MY_LIGHTMAPPING_INCLUDED
 
 #include "UnityPBSLighting.cginc"
@@ -15,11 +15,6 @@ float _Smoothness;
 sampler2D _EmissionMap;
 float3 _Emission;
 
-struct Interpolators {
-	float4 pos : SV_POSITION;
-	float4 uv : TEXCOORD0;
-};
-
 struct VertexData {
 	float4 vertex : POSITION;
 	float2 uv : TEXCOORD0;
@@ -27,6 +22,10 @@ struct VertexData {
 	float2 uv2 : TEXCOORD2;
 };
 
+struct Interpolators {
+	float4 pos : SV_POSITION;
+	float4 uv : TEXCOORD0;
+};
 
 float GetDetailMask (Interpolators i) {
 	#if defined (_DETAIL_MASK)
@@ -64,36 +63,36 @@ float GetSmoothness (Interpolators i) {
 }
 
 float3 GetEmission (Interpolators i) {
-	#if defined (_EMISSION_MAP)
-		return tex2D(_Emission,i.uv.xy)*_Emission;
+	#if defined(_EMISSION_MAP)
+		return tex2D(_EmissionMap, i.uv.xy) * _Emission;
 	#else
 		return _Emission;
 	#endif
 }
 
-Interpolators vert(VertexData v)
-{
+Interpolators MyLightmappingVertexProgram (VertexData v) {
 	Interpolators i;
-	v.vertex.xy=v.uv1*unity_LightmapST.xy+unity_LightmapST.zw;
-	v.vertex.z=v.vertex.z>0?0.0001:0;
-	i.pos=UnityObjectToClipPos(v.vertex);
+	i.pos = UnityMetaVertexPosition(
+		v.vertex, v.uv1, v.uv2, unity_LightmapST, unity_DynamicLightmapST
+	);
 
-	i.uv.xy=TRANSFORM_TEX(v.uv,_MainTex);
-	i.uv.zw=TRANSFORM_TEX(v.uv,_DetailTex);
+	i.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
+	i.uv.zw = TRANSFORM_TEX(v.uv, _DetailTex);
 	return i;
 }
 
-float4 frag(Interpolators i):SV_TARGET
-{
+float4 MyLightmappingFragmentProgram (Interpolators i) : SV_TARGET {
 	UnityMetaInput surfaceData;
 	surfaceData.Emission = GetEmission(i);
 	float oneMinusReflectivity;
 	surfaceData.Albedo = DiffuseAndSpecularFromMetallic(
-		GetAlbedo(i),GetMetallic(i),
-		surfaceData.SpecularColor,oneMinusReflectivity
+		GetAlbedo(i), GetMetallic(i),
+		surfaceData.SpecularColor, oneMinusReflectivity
 	);
-	float rougness = SmoothnessToRoughness(GetSmoothness(i))*0.5;
-	surfaceData.Albedo += surfaceData.SpecularColor * rougness;
+
+	float roughness = SmoothnessToRoughness(GetSmoothness(i)) * 0.5;
+	surfaceData.Albedo += surfaceData.SpecularColor * roughness;
+
 	return UnityMetaFragment(surfaceData);
 }
 
