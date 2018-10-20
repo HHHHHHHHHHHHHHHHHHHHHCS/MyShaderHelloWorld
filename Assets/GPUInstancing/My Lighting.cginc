@@ -1,4 +1,6 @@
-﻿#if !defined(MY_LIGHTING_INCLUDED)
+﻿// Upgrade NOTE: upgraded instancing buffer 'InstanceProperties' to new syntax.
+
+#if !defined(MY_LIGHTING_INCLUDED)
 #define MY_LIGHTING_INCLUDED
 
 #include "UnityPBSLighting.cginc"
@@ -23,7 +25,10 @@
 	#endif
 #endif
 
-float4 _Color;
+UNITY_INSTANCING_BUFFER_START(InstanceProperties)
+	UNITY_DEFINE_INSTANCED_PROP(float4,_Color)
+UNITY_INSTANCING_BUFFER_END(InstanceProperties)
+
 sampler2D _MainTex, _DetailTex, _DetailMask;
 float4 _MainTex_ST, _DetailTex_ST;
 
@@ -43,6 +48,7 @@ float3 _Emission;
 float _Cutoff;
 
 struct VertexData {
+	UNITY_VERTEX_INPUT_INSTANCE_ID
 	float4 vertex : POSITION;
 	float3 normal : NORMAL;
 	float4 tangent : TANGENT;
@@ -131,7 +137,7 @@ float GetDetailMask (Interpolators i) {
 }
 
 float3 GetAlbedo (Interpolators i) {
-	float3 albedo = tex2D(_MainTex, i.uv.xy).rgb * _Color.rgb;
+	float3 albedo = tex2D(_MainTex, i.uv.xy).rgb * UNITY_ACCESS_INSTANCED_PROP(_Color_arr, _Color).rgb;
 	#if defined (_DETAIL_ALBEDO_MAP)
 		float3 details = tex2D(_DetailTex, i.uv.zw) * unity_ColorSpaceDouble;
 		albedo = lerp(albedo, albedo * details, GetDetailMask(i));
@@ -140,7 +146,7 @@ float3 GetAlbedo (Interpolators i) {
 }
 
 float GetAlpha (Interpolators i) {
-	float alpha = _Color.a;
+	float alpha = UNITY_ACCESS_INSTANCED_PROP(_Color_arr, _Color).a;
 	#if !defined(_SMOOTHNESS_ALBEDO)
 		alpha *= tex2D(_MainTex, i.uv.xy).a;
 	#endif
@@ -220,6 +226,8 @@ float3 CreateBinormal (float3 normal, float3 tangent, float binormalSign) {
 InterpolatorsVertex MyVertexProgram (VertexData v) {
 	InterpolatorsVertex i;
 	UNITY_INITIALIZE_OUTPUT(Interpolators, i);
+	UNITY_SETUP_INSTANCE_ID(v);
+	UNITY_TRANSFER_INSTANCE_ID(v,i);
 	i.pos = UnityObjectToClipPos(v.vertex);
 	i.worldPos.xyz = mul(unity_ObjectToWorld, v.vertex);
 	#if FOG_DEPTH
@@ -486,6 +494,7 @@ struct FragmentOutput {
 };
 
 FragmentOutput MyFragmentProgram (Interpolators i) {
+	UNITY_SETUP_INSTANCE_ID(i);
 	#if defined(LOD_FADE_CROSSFADE)
 		UnityApplyDitherCrossFade(i.pos);
 	#endif
