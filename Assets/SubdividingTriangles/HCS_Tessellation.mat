@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: HCS_Tessellation
   m_Shader: {fileID: 4800000, guid: 824b2807c562e4e46b201ad1c8ec2ab6, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _TESSELLATION_EDGE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -64,6 +64,8 @@ Material:
     - _ParallaxStrength: 0
     - _Smoothness: 0.1
     - _SrcBlend: 1
+    - _TessellationUniform: 1
+    - _TessllationEdgeLength: 1
     - _WireframeSmoothing: 1
     - _WireframeThickness: 1
     - _ZWrite: 1

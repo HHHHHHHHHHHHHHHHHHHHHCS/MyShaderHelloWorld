@@ -27,6 +27,9 @@
 
 		_Cutoff ("Alpha Cutoff", Range(0, 1)) = 0.5
 
+		_TessellationUniform ("Tessellation Uniform", Range(1, 64)) = 1
+		_TessllationEdgeLength("Tessellation Edge Length",Range(0.1,1))=0.5
+
 
 		_WireframeColor ("Wireframe Color", Color) = (0, 0, 0)
 		_WireframeSmoothing ("Wireframe Smoothing", Range(0, 10)) = 1
@@ -75,6 +78,7 @@
 			#pragma shader_feature _DETAIL_MASK
 			#pragma shader_feature _DETAIL_ALBEDO_MAP
 			#pragma shader_feature _DETAIL_NORMAL_MAP
+			#pragma shader_feature _TESSELLATION_EDGE
 
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 
@@ -115,6 +119,7 @@
 			#pragma shader_feature _DETAIL_MASK
 			#pragma shader_feature _DETAIL_ALBEDO_MAP
 			#pragma shader_feature _DETAIL_NORMAL_MAP
+			#pragma shader_feature _TESSELLATION_EDGE
 
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 
@@ -153,6 +158,7 @@
 			#pragma shader_feature _DETAIL_MASK
 			#pragma shader_feature _DETAIL_ALBEDO_MAP
 			#pragma shader_feature _DETAIL_NORMAL_MAP
+			#pragma shader_feature _TESSELLATION_EDGE
 
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 
