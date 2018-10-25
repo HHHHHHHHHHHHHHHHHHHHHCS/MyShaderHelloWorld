@@ -167,7 +167,7 @@ public class MyLightingShaderGUI_SubdividingTriangles : ShaderGUI
         else
         {
             editor.ShaderProperty(
-                FindProperty("_TessllationEdgeLength"),
+                FindProperty("_TessellationEdgeLength"),
                 MakeLabel("Edge Length"));
         }
 

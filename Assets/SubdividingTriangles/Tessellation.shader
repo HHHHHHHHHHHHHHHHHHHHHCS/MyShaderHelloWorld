@@ -28,7 +28,7 @@
 		_Cutoff ("Alpha Cutoff", Range(0, 1)) = 0.5
 
 		_TessellationUniform ("Tessellation Uniform", Range(1, 64)) = 1
-		_TessllationEdgeLength("Tessellation Edge Length",Range(0.1,1))=0.5
+		_TessellationEdgeLength ("Tessellation Edge Length", Range(5, 100)) = 50//0-1 0.5
 
 
 		_WireframeColor ("Wireframe Color", Color) = (0, 0, 0)

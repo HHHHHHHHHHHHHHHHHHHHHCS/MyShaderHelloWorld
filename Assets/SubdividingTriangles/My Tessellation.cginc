@@ -45,29 +45,79 @@
 	}
 	*/
 
+	/*
 	float TessellationEdgeFactor(TessellationControlPoint cp0,TessellationControlPoint cp1)
 	{
 		#if defined(_TESSELLATION_EDGE)
+			//float3 p0 = mul(unity_ObjectToWorld, float4(cp0.vertex.xyz, 1)).xyz;
+			//float3 p1 = mul(unity_ObjectToWorld, float4(cp1.vertex.xyz, 1)).xyz;
+			//float edgeLength = distance(p0, p1);
+			//return edgeLength / _TessellationEdgeLength;
+
+			//float4 p0 = UnityObjectToClipPos(cp0.vertex);
+			//float4 p1 = UnityObjectToClipPos(cp1.vertex);
+			//float edgeLength = distance(p0.xy / p0.w, p1.xy / p1.w);
+			//return edgeLength * _ScreenParams.y  / _TessellationEdgeLength;
+
 			float3 p0 = mul(unity_ObjectToWorld, float4(cp0.vertex.xyz, 1)).xyz;
 			float3 p1 = mul(unity_ObjectToWorld, float4(cp1.vertex.xyz, 1)).xyz;
 			float edgeLength = distance(p0, p1);
-			return edgeLength / _TessellationEdgeLength;
+
+			float3 edgeCenter = (p0 + p1) * 0.5;
+			float viewDistance = distance(edgeCenter, _WorldSpaceCameraPos);
+
+			return edgeLength* _ScreenParams.y / (_TessellationEdgeLength * viewDistance);
+		#else
+			return _TessellationUniform;
+		#endif
+
+	}
+	*/
+
+	float TessellationEdgeFactor(float3 p0,float3 p1)
+	{
+		#if defined(_TESSELLATION_EDGE)
+			float edgeLength = distance(p0, p1);
+
+			float3 edgeCenter = (p0 + p1) * 0.5;
+			float viewDistance = distance(edgeCenter, _WorldSpaceCameraPos);
+
+			return edgeLength* _ScreenParams.y / (_TessellationEdgeLength * viewDistance);
 		#else
 			return _TessellationUniform;
 		#endif
 
 	}
 
+/*
 	TessellationFactors MyPatchConstantFunction(InputPatch<TessellationControlPoint,3> patch)
 	{
 		TessellationFactors f;
 		f.edge[0]=TessellationEdgeFactor(patch[1],patch[2]);
 		f.edge[1]=TessellationEdgeFactor(patch[2],patch[0]);
 		f.edge[2]=TessellationEdgeFactor(patch[0],patch[1]);
-		f.inside=(f.edge[0]+f.edge[1]+f.edge[2])*(1/3.0);
+		f.inside=(TessellationEdgeFactor(patch[1],patch[2])
+			+TessellationEdgeFactor(patch[2],patch[0])
+			+TessellationEdgeFactor(patch[0],patch[1]))*(1/3.0);
 		return f;
 	}
+*/
 
+	TessellationFactors MyPatchConstantFunction (InputPatch<TessellationControlPoint, 3> patch) 
+	{
+		float3 p0 = mul(unity_ObjectToWorld, patch[0].vertex).xyz;
+		float3 p1 = mul(unity_ObjectToWorld, patch[1].vertex).xyz;
+		float3 p2 = mul(unity_ObjectToWorld, patch[2].vertex).xyz;
+		TessellationFactors f;
+		f.edge[0] = TessellationEdgeFactor(p1, p2);
+		f.edge[1] = TessellationEdgeFactor(p2, p0);
+		f.edge[2] = TessellationEdgeFactor(p0, p1);
+		f.inside =
+			(TessellationEdgeFactor(p1, p2) +
+			TessellationEdgeFactor(p2, p0) +
+			TessellationEdgeFactor(p0, p1)) * (1 / 3.0);
+		return f;
+	}
 
 	[UNITY_domain("tri")]
 	[UNITY_outputcontrolpoints(3)]
