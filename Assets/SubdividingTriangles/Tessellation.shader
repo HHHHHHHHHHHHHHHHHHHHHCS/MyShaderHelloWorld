@@ -80,12 +80,11 @@
 
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			#pragma multi_compile_instancing
-			#pragma instancing_options lodfade force_same_maxcount_for_gl
 
-			#pragma vertex MyVertexProgram
+			#pragma vertex MyTessellationVertexProgram
 			#pragma fragment MyFragmentProgram
 			#pragma hull MyHullProgram
+			#pragma domain MyDomainProgram
 			#pragma geometry MyGeometryProgram
 
 			#define FORWARD_BASE_PASS
@@ -122,9 +121,10 @@
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			
-			#pragma vertex MyVertexProgram
+			#pragma vertex MyTessellationVertexProgram
 			#pragma fragment MyFragmentProgram
 			#pragma hull MyHullProgram
+			#pragma domain MyDomainProgram
 			#pragma geometry MyGeometryProgram
 
 			#include "My FlatWireframe.cginc"
@@ -157,12 +157,11 @@
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 
 			#pragma multi_compile_prepassfinal
-			#pragma multi_compile_instancing
-			#pragma instancing_options lodfade
 
-			#pragma vertex MyVertexProgram
+			#pragma vertex MyTessellationVertexProgram
 			#pragma fragment MyFragmentProgram
 			#pragma hull MyHullProgram
+			#pragma domain MyDomainProgram
 			#pragma geometry MyGeometryProgram
 
 			#define DEFERRED_PASS
@@ -189,8 +188,6 @@
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 
 			#pragma multi_compile_shadowcaster
-			#pragma multi_compile_instancing
-			#pragma instancing_options lodfade force_same_maxcount_for_gl
 
 			#pragma vertex MyShadowVertexProgram
 			#pragma fragment MyShadowFragmentProgram

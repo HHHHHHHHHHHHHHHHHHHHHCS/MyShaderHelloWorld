@@ -1,24 +1,37 @@
-#if !defined(TESSELLATION_INCLUED)
-	#define TESSELLATION_INCLUED
+#if !defined(TESSELLATION_INCLUDED)
+	#define TESSELLATION_INCLUDED
 
+	struct TessellationControlPoint
+	{
+		float4 vertex : INTERNALTESSPOS;
+		float3 normal : NORMAL;
+		float4 tangent : TANGENT;
+		float2 uv : TEXCOORD0;
+		float2 uv1 : TEXCOORD1;
+		float2 uv2 : TEXCOORD2;
+	};
+	
 	struct TessellationFactors
 	{
 		float edge[3] : SV_TessFactor;
 		float inside : SV_InsideTessFactor;
 	};
 
-
-	[UNITY_domain("tri")]
-	[UNITY_outputcontrolpoints(3)]
-	[UNITY_outputtopology("triangle_cw")]
-	[UNITY_partitioning("integer")]
-	[UNITY_patchconstantfunc("MyPatchConstantFunction")]
-	VertexData MyHullProgram (InputPatch<VertexData,3> patch,uint id:SV_OutputControlPointID) 
+	
+	TessellationControlPoint MyTessellationVertexProgram(VertexData v)
 	{
-		return patch[id];
+		TessellationControlPoint p;
+		p.vertex = v.vertex;
+		p.normal = v.normal;
+		p.tangent=v.tangent;
+		p.uv=v.uv;
+		p.uv1=v.uv1;
+		p.uv2=v.uv2;
+		return p;
 	}
 
-	TessellationFactors MyPatchConstantFunction(InputPatch<VertexData,3> patch)
+	
+	TessellationFactors MyPatchConstantFunction(InputPatch<TessellationControlPoint,3> patch)
 	{
 		TessellationFactors f;
 		f.edge[0]=1;
@@ -28,8 +41,20 @@
 		return f;
 	}
 
+
 	[UNITY_domain("tri")]
-	void MyDomainProgram(TessellationFactors factors,OutputPatch<VertexData,3> patch
+	[UNITY_outputcontrolpoints(3)]
+	[UNITY_outputtopology("triangle_cw")]
+	[UNITY_partitioning("integer")]
+	[UNITY_patchconstantfunc("MyPatchConstantFunction")]
+	TessellationControlPoint MyHullProgram (InputPatch<TessellationControlPoint,3> patch,uint id:SV_OutputControlPointID) 
+	{
+		return patch[id];
+	}
+
+
+	[UNITY_domain("tri")]
+	InterpolatorsVertex MyDomainProgram(TessellationFactors factors,OutputPatch<TessellationControlPoint,3> patch
 		,float3 barycentriCoordinates:SV_DOMAINLOCATION)
 	{
 		VertexData data;
@@ -40,6 +65,15 @@
 			patch[2].vertex*barycentriCoordinates.z;
 
 		MY_DOMAIN_PROGRAM_INTERPOLATE(vertex)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(normal)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(tangent)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(uv)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(uv1)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(uv2)
+
+		return MyVertexProgram(data);
+		
 	}
+
 
 #endif
