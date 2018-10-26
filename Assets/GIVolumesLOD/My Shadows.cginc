@@ -44,7 +44,7 @@ struct Interpolators {
 	#if SHADOWS_SEMITRANSPARENT || defined(LOD_FADE_CROSSFADE)
 		UNITY_VPOS_TYPE vpos : VPOS;
 	#else
-		float4 positions : SV_POSITION;
+		float4 position : SV_POSITION;
 	#endif
 
 	#if SHADOWS_NEED_UV
