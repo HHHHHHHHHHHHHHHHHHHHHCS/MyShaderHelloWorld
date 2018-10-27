@@ -118,19 +118,50 @@
 	}
 */
 
+	bool TriangleIsBelowClipPlane(float3 p0,float3 p1,float3 p2,int planeIndex ,float bias)
+	{
+		float4 plane = unity_CameraWorldClipPlanes[planeIndex];
+
+		return 
+			dot(float4(p0,1),plane)<bias &&
+			dot(float4(p1,1),plane)<bias &&
+			dot(float4(p2,1),plane)<bias ;
+	}
+
+	bool TriangleIsCulled(float3 p0,float3 p1 ,float3 p2 ,float bias)
+	{
+		return 
+			TriangleIsBelowClipPlane(p0,p1,p2,0,bias)||
+			TriangleIsBelowClipPlane(p0,p1,p2,1,bias)||
+			TriangleIsBelowClipPlane(p0,p1,p2,2,bias)||
+			TriangleIsBelowClipPlane(p0,p1,p2,3,bias);
+	}
+
 	TessellationFactors MyPatchConstantFunction (InputPatch<TessellationControlPoint, 3> patch) 
 	{
 		float3 p0 = mul(unity_ObjectToWorld, patch[0].vertex).xyz;
 		float3 p1 = mul(unity_ObjectToWorld, patch[1].vertex).xyz;
 		float3 p2 = mul(unity_ObjectToWorld, patch[2].vertex).xyz;
 		TessellationFactors f;
-		f.edge[0] = TessellationEdgeFactor(p1, p2);
-		f.edge[1] = TessellationEdgeFactor(p2, p0);
-		f.edge[2] = TessellationEdgeFactor(p0, p1);
-		f.inside =
-			(TessellationEdgeFactor(p1, p2) +
-			TessellationEdgeFactor(p2, p0) +
-			TessellationEdgeFactor(p0, p1)) * (1 / 3.0);
+		float bias = 0;
+		#if VERTEX_DISPLACEMENT
+				bias = -0.5 * _DisplacementStrength;
+		#endif
+		if(TriangleIsCulled(p0,p1,p2,bias))
+		{
+			f.edge[0]=f.edge[1]=f.edge[2]=f.inside=0;
+		}
+		else
+		{
+			f.edge[0] = TessellationEdgeFactor(p1, p2);
+			f.edge[1] = TessellationEdgeFactor(p2, p0);
+			f.edge[2] = TessellationEdgeFactor(p0, p1);
+			f.inside =
+				(TessellationEdgeFactor(p1, p2) +
+				TessellationEdgeFactor(p2, p0) +
+				TessellationEdgeFactor(p0, p1)) * (1 / 3.0);
+		}
+
 		return f;
 	}
 
