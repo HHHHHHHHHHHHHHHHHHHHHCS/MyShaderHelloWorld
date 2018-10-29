@@ -9,7 +9,7 @@ Material:
   m_Name: Custom_Tessellation 3
   m_Shader: {fileID: 4800000, guid: 772b23460c7184c4cb34ad822094f53f, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -69,4 +69,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 0, a: 1}
-    - _Emission: {r: 0, g: 0, b: 0, a: 1}
+    - _Emission: {r: 1, g: 0, b: 0, a: 1}
