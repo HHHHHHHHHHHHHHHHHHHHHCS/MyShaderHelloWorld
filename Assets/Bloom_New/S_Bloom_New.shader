@@ -9,7 +9,7 @@
 		#include "UnityCG.cginc"
 
 		sampler2D _MainTex,_SourceTex;
-		float2 _MainTex_TexelSize;
+		float4 _MainTex_TexelSize;
 		float _Intensity ;
 		half4 _Filter;
 
