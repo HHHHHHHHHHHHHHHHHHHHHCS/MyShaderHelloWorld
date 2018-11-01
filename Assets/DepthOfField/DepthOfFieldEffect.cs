@@ -23,6 +23,7 @@ public class DepthOfFieldEffect : MonoBehaviour
     private const int preFilterPass = 1;
     private const int bokehPass = 2;
     private const int postFilterPass = 3;
+    private const int combinePass = 4;
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
@@ -49,12 +50,14 @@ public class DepthOfFieldEffect : MonoBehaviour
 
 
         dofMaterial.SetTexture("_CoCTex", coc);
+        dofMaterial.SetTexture("_DoFTex", dof0);
 
         Graphics.Blit(src, coc, dofMaterial, circleOfConfusionPass);
         Graphics.Blit(src, dof0,dofMaterial,preFilterPass);
         Graphics.Blit(dof0, dof1, dofMaterial, bokehPass);
         Graphics.Blit(dof1, dof0, dofMaterial, postFilterPass);
-        Graphics.Blit(dof0, dest);
+        Graphics.Blit(src, dest, dofMaterial, combinePass);
+        //Graphics.Blit(dof0, dest);
 
 
         RenderTexture.ReleaseTemporary(coc);
