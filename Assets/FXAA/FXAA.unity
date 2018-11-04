@@ -573,6 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fxaaShader: {fileID: 4800000, guid: 8d594681fc276e74b94ab4e18f21d563, type: 3}
+  luminanceSource: 0
 --- !u!1 &103022094
 GameObject:
   m_ObjectHideFlags: 0
