@@ -22,6 +22,8 @@ public class FXAAEffect : MonoBehaviour
     public float contrastThreshold = 0.0312f;
     [Range(0.063f, 0.333f)]
     public float relativeThreshold = 0.063f;
+    [Range(0f, 1f)]
+    public float subpixelBlending = 1f;
 
     [NonSerialized]
     private Material fxaaMaterial;
@@ -40,6 +42,7 @@ public class FXAAEffect : MonoBehaviour
 
         fxaaMaterial.SetFloat("_ContrastThreshold", contrastThreshold);
         fxaaMaterial.SetFloat("_RelativeThreshold", relativeThreshold);
+        fxaaMaterial.SetFloat("_SubpixelBlending", subpixelBlending);
 
         if(luminanceSource == LuminanceMode.Calculate)
         {

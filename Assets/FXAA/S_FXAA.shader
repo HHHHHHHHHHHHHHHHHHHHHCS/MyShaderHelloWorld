@@ -11,7 +11,7 @@
 
 		sampler2D _MainTex;
 		float4 _MainTex_TexelSize;
-		float _ContrastThreshold,_RelativeThreshold;
+		float _ContrastThreshold,_RelativeThreshold,_SubpixelBlending;
 
 		struct a2v 
 		{
@@ -36,6 +36,7 @@
 		{
 			bool isHorizontal;
 			float pixelStep;
+			float oppositeLuminance,gradient;
 		};
 
 		v2f vert(a2v v)
@@ -48,7 +49,7 @@
 
 		float4 Sample(float2 uv)
 		{
-			return tex2D(_MainTex,uv);
+			return tex2Dlod(_MainTex,float4(uv,0,0));
 		}
 
 		float SampleLuminance(float2 uv)
@@ -102,7 +103,7 @@
 			filter = abs(filter-l.m);
 			filter = saturate(filter/l.contrast);
 			float blendFactor = smoothstep(0,1,filter);
-			return blendFactor*blendFactor;
+			return blendFactor*blendFactor*_SubpixelBlending;
 		}
 
 		EdgeData DetermineEdge(LuminanceData l)
@@ -119,7 +120,53 @@
 				abs(l.se+l.sw-2*l.s);
 			
 			e.isHorizontal=horizontal>=vertical;
+
+			float pLuminance = e.isHorizontal?l.n:l.e;
+			float nLuminance = e.isHorizontal?l.s:l.w;
+			float pGradient = abs(pLuminance-l.m);
+			float nGradient = abs(nLuminance-l.m);
+
+			e.pixelStep = e.isHorizontal?_MainTex_TexelSize.y:_MainTex_TexelSize.x;
+
+			if(pGradient<nGradient)
+			{
+				e.pixelStep=-e.pixelStep;
+				e.oppositeLuminance=nLuminance;
+				e.gradient=nGradient;
+			}
+			else
+			{
+				e.oppositeLuminance=pLuminance;
+				e.gradient=pGradient;
+			}
+
+
 			return e;
+		}
+
+		float DetermineEdgeBlendFactor(LuminanceData l,EdgeData e ,float2 uv)
+		{
+			float2 uvEdge = uv;
+			float2 edgeStep;
+			if(e.isHorizontal)
+			{
+				uvEdge.y += e.pixelStep*0.5;
+				edgeStep = float2(_MainTex_TexelSize.x,0);
+			}
+			else
+			{
+				uvEdge.x +=e.pixelStep*0.5;
+				edgeStep = float2(0,_MainTex_TexelSize.y);
+			}
+
+			float edgeLuminance=(l.m+e.oppositeLuminance)*0.5;
+			float gradientThresold = e.gradient * 0.25;
+
+			float2 puv = uvEdge + edgeStep;
+			float pLuminanceDelta =  SampleLuminance(puv)-edgeLuminance;
+			bool pAtEnd = abs(pLuminanceDelta)>=gradientThresold;
+//TODO:
+			return pAtEnd;
 		}
 
 
@@ -128,12 +175,23 @@
 			LuminanceData l = SampleLuminanceNeighborhood(uv);
 			if(l.contrast<_RelativeThreshold*l.higest)
 			{
-				return 0;
+				return 0;//Sample(uv);
 			}
 
 			float pixelBlend = DeterminePixelBlendFactor(l);
 			EdgeData e = DetermineEdge(l);
-			return e.isHorizontal?float4(1,0,0,0):1;
+			return DetermineEdgeBlendFactor(l,e,uv);
+
+			if(e.isHorizontal)
+			{
+				uv.y+=e.pixelStep*pixelBlend;
+			}
+			else
+			{
+				uv.x+=e.pixelStep*pixelBlend;
+			}
+
+			return float4(Sample(uv).rgb,l.m);
 		}
 
 
