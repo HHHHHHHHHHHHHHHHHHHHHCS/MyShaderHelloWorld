@@ -18,9 +18,13 @@ public class FXAAEffect : MonoBehaviour
 
     public LuminanceMode luminanceSource;
 
+    [Range(0.0312f,0.0833f)]
+    public float contrastThreshold = 0.0312f;
+    [Range(0.063f, 0.333f)]
+    public float relativeThreshold = 0.063f;
+
     [NonSerialized]
     private Material fxaaMaterial;
-
 
     private const int  luminancePass = 0;
     private const int fxaaPass = 1;
@@ -33,6 +37,9 @@ public class FXAAEffect : MonoBehaviour
             fxaaMaterial = new Material(fxaaShader);
             fxaaMaterial.hideFlags = HideFlags.HideAndDontSave;
         }
+
+        fxaaMaterial.SetFloat("_ContrastThreshold", contrastThreshold);
+        fxaaMaterial.SetFloat("_RelativeThreshold", relativeThreshold);
 
         if(luminanceSource == LuminanceMode.Calculate)
         {
