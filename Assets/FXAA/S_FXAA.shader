@@ -9,6 +9,21 @@
 		
 		#include "UnityCG.cginc"
 
+		#if defined(LOW_QUALITY)
+			#define EDGE_STEP_COUNT 4
+			#define EDGE_STEPS 1,1.5,2,4
+			#define EDGE_GUESS 12
+		#else
+			#define EDGE_STEP_COUNT 10
+			#define EDGE_STEPS 1, 1.5, 2, 2, 2, 2, 2, 2, 2, 4
+			#define EDGE_GUESS 8
+			//#define EDGE_STEPS 1,1,1,1,1,1,1,1,1,1
+			//#define EDGE_GUESS 1
+		#endif
+
+		static const float edgeSteps[EDGE_STEP_COUNT]={EDGE_STEPS};
+
+
 		sampler2D _MainTex;
 		float4 _MainTex_TexelSize;
 		float _ContrastThreshold,_RelativeThreshold,_SubpixelBlending;
@@ -160,13 +175,71 @@
 			}
 
 			float edgeLuminance=(l.m+e.oppositeLuminance)*0.5;
-			float gradientThresold = e.gradient * 0.25;
+			float gradientThreshold = e.gradient * 0.25;
 
-			float2 puv = uvEdge + edgeStep;
+			float2 puv = uvEdge + edgeStep*edgeSteps[0];
 			float pLuminanceDelta =  SampleLuminance(puv)-edgeLuminance;
-			bool pAtEnd = abs(pLuminanceDelta)>=gradientThresold;
-//TODO:
-			return pAtEnd;
+			bool pAtEnd = abs(pLuminanceDelta)>=gradientThreshold;
+
+			for (int i=1;i<EDGE_STEP_COUNT&&!pAtEnd;i++)
+			{
+				puv+=edgeStep*edgeSteps[i];
+				pLuminanceDelta=SampleLuminance(puv)-edgeLuminance;
+				pAtEnd = abs(pLuminanceDelta)>=gradientThreshold;
+			}
+
+			if(!pAtEnd)
+			{
+				puv+=edgeStep*EDGE_GUESS;
+			}
+
+			float2 nuv = uvEdge - edgeStep*edgeStep[0];
+			float nLuminanceDelta = SampleLuminance(nuv)-edgeLuminance;
+			bool nAtEnd = abs(nLuminanceDelta)>=gradientThreshold;
+
+			for (int i=1;i<EDGE_STEP_COUNT&&!nAtEnd;i++)
+			{
+				nuv-=edgeStep*edgeSteps[i];
+				nLuminanceDelta=SampleLuminance(nuv)-edgeLuminance;
+				nAtEnd = abs(nLuminanceDelta)>=gradientThreshold;
+			}
+
+			if(!nAtEnd)
+			{
+				nuv-=edgeStep*EDGE_GUESS;
+			}
+
+			float pDistance,nDistance;
+			if(e.isHorizontal)
+			{
+				pDistance = puv.x - uv.x;
+				nDistance = uv.x - nuv.x;
+			}
+			else
+			{
+				pDistance = puv.y - uv.y;
+				nDistance = uv.y - nuv.y;
+			}
+
+			float shortestDistance;
+			bool deltaSign;
+			if(pDistance<=nDistance)
+			{
+				shortestDistance = pDistance;
+				deltaSign=pLuminanceDelta>=0;
+			}
+			else
+			{
+				shortestDistance = nDistance;
+				deltaSign=nLuminanceDelta>=0;
+			}
+
+			if(deltaSign==(l.m-edgeLuminance>=0))
+			{
+				return 0 ;
+			}
+
+			return 0.5 - shortestDistance / (pDistance + nDistance);
 		}
 
 
@@ -175,20 +248,21 @@
 			LuminanceData l = SampleLuminanceNeighborhood(uv);
 			if(l.contrast<_RelativeThreshold*l.higest)
 			{
-				return 0;//Sample(uv);
+				return Sample(uv);
 			}
 
 			float pixelBlend = DeterminePixelBlendFactor(l);
 			EdgeData e = DetermineEdge(l);
-			return DetermineEdgeBlendFactor(l,e,uv);
+			float edgeBlend =  DetermineEdgeBlendFactor(l,e,uv);
+			float finalBlend = max(pixelBlend,edgeBlend);
 
 			if(e.isHorizontal)
 			{
-				uv.y+=e.pixelStep*pixelBlend;
+				uv.y+=e.pixelStep*finalBlend;
 			}
 			else
 			{
-				uv.x+=e.pixelStep*pixelBlend;
+				uv.x+=e.pixelStep*finalBlend;
 			}
 
 			return float4(Sample(uv).rgb,l.m);
@@ -229,6 +303,7 @@
 				#pragma fragment frag
 
 				#pragma multi_compile _ LUMINANCE_GREEN
+				#pragma multi_compile _ LOW_QUALITY
 
 				float4 frag(v2f i):SV_TARGET 
 				{
