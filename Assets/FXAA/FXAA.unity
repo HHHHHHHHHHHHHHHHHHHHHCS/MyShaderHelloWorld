@@ -574,8 +574,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fxaaShader: {fileID: 4800000, guid: 8d594681fc276e74b94ab4e18f21d563, type: 3}
   luminanceSource: 1
-  contrastThreshold: 0.0312
-  relativeThreshold: 0.063
+  gammaBlending: 1
+  lowQuality: 1
+  contrastThreshold: 0.0833
+  relativeThreshold: 0.166
+  subpixelBlending: 0.75
 --- !u!1 &103022094
 GameObject:
   m_ObjectHideFlags: 0

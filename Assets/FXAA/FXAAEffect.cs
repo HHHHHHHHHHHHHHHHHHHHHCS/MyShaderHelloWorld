@@ -17,6 +17,7 @@ public class FXAAEffect : MonoBehaviour
     }
 
     public LuminanceMode luminanceSource;
+    public bool gammaBlending;
 
     public bool lowQuality;
     [Range(0.0312f,0.0833f)]
@@ -53,6 +54,15 @@ public class FXAAEffect : MonoBehaviour
         else
         {
             fxaaMaterial.DisableKeyword("LOW_QUALITY");
+        }
+
+        if (gammaBlending)
+        {
+            fxaaMaterial.EnableKeyword("GAMMA_BLENDING");
+        }
+        else
+        {
+            fxaaMaterial.DisableKeyword("GAMMA_BLENDING");
         }
 
         if (luminanceSource == LuminanceMode.Calculate)

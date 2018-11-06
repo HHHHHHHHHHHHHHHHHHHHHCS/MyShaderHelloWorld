@@ -44,7 +44,7 @@
 		{
 			float m,n,e,s,w;
 			float ne,nw,se,sw;
-			float higest,lowest,contrast;
+			float highest,lowest,contrast;
 		};
 
 		struct EdgeData
@@ -97,17 +97,17 @@
 			l.sw=SampleLuminance(uv,-1,-1);
 
 
-			l.higest=max(max(max(max(l.n,l.e),l.s),l.w),l.m);
+			l.highest=max(max(max(max(l.n,l.e),l.s),l.w),l.m);
 			l.lowest=min(min(min(min(l.n,l.e),l.s),l.w),l.m);
-			l.contrast=l.higest-l.lowest;
+			l.contrast=l.highest-l.lowest;
 
 			return l;
 		}
 		
-		bool ShouldSkilPixel(LuminanceData l)
+		bool ShouldSkipPixel(LuminanceData l)
 		{
-			float threshold =max(_ContrastThreshold,_RelativeThreshold*l.higest);
-			return l.contrast<l.contrast<threshold;
+			float threshold =max(_ContrastThreshold,_RelativeThreshold*l.highest);
+			return l.contrast<threshold;
 		}
 
 		float DeterminePixelBlendFactor(LuminanceData l)
@@ -181,6 +181,7 @@
 			float pLuminanceDelta =  SampleLuminance(puv)-edgeLuminance;
 			bool pAtEnd = abs(pLuminanceDelta)>=gradientThreshold;
 
+			UNITY_UNROLL
 			for (int i=1;i<EDGE_STEP_COUNT&&!pAtEnd;i++)
 			{
 				puv+=edgeStep*edgeSteps[i];
@@ -197,6 +198,7 @@
 			float nLuminanceDelta = SampleLuminance(nuv)-edgeLuminance;
 			bool nAtEnd = abs(nLuminanceDelta)>=gradientThreshold;
 
+			UNITY_UNROLL
 			for (int i=1;i<EDGE_STEP_COUNT&&!nAtEnd;i++)
 			{
 				nuv-=edgeStep*edgeSteps[i];
@@ -246,7 +248,7 @@
 		float4 ApplyFXAA(float2 uv)
 		{
 			LuminanceData l = SampleLuminanceNeighborhood(uv);
-			if(l.contrast<_RelativeThreshold*l.higest)
+			if (ShouldSkipPixel(l)) 
 			{
 				return Sample(uv);
 			}
@@ -284,11 +286,15 @@
 				#pragma vertex vert
 				#pragma fragment frag
 
+				#pragma multi_compile _ GAMMA_BLENDING
 
-				float4 frag(v2f i):SV_TARGET
-				{
-					float4 sample = tex2D(_MainTex,i.uv);
-					sample.rgb = LinearRgbToLuminance(saturate(sample.rgb));
+				float4 frag (v2f i) : SV_Target {
+					float4 sample = tex2D(_MainTex, i.uv);
+					sample.rgb = saturate(sample.rgb);
+					sample.a = LinearRgbToLuminance(sample.rgb);
+					#if defined(GAMMA_BLENDING)
+						sample.rgb = LinearToGammaSpace(sample.rgb);
+					#endif
 					return sample;
 				}
 
@@ -304,10 +310,15 @@
 
 				#pragma multi_compile _ LUMINANCE_GREEN
 				#pragma multi_compile _ LOW_QUALITY
+				#pragma multi_compile _ GAMMA_BLENDING
 
 				float4 frag(v2f i):SV_TARGET 
 				{
-					return ApplyFXAA(i.uv);
+					float4 sample = ApplyFXAA(i.uv);
+					#if defined(GAMMA_BLENDING)
+						sample.rgb = GammaToLinearSpace(sample.rgb);
+					#endif
+					return sample;
 				}
 			ENDCG
 		}
