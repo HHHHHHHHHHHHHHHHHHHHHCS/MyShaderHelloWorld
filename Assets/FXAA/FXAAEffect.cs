@@ -87,7 +87,5 @@ public class FXAAEffect : MonoBehaviour
             }
             Graphics.Blit(src, dest, fxaaMaterial, fxaaPass);
         }
-
-        Graphics.Blit(src, dest, fxaaMaterial);
     }
 }
