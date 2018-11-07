@@ -20,6 +20,7 @@ public class DepthAndLight : MonoBehaviour
     {
         if (depthLightMaterial == null)
         {
+            GetComponent<Camera>().depthTextureMode = DepthTextureMode.DepthNormals;
             depthLightMaterial = new Material(depthLightShader);
             depthLightShader.hideFlags = HideFlags.HideAndDontSave;
         }
@@ -30,13 +31,13 @@ public class DepthAndLight : MonoBehaviour
 
         RenderTexture lightTexture = RenderTexture.GetTemporary(
             src.width, src.height, 0, src.format);
-        Graphics.Blit(src, lightTexture, depthLightMaterial, lightPass);
+        //Graphics.Blit(src, lightTexture, depthLightMaterial, lightPass);
 
 
-        //Graphics.Blit(depthTexture, dest);
-        Graphics.Blit(lightTexture, dest);
+        Graphics.Blit(depthTexture, dest);
+        //Graphics.Blit(lightTexture, dest);
 
         RenderTexture.ReleaseTemporary(depthTexture);
-        RenderTexture.ReleaseTemporary(lightTexture);
+        //RenderTexture.ReleaseTemporary(lightTexture);
     }
 }
