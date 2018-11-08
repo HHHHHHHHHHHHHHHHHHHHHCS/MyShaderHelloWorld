@@ -12,9 +12,8 @@ public class DepthAndLight : MonoBehaviour
     [NonSerialized]
     private Material depthLightMaterial;
 
-    private const int depthPass = 0;
-    private const int lightPass = 1;
-    private const int mixPass = 2;
+    private const int outlinePass = 0;
+    private const int onePass = 1;
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
@@ -27,17 +26,19 @@ public class DepthAndLight : MonoBehaviour
 
         RenderTexture depthTexture = RenderTexture.GetTemporary(
             src.width, src.height, 0, src.format);
-        Graphics.Blit(src, depthTexture, depthLightMaterial, depthPass);
+        Graphics.Blit(src, depthTexture, depthLightMaterial, outlinePass);
+
+        depthLightMaterial.SetTexture("_OutlineTexture", depthTexture);
 
         RenderTexture lightTexture = RenderTexture.GetTemporary(
             src.width, src.height, 0, src.format);
-        //Graphics.Blit(src, lightTexture, depthLightMaterial, lightPass);
+        Graphics.Blit(src, lightTexture, depthLightMaterial, onePass);
 
 
         Graphics.Blit(depthTexture, dest);
-        //Graphics.Blit(lightTexture, dest);
+        Graphics.Blit(lightTexture, dest);
 
         RenderTexture.ReleaseTemporary(depthTexture);
-        //RenderTexture.ReleaseTemporary(lightTexture);
+        RenderTexture.ReleaseTemporary(lightTexture);
     }
 }
