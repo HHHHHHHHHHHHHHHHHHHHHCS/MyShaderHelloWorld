@@ -143,10 +143,18 @@
 						float2 uv7 = i.uv+_MainTex_TexelSize*offest.yz*bloomJump;
 						float2 uv8 = i.uv+_MainTex_TexelSize*offest.zy*bloomJump;
 
-						float3 col = 0.15*(tex2D(_OutlineTexture,uv1) + tex2D(_OutlineTexture,uv2) + tex2D(_OutlineTexture,uv3) + tex2D(_OutlineTexture,uv4))
+						float3 col0 = 0.15*(tex2D(_OutlineTexture,uv1) + tex2D(_OutlineTexture,uv2) + tex2D(_OutlineTexture,uv3) + tex2D(_OutlineTexture,uv4))
 							+ 0.1*(tex2D(_OutlineTexture,uv5) + tex2D(_OutlineTexture,uv6) + tex2D(_OutlineTexture,uv7) + tex2D(_OutlineTexture,uv8));
 
-						return col;
+						if(col0.r==0)
+						{
+							return 0;
+						}
+
+						float3 col1 = 0.15*(tex2D(_MainTex,uv1) + tex2D(_MainTex,uv2) + tex2D(_MainTex,uv3) + tex2D(_MainTex,uv4))
+							+ 0.1*(tex2D(_MainTex,uv5) + tex2D(_MainTex,uv6) + tex2D(_MainTex,uv7) + tex2D(_MainTex,uv8));
+
+						return col1;
 					}
 
 					return 0;
