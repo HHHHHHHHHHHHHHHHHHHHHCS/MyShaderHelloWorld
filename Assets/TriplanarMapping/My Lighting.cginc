@@ -49,11 +49,13 @@ InterpolatorsVertex MyVertexProgram (VertexData v) {
 	#endif
 	i.normal = UnityObjectToWorldNormal(v.normal);
 
-	#if defined(BINORMAL_PER_FRAGMENT)
-		i.tangent = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
-	#else
-		i.tangent = UnityObjectToWorldDir(v.tangent.xyz);
-		i.binormal = CreateBinormal(i.normal, i.tangent, v.tangent.w);
+	#if REQUIRES_TANGENT_SPACE
+		#if defined(BINORMAL_PER_FRAGMENT)
+			i.tangent = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
+		#else
+			i.tangent = UnityObjectToWorldDir(v.tangent.xyz);
+			i.binormal = CreateBinormal(i.normal, i.tangent, v.tangent.w);
+		#endif
 	#endif
 
 	#if defined(LIGHTMAP_ON) || ADDITIONAL_MASKED_DIRECTIONAL_SHADOWS
@@ -162,7 +164,7 @@ void ApplySubtractiveLighting (
 	#endif
 }
 
-UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
+UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir,SurfaceData surface) {
 	UnityIndirect indirectLight;
 	indirectLight.diffuse = 0;
 	indirectLight.specular = 0;
@@ -229,7 +231,7 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 
 		float3 reflectionDir = reflect(-viewDir, i.normal);
 		Unity_GlossyEnvironmentData envData;
-		envData.roughness = 1 - GetSmoothness(i);
+		envData.roughness = 1 - surface.smoothness;
 		envData.reflUVW = BoxProjection(
 			reflectionDir, i.worldPos.xyz,
 			unity_SpecCube0_ProbePosition,
@@ -260,7 +262,7 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 			indirectLight.specular = probe0;
 		#endif
 
-		float occlusion = GetOcclusion(i);
+		float occlusion = surface.occlusion;
 		indirectLight.diffuse *= occlusion;
 		indirectLight.specular *= occlusion;
 
@@ -272,20 +274,25 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 	return indirectLight;
 }
 
-void InitializeFragmentNormal(inout Interpolators i) {
-	float3 tangentSpaceNormal = GetTangentSpaceNormal(i);
-	#if defined(BINORMAL_PER_FRAGMENT)
-		float3 binormal =
-			CreateBinormal(i.normal, i.tangent.xyz, i.tangent.w);
+void InitializeFragmentNormal(inout Interpolators i) 
+{
+	#if REQUIRES_TANGENT_SPACE
+		float3 tangentSpaceNormal = GetTangentSpaceNormal(i);
+		#if defined(BINORMAL_PER_FRAGMENT)
+			float3 binormal =
+				CreateBinormal(i.normal, i.tangent.xyz, i.tangent.w);
+		#else
+			float3 binormal = i.binormal;
+		#endif
+		
+		i.normal = normalize(
+			tangentSpaceNormal.x * i.tangent +
+			tangentSpaceNormal.y * binormal +
+			tangentSpaceNormal.z * i.normal
+		);
 	#else
-		float3 binormal = i.binormal;
+		i.normal = normalize(i.normal);
 	#endif
-	
-	i.normal = normalize(
-		tangentSpaceNormal.x * i.tangent +
-		tangentSpaceNormal.y * binormal +
-		tangentSpaceNormal.z * i.normal
-	);
 }
 
 float4 ApplyFog (float4 color, Interpolators i) {
@@ -417,13 +424,33 @@ FragmentOutput MyFragmentProgram (Interpolators i) {
 	InitializeFragmentNormal(i);
 
 	SurfaceData surface;
-	surface.normal = i.normal;
-	surface.albedo = ALBEDO_FUNCTION(i);
-	surface.alpha = GetAlpha(i);
-	surface.emission = GetEmission(i);
-	surface.metallic = GetMetallic(i);
-	surface.occlusion = GetOcclusion(i);
-	surface.smoothness = GetSmoothness(i);
+
+	#if defined (SURFACE_FUNCTION)
+		surface.normal = i.normal;
+		surface.albedo = 1;
+		surface.alpha = 1;
+		surface.emission = 0;
+		surface.metallic = 0;
+		surface.occlusion = 1;
+		surface.smoothness = 0.5;
+
+		SurfaceParameters sp;
+		sp.normal = i.normal;
+		sp.position = i.worldPos.xyz;
+		sp.uv = UV_FUNCTION(i);
+
+		SURFACE_FUNCTION(surface,sp);
+	#else
+		surface.normal = i.normal;
+		surface.albedo = ALBEDO_FUNCTION(i);
+		surface.alpha = GetAlpha(i);
+		surface.emission = GetEmission(i);
+		surface.metallic = GetMetallic(i);
+		surface.occlusion = GetOcclusion(i);
+		surface.smoothness = GetSmoothness(i);
+	#endif
+	i.normal = surface.normal;
+
 
 	float alpha = surface.alpha;
 	#if defined(_RENDERING_CUTOUT)
@@ -435,7 +462,7 @@ FragmentOutput MyFragmentProgram (Interpolators i) {
 	float3 specularTint;
 	float oneMinusReflectivity;
 	float3 albedo = DiffuseAndSpecularFromMetallic(
-		ALBEDO_FUNCTION(i), GetMetallic(i), specularTint, oneMinusReflectivity
+		surface.albedo, surface.metallic, specularTint, oneMinusReflectivity
 	);
 	#if defined(_RENDERING_TRANSPARENT)
 		albedo *= alpha;
@@ -444,11 +471,11 @@ FragmentOutput MyFragmentProgram (Interpolators i) {
 
 	float4 color = UNITY_BRDF_PBS(
 		albedo, specularTint,
-		oneMinusReflectivity, GetSmoothness(i),
+		oneMinusReflectivity, surface.smoothness,
 		i.normal, viewDir,
-		CreateLight(i), CreateIndirectLight(i, viewDir)
+		CreateLight(i), CreateIndirectLight(i, viewDir,surface)
 	);
-	color.rgb += GetEmission(i);
+	color.rgb += surface.emission;
 	#if defined(_RENDERING_FADE) || defined(_RENDERING_TRANSPARENT)
 		color.a = alpha;
 	#endif
@@ -459,9 +486,9 @@ FragmentOutput MyFragmentProgram (Interpolators i) {
 			color.rgb = exp2(-color.rgb);
 		#endif
 		output.gBuffer0.rgb = albedo;
-		output.gBuffer0.a = GetOcclusion(i);
+		output.gBuffer0.a = surface.occlusion;
 		output.gBuffer1.rgb = specularTint;
-		output.gBuffer1.a = GetSmoothness(i);
+		output.gBuffer1.a = surface.smoothness;
 		output.gBuffer2 = float4(i.normal * 0.5 + 0.5, 1);
 		output.gBuffer3 = color;
 
