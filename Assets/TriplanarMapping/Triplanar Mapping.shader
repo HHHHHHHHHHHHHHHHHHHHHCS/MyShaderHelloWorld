@@ -2,7 +2,11 @@ Shader "HCS/Triplanar Mapping"
 {
 	Properties
 	{
-		_MainTex("Albedo",2D)="white"{}
+		[NoScaleOffset]_MainTex("Albedo",2D)="white"{}
+		[NoTilingOffest] _MOSMap("MOS",2D)="white"{}
+		[NoTilingOffest] _NormalMap ("Normals",2D)="white"{}
+		_MapScale("Map Scale",float) = 1
+		_BlendOffset("Blend Offset",Range(0,0.5))=0.25
 	}
 
 	SubShader
@@ -17,7 +21,7 @@ Shader "HCS/Triplanar Mapping"
 
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			#pragma multi_commpile_instancing
+			#pragma multi_compile_instancing
 
 			#pragma vertex MyVertexProgram
 			#pragma fragment MyFragmentProgram
