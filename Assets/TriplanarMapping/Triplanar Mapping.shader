@@ -3,10 +3,12 @@ Shader "HCS/Triplanar Mapping"
 	Properties
 	{
 		[NoScaleOffset]_MainTex("Albedo",2D)="white"{}
-		[NoTilingOffest] _MOSMap("MOS",2D)="white"{}
+		[NoTilingOffest] _MOHSMap("MOHS",2D)="white"{}
 		[NoTilingOffest] _NormalMap ("Normals",2D)="white"{}
 		_MapScale("Map Scale",float) = 1
 		_BlendOffset("Blend Offset",Range(0,0.5))=0.25
+		_BlendExponent("Blend Exponent",Range(1,8))=2
+		_BlendHeightStrength("Blend Height Strength",Range(0,0.99))=0.5
 	}
 
 	SubShader
@@ -99,5 +101,9 @@ Shader "HCS/Triplanar Mapping"
 
 			ENDCG
 		}
+
+
 	}
+
+	CustomEditor "MyLightingShaderGUI_TriplanarMapping"
 }
