@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MyLightingShaderGUI_TriplanarMapping : MyLightingShaderGUI_TriplanarMapping_Base
+public class MyLightingShaderGUI_TriplanarMapping_TM : MyLightingShaderGUI_TriplanarMapping_Base
 {
     public override void OnGUI(MaterialEditor editor, MaterialProperty[] properties)
     {
@@ -23,7 +23,7 @@ public class MyLightingShaderGUI_TriplanarMapping : MyLightingShaderGUI_Triplana
             MakeLabel("MOHS", "Metallic (R) Occlusion (G) Height(B) Smoothness(A)")
             , FindProperty("_MOHSMap"));
         editor.TexturePropertySingleLine(
-            MakeLabel("Normals"),FindProperty("_MormalMap"));
+            MakeLabel("Normals"),FindProperty("_NormalMap"));
     }
 
     void DoBlending()

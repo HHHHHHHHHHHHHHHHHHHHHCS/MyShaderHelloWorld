@@ -105,5 +105,5 @@ Shader "HCS/Triplanar Mapping"
 
 	}
 
-	CustomEditor "MyLightingShaderGUI_TriplanarMapping"
+	CustomEditor "MyLightingShaderGUI_TriplanarMapping_TM"
 }
