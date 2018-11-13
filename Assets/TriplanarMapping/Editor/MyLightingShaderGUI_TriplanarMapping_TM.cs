@@ -16,6 +16,21 @@ public class MyLightingShaderGUI_TriplanarMapping_TM : MyLightingShaderGUI_Tripl
 
     void DoMaps()
     {
+        GUILayout.Label("Top Maps", EditorStyles.boldLabel);
+
+        MaterialProperty topAlbedo = FindProperty("_TopMainTex");
+        Texture topTexture = topAlbedo.textureValue;
+        EditorGUI.BeginChangeCheck();
+        editor.TexturePropertySingleLine(MakeLabel("Albedo"), topAlbedo);
+        if(EditorGUI.EndChangeCheck() && topTexture!=topAlbedo.textureValue)
+        {
+            SetKeyword("_SEPARATE_TOP_MAPS", topAlbedo.textureValue);
+        }
+        editor.TexturePropertySingleLine(
+            MakeLabel("MOHS", "Metallic (R) Occlusion (G) Height (B) Smoothness(A)")
+            , FindProperty("_TopMOHSMap"));
+        editor.TexturePropertySingleLine(MakeLabel("Normals"), FindProperty("_TopNormalMap"));
+
         GUILayout.Label("Maps", EditorStyles.boldLabel);
         editor.TexturePropertySingleLine(
             MakeLabel("Albedo"), FindProperty("_MainTex"));

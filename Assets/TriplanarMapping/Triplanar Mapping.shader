@@ -5,6 +5,11 @@ Shader "HCS/Triplanar Mapping"
 		[NoScaleOffset]_MainTex("Albedo",2D)="white"{}
 		[NoTilingOffest] _MOHSMap("MOHS",2D)="white"{}
 		[NoTilingOffest] _NormalMap ("Normals",2D)="white"{}
+
+		[NoScaleOffest] _TopMainTex("Top Albedo",2D)="white"{}
+		[NoScaleOffest] _TopMOHSMap("Top MOHS",2D)="white"{}
+		[NoScaleOffest] _TopNormalMap("Top Normals",2D)="white"{}
+
 		_MapScale("Map Scale",float) = 1
 		_BlendOffset("Blend Offset",Range(0,0.5))=0.25
 		_BlendExponent("Blend Exponent",Range(1,8))=2
@@ -20,6 +25,8 @@ Shader "HCS/Triplanar Mapping"
 			CGPROGRAM
 
 			#pragma target 3.0
+
+			#pragma shader_feature _SEPARATE_TOP_MAPS
 
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
@@ -47,6 +54,8 @@ Shader "HCS/Triplanar Mapping"
 			
 			#pragma target 3.0
 
+			#pragma shader_feature _SEPARATE_TOP_MAPS
+
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 
@@ -66,6 +75,8 @@ Shader "HCS/Triplanar Mapping"
 			CGPROGRAM
 
 			#pragma target 3.0
+			#pragma shader_feature _SEPARATE_TOP_MAPS
+
 			#pragma exclude_renderers nomrt
 
 			#pragma multi_compile_prepassfinal
@@ -90,6 +101,7 @@ Shader "HCS/Triplanar Mapping"
 			CGPROGRAM
 
 			#pragma target 3.0
+			#pragma shader_feature _SEPARATE_TOP_MAPS
 
 			#pragma multi_compile_shadowcaster
 			#pragma multi_compile_instancing
@@ -102,7 +114,26 @@ Shader "HCS/Triplanar Mapping"
 			ENDCG
 		}
 
+		pass
+		{
+			Tags{"LightMode"="Meta"}
 
+			Cull Off
+
+			CGPROGRAM
+			#pragma vertex MyLightmappingVertexProgram
+			#pragma fragment MyLightmappingFragmentProgram
+
+			#pragma shader_feature _SEPARATE_TOP_MAPS
+
+			#define META_PASS_NEEDS_NORMAL
+			#define META_PASS_NEEDS_POSITION
+
+			#include "MyTriplanarMapping.cginc"
+			#include "My Lightmapping.cginc"
+
+			ENDCG
+		}
 	}
 
 	CustomEditor "MyLightingShaderGUI_TriplanarMapping_TM"

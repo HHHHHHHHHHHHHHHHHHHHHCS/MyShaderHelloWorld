@@ -10,7 +10,7 @@ struct TriplanarUV
 	float2 x,y,z;
 };
 
-sampler2D _MOHSMap;
+sampler2D _MOHSMap,_TopMainTex,_TopMOHSMap,_TopNormalMap;
 float _MapScale,_BlendOffset,_BlendExponent,_BlendHeightStrength;
 
 TriplanarUV GetTriplanarUV(SurfaceParameters parameters)
@@ -69,8 +69,18 @@ void MyTriPlanarSurfaceFunction(inout SurfaceData surface,SurfaceParameters para
 	float4 mohsZ = tex2D(_MOHSMap,triUV.z);
 
 	float3 tangentNormalX = UnpackNormal(tex2D(_NormalMap,triUV.x));
-	float3 tangentNormalY = UnpackNormal(tex2D(_NormalMap,triUV.y));
+	float4 rawNormalY = tex2D(_NormalMap,triUV.y);
 	float3 tangentNormalZ = UnpackNormal(tex2D(_NormalMap,triUV.z));
+
+	#if defined (_SEPARATE_TOP_MAPS)
+		if (parameters.normal.y>0)
+		{
+			albedoY = tex2D(_TopMainTex,triUV.y).rgb;
+			mohsY = tex2D(_TopMOHSMap,triUV.y);
+			rawNormalY = tex2D(_TopNormalMap,triUV.y);
+		}
+	#endif
+	float3 tangentNormalY = UnpackNormal(rawNormalY);
 
 	if(parameters.normal.x<0)
 	{

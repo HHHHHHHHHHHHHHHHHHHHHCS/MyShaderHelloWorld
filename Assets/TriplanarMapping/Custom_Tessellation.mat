@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Custom_Tessellation
   m_Shader: {fileID: 4800000, guid: a63f1ae262b5fdb41b29c2e3488726ac, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _SEPARATE_TOP_MAPS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,20 +20,32 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MOHSMap:
-        m_Texture: {fileID: 2800000, guid: fd4376f769a969443a7338d828a8798f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 205729ef646fec84290f093f6f7bc2cc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ab217b133289dbd4aa553c1e838b7ff0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4f7010d12e4de494e8be4fc462bf44ae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 596ab850ad82a5c41b4a4f2cbd6c95c8, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca5ee19ffb81d3d478cd97f46e24ed53, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopMOHSMap:
+        m_Texture: {fileID: 2800000, guid: fd4376f769a969443a7338d828a8798f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopMainTex:
+        m_Texture: {fileID: 2800000, guid: ab217b133289dbd4aa553c1e838b7ff0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopNormalMap:
+        m_Texture: {fileID: 2800000, guid: 9aa2ff70ab4933e4ba9b1bd92a877495, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BlendExponent: 2
     - _BlendHeightStrength: 0.5
     - _BlendOffset: 0.25
-    - _MapScale: 1
+    - _MapScale: 1.56
     m_Colors: []
