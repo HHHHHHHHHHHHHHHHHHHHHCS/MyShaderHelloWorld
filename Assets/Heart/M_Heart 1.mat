@@ -20,9 +20,9 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Blur: 0.01
+    - _Blur: 0.048
     - _Duration: 1.5
-    - _Eccentricity: 0.25
+    - _Eccentricity: 0.5
     m_Colors:
     - _BackgroundColor: {r: 1, g: 0.8, b: 0.7, a: 1}
     - _HeartColor: {r: 1, g: 0.5, b: 0.29999998, a: 1}
