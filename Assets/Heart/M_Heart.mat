@@ -25,4 +25,5 @@ Material:
     - _Eccentricity: 0.25
     m_Colors:
     - _BackgroundColor: {r: 1, g: 0.8, b: 0.7, a: 1}
+    - _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
     - _HeartColor: {r: 1, g: 0.5, b: 0.29999998, a: 1}
