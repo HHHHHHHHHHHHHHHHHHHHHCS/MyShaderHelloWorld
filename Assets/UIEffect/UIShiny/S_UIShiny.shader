@@ -40,7 +40,7 @@ Shader "UI/S_UIShiny"
 		
 		pass
 		{
-			Name "ShinyDefault"
+			Name "SHINYDEFAULT"
 			
 			CGPROGRAM
 			
