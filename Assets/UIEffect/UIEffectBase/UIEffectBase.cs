@@ -11,12 +11,9 @@ namespace UIEffect
     [RequireComponent(typeof(Graphic))]
     [DisallowMultipleComponent]
     public abstract class UIEffectBase : BaseMeshEffect,IParameterTexture
-#if UNITY_EDITOR
-    ,ISerializationCallbackReceiver
-#endif
     {
         /// <summary>
-        /// 分割字符位置
+        /// 分割字符位置用
         /// </summary>
         protected static readonly Vector2[] splitedCharacterPosition
             = { Vector2.up, Vector2.one, Vector2.right, Vector2.zero };
@@ -28,12 +25,6 @@ namespace UIEffect
             = new List<UIVertex>();
 
         /// <summary>
-        /// 当前的版本
-        /// </summary>
-        [HideInInspector, SerializeField]
-        private int version;
-
-        /// <summary>
         /// 特效的index
         /// </summary>
         public int parameterIndex { get; set; }
@@ -41,7 +32,7 @@ namespace UIEffect
         /// <summary>
         /// 参数的图片
         /// </summary>
-        public ParameterTexture ParaTex { get; }
+        public virtual ParameterTexture ParaTex { get; }
 
         /// <summary>
         /// 目标的图形类
@@ -53,80 +44,6 @@ namespace UIEffect
         /// </summary>
         [field:SerializeField]
         public Material EffectMaterial { get;protected set; }
-#if UNITY_EDITOR
-        /// <summary>
-        /// Inspector点击reset的时候用
-        /// </summary>
-        protected override void Reset()
-        {
-            version = 300;
-        }
-
-        /// <summary>
-        /// 重置数据 编辑状态才需要
-        /// </summary>
-        protected override void OnValidate()
-        {
-            var mat = GetMaterial();
-            if (EffectMaterial != mat)
-            {
-                EffectMaterial = mat;
-                UnityEditor.EditorUtility.SetDirty(this);
-            }
-
-            ModifyMaterial();
-            //TargetGraphic.SetVerticesDirty();
-            SetDirty();
-        }
-
-        public void OnBeforeSerialize()
-        {
-            
-        }
-
-        public void OnAfterDeserialize()
-        {
-            UnityEditor.EditorApplication.delayCall += UpdateIfNeeded;
-        }
-
-        protected bool IsShouldUpgrade(int expectedVersion)
-        {
-            if (version < expectedVersion)
-            {
-                Debug.LogFormat(gameObject, "<b>{0}({1})</b> has been upgraded: <i>version {2} -> {3}</i>", name, GetType().Name, version, expectedVersion);
-                version = expectedVersion;
-
-                //UnityEditor.EditorApplication.delayCall += () =>
-                {
-                    UnityEditor.EditorUtility.SetDirty(this);
-                    if (!Application.isPlaying && gameObject && gameObject.scene.IsValid())
-                    {
-                        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
-                    }
-                }
-                ;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 看是否能更新材质
-        /// </summary>
-        protected virtual void UpdateIfNeeded()
-        {
-
-        }
-
-        /// <summary>
-        /// 得到材质球
-        /// </summary>
-        /// <returns></returns>
-        public virtual Material GetMaterial()
-        {
-            return null;
-        }
-#endif
 
         /// <summary>
         /// 根据是否激活设置材质或者清除材质

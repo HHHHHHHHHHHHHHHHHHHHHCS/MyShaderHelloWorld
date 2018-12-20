@@ -68,7 +68,7 @@ Shader "UI/S_UIShiny"
 				fixed4 color: COLOR;
 				float2 texcoord: TEXCOORD0;
 				float4 worldPostion: TEXCOORD1;
-				half2 param: TEXCOORD2;
+				half2 param: TEXCOORD2;//参数 X是光柱的位置 Y是在图片上的索引
 				
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -89,8 +89,8 @@ Shader "UI/S_UIShiny"
 				o.worldPostion = v.vertex;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.color = v.color * _Color;
-				o.texcoord = UnpackToVec2(v.texcoord.x);
-				o.param = UnpackToVec2(v.texcoord.y);
+				o.texcoord = UnpackToVec2(v.texcoord.x);//图片原来的uv顶点位置
+				o.param = UnpackToVec2(v.texcoord.y);//
 				return o;
 			}
 			
