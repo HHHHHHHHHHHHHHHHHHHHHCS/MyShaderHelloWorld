@@ -1,8 +1,8 @@
-#ifndef  UIEffectBase
+ï»¿#ifndef  UIEffectBase
 	#define UIEffectBase
-	//°Ñfloat½âÎö³É half4 xyzw ±»Ñ¹Ëõ³É0~1
-	//float °´ÕÕ ((((w)*64+z)*64+y)*64+x) ´¢´æ
-	//63Îª×î´ó¾«¶È(6Î»)
+	//æŠŠfloatè§£ææˆ half4 xyzw è¢«å‹ç¼©æˆ0~1
+	//float æŒ‰ç…§ ((((w)*64+z)*64+y)*64+x) å‚¨å­˜
+	//63ä¸ºæœ€å¤§ç²¾åº¦(6ä½)
 	half4 UnpackToVec4(float value)
 	{
 		const uint PACKER_STEP = 64;
@@ -23,9 +23,9 @@
 		return unpacked;
 	}
 	
-	//°Ñfloat½âÎö³É fixed3 xyz ±»Ñ¹Ëõ³É0~1
-	//float °´ÕÕ (((z)*256+y)*256+x) ´¢´æ
-	//255Îª×î´ó¾«¶È(8Î»)
+	//æŠŠfloatè§£ææˆ fixed3 xyz è¢«å‹ç¼©æˆ0~1
+	//float æŒ‰ç…§ (((z)*256+y)*256+x) å‚¨å­˜
+	//255ä¸ºæœ€å¤§ç²¾åº¦(8ä½)
 	half3 UnpackToVec3(float value)
 	{
 		const int PACKER_STEP = 256;
@@ -42,9 +42,9 @@
 		return unpacked;
 	}
 	
-	//°Ñfloat½âÎö³É half2 xy ±»Ñ¹Ëõ³É0~1
-	//float °´ÕÕ ((y)*4096+x) ´¢´æ
-	//4096Îª×î´ó¾«¶È(12Î»)
+	//æŠŠfloatè§£ææˆ half2 xy è¢«å‹ç¼©æˆ0~1
+	//float æŒ‰ç…§ ((y)*4096+x) å‚¨å­˜
+	//4096ä¸ºæœ€å¤§ç²¾åº¦(12ä½)
 	half2 UnpackToVec2(float value)
 	{
 		const int PACKER_STEP = 4096;

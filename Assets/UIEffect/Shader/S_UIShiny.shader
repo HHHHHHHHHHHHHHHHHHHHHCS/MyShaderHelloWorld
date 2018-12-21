@@ -1,4 +1,4 @@
-//UI Á÷¹âÓÃ
+//UI æµå…‰ç”¨
 Shader "UI/S_UIShiny"
 {
 	Properties
@@ -68,13 +68,13 @@ Shader "UI/S_UIShiny"
 				fixed4 color : COLOR;
 				float2 texcoord: TEXCOORD0;
 				float4 worldPosition: TEXCOORD1;
-				half2 param: TEXCOORD2;//²ÎÊı XÊÇ¹âÖùµÄÎ»ÖÃ YÊÇÔÚÍ¼Æ¬ÉÏµÄË÷Òı
+				half2 param: TEXCOORD2;//å‚æ•° Xæ˜¯å…‰æŸ±çš„ä½ç½® Yæ˜¯åœ¨å›¾ç‰‡ä¸Šçš„ç´¢å¼•
 
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
-			fixed4 _TextureSampleAdd;//textureÑÕÉ«Ìí¼ÓÓÃ
-			float4 _ClipRect;//2D²Ã¼ôÓÃ
+			fixed4 _TextureSampleAdd;//textureé¢œè‰²æ·»åŠ ç”¨
+			float4 _ClipRect;//2Dè£å‰ªç”¨
 			fixed4 _Color;
 			sampler2D _MainTex;
 			float4 _MainTex_TexelSize;
@@ -89,8 +89,8 @@ Shader "UI/S_UIShiny"
 				o.worldPosition = v.vertex;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.color = v.color * _Color;
-				o.texcoord = UnpackToVec2(v.texcoord.x);//Í¼Æ¬Ô­À´µÄuv¶¥µãÎ»ÖÃ
-				o.param = UnpackToVec2(v.texcoord.y);//ÕâÒ»×éÊÇ ²¥·ÅµÄ½ø¶È(0-1)ºÍÌØĞ§×éid
+				o.texcoord = UnpackToVec2(v.texcoord.x);//å›¾ç‰‡åŸæ¥çš„uvé¡¶ç‚¹ä½ç½®
+				o.param = UnpackToVec2(v.texcoord.y);//è¿™ä¸€ç»„æ˜¯ æ’­æ”¾çš„è¿›åº¦(0-1)å’Œç‰¹æ•ˆç»„id
 				return o;
 			}
 
@@ -98,7 +98,7 @@ Shader "UI/S_UIShiny"
 			{
 				fixed normalizedPos = i.param.x;
 
-			//ÒòÎªÁ÷¹âÊÇÁ½×é²ÎÊı ËùÒÔ È¡ÖĞ¼äµã 0.25 ºÍ 0.75
+			//å› ä¸ºæµå…‰æ˜¯ä¸¤ç»„å‚æ•° æ‰€ä»¥ å–ä¸­é—´ç‚¹ 0.25 å’Œ 0.75
 			fixed4 param1 = tex2D(_ParamTex, float2(0.25, i.param.y));
 			fixed4 param2 = tex2D(_ParamTex, float2(0.75, i.param.y));
 			half location = param1.x * 2 - 0.5;
