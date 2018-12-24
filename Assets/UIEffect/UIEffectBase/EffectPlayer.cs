@@ -18,29 +18,27 @@ namespace UIEffect
         /// <summary>
         /// 是否在播放
         /// </summary>
-        [Tooltip("Playing")] public bool play = false;
+        [Tooltip("是否在播放")] public bool play = false;
 
         /// <summary>
         /// 是否循环
         /// </summary>
-        [Tooltip("Loop")] public bool loop = false;
+        [Tooltip("是否循环")] public bool loop = false;
 
         /// <summary>
         /// 播放的时间
         /// </summary>
-        [Range(0.01f, 10f), Tooltip("Duration")]
-        public float duration = 1;
+        [Range(0.01f, 10f), Tooltip("播放的时间")] public float duration = 1;
 
         /// <summary>
         /// 循环播放的延迟
         /// </summary>
-        [Range(0, 10f), Tooltip("Delay before looping")]
-        public float loopDelay = 0;
+        [Range(0, 10f), Tooltip("循环播放的延迟")] public float loopDelay = 0;
 
         /// <summary>
         /// 动画的时间方式
         /// </summary>
-        [Tooltip("Update Mode")] public AnimatorUpdateMode updateMode = AnimatorUpdateMode.Normal;
+        [Tooltip("动画的时间方式")] public AnimatorUpdateMode updateMode = AnimatorUpdateMode.Normal;
 
         /// <summary>
         /// 特效已经播放的时间

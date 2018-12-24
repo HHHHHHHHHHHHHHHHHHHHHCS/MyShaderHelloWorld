@@ -68,7 +68,7 @@ Shader "UI/S_UIShiny"
 				half4 color: COLOR;
 				float2 texcoord: TEXCOORD0;
 				float4 worldPosition: TEXCOORD1;
-				half2 param: TEXCOORD2;//参数 X是光柱的位置 Y是在图片上的索引
+				float2 param: TEXCOORD2;//参数 X是光柱的位置 Y是在图片上的索引
 				
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -123,7 +123,7 @@ Shader "UI/S_UIShiny"
 				half normalized = 1 - saturate(abs((normalizedPos - location) / width));//流光的位置
 				isOri = isOri * (1 - step(normalized, 0));//流光是否是自定义颜色用
 				half shinePower = smoothstep(0, softness * 2, normalized);//流光的软光
-				shinePower = lerp(shinePower, shinePower + 0.05, isOri);//如果是自定义颜色 因为软边会发黑
+				shinePower = shinePower + 0.05 * isOri;//如果是自定义颜色 因为软边会发黑
 				half3 reflectColor = lerp(1, glossColor * 10, gloss);//流光的曝光度
 				//流光颜色*软光*光强度*曝光度的颜色
 				half3 shinyColor = originAlpha * (shinePower / 2) * brightness * reflectColor;

@@ -20,33 +20,33 @@ namespace UIEffect
         private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParamTex");
 
         /// <summary>
-        /// 流光的曝光颜色 如果都为0,则为图片颜色*10
+        /// 流光的颜色 如果都为0,则为流光颜色为图片颜色*10
         /// </summary>
-        [SerializeField, Tooltip("Shiny Color")]
+        [SerializeField, Tooltip("流光的颜色 如果都为0,则为流光颜色为图片颜色*10")]
         private Color shinyColor = Color.white;
 
         /// <summary>
         /// 流光的亮度
         /// </summary>
-        [SerializeField, Range(0, 1), Tooltip("Brightness for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("流光的亮度")]
         private float brightness = 1f;
 
         /// <summary>
-        /// 流光的区域
+        /// 流光的区域,Text+Character则为每个字符串都流光
         /// </summary>
-        [SerializeField, Tooltip("The area for effect")]
+        [SerializeField, Tooltip("流光的区域,Text+Character则为每个字符串都流光")]
         protected EffectArea effectArea;
 
         /// <summary>
         /// 流光的位置百分比,Text可能过0.5才起作用
         /// </summary>
-        [SerializeField, Range(0, 1), Tooltip("Location for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("流光的位置百分比,Text可能过0.5才起作用")]
         private float effectFactor;
 
         /// <summary>
         /// 流光的曝光度
         /// </summary>
-        [SerializeField, Range(0, 1), Tooltip("Highlight")]
+        [SerializeField, Range(0, 1), Tooltip("流光的曝光度")]
         private float gloss = 1;
 
         /// <summary>
@@ -62,19 +62,19 @@ namespace UIEffect
         /// <summary>
         /// 流光的旋转
         /// </summary>
-        [SerializeField, Range(-180, 180), Tooltip("Width for shiny effect")]
+        [SerializeField, Range(-180, 180), Tooltip("流光的旋转")]
         private float rotation;
 
         /// <summary>
         /// 流光的渐变软边
         /// </summary>
-        [SerializeField, Range(0.01f, 1), Tooltip("Softness for shiny effect")]
+        [SerializeField, Range(0.01f, 1), Tooltip("流光的渐变软边")]
         private float softness = 1f;
 
         /// <summary>
         /// 流光的宽度
         /// </summary>
-        [SerializeField, Range(0, 1), Tooltip("Width for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("流光的宽度")]
         private float width = 0.25f;
 
 

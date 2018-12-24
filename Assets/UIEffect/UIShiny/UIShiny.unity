@@ -162,8 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -265,8 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -368,8 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -471,8 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -574,8 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -677,8 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -780,12 +774,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  shinyColor: {r: 0, g: 0, b: 0, a: 1}
+  brightness: 0.395
   effectArea: 0
-  effectFactor: 0
+  effectFactor: 0.734
   gloss: 1
   player:
     play: 1
@@ -883,8 +876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -986,8 +978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1089,8 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1142,6 +1132,108 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295736706}
   m_CullTransparentMesh: 0
+--- !u!1 &364536476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 364536477}
+  - component: {fileID: 364536480}
+  - component: {fileID: 364536479}
+  - component: {fileID: 364536478}
+  m_Layer: 5
+  m_Name: Image (102)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &364536477
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364536476}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 732399434}
+  m_RootOrder: 102
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &364536478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364536476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  effectFactor: 0.738
+  gloss: 1
+  player:
+    play: 1
+    loop: 1
+    duration: 0.01
+    loopDelay: 0
+    updateMode: 0
+  rotation: 45
+  softness: 1
+  width: 0.261
+--- !u!114 &364536479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364536476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &364536480
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364536476}
+  m_CullTransparentMesh: 0
 --- !u!1 &371581466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,8 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1295,8 +1386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1398,8 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1501,8 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1604,8 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1707,8 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1810,8 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -1913,8 +1998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2016,8 +2100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2119,8 +2202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2222,8 +2304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2325,8 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2428,8 +2508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2531,8 +2610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2634,8 +2712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2722,7 +2799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -455, y: 340}
+  m_AnchoredPosition: {x: -810, y: 490}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &569015261
@@ -2779,8 +2856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2845,8 +2921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -2948,8 +3023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3051,8 +3125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3154,8 +3227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3257,8 +3329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3360,8 +3431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3463,8 +3533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3566,8 +3635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3669,8 +3737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -3852,13 +3919,14 @@ RectTransform:
   - {fileID: 1578594603}
   - {fileID: 825288950}
   - {fileID: 117318325}
+  - {fileID: 364536477}
   m_Father: {fileID: 1807996452}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 424.9, y: 0}
-  m_SizeDelta: {x: 1070.2, y: 1080}
+  m_AnchoredPosition: {x: 149.99997, y: 0}
+  m_SizeDelta: {x: 1620, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732399435
 MonoBehaviour:
@@ -3934,8 +4002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4021,7 +4088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -576, y: -100}
+  m_AnchoredPosition: {x: -910, y: 240}
   m_SizeDelta: {x: 100, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &778621986
@@ -4109,8 +4176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4212,8 +4278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4315,8 +4380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4418,8 +4482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4521,8 +4584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4624,8 +4686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4727,8 +4788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4830,8 +4890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -4933,8 +4992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5036,8 +5094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5139,8 +5196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5242,8 +5298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5345,8 +5400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5448,8 +5502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5620,8 +5673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5723,8 +5775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5826,8 +5877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -5995,8 +6045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6098,8 +6147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6201,8 +6249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6304,8 +6351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6407,8 +6453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6510,8 +6555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6613,8 +6657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6716,8 +6759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6819,8 +6861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -6922,8 +6963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7025,8 +7065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7128,8 +7167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7231,8 +7269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7334,8 +7371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7437,8 +7473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7540,8 +7575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7643,8 +7677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7746,8 +7779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7849,8 +7881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -7952,8 +7983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8055,8 +8085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8158,8 +8187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8261,8 +8289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8364,8 +8391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8467,8 +8493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8607,8 +8632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8673,8 +8697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8776,8 +8799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -8879,8 +8901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9022,8 +9043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9125,8 +9145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9228,8 +9247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9331,8 +9349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9618,8 +9635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9721,8 +9737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9824,8 +9839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -9927,8 +9941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10030,8 +10043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10133,8 +10145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10236,8 +10247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10339,8 +10349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10427,7 +10436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -423, y: 170}
+  m_AnchoredPosition: {x: -810, y: 390}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003447012
@@ -10442,8 +10451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 2
@@ -10550,8 +10558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10653,8 +10660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10756,8 +10762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10859,8 +10864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -10962,8 +10966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -11065,8 +11068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -11168,8 +11170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -11271,8 +11272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0
@@ -11374,8 +11374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <EffectMaterial>k__BackingField: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe,
-    type: 2}
+  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
   shinyColor: {r: 1, g: 1, b: 1, a: 1}
   brightness: 1
   effectArea: 0

@@ -12,17 +12,21 @@ namespace UIEffect
     [DisallowMultipleComponent]
     public abstract class UIEffectBase : BaseMeshEffect, IParameterTexture
 #if UNITY_EDITOR
-    , ISerializationCallbackReceiver
+        , ISerializationCallbackReceiver
 #endif
     {
         /// <summary>
         /// 字符串,单个分割用
         /// </summary>
-        protected static readonly Vector2[] splitedCharacterPosition = { Vector2.up, Vector2.one, Vector2.right, Vector2.zero };
+        protected static readonly Vector2[] splitedCharacterPosition =
+            {Vector2.up, Vector2.one, Vector2.right, Vector2.zero};
+
         /// <summary>
         /// UI的顶点
         /// </summary>
         protected static readonly List<UIVertex> tempVerts = new List<UIVertex>();
+
+        [SerializeField] private Material effectMaterial;
 
         /// <summary>
         /// 特效的index
@@ -42,8 +46,8 @@ namespace UIEffect
         /// <summary>
         /// 特效的材质球
         /// </summary>
-        [field: SerializeField]
-        public Material EffectMaterial { get; protected set; }
+        //[field: SerializeField]
+        public Material EffectMaterial => effectMaterial;
 
 #if UNITY_EDITOR
 
@@ -61,9 +65,9 @@ namespace UIEffect
         protected override void OnValidate()
         {
             var mat = GetMaterial();
-            if (mat != EffectMaterial)
+            if (mat != effectMaterial)
             {
-                EffectMaterial = mat;
+                effectMaterial = mat;
                 UnityEditor.EditorUtility.SetDirty(this);
             }
 
@@ -78,7 +82,6 @@ namespace UIEffect
 
         public void OnAfterDeserialize()
         {
-
         }
 
         protected virtual void UpgradeIfNeeded()
