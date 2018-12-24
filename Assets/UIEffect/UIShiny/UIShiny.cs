@@ -20,34 +20,33 @@ namespace UIEffect
         private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParamTex");
 
         /// <summary>
+        /// 流光的曝光颜色 如果都为0,则为图片颜色*10
+        /// </summary>
+        [SerializeField, Tooltip("Shiny Color")]
+        private Color shinyColor = Color.white;
+
+        /// <summary>
         /// 流光的亮度
         /// </summary>
-        [SerializeField]
-        [Range(0, 1)]
-        [Tooltip("Brightness for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("Brightness for shiny effect")]
         private float brightness = 1f;
 
         /// <summary>
         /// 流光的区域
         /// </summary>
-        [SerializeField]
-        [Tooltip("The area for effect")]
+        [SerializeField, Tooltip("The area for effect")]
         protected EffectArea effectArea;
 
         /// <summary>
-        /// 流光的位置百分比
+        /// 流光的位置百分比,Text可能过0.5才起作用
         /// </summary>
-        [SerializeField]
-        [Range(0, 1)]
-        [Tooltip("Location for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("Location for shiny effect")]
         private float effectFactor;
 
         /// <summary>
         /// 流光的曝光度
         /// </summary>
-        [SerializeField]
-        [Range(0, 1)]
-        [Tooltip("Highlight")]
+        [SerializeField, Range(0, 1), Tooltip("Highlight")]
         private float gloss = 1;
 
         /// <summary>
@@ -63,25 +62,19 @@ namespace UIEffect
         /// <summary>
         /// 流光的旋转
         /// </summary>
-        [SerializeField]
-        [Range(-180, 180)]
-        [Tooltip("Width for shiny effect")]
+        [SerializeField, Range(-180, 180), Tooltip("Width for shiny effect")]
         private float rotation;
 
         /// <summary>
         /// 流光的渐变软边
         /// </summary>
-        [SerializeField]
-        [Range(0.01f, 1)]
-        [Tooltip("Softness for shiny effect")]
+        [SerializeField, Range(0.01f, 1), Tooltip("Softness for shiny effect")]
         private float softness = 1f;
 
         /// <summary>
         /// 流光的宽度
         /// </summary>
-        [SerializeField]
-        [Range(0, 1)]
-        [Tooltip("Width for shiny effect")]
+        [SerializeField, Range(0, 1), Tooltip("Width for shiny effect")]
         private float width = 0.25f;
 
 
@@ -318,13 +311,13 @@ namespace UIEffect
 
                 //根据矩阵标准化顶点位置
                 var vertexPos = effectEachCharacter
-                ? splitedCharacterPosition[i % 4]
-                : (Vector2)vertex.position;
+                    ? splitedCharacterPosition[i % 4]
+                    : (Vector2) vertex.position;
                 var normalizedPos = localMatrix * vertexPos;
 
                 vertex.uv0 = new Vector2(
-                Packer.ToFloat(vertex.uv0.x, vertex.uv0.y), //原来的UV
-                Packer.ToFloat(normalizedPos.y, normalizedIndex)); //光柱的位置 特效的索引
+                    Packer.ToFloat(vertex.uv0.x, vertex.uv0.y), //原来的UV
+                    Packer.ToFloat(normalizedPos.y, normalizedIndex)); //光柱的中心点位置 特效的索引
 
                 vh.SetUIVertex(vertex, i);
             }
@@ -356,9 +349,11 @@ namespace UIEffect
             ParaTex.SetData(this, 1, Width); //param1.y:流光的粗细
             ParaTex.SetData(this, 2, Softness); //param1.z:流光的渐变的软边
             ParaTex.SetData(this, 3, Brightness); //param1.w:流光的亮度
-            ParaTex.SetData(this, 4, Gloss); //param2.x:流光的曝光度
 
-            //Debug.Log($"{effectFactor},{width},{softness},{brightness},{gloss}");
+            paraTex.SetData(this, 4, shinyColor.r); //param2.r:流光的颜色R
+            paraTex.SetData(this, 5, shinyColor.g); //param2.g:流光的颜色G
+            paraTex.SetData(this, 6, shinyColor.b); //param2.b:流光的颜色B
+            ParaTex.SetData(this, 7, Gloss); //param2.w:流光的曝光度
             //旋转不一样还要重新设置顶点数据
             if (!Mathf.Approximately(lastRotation, Rotation) && TargetGraphic)
             {

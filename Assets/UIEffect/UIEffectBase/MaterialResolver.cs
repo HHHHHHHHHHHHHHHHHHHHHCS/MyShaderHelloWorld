@@ -84,8 +84,8 @@ namespace UIEffect
         {
             string variantName = GetVariantName(shader, append);
             return AssetDatabase.FindAssets("t:Material " + Path.GetFileName(shader.name))
-            .Select(x => AssetDatabase.GUIDToAssetPath(x))
-            .SelectMany(x => AssetDatabase.LoadAllAssetsAtPath(x))
+            .Select(AssetDatabase.GUIDToAssetPath)
+            .SelectMany(AssetDatabase.LoadAllAssetsAtPath)
             .OfType<Material>()
             .FirstOrDefault(x => x.name == variantName);
         }
@@ -94,7 +94,7 @@ namespace UIEffect
         {
             var name = Path.GetFileName(shader.name);
             return AssetDatabase.FindAssets("t:Material " + name)
-            .Select(x => AssetDatabase.GUIDToAssetPath(x))
+            .Select(AssetDatabase.GUIDToAssetPath)
             .FirstOrDefault(x => Path.GetFileNameWithoutExtension(x) == name)
             ?? ("Assets/" + name + ".mat");
         }
