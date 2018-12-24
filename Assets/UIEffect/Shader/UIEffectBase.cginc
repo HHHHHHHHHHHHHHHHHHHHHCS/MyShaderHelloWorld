@@ -23,7 +23,7 @@
 		return unpacked;
 	}
 	
-	//把float解析成 fixed3 xyz 被压缩成0~1
+	//把float解析成 half3 xyz 被压缩成0~1
 	//float 按照 (((z)*256+y)*256+x) 储存
 	//255为最大精度(8位)
 	half3 UnpackToVec3(float value)

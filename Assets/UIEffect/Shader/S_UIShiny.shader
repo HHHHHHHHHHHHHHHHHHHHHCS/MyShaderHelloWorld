@@ -65,7 +65,7 @@ Shader "UI/S_UIShiny"
 			struct v2f
 			{
 				float4 vertex: SV_POSITION;
-				fixed4 color: COLOR;
+				half4 color: COLOR;
 				float2 texcoord: TEXCOORD0;
 				float4 worldPosition: TEXCOORD1;
 				half2 param: TEXCOORD2;//参数 X是光柱的位置 Y是在图片上的索引
@@ -73,9 +73,9 @@ Shader "UI/S_UIShiny"
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 			
-			fixed4 _TextureSampleAdd;//texture颜色添加用
+			half4 _TextureSampleAdd;//texture颜色添加用
 			float4 _ClipRect;//2D裁剪用
-			fixed4 _Color;
+			half4 _Color;
 			sampler2D _MainTex;
 			float4 _MainTex_TexelSize;
 			sampler2D _ParamTex;
@@ -94,21 +94,21 @@ Shader "UI/S_UIShiny"
 				return o;
 			}
 			
-			fixed4 frag(v2f i): SV_TARGET
+			half4 frag(v2f i): SV_TARGET
 			{
-				fixed normalizedPos = i.param.x;
+				half normalizedPos = i.param.x;
 				
 				//因为流光是两组参数 所以 取中间点 0.25 和 0.75
-				fixed4 param1 = tex2D(_ParamTex, float2(0.25, i.param.y));
-				fixed4 param2 = tex2D(_ParamTex, float2(0.75, i.param.y));
+				half4 param1 = tex2D(_ParamTex, float2(0.25, i.param.y));
+				half4 param2 = tex2D(_ParamTex, float2(0.75, i.param.y));
 				half location = param1.x * 2 - 0.5;
-				fixed width = param1.y;
-				fixed softness = param1.z;
-				fixed brightness = param1.w;
-				fixed gloss = param2.w;
+				half width = param1.y;
+				half softness = param1.z;
+				half brightness = param1.w;
+				half gloss = param2.w;
 				
 				half4 color = (tex2D(_MainTex, i.texcoord) + _TextureSampleAdd);//图片原有颜色
-				fixed4 originAlpha = color.a;
+				half4 originAlpha = color.a;
 				color *= i.color;
 				color.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);//裁剪看不见的UI
 				
@@ -117,8 +117,8 @@ Shader "UI/S_UIShiny"
 				#endif
 				
 				
-				fixed isOri = 1 - step(param2.x + param2.y + param2.z, 0);
-				fixed3 glossColor = lerp(color.rgb, param2.rgb, isOri) ;
+				half isOri = 1 - step(param2.x + param2.y + param2.z, 0);
+				half3 glossColor = lerp(color.rgb, param2.rgb, isOri) ;
 				
 				half normalized = 1 - saturate(abs((normalizedPos - location) / width));//流光的位置
 				isOri = isOri * (1 - step(normalized, 0));//流光是否是自定义颜色用
