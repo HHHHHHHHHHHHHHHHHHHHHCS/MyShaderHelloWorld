@@ -38,7 +38,7 @@ namespace UIEffect
         protected EffectArea effectArea;
 
         /// <summary>
-        /// 流光的位置百分比,Text可能过0.5才起作用
+        /// 流光的位置百分比
         /// </summary>
         [SerializeField, Range(0, 1), Tooltip("流光的位置百分比,Text可能过0.5才起作用")]
         private float effectFactor;
@@ -250,6 +250,72 @@ namespace UIEffect
         /// 得到参数图片
         /// </summary>
         public override ParameterTexture ParaTex => paraTex;
+
+        /// <summary>
+        /// 批量设置参数
+        /// </summary>
+        public void SetParameter(float? _effectFactor = null, float? _width = null
+            , float? _softness = null, float? _brightness = null
+            , float? gloss = null, float? _rotation = null
+            , EffectArea? _effectArea = null, bool? _playState = null
+            , bool? _loop = null, float? _duration = null
+            , float? _loopDelay = null, AnimatorUpdateMode? _updateMode = null)
+        {
+            if (_effectFactor.HasValue)
+            {
+                EffectFactor = _effectFactor.Value;
+            }
+
+            if (_width.HasValue)
+            {
+                Width = _width.Value;
+            }
+
+            if (_softness.HasValue)
+            {
+                Softness = _softness.Value;
+            }
+
+            if (_brightness.HasValue)
+            {
+                Brightness = _brightness.Value;
+            }
+
+            if (_rotation.HasValue)
+            {
+                Rotation = _rotation.Value;
+            }
+
+            if (_effectArea.HasValue)
+            {
+                EffectArea = _effectArea.Value;
+            }
+
+            if (_playState.HasValue)
+            {
+                PlayState = _playState.Value;
+            }
+
+            if (_loop.HasValue)
+            {
+                Loop = _loop.Value;
+            }
+
+            if (_duration.HasValue)
+            {
+                Duration = _duration.Value;
+            }
+
+            if (_loopDelay.HasValue)
+            {
+                LoopDelay = _loopDelay.Value;
+            }
+
+            if (_updateMode.HasValue)
+            {
+                UpdateMode = _updateMode.Value;
+            }
+        }
 
         /// <summary>
         /// 注册事件  得到动画播放的进度

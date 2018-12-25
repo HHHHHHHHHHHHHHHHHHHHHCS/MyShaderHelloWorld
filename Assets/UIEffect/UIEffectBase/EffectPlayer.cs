@@ -89,7 +89,7 @@ namespace UIEffect
         {
             timer = 0;
             play = true;
-            if (callback != null)
+            if (_callback != null)
             {
                 callback = _callback;
             }

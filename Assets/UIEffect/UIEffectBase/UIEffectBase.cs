@@ -106,7 +106,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 激活时 注册特效 设置材质球 设置数据 刷新UI
+        /// 激活时创造时 注册特效 设置材质球 设置数据 刷新UI
         /// </summary>
         protected override void OnEnable()
         {
@@ -117,7 +117,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 隐藏时 注销特效 清除材质球 刷新UI
+        /// 隐藏时删除时 注销特效 清除材质球 刷新UI
         /// </summary>
         protected override void OnDisable()
         {
