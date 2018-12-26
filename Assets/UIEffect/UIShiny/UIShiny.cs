@@ -7,7 +7,7 @@ namespace UIEffect
     /// 流光特效
     /// </summary>
     //[AddComponentMenu("UI/UIEffect/UIShiny", 2)]
-    public class UIShiny : UIEffectBase
+    public class UIShiny : UIDynamicBase
     {
         /// <summary>
         /// shader的名字
@@ -37,11 +37,6 @@ namespace UIEffect
         [SerializeField, Tooltip("流光的区域,Text+Character则为每个字符串都流光")]
         protected EffectArea effectArea;
 
-        /// <summary>
-        /// 流光的位置百分比
-        /// </summary>
-        [SerializeField, Range(0, 1), Tooltip("流光的位置百分比,Text可能过0.5才起作用")]
-        private float effectFactor;
 
         /// <summary>
         /// 流光的曝光度
@@ -53,11 +48,6 @@ namespace UIEffect
         /// 光柱最后的旋转角度
         /// </summary>
         private float lastRotation;
-
-        /// <summary>
-        /// 流光的播放器
-        /// </summary>
-        [SerializeField] protected EffectPlayer player;
 
         /// <summary>
         /// 流光的旋转
@@ -77,24 +67,22 @@ namespace UIEffect
         [SerializeField, Range(0, 1), Tooltip("流光的宽度")]
         private float width = 0.25f;
 
-
         /// <summary>
-        /// 特效的播放进度 0~1
-        /// 如果set 的值过于近似也不会有效果
+        /// 流光的颜色
         /// </summary>
-        public float EffectFactor
+        public Color ShinyColor
         {
-            get => effectFactor;
+            get => shinyColor;
             set
             {
-                value = Mathf.Clamp(value, 0, 1);
-                if (!Mathf.Approximately(effectFactor, value))
+                if (shinyColor != value)
                 {
-                    effectFactor = value;
+                    shinyColor = value;
                     SetDirty();
                 }
             }
         }
+
 
         /// <summary>
         /// 设置流光的宽度
@@ -197,56 +185,6 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 流光的播放器
-        /// </summary>
-        protected EffectPlayer Player => player ?? (player = new EffectPlayer());
-
-        /// <summary>
-        /// 是否播放特效
-        /// </summary>
-        public bool PlayState
-        {
-            get => Player.play;
-            set => Player.play = value;
-        }
-
-        /// <summary>
-        /// 特效是否循环
-        /// </summary>
-        public bool Loop
-        {
-            get => Player.loop;
-            set => Player.loop = value;
-        }
-
-        /// <summary>
-        /// 特效播放多久
-        /// </summary>
-        public float Duration
-        {
-            get => Player.duration;
-            set => Player.duration = Mathf.Max(value, 0.1f);
-        }
-
-        /// <summary>
-        /// 特效播放 延迟多久再次循环播放
-        /// </summary>
-        public float LoopDelay
-        {
-            get => Player.loopDelay;
-            set => Player.loopDelay = Mathf.Max(value, 0);
-        }
-
-        /// <summary>
-        /// 特效的播放时间方式
-        /// </summary>
-        public AnimatorUpdateMode UpdateMode
-        {
-            get => Player.updateMode;
-            set => Player.updateMode = value;
-        }
-
-        /// <summary>
         /// 得到参数图片
         /// </summary>
         public override ParameterTexture ParaTex => paraTex;
@@ -254,7 +192,8 @@ namespace UIEffect
         /// <summary>
         /// 批量设置参数
         /// </summary>
-        public void SetParameter(float? _effectFactor = null, float? _width = null
+        public void SetParameter(float? _effectFactor = null
+            , Color? _shinyColor = null, float? _width = null
             , float? _softness = null, float? _brightness = null
             , float? gloss = null, float? _rotation = null
             , EffectArea? _effectArea = null, bool? _playState = null
@@ -264,6 +203,11 @@ namespace UIEffect
             if (_effectFactor.HasValue)
             {
                 EffectFactor = _effectFactor.Value;
+            }
+
+            if (_shinyColor.HasValue)
+            {
+                ShinyColor = _shinyColor.Value;
             }
 
             if (_width.HasValue)
@@ -378,7 +322,7 @@ namespace UIEffect
                 //根据矩阵标准化顶点位置
                 var vertexPos = effectEachCharacter
                     ? splitedCharacterPosition[i % 4]
-                    : (Vector2) vertex.position;
+                    : (Vector2)vertex.position;
                 var normalizedPos = localMatrix * vertexPos;
 
                 vertex.uv0 = new Vector2(
@@ -387,22 +331,6 @@ namespace UIEffect
 
                 vh.SetUIVertex(vertex, i);
             }
-        }
-
-        /// <summary>
-        /// 播放特效
-        /// </summary>
-        public void Play()
-        {
-            Player.Play();
-        }
-
-        /// <summary>
-        /// 暂停特效
-        /// </summary>
-        public void Stop()
-        {
-            Player.Stop();
         }
 
         /// <summary>
@@ -416,9 +344,9 @@ namespace UIEffect
             ParaTex.SetData(this, 2, Softness); //param1.z:流光的渐变的软边
             ParaTex.SetData(this, 3, Brightness); //param1.w:流光的亮度
 
-            paraTex.SetData(this, 4, shinyColor.r); //param2.r:流光的颜色R
-            paraTex.SetData(this, 5, shinyColor.g); //param2.g:流光的颜色G
-            paraTex.SetData(this, 6, shinyColor.b); //param2.b:流光的颜色B
+            paraTex.SetData(this, 4, ShinyColor.r); //param2.r:流光的颜色R
+            paraTex.SetData(this, 5, ShinyColor.g); //param2.g:流光的颜色G
+            paraTex.SetData(this, 6, ShinyColor.b); //param2.b:流光的颜色B
             ParaTex.SetData(this, 7, Gloss); //param2.w:流光的曝光度
             //旋转不一样还要重新设置顶点数据
             if (!Mathf.Approximately(lastRotation, Rotation) && TargetGraphic)

@@ -163,17 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -265,17 +265,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -367,17 +367,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -469,17 +469,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -571,17 +571,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -673,17 +673,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -775,17 +775,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 0, g: 0, b: 0, a: 1}
-  brightness: 0.395
-  effectArea: 0
   effectFactor: 0.734
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 0, g: 0, b: 0, a: 1}
+  brightness: 0.395
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -877,17 +877,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -979,17 +979,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1081,17 +1081,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1183,17 +1183,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0.738
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 0.01
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.261
@@ -1285,17 +1285,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1387,17 +1387,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1489,17 +1489,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1591,17 +1591,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1693,17 +1693,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1795,17 +1795,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1897,17 +1897,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -1999,17 +1999,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2101,17 +2101,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2203,17 +2203,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2305,17 +2305,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2407,17 +2407,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2509,17 +2509,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2611,17 +2611,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2713,17 +2713,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2894,17 +2894,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -2996,17 +2996,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3098,17 +3098,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3200,17 +3200,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3302,17 +3302,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3404,17 +3404,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3506,17 +3506,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3608,17 +3608,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3710,17 +3710,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -3975,17 +3975,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4149,17 +4149,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4251,17 +4251,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4353,17 +4353,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4455,17 +4455,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4557,17 +4557,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4659,17 +4659,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4761,17 +4761,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4863,17 +4863,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -4965,17 +4965,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5067,17 +5067,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5169,17 +5169,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5271,17 +5271,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5373,17 +5373,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5475,17 +5475,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5646,17 +5646,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5748,17 +5748,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -5850,17 +5850,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6018,17 +6018,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6120,17 +6120,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6222,17 +6222,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6324,17 +6324,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6426,17 +6426,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6528,17 +6528,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6630,17 +6630,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6732,17 +6732,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6834,17 +6834,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -6936,17 +6936,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7038,17 +7038,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7140,17 +7140,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7242,17 +7242,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7344,17 +7344,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7446,17 +7446,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7548,17 +7548,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7650,17 +7650,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7752,17 +7752,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7854,17 +7854,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -7956,17 +7956,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8058,17 +8058,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8160,17 +8160,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8262,17 +8262,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8364,17 +8364,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8466,17 +8466,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8605,17 +8605,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8670,17 +8670,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8772,17 +8772,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -8874,17 +8874,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9016,17 +9016,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9118,17 +9118,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9220,17 +9220,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9322,17 +9322,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9621,17 +9621,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9723,17 +9723,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9825,17 +9825,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -9927,17 +9927,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10029,17 +10029,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10131,17 +10131,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10233,17 +10233,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10335,17 +10335,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10437,17 +10437,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 2
   effectFactor: 0.732
-  gloss: 1
   player:
     play: 0
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 2
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10544,17 +10544,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10646,17 +10646,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10748,17 +10748,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10850,17 +10850,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -10952,17 +10952,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -11054,17 +11054,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -11156,17 +11156,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -11258,17 +11258,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
@@ -11360,17 +11360,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
-  shinyColor: {r: 1, g: 1, b: 1, a: 1}
-  brightness: 1
-  effectArea: 0
   effectFactor: 0
-  gloss: 1
   player:
     play: 1
     loop: 1
     duration: 1
     loopDelay: 0
     updateMode: 0
+  shinyColor: {r: 1, g: 1, b: 1, a: 1}
+  brightness: 1
+  effectArea: 0
+  gloss: 1
   rotation: 45
   softness: 1
   width: 0.25
