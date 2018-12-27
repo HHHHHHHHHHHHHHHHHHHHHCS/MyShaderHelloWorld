@@ -16,7 +16,7 @@ namespace UIEffect
 #endif
     {
         /// <summary>
-        /// 字符串,单个分割用
+        /// 字符串,单个分割用,顺时针
         /// </summary>
         protected static readonly Vector2[] splitedCharacterPosition =
             {Vector2.up, Vector2.one, Vector2.right, Vector2.zero};
@@ -26,7 +26,7 @@ namespace UIEffect
         /// </summary>
         protected static readonly List<UIVertex> tempVerts = new List<UIVertex>();
 
-        [SerializeField] private Material effectMaterial;
+        [SerializeField] protected Material effectMaterial;
 
         /// <summary>
         /// 特效的index

@@ -79,4 +79,15 @@ namespace UIEffect
         }
     }
 
+
+    /// <summary>
+    /// 颜色模式
+    /// </summary>
+    public enum ColorMode
+    {
+        Multiply = 0,//相乘
+        Fill,//替换
+        Add,//叠加
+        Subtract,//相减
+    }
 }

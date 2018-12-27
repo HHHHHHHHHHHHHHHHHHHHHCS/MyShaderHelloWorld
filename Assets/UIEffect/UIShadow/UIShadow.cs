@@ -238,7 +238,7 @@ namespace UIEffect
         /// <param name="start">原来的起始顶点</param>
         /// <param name="end">原来的结束顶点</param>
         /// <param name="xOffset">x的偏移</param>
-        /// /// <param name="yOffset">y的偏移</param>
+        /// <param name="yOffset">y的偏移</param>
         /// <param name="useAlpha">是否使用图片的Alpha</param>
         private void MyApplyShadowZeroAlloc(List<UIVertex> verts, Color color
             , ref int start, ref int end
@@ -264,6 +264,7 @@ namespace UIEffect
             }
 
             //把原来的顶点往后挪动,要改变的放前面
+            //因为后面的顶点渲染会最后渲染,覆盖前面的颜色
             //用倒序,不然可能会覆盖前面的
             for (int i = verts.Count - 1; i >= count; i--)
             {

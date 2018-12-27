@@ -8,7 +8,7 @@ namespace UIEffect
     /// <summary>
     /// UI动态特效的基础类
     /// </summary>
-    public class UIDynamicBase : UIEffectBase
+    public abstract class UIDynamicBase : UIEffectBase
     {
         /// <summary>
         /// 流光的位置百分比
@@ -41,7 +41,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 流光的播放器
+        /// 特效的播放器
         /// </summary>
         protected EffectPlayer Player => player ?? (player = new EffectPlayer());
 
@@ -90,9 +90,22 @@ namespace UIEffect
             set => Player.updateMode = value;
         }
 
-
-        public override void ModifyMesh(VertexHelper vh)
+        /// <summary>
+        /// 注册事件  得到动画播放的进度
+        /// </summary>
+        protected override void OnEnable()
         {
+            base.OnEnable();
+            Player.OnEnable(f => EffectFactor = f);
+        }
+
+        /// <summary>
+        /// 注销事件
+        /// </summary>
+        protected override void OnDisable()
+        {
+            Player.OnDisable();
+            base.OnDisable();
         }
 
         /// <summary>

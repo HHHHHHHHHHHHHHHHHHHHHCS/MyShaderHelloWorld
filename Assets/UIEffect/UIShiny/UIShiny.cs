@@ -261,23 +261,6 @@ namespace UIEffect
             }
         }
 
-        /// <summary>
-        /// 注册事件  得到动画播放的进度
-        /// </summary>
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            Player.OnEnable(f => EffectFactor = f);
-        }
-
-        /// <summary>
-        /// 注销事件
-        /// </summary>
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            Player.OnDisable();
-        }
 
 
 #if UNITY_EDITOR
@@ -324,7 +307,7 @@ namespace UIEffect
                     ? splitedCharacterPosition[i % 4]
                     : (Vector2)vertex.position;
                 var normalizedPos = localMatrix * vertexPos;
-
+                
                 vertex.uv0 = new Vector2(
                     Packer.ToFloat(vertex.uv0.x, vertex.uv0.y), //原来的UV
                     Packer.ToFloat(normalizedPos.y, normalizedIndex)); //光柱的中心点位置 特效的索引

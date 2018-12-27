@@ -31,7 +31,7 @@ namespace UIEffect
         private static List<Action> updateList; //图片要更新的事件
 
         private readonly string propertyName; //shader参数 texture的name
-        private readonly int channels; //一组有几个参数 4的倍数(xyzw)
+        private readonly int channels; //一组有几个参数 4的倍数(rgba)
         private readonly int instanceLimit; //最多几个特效组
         private readonly byte[] data; //图片数据
         private readonly Stack<int> effectStack; //对象池 缓存池
@@ -44,7 +44,7 @@ namespace UIEffect
         /// <summary>
         /// 构造参数图片
         /// </summary>
-        /// <param name="_channels">一组有几个特效</param>
+        /// <param name="_channels">一组有几个特效参数</param>
         /// <param name="_instanceLimit">有几个特效组</param>
         /// <param name="_propertyName">shader texture的名字</param>
         public ParameterTexture(int _channels, int _instanceLimit, string _propertyName)
