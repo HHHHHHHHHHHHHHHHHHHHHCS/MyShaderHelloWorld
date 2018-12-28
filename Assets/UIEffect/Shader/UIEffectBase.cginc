@@ -1,5 +1,10 @@
 ﻿#ifndef  UIEffectBase
 	#define UIEffectBase
+	
+	#if ADD | SUBTRACT | FILL
+		#define UI_COLOR
+	#endif
+	
 	//把float解析成 half4 xyzw 被压缩成0~1
 	//float 按照 ((((w)*64+z)*64+y)*64+x) 储存
 	//63为最大精度(6位)
@@ -56,5 +61,25 @@
 		
 		unpacked.y = (value % PACKER_STEP) / (PACKER_STEP - 1);
 		return unpacked;
+	}
+	
+	//根据ColorMode,设置颜色效果
+	half4 ApplyColorEffect(half4 color, half4 factor)
+	{
+		#ifdef FILL//颜色替换
+			color.rgb = lerp(color.rgb, factor.rgb, factor.a);
+		#elif ADD//颜色叠加
+			color.rgb += factor.rgb * factor.a;
+		#elif SUBTRACT//颜色相减
+			color.rgb -= factor.rgb * factor.a;
+		#else//颜色相乘
+			color.rgb = lerp(color.rgb, color.rgb * factor.rgb, factor.a);
+		#endif
+		
+		#if CUTOFF//是否设置了裁剪
+			color.a = factor.a;
+		#endif
+		
+		return color;
 	}
 #endif

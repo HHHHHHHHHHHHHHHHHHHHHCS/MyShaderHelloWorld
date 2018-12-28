@@ -1,40 +1,40 @@
-﻿using UnityEditor;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace UIEffect.Editors
 {
-    /// <summary>
-    /// 流光的Editor 面板
-    /// </summary>
-    [CustomEditor(typeof(UIShiny)), CanEditMultipleObjects]
-    public class UIShinyEditor : UIBaseEffect
+    [CustomEditor(typeof(UIDissolve)),CanEditMultipleObjects]
+    public class UIDissolveEditor : UIBaseEffect
     {
-        private SerializedProperty mat; //流光的材质
-        private SerializedProperty color; //流光的颜色
-        private SerializedProperty effectFactor; //当前特效的播放进度
-        private SerializedProperty width; //当前流光的宽度
-        private SerializedProperty rotation; //流光的旋转
-        private SerializedProperty softness; //流光的软边
-        private SerializedProperty brightness; //流光的亮度
-        private SerializedProperty gloss; //流光的曝光度
-        private SerializedProperty effectArea; //流光的光区域
-        private SerializedProperty play; //流光是否播放
-        private SerializedProperty loop; //流光是否循环
-        private SerializedProperty loopDelay; //流光循环的延迟
-        private SerializedProperty duration; //流光的播放时间
-        private SerializedProperty updateMode; //流光的时间更新模式
+        private SerializedProperty mat;//材质
+        private SerializedProperty effectFactor;//播放进度
+        private SerializedProperty width;//宽度
+        private SerializedProperty dissolveColor;//溶解颜色
+        private SerializedProperty softness;//软边
+        private SerializedProperty colorMode;//颜色模式
+        private SerializedProperty noiseTexture;//噪音图
+        private SerializedProperty effectArea;//特效区域
+        private SerializedProperty keepAspectRatio;//保持纵横比
+        private SerializedProperty play;//播放
+        private SerializedProperty loop;//循环
+        private SerializedProperty loopDelay;//循环延迟
+        private SerializedProperty duration;//周期
+        private SerializedProperty updateMode;//更新模式
 
         private void OnEnable()
         {
             mat = FindProperty("effectMaterial");
-            color = FindProperty("shinyColor");
             effectFactor = FindProperty("effectFactor");
-            width = FindProperty("width");
-            rotation = FindProperty("rotation");
-            softness = FindProperty("softness");
-            brightness = FindProperty("brightness");
-            gloss = FindProperty("gloss");
             effectArea = FindProperty("effectArea");
+            keepAspectRatio = FindProperty("keepAspectRatio");
+            width = FindProperty("width");
+            dissolveColor = FindProperty("dissolveColor");
+            softness = FindProperty("softness");
+            colorMode = FindProperty("colorMode");
+            noiseTexture = FindProperty("noiseTexture");
+            keepAspectRatio = FindProperty("keepAspectRatio");
             var player = FindProperty("player");
             play = FindProperty("play", player);
             loop = FindProperty("loop", player);
@@ -43,23 +43,24 @@ namespace UIEffect.Editors
             updateMode = FindProperty("updateMode", player);
         }
 
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.PropertyField(mat, Label("材质球"));
+            CreateLine(mat, "材质球");
             EditorGUI.EndDisabledGroup();
 
             CreateLine(effectFactor, "进度");
-            CreateLine(color, "颜色");
             CreateLine(width, "宽度");
-            CreateLine(rotation, "旋转");
             CreateLine(softness, "软边");
-            CreateLine(brightness, "亮度");
-            CreateLine(gloss, "曝光度");
+            CreateLine(dissolveColor, "颜色");
+            CreateLine(colorMode, "颜色模式");
+            CreateLine(noiseTexture, "噪音图");
+
+            GUILayout.Space(10);
             CreateLine(effectArea, "特效区域");
+            CreateLine(keepAspectRatio, "纵横比例");
 
             GUILayout.Space(10);
             EditorGUILayout.LabelField("特效播放器", EditorStyles.boldLabel);
@@ -89,6 +90,5 @@ namespace UIEffect.Editors
 
             serializedObject.ApplyModifiedProperties();
         }
-
     }
 }

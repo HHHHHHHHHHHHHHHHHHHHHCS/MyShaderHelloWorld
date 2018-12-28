@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0.734
   player:
     play: 1
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0.738
   player:
     play: 1
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1386,7 +1386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1692,7 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1794,7 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1896,7 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -1998,7 +1998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2100,7 +2100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2304,7 +2304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2508,7 +2508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2610,7 +2610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2712,7 +2712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -2995,7 +2995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3097,7 +3097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3199,7 +3199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3301,7 +3301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3403,7 +3403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3505,7 +3505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3607,7 +3607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3709,7 +3709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -3974,7 +3974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4148,7 +4148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4250,7 +4250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4352,7 +4352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4454,7 +4454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4556,7 +4556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4658,7 +4658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4760,7 +4760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4862,7 +4862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -4964,7 +4964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5066,7 +5066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5168,7 +5168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5270,7 +5270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5372,7 +5372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5474,7 +5474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5645,7 +5645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5747,7 +5747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -5849,7 +5849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6017,7 +6017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6119,7 +6119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6221,7 +6221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6323,7 +6323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6425,7 +6425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6527,7 +6527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6629,7 +6629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6731,7 +6731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6833,7 +6833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -6935,7 +6935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7037,7 +7037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7139,7 +7139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7241,7 +7241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7343,7 +7343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7445,7 +7445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7547,7 +7547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7649,7 +7649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7751,7 +7751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7853,7 +7853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -7955,7 +7955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8057,7 +8057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8159,7 +8159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8261,7 +8261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8363,7 +8363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8465,7 +8465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8604,7 +8604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8669,7 +8669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8771,7 +8771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -8873,7 +8873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9015,7 +9015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9117,7 +9117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9219,7 +9219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9321,7 +9321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9385,7 +9385,6 @@ GameObject:
   - component: {fileID: 1807996451}
   - component: {fileID: 1807996450}
   - component: {fileID: 1807996449}
-  - component: {fileID: 1807996453}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -9476,18 +9475,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1807996453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807996448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f449ce7ef7ee3c443adc46e31f231a64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1825679590
 GameObject:
   m_ObjectHideFlags: 0
@@ -9620,7 +9607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9722,7 +9709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9824,7 +9811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -9926,7 +9913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10028,7 +10015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10130,7 +10117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10232,7 +10219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10334,7 +10321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10436,7 +10423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 2100000, guid: b3b802e35907045409dbd463691f45aa, type: 2}
   effectFactor: 0.732
   player:
     play: 0
@@ -10463,7 +10450,7 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  m_Material: {fileID: 2100000, guid: b3b802e35907045409dbd463691f45aa, type: 2}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -10543,7 +10530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10645,7 +10632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10747,7 +10734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10849,7 +10836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -10951,7 +10938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -11053,7 +11040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -11155,7 +11142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -11257,7 +11244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1
@@ -11359,7 +11346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eca03251eee1d4c8733ea6e5ac16a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 2100000, guid: 3aa51360853263142af34d8997b985fe, type: 2}
+  effectMaterial: {fileID: 0}
   effectFactor: 0
   player:
     play: 1

@@ -40,7 +40,7 @@ Shader "UI/S_UIShiny"
 		
 		pass
 		{
-			Name "SHINYDEFAULT"
+			Name "SHINY_DEFAULT"
 			
 			CGPROGRAM
 			
@@ -73,8 +73,8 @@ Shader "UI/S_UIShiny"
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 			
-			half4 _TextureSampleAdd;//texture颜色添加用
-			float4 _ClipRect;//2D裁剪用
+			half4 _TextureSampleAdd;//Unity管理:图片格式用Alpha8
+			float4 _ClipRect;//Unity管理:2D裁剪用
 			half4 _Color;
 			sampler2D _MainTex;
 			float4 _MainTex_TexelSize;

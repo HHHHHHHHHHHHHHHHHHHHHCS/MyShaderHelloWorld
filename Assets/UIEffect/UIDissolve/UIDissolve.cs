@@ -7,6 +7,7 @@ namespace UIEffect
 {
     /// <summary>
     /// 溶解的效果
+    /// 噪音图建议设置单通道,用灰度当alpha
     /// </summary>
     public class UIDissolve : UIDynamicBase
     {
@@ -18,7 +19,7 @@ namespace UIEffect
         /// <summary>
         /// 参数图
         /// </summary>
-        private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParaTex");
+        private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParamTex");
 
         /// <summary>
         /// 溶解的宽度
@@ -111,7 +112,7 @@ namespace UIEffect
         /// </summary>
         public ColorMode ColorMode
         {
-            get => ColorMode;
+            get => colorMode;
             set
             {
                 if (colorMode != value)
@@ -248,7 +249,7 @@ namespace UIEffect
             UIVertex vertex = default;
             bool effectEachCharacter = graphic is Text && EffectArea == EffectArea.Character;
             float x, y;//在噪音图上的UV坐标
-            int count = vh.currentIndexCount;
+            int count = vh.currentVertCount;
             for (int i = 0; i < count; i++)
             {
                 vh.PopulateUIVertex(ref vertex, i);
