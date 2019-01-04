@@ -152,6 +152,10 @@ namespace UIEffect
                 return;
             }
 
+            //参数图索引
+            float normalizedIndex = ParaTex.GetNormalizedIndex(this);
+
+            //有模糊效果,而且是高级模糊
             if (BlurMode != BlurMode.None && advanceBlur)
             {
                 vh.GetUIVertexStream(tempVerts);
@@ -165,28 +169,100 @@ namespace UIEffect
                 Rect posBounds = default;//位置捆
                 Rect uvBounds = default;//UV捆
                 Vector3 size = default;//尺寸
-                Vector3 tPos = default;//顶点位置
-                Vector3 tUV = default;//顶点UV
-                float expand = (float)BlurMode * 6 * 2;//模糊模式用
+                Vector3 tPos = default;//顶点偏移位置
+                Vector3 tUV = default;//UV偏移位置
+                float expand = (float)BlurMode * 6 * 2;//模糊模式用,顶点外扩多少倍数
 
                 for (int i = 0; i < count; i += bundleSize)
                 {
                     //计算最小矩形框
                     GetBounds(tempVerts, i, bundleSize, ref posBounds, ref uvBounds, true);
 
-                    //打包UV Mask
+                    //打包UVMask,即原来最大最小顶点UV的位置
                     Vector2 uvMask = new Vector2(Packer.ToFloat(uvBounds.xMin, uvBounds.yMin), Packer.ToFloat(uvBounds.xMax, uvBounds.yMax));
 
                     //计算多少个矩形
                     for(int j=0;j<bundleSize;j+=6)
                     {
-                        Vector3 cornerPos1 = tempVerts[i + j + 1].position;//第一个三角形
-                        Vector3 cornerPos2 = tempVerts[i + j + 4].position;//第二个三角形
+                        int p1 = i + j + 1;
+                        int p2 = p1 + 3;
 
+                        Vector3 cornerPos1 = tempVerts[p1].position;//第一个三角形
+                        Vector3 cornerPos2 = tempVerts[p2].position;//第二个三角形
+
+                        //是否是最外边
+                        //如果是一块矩形必定是边
+                        //否则看顶点是在矩形边上,在则也是边
+                        bool hasOuterEdge = (bundleSize == 6)
+                            || !posBounds.Contains(cornerPos1)
+                            || !posBounds.Contains(cornerPos2);
+
+                        if(hasOuterEdge)
+                        {
+                            Vector3 cornerUV1 = tempVerts[p1].uv0;
+                            Vector3 cornerUV2 = tempVerts[p2].uv0;
+
+                            Vector3 centerPos = (cornerPos1 + cornerPos2) / 2;
+                            Vector3 centerUV = (cornerUV1 + cornerUV2) / 2;
+                            size = cornerPos1 - cornerPos2;
+
+                            //模糊分块
+                            size.x = 1 + expand / Mathf.Abs(size.x);
+                            size.y = 1 + expand / Mathf.Abs(size.y);
+                            size.z = 1 + expand / Mathf.Abs(size.z);
+
+                            tPos = centerPos - Vector3.Scale(size, centerPos);
+                            tUV = centerUV - Vector3.Scale(size, centerUV);
+                        }
+
+                        //顶点处理
+                        for(int k=0;k<6;k++)
+                        {
+                            UIVertex vt = tempVerts[i + j + k];
+                            Vector3 pos = vt.position;
+                            Vector2 uv0 = vt.uv0;
+
+                            //是否在边界外,然后乘倍数外扩顶点
+                            //中心点是Pivot,所有有负数,直接乘没事
+                            if (hasOuterEdge && (pos.x < posBounds.xMin || posBounds.xMax < pos.x))
+                            {
+                                pos.x = pos.x * size.x + tPos.x;
+                                uv0.x = uv0.x * size.x + tUV.x;
+                            }
+                            if(hasOuterEdge&&(pos.y<posBounds.yMin||posBounds.yMax<pos.y))
+                            {
+                                pos.y = pos.y * size.y + tPos.y;
+                                uv0.y = uv0.y * size.y + tUV.y;
+                            }
+                            
+                            //因为外扩了,所以以前的UV 都要往里面缩小
+                            vt.uv0 = new Vector2(
+                                Packer.ToFloat((uv0.x + 0.5f) / 2f, (uv0.y + 0.5f) / 2f)
+                                , normalizedIndex);
+                            vt.position = pos;
+                            vt.uv1 = uvMask;
+                            tempVerts[i + j + k] = vt;
+                        }
                     }
                 }
-            }
 
+                vh.AddUIVertexTriangleStream(tempVerts);
+                tempVerts.Clear();
+            }
+            else
+            {
+                int count = vh.currentVertCount;
+                UIVertex vt = default;
+                for(int i=0;i<count;i++)
+                {
+                    vh.PopulateUIVertex(ref vt, i);
+                    Vector2 uv0 = vt.uv0;
+                    vt.uv0 = new Vector2(
+                        Packer.ToFloat((uv0.x + 0.5f) / 2f, (uv0.y + 0.5f) / 2f)
+                        , normalizedIndex);
+                    vh.SetUIVertex(vt, i);
+                }
+            }
         }
 
         /// <summary>
@@ -232,5 +308,28 @@ namespace UIEffect
             //UV不用变
             uvBounds.Set(minUV.x, minUV.y, maxUV.x - minUV.x, maxUV.y - minUV.y);
         }
+
+        /// <summary>
+        /// 设置顶点数据
+        /// </summary>
+        protected override void SetDirty()
+        {
+            ParaTex.RegisterMaterial(EffectMaterial);
+            ParaTex.SetData(this, 0, EffectFactor); //param1.x:特效影响的程度
+            ParaTex.SetData(this, 1, ColorFactor); //param1.y:颜色影响的程度
+            ParaTex.SetData(this, 2, BlurFactor); //param1.z:模糊的程度
+        }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// 得到材质球
+        /// </summary>
+        /// <returns></returns>
+        protected override Material GetMaterial()
+        {
+            return MaterialResolver.GetOrGenerateMaterialVariant(Shader.Find(shaderName), EffectMode, ColorMode, BlurMode, advanceBlur ? BlurEx.Ex : BlurEx.None);
+        }
+
+#endif
     }
 }

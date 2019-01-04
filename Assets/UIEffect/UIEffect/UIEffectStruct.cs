@@ -1,7 +1,7 @@
 ﻿namespace UIEffect
 {
     /// <summary>
-    /// 特效英雄模式
+    /// 特效影响模式
     /// </summary>
     public enum EffectMode
     {
@@ -22,5 +22,14 @@
         FastBlur,//快速模糊
         MediumBlur,//中等模糊
         DetailBlur,//细节模糊
+    }
+
+    /// <summary>
+    /// 是否是进阶模糊
+    /// </summary>
+    public enum BlurEx
+    {
+        None = 0,
+        Ex = 1,
     }
 }
