@@ -235,10 +235,12 @@ namespace UIEffect
                                 uv0.y = uv0.y * size.y + tUV.y;
                             }
                             
-                            //因为外扩了,所以以前的UV 都要往里面缩小
+                            //因为UV外扩了,可能存在负数,所以要归正
                             vt.uv0 = new Vector2(
                                 Packer.ToFloat((uv0.x + 0.5f) / 2f, (uv0.y + 0.5f) / 2f)
                                 , normalizedIndex);
+                            //就算改变了位置UV也没有跟着变
+                            //判断最大最小框用的是UV,所以没事
                             vt.position = pos;
                             vt.uv1 = uvMask;
                             tempVerts[i + j + k] = vt;
@@ -257,6 +259,7 @@ namespace UIEffect
                 {
                     vh.PopulateUIVertex(ref vt, i);
                     Vector2 uv0 = vt.uv0;
+                    //跟上面UV 算法保持一直
                     vt.uv0 = new Vector2(
                         Packer.ToFloat((uv0.x + 0.5f) / 2f, (uv0.y + 0.5f) / 2f)
                         , normalizedIndex);
