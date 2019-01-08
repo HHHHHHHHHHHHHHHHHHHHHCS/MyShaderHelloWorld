@@ -98,7 +98,7 @@ Shader "UI/S_UIEffect"
 
 				half4 _TextureSampleAdd;//Unity管理:图片格式用Alpha8
 				float4 _ClipRect;//Unity管理:2D裁剪用
-				fixed4 _Color;
+				half4 _Color;
 				sampler2D _MainTex;
 				float4 _MainTex_TexelSize;
 				sampler2D _ParamTex;
@@ -110,33 +110,58 @@ Shader "UI/S_UIEffect"
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 					o.worldPosition = v.vertex;
 					o.vertex=UnityObjectToClipPos(v.vertex);
-					o.color = v.Color*_Color;
+					o.color = v.color*_Color;
 					//因为UV外扩了,把归正的UV,解析出来
 					o.texcoord = UnpackToVec2(v.texcoord.x)*2-0.5;
 					o.param = v.texcoord.y;
 					#if defined(EX)
-					o.uvMask.xy = UnpackToVec2(o.uvMask.x);
-					o.uvMask.zw = UnpackToVec2(o.uvMask.y);
+					o.uvMask.xy = UnpackToVec2(v.uvMask.x);
+					o.uvMask.zw = UnpackToVec2(v.uvMask.y);
 					#endif
 					return o;
 				}
 
 				half4 frag(v2f i):SV_TARGET
 				{
-					fixed4 param = tex2D(_ParamTex,float2(0.5,i.param));
-					fixed effectFactor = param.x;
-					fixed colorFactor = param.y;
-					fixed blurFactor = param.z;
+					half4 param = tex2D(_ParamTex,float2(0.5,i.param));
+					half effectFactor = param.x;
+					half colorFactor = param.y;
+					half blurFactor = param.z;
 
 					#if PIXEL//像素化
 					half2 pixelSize = max(2,(1-effectFactor*0.95)*_MainTex_TexelSize.zw);//_MainTex_TexelSize.zw图片大小
 					i.texcoord = round(i.texcoord*pixelSize)/pixelSize;//像素取整/像素尺寸
 					#endif
 
+					//模糊
 					#if defined(UI_BLUR) && EX
-					half4 color = ()
+					half4 color = (Tex2DBlurring(_MainTex,i.texcoord,blurFactor*_MainTex_TexelSize.xy*2,i.uvMask)
+						+ _TextureSampleAdd);
+					#elif defined(UI_BLUR)
+					half4 color = (Tex2DBlurring(_MainTex,i.texcoord,blurFactor*_MainTex_TexelSize.xy*2)
+						+ _TextureSampleAdd);
+					#else
+					half4 color = (tex2D(_MainTex,i.texcoord)+_TextureSampleAdd);
+					#endif
 
-					return half4(1,1,1,1);
+					//视野裁剪
+					color.a *=UnityGet2DClipping(i.worldPosition.xy,_ClipRect);
+
+					//裁剪
+					#if UNITY_UI_ALPHACLIP
+					clip(color.a-0.001)
+					#endif
+
+					//色调用
+					#if defined(UI_TONE)
+					color = ApplyToneEffect(color,effectFactor);
+					#endif
+
+					//最后的颜色叠加处理
+					color = ApplyColorEffect(color,half4(i.color.rgb,colorFactor));
+					color.a *= i.color.a;
+
+					return color;
 				}
 
 			ENDCG

@@ -1,8 +1,16 @@
 ﻿#ifndef  UIEffectBase
 	#define UIEffectBase
 	
+	#if GRAYSCALE | SEPIA | NEGA | PIXEL 
+	#define UI_TONE
+	#endif
+
 	#if ADD | SUBTRACT | FILL
-		#define UI_COLOR
+	#define UI_COLOR
+	#endif
+
+	#if FASTBLUR | MEDIUMBLUR | DETAILBLUR
+	#define UI_BLUR
 	#endif
 	
 	//把float解析成 half4 xyzw 被压缩成0~1
@@ -83,11 +91,34 @@
 		return color;
 	}
 
+	//色调用
+	half4 ApplyToneEffect(half4 color,half factor)
+	{
+		#ifdef GRAYSCALE//取灰
+		color.rgb = lerp(color.rgb,Luminance(color.rgb),factor);
+		#elif SEPIA//金属色
+		color.rgb = lerp(color.rgb,Luminance(color.rgb)*half3(1.07,0.74,0.43),factor);
+		#elif NEGA//反色
+		color.rgb = lerp(color,1-color.rgb,factor);
+		#endif
+
+		return color;
+	}
+
+	half4 Tex2DBlurring(sampler2D tex,half2 texcoord,half2 blur,half4 mask);
+	//模糊用
+	//tex:原图片,texcoord:UV,blur:采样点偏移
+	half4 Tex2DBlurring (sampler2D tex, half2 texcood, half2 blur)
+	{
+		return Tex2DBlurring(tex, texcood, blur, half4(0,0,1,1));
+	}
+
 	//模糊用
 	//Fast:3x3 EX:5x5
 	//Medium:5x5 EX:9x9
 	//Detail:7x7 EX:13x13
-	fixed4 Tex2DBlurring(sampler2D tex,half2 texcood,half2 blur,half4 mask)
+	//tex:原图片,texcoord:UV,blur:采样点偏移,mask:EX的mask保护
+	half4 Tex2DBlurring(sampler2D tex,half2 texcoord,half2 blur,half4 mask)
 	{
 		#if FASTBLUR && EX
 		const int KERNEL_SIZE = 5;
@@ -116,18 +147,18 @@
 		float sum = 0;
 		float2 shift = 0;
 
-		for(int x=0;x<KERNEL_SIZE;X++)
+		for(int x=0;x<KERNEL_SIZE;x++)
 		{
 			shift.x=blur.x*(float(x)-KERNEL_SIZE/2);//采样偏移的X点
-			for(int y=0;y<KERNEL_SIZE;Y++)
+			for(int y=0;y<KERNEL_SIZE;y++)
 			{
 				shift.y=blur.y*(float(y)-KERNEL_SIZE/2);
-				float2 uv = texcood+shift;
+				float2 uv = texcoord+shift;
 				float weight = KERNEL_[x]*KERNEL_[y];//模糊权重
 				sum+=weight;
-				if EX//如果是EX模糊,临界变用半透明,外面用透明
-				fixed masked = min(mask.x<=uv.x,uv.x<=mask.z)*min(mask.y<=uv.y,uv.y<=mask.w);
-				o+=lerp(fixed4(0.5,0.5,0.5,0),tex2D(tex,uv),masked)*weight;
+				#ifdef EX//如果是EX模糊,临界变用半透明,外面用透明
+				half masked = min(mask.x<=uv.x,uv.x<=mask.z)*min(mask.y<=uv.y,uv.y<=mask.w);
+				o+=lerp(half4(0.5,0.5,0.5,0),tex2D(tex,uv),masked)*weight;
 				#else 
 				o+=tex2D(tex,uv)*weight;
 				#endif
