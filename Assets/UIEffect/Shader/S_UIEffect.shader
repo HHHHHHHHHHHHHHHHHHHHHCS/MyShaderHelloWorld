@@ -6,7 +6,7 @@ Shader "UI/S_UIEffect"
 		[PerRendererData] _MainTex("Main Texture",2D)="white"{}
 		_Color("Tint",Color) = (1,1,1,1)
 
-		_StencilComp("Stencil Comparsion",Float)=8
+		_StencilComp("Stencil Comparison",Float)=8
 		_Stencil("Stencil ID",Float)=0
 		_StencilOp("Stencil Operation",Float)=0
 		_StencilWriteMask("Stencil Write Mask",Float)=255
@@ -72,7 +72,7 @@ Shader "UI/S_UIEffect"
 				{
 					float4 vertex :POSITION;
 					float4 color :COLOR;
-					float2 texcoord:TEXCOORD;
+					float2 texcoord:TEXCOORD0;
 
 					#if defined(EX)
 					float2 uvMask:TEXCOORD1;
@@ -84,7 +84,7 @@ Shader "UI/S_UIEffect"
 				struct v2f
 				{
 					float4 vertex:SV_POSITION;
-					float4 color:COLOR;
+					half4 color:COLOR;
 					float2 texcoord:TEXCOORD0;
 					float4 worldPosition:TEXCOORD1;
 					

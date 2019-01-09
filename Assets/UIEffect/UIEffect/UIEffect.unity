@@ -409,13 +409,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aeb6ab761dbd84c82fb28829cd0012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectMaterial: {fileID: 21073103635791954, guid: 9e66639f74b47444b916d11adad89f01,
+  effectMaterial: {fileID: 21423558598658058, guid: 9e66639f74b47444b916d11adad89f01,
     type: 2}
   effectFactor: 1
   colorFactor: 1
   blurFactor: 1
   effectMode: 0
-  colorMode: 2
+  colorMode: 0
   blurMode: 3
   advanceBlur: 1
 --- !u!114 &1692250857
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 21073103635791954, guid: 9e66639f74b47444b916d11adad89f01,
+  m_Material: {fileID: 21423558598658058, guid: 9e66639f74b47444b916d11adad89f01,
     type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1

@@ -156,7 +156,7 @@
 				float2 uv = texcoord+shift;
 				float weight = KERNEL_[x]*KERNEL_[y];//模糊权重
 				sum+=weight;
-				#ifdef EX//如果是EX模糊,临界变用半透明,外面用透明
+				#if EX//如果是EX模糊,临界变用半透明,外面用透明
 				half masked = min(mask.x<=uv.x,uv.x<=mask.z)*min(mask.y<=uv.y,uv.y<=mask.w);
 				o+=lerp(half4(0.5,0.5,0.5,0),tex2D(tex,uv),masked)*weight;
 				#else 
@@ -164,6 +164,7 @@
 				#endif
 			}
 		}
+
 		return o/sum;
 	}
 #endif

@@ -145,6 +145,7 @@ namespace UIEffect
         /// </summary>
         public override ParameterTexture ParaTex => paraTex;
 
+
         public override void ModifyMesh(VertexHelper vh)
         {
             if (!isActiveAndEnabled)
@@ -180,7 +181,6 @@ namespace UIEffect
 
                     //打包UVMask,即原来最大最小顶点UV的位置
                     Vector2 uvMask = new Vector2(Packer.ToFloat(uvBounds.xMin, uvBounds.yMin), Packer.ToFloat(uvBounds.xMax, uvBounds.yMax));
-
                     //计算多少个矩形
                     for(int j=0;j<bundleSize;j+=6)
                     {
@@ -215,10 +215,13 @@ namespace UIEffect
                             tUV = centerUV - Vector3.Scale(size, centerUV);
                         }
 
+      
                         //顶点处理
                         for(int k=0;k<6;k++)
                         {
-                            UIVertex vt = tempVerts[i + j + k];
+                            var index = i + j + k;
+
+                            UIVertex vt = tempVerts[index];
                             Vector3 pos = vt.position;
                             Vector2 uv0 = vt.uv0;
 
@@ -243,13 +246,13 @@ namespace UIEffect
                             //判断最大最小框用的是UV,所以没事
                             vt.position = pos;
                             vt.uv1 = uvMask;
-                            tempVerts[i + j + k] = vt;
+                            tempVerts[index] = vt;
                         }
                     }
                 }
 
-                vh.AddUIVertexTriangleStream(tempVerts);
-                tempVerts.Clear();
+				vh.AddUIVertexTriangleStream(tempVerts);
+				tempVerts.Clear();
             }
             else
             {
@@ -267,6 +270,7 @@ namespace UIEffect
                 }
             }
         }
+
 
         /// <summary>
         /// 计算最小矩形框
