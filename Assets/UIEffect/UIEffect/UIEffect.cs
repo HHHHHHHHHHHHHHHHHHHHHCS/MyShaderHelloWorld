@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UIEffect
 {
     /// <summary>
     /// ui常见的特效
+    /// 为什么要advanced Mode:因为模糊的时候可能会被框的大小限制,所以要扩大边
     /// </summary>
     [RequireComponent(typeof(Graphic)), ExecuteInEditMode, DisallowMultipleComponent]
     public class UIEffect : UIEffectBase
@@ -57,7 +59,7 @@ namespace UIEffect
         private BlurMode blurMode;
 
         [SerializeField, Tooltip("进阶的模糊")]
-        private bool advanceBlur = false;
+        private bool advancedBlur = false;
 
         /// <summary>
         /// 特效的播放比例
@@ -157,7 +159,7 @@ namespace UIEffect
             float normalizedIndex = ParaTex.GetNormalizedIndex(this);
 
             //有模糊效果,而且是高级模糊
-            if (BlurMode != BlurMode.None && advanceBlur)
+            if (BlurMode != BlurMode.None && advancedBlur)
             {
                 vh.GetUIVertexStream(tempVerts);
                 vh.Clear();
@@ -182,7 +184,7 @@ namespace UIEffect
                     //打包UVMask,即原来最大最小顶点UV的位置
                     Vector2 uvMask = new Vector2(Packer.ToFloat(uvBounds.xMin, uvBounds.yMin), Packer.ToFloat(uvBounds.xMax, uvBounds.yMax));
                     //计算多少个矩形
-                    for(int j=0;j<bundleSize;j+=6)
+                    for (int j = 0; j < bundleSize; j += 6)
                     {
                         int p1 = i + j + 1;
                         int p2 = p1 + 3;
@@ -197,7 +199,7 @@ namespace UIEffect
                             || !posBounds.Contains(cornerPos1)
                             || !posBounds.Contains(cornerPos2);
 
-                        if(hasOuterEdge)
+                        if (hasOuterEdge)
                         {
                             Vector3 cornerUV1 = tempVerts[p1].uv0;
                             Vector3 cornerUV2 = tempVerts[p2].uv0;
@@ -215,9 +217,9 @@ namespace UIEffect
                             tUV = centerUV - Vector3.Scale(size, centerUV);
                         }
 
-      
+
                         //顶点处理
-                        for(int k=0;k<6;k++)
+                        for (int k = 0; k < 6; k++)
                         {
                             var index = i + j + k;
 
@@ -232,12 +234,12 @@ namespace UIEffect
                                 pos.x = pos.x * size.x + tPos.x;
                                 uv0.x = uv0.x * size.x + tUV.x;
                             }
-                            if(hasOuterEdge&&(pos.y<posBounds.yMin||posBounds.yMax<pos.y))
+                            if (hasOuterEdge && (pos.y < posBounds.yMin || posBounds.yMax < pos.y))
                             {
                                 pos.y = pos.y * size.y + tPos.y;
                                 uv0.y = uv0.y * size.y + tUV.y;
                             }
-                            
+
                             //因为UV外扩了,可能存在负数,所以要归正
                             vt.uv0 = new Vector2(
                                 Packer.ToFloat((uv0.x + 0.5f) / 2f, (uv0.y + 0.5f) / 2f)
@@ -251,14 +253,14 @@ namespace UIEffect
                     }
                 }
 
-				vh.AddUIVertexTriangleStream(tempVerts);
-				tempVerts.Clear();
+                vh.AddUIVertexTriangleStream(tempVerts);
+                tempVerts.Clear();
             }
             else
             {
                 int count = vh.currentVertCount;
                 UIVertex vt = default;
-                for(int i=0;i<count;i++)
+                for (int i = 0; i < count; i++)
                 {
                     vh.PopulateUIVertex(ref vt, i);
                     Vector2 uv0 = vt.uv0;
@@ -331,10 +333,9 @@ namespace UIEffect
         /// <summary>
         /// 得到材质球
         /// </summary>
-        /// <returns></returns>
         protected override Material GetMaterial()
         {
-            return MaterialResolver.GetOrGenerateMaterialVariant(Shader.Find(shaderName), EffectMode, ColorMode, BlurMode, advanceBlur ? BlurEx.Ex : BlurEx.None);
+            return MaterialResolver.GetOrGenerateMaterialVariant(Shader.Find(shaderName), effectMode, colorMode, blurMode, advancedBlur ? BlurEx.Ex : BlurEx.None);
         }
 
 #endif
