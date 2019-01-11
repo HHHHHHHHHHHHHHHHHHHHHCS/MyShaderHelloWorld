@@ -36,7 +36,7 @@ namespace UIEffect
         /// <summary>
         /// 参数的图片
         /// </summary>
-        public virtual ParameterTexture ParaTex { get; }
+        public virtual ParameterTexture ParamTex { get; }
 
         /// <summary>
         /// 目标的图形类
@@ -110,7 +110,7 @@ namespace UIEffect
         /// </summary>
         protected override void OnEnable()
         {
-            ParaTex?.Register(this);
+            ParamTex?.Register(this);
             ModifyMaterial();
             TargetGraphic.SetVerticesDirty();
             SetDirty();
@@ -123,7 +123,7 @@ namespace UIEffect
         {
             ModifyMaterial();
             TargetGraphic.SetVerticesDirty();
-            ParaTex?.Unregister(this);
+            ParamTex?.Unregister(this);
         }
 
         /// <summary>

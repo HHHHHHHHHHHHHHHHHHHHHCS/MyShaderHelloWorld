@@ -19,7 +19,7 @@ namespace UIEffect
         /// <summary>
         /// 参数的图片
         /// </summary>
-        ParameterTexture ParaTex { get; }
+        ParameterTexture ParamTex { get; }
     }
 
     /// <summary>

@@ -19,7 +19,7 @@ namespace UIEffect
         /// <summary>
         /// 参数图
         /// </summary>
-        private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParamTex");
+        private static readonly ParameterTexture paramTex = new ParameterTexture(8, 128, "_ParamTex");
 
         /// <summary>
         /// 溶解的宽度
@@ -178,7 +178,7 @@ namespace UIEffect
         /// <summary>
         /// 参数图
         /// </summary>
-        public override ParameterTexture ParaTex => paraTex;
+        public override ParameterTexture ParamTex => paramTex;
 
         /// <summary>
         /// 材质球缓存用
@@ -239,7 +239,7 @@ namespace UIEffect
             }
 
             //参数图索引
-            float normalizedIndex = ParaTex.GetNormalizedIndex(this);
+            float normalizedIndex = ParamTex.GetNormalizedIndex(this);
 
             //得到特效的区域矩形
             var tex = NoiseTexture;
@@ -281,13 +281,13 @@ namespace UIEffect
         /// </summary>
         protected override void SetDirty()
         {
-            ParaTex.RegisterMaterial(TargetGraphic.material);
-            ParaTex.SetData(this, 0, EffectFactor); //param1.x:播放的进度
-            ParaTex.SetData(this, 1, Width); //param1.y:溶解的宽度
-            ParaTex.SetData(this, 2, Softness); //param1.z:溶解的软边
-            ParaTex.SetData(this, 4, DissolveColor.r); //param2.x:溶解的颜色R
-            ParaTex.SetData(this, 5, DissolveColor.g); //param2.y:溶解的颜色G
-            ParaTex.SetData(this, 6, DissolveColor.b); //param2.z:溶解的颜色B
+            ParamTex.RegisterMaterial(TargetGraphic.material);
+            ParamTex.SetData(this, 0, EffectFactor); //param1.x:播放的进度
+            ParamTex.SetData(this, 1, Width); //param1.y:溶解的宽度
+            ParamTex.SetData(this, 2, Softness); //param1.z:溶解的软边
+            ParamTex.SetData(this, 4, DissolveColor.r); //param2.x:溶解的颜色R
+            ParamTex.SetData(this, 5, DissolveColor.g); //param2.y:溶解的颜色G
+            ParamTex.SetData(this, 6, DissolveColor.b); //param2.z:溶解的颜色B
         }
 
         /// <summary>

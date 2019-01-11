@@ -20,7 +20,7 @@ namespace UIEffect
         /// <summary>
         /// 参数图片
         /// </summary>
-        private static readonly ParameterTexture paraTex = new ParameterTexture(4, 1024, "_ParamTex");
+        private static readonly ParameterTexture paramTex = new ParameterTexture(4, 1024, "_ParamTex");
 
         /// <summary>
         /// 特效的影响程度
@@ -145,7 +145,7 @@ namespace UIEffect
         /// <summary>
         /// 特效参数图
         /// </summary>
-        public override ParameterTexture ParaTex => paraTex;
+        public override ParameterTexture ParamTex => paramTex;
 
 
         public override void ModifyMesh(VertexHelper vh)
@@ -156,7 +156,7 @@ namespace UIEffect
             }
 
             //参数图索引
-            float normalizedIndex = ParaTex.GetNormalizedIndex(this);
+            float normalizedIndex = ParamTex.GetNormalizedIndex(this);
 
             //有模糊效果,而且是高级模糊
             if (BlurMode != BlurMode.None && advancedBlur)
@@ -323,10 +323,10 @@ namespace UIEffect
         /// </summary>
         protected override void SetDirty()
         {
-            ParaTex.RegisterMaterial(EffectMaterial);
-            ParaTex.SetData(this, 0, EffectFactor); //param1.x:特效影响的程度
-            ParaTex.SetData(this, 1, ColorFactor); //param1.y:颜色影响的程度
-            ParaTex.SetData(this, 2, BlurFactor); //param1.z:模糊的程度
+            ParamTex.RegisterMaterial(EffectMaterial);
+            ParamTex.SetData(this, 0, EffectFactor); //param1.x:特效影响的程度
+            ParamTex.SetData(this, 1, ColorFactor); //param1.y:颜色影响的程度
+            ParamTex.SetData(this, 2, BlurFactor); //param1.z:模糊的程度
         }
 
 #if UNITY_EDITOR

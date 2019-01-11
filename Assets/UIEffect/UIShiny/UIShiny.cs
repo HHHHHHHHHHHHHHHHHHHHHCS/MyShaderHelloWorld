@@ -17,7 +17,7 @@ namespace UIEffect
         /// <summary>
         /// 特效参数用
         /// </summary>
-        private static readonly ParameterTexture paraTex = new ParameterTexture(8, 128, "_ParamTex");
+        private static readonly ParameterTexture paramTex = new ParameterTexture(8, 128, "_ParamTex");
 
         /// <summary>
         /// 流光的颜色 如果都为0,则为流光颜色为图片颜色*10
@@ -187,7 +187,7 @@ namespace UIEffect
         /// <summary>
         /// 得到参数图片
         /// </summary>
-        public override ParameterTexture ParaTex => paraTex;
+        public override ParameterTexture ParamTex => paramTex;
 
         /// <summary>
         /// 批量设置参数
@@ -282,7 +282,7 @@ namespace UIEffect
             if (!isActiveAndEnabled) return;
 
             //得到特效的索引
-            var normalizedIndex = ParaTex.GetNormalizedIndex(this);
+            var normalizedIndex = ParamTex.GetNormalizedIndex(this);
 
             //重新计算矩阵
             var rect = EffectArea.GetEffectArea(vh, graphic);
@@ -321,16 +321,16 @@ namespace UIEffect
         /// </summary>
         protected override void SetDirty()
         {
-            ParaTex.RegisterMaterial(TargetGraphic.material);
-            ParaTex.SetData(this, 0, EffectFactor); //param1.x:特效播放的进度
-            ParaTex.SetData(this, 1, Width); //param1.y:流光的粗细
-            ParaTex.SetData(this, 2, Softness); //param1.z:流光的渐变的软边
-            ParaTex.SetData(this, 3, Brightness); //param1.w:流光的亮度
+            ParamTex.RegisterMaterial(TargetGraphic.material);
+            ParamTex.SetData(this, 0, EffectFactor); //param1.x:特效播放的进度
+            ParamTex.SetData(this, 1, Width); //param1.y:流光的粗细
+            ParamTex.SetData(this, 2, Softness); //param1.z:流光的渐变的软边
+            ParamTex.SetData(this, 3, Brightness); //param1.w:流光的亮度
 
-            paraTex.SetData(this, 4, ShinyColor.r); //param2.r:流光的颜色R
-            paraTex.SetData(this, 5, ShinyColor.g); //param2.g:流光的颜色G
-            paraTex.SetData(this, 6, ShinyColor.b); //param2.b:流光的颜色B
-            ParaTex.SetData(this, 7, Gloss); //param2.w:流光的曝光度
+            paramTex.SetData(this, 4, ShinyColor.r); //param2.r:流光的颜色R
+            paramTex.SetData(this, 5, ShinyColor.g); //param2.g:流光的颜色G
+            paramTex.SetData(this, 6, ShinyColor.b); //param2.b:流光的颜色B
+            ParamTex.SetData(this, 7, Gloss); //param2.w:流光的曝光度
             //旋转不一样还要重新设置顶点数据
             if (!Mathf.Approximately(lastRotation, Rotation) && TargetGraphic)
             {

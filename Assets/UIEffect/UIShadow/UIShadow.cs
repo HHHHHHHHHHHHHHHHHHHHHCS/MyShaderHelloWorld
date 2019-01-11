@@ -82,7 +82,7 @@ namespace UIEffect
         /// <summary>
         /// 特效的参数图
         /// </summary>
-        public ParameterTexture ParaTex { get; private set; }
+        public ParameterTexture ParamTex { get; private set; }
 
         /// <summary>
         /// 注册一些参数和效果
@@ -94,8 +94,8 @@ namespace UIEffect
             uieffect = GetComponent<UIEffect>();
             if (uieffect)
             {
-                ParaTex = uieffect.ParaTex;
-                ParaTex.Register(this);
+                ParamTex = uieffect.ParamTex;
+                ParamTex.Register(this);
             }
         }
 
@@ -107,10 +107,10 @@ namespace UIEffect
             base.OnDisable();
 
             uieffect = null;
-            if (ParaTex != null)
+            if (ParamTex != null)
             {
-                ParaTex.Unregister(this);
-                ParaTex = null;
+                ParamTex.Unregister(this);
+                ParamTex = null;
             }
         }
 
@@ -153,11 +153,11 @@ namespace UIEffect
             var start = vertexs.Count - graphicVertexCount;
             var end = vertexs.Count;
 
-            if (ParaTex != null && uieffect && uieffect.isActiveAndEnabled)
+            if (ParamTex != null && uieffect && uieffect.isActiveAndEnabled)
             {
-                ParaTex.SetData(this, 0, uieffect.EffectFactor); //param1.x 特效的影响度
-                ParaTex.SetData(this, 1, 255); //param1.y 颜色的影响度
-                ParaTex.SetData(this, 2, BlurFactor); //param1.z 模糊的影响度
+                ParamTex.SetData(this, 0, uieffect.EffectFactor); //param1.x 特效的影响度
+                ParamTex.SetData(this, 1, 255); //param1.y 颜色的影响度
+                ParamTex.SetData(this, 2, BlurFactor); //param1.z 模糊的影响度
             }
 
             MyApplyShadow(vertexs, effectColor, ref start, ref end, effectDistance, style, useGraphicAlpha);
@@ -252,8 +252,8 @@ namespace UIEffect
             }
 
             //在UV中的索引
-            float normalizeedIndex = ParaTex != null && uieffect && uieffect.isActiveAndEnabled
-                ? ParaTex.GetNormalizedIndex(this)
+            float normalizeedIndex = ParamTex != null && uieffect && uieffect.isActiveAndEnabled
+                ? ParamTex.GetNormalizedIndex(this)
                 : -1;
 
             //添加扩充的顶点
