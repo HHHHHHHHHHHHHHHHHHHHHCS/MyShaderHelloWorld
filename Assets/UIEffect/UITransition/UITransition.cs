@@ -23,7 +23,8 @@ namespace UIEffect
         /// <summary>
         /// 过渡效果
         /// </summary>
-        [SerializeField, Tooltip("过渡效果")] private TransitionMode transitionMode = TransitionMode.Cutoff;
+        [SerializeField, Tooltip("过渡效果")]
+        private TransitionMode transitionMode = TransitionMode.Cutoff;
 
         /// <summary>
         /// 特效图,单通道颜色图
@@ -34,7 +35,8 @@ namespace UIEffect
         /// <summary>
         /// 特效影响区域
         /// </summary>
-        [SerializeField, Tooltip("特效影响区域")] private EffectArea effectArea = EffectArea.RectTransform;
+        [SerializeField, Tooltip("特效影响区域")]
+        private EffectArea effectArea = EffectArea.RectTransform;
 
         /// <summary>
         /// 是否用特效参数图的缩放比
@@ -61,9 +63,10 @@ namespace UIEffect
         private Color dissolveColor = new Color(0f, 0.25f, 1f);
 
         /// <summary>
-        /// 点击之后隐藏效果
+        /// 播放的时候是否能点击
         /// </summary>
-        [SerializeField, Tooltip("点击之后隐藏效果")] private bool passRayOnHidden = false;
+        [SerializeField, Tooltip("播放的时候是否能点击")]
+        private bool passRayOnHidden = false;
 
         /// <summary>
         /// 特效图,单通道颜色图
@@ -84,7 +87,9 @@ namespace UIEffect
             }
         }
 
-        //TODO:
+        /// <summary>
+        /// 过渡模式
+        /// </summary>
         public TransitionMode TransitionMode
         {
             get => transitionMode;
@@ -98,11 +103,171 @@ namespace UIEffect
             }
         }
 
+        /// <summary>
+        /// 用噪音图的纵横比
+        /// </summary>
+        public bool KeepAspectRatio
+        {
+            get => keepAspectRatio;
+            set
+            {
+                if (keepAspectRatio != value)
+                {
+                    keepAspectRatio = value;
+                    TargetGraphic.SetVerticesDirty();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 溶解的宽度
+        /// </summary>
+        public float DissolveWidth
+        {
+            get => dissolveWidth;
+            set
+            {
+                if (dissolveWidth != value)
+                {
+                    dissolveWidth = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 溶解的软边
+        /// </summary>
+        public float DissolveSoftness
+        {
+            get => dissolveSoftness;
+            set
+            {
+                if (dissolveSoftness != value)
+                {
+                    dissolveSoftness = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 溶解的颜色
+        /// </summary>
+        public Color DissolveColor
+        {
+            get => dissolveColor;
+            set
+            {
+                if (dissolveColor != value)
+                {
+                    dissolveColor = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 播放的时候是否能点击
+        /// </summary>
+        public bool PassRayOnHidden
+        {
+            get => passRayOnHidden;
+            set
+            {
+                if (passRayOnHidden != value)
+                {
+                    passRayOnHidden = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 特效参数图
+        /// </summary>
         public override ParameterTexture ParamTex => paramTex;
 
+        private MaterialCache materialCache;
+
+        /// <summary>
+        /// 显示
+        /// </summary>
+        public void Show()
+        {
+            player.loop = false;
+            player.Play(f => EffectFactor = f);
+        }
+
+        /// <summary>
+        /// 隐藏
+        /// </summary>
+        public void Hide()
+        {
+            player.loop = false;
+            player.Play(f => EffectFactor = 1 - f);
+        }
+
+        /// <summary>
+        /// 激活的时候,设置播放事件
+        /// </summary>
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            player.OnEnable();
+            player.loop = false;
+        }
+
+        /// <summary>
+        /// 隐藏的时候,取消播放事件,注销缓存材质
+        /// </summary>
+        protected override void OnDisable()
+        {
+            MaterialCache.Unregister(materialCache);
+            materialCache = null;
+            base.OnDisable();
+            player.OnDisable();
+        }
+
+        public override void ModifyMaterial()
+        {
+        }
 
         public override void ModifyMesh(VertexHelper vh)
         {
         }
+
+        /// <summary>
+        /// 设置数据
+        /// </summary>
+        protected override void SetDirty()
+        {
+            ParamTex.RegisterMaterial(TargetGraphic.material);//注册材质
+            ParamTex.SetData(this, 0, EffectFactor);//para0:x 播放进度
+            if (TransitionMode == TransitionMode.Dissolve)
+            {
+                ParamTex.SetData(this, 1, DissolveWidth);//para0:z 溶解宽度
+                ParamTex.SetData(this, 2, DissolveSoftness);//para0:z 溶解软边
+                ParamTex.SetData(this, 4, DissolveColor.r);//para1.x 溶解的颜色R
+                ParamTex.SetData(this, 5, DissolveColor.g);//para1.g 溶解的颜色G
+                ParamTex.SetData(this, 6, DissolveColor.b);//para1.b 溶解的颜色B
+            }
+
+            if (PassRayOnHidden)
+            {
+                TargetGraphic.raycastTarget =  EffectFactor>0;
+            }
+        }
+
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// 得到材质
+        /// </summary>
+        protected override Material GetMaterial()
+        {
+            return MaterialResolver.GetOrGenerateMaterialVariant(Shader.Find(shaderName), TransitionMode);
+        }
+#endif
     }
 }
