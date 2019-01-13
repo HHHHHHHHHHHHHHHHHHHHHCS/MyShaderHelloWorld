@@ -17,6 +17,7 @@ namespace UIEffect
     {
         /// <summary>
         /// 字符串,单个分割用,顺时针
+        /// 一个字是四个顶点,和下面的数组顺序对应
         /// </summary>
         protected static readonly Vector2[] splitedCharacterPosition =
             {Vector2.up, Vector2.one, Vector2.right, Vector2.zero};

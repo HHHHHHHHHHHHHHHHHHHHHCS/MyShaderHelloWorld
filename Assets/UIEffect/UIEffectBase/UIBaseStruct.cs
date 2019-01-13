@@ -65,7 +65,7 @@ namespace UIEffect
 
             if (aspectRatio > 0)
             {
-                if (rect.width < rect.height)
+                if (rect.height > rect.width)
                 {
                     rect.width = rect.height * aspectRatio;
                 }
@@ -85,9 +85,9 @@ namespace UIEffect
     /// </summary>
     public enum ColorMode
     {
-        Multiply = 0,//相乘
-        Fill,//替换
-        Add,//叠加
-        Subtract,//相减
+        Multiply = 0, //相乘
+        Fill, //替换
+        Add, //叠加
+        Subtract, //相减
     }
 }

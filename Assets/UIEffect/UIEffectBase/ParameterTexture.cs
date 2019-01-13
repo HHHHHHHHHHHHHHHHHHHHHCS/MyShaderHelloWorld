@@ -118,7 +118,7 @@ namespace UIEffect
         public void Register(IParameterTexture target)
         {
             Initialize();
-            if (target.ParameterIndex <= 0 && 0 < effectStack.Count)
+            if (target.ParameterIndex <= 0 && effectStack.Count > 0)
             {
                 target.ParameterIndex = effectStack.Pop();
             }
