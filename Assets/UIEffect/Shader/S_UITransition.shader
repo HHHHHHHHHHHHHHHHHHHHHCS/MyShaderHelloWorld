@@ -16,6 +16,8 @@ Shader "UI/S_UITransition"
 
 		[Toggle(UNITY_UI_ALPHACLIP)]_UseUIAlphaClip("Use Alpha Clip",Float)=0
 
+		[Header(Transition)]//括号内即为头标题的显示文字 不要加引号,不支持中文
+		_TransitionTexture("Transition Texture (A)",2D)="white"{}
 		_ParamTex("Parameter Texture",2D)="white"{}
 	}
 
@@ -49,7 +51,7 @@ Shader "UI/S_UITransition"
 
 		Pass
 		{
-			Name "UIEFFECT_DEFAULT"
+			Name "UITRANSITION_DEFAULT"
 
 			CGPROGRAM
 
@@ -59,10 +61,7 @@ Shader "UI/S_UITransition"
 
 				#pragma multi_compile _ UNITY_UI_ALPHACLIP
 
-				#pragma shader_feature _ GRAYSCALE SEPIA NEGA PIXEL
-				#pragma shader_feature _ ADD SUBTRACT FILL
-				#pragma shader_feature _ FASTBLUR MEDIUMBLUR DETAILBLUR
-				#pragma shader_feature _ EX
+				#pragma shader_feature _ FADE CUTOFF DISSOLVE
 
 				#include "UnityCG.cginc"
 				#include "UnityUI.cginc"
@@ -73,11 +72,6 @@ Shader "UI/S_UITransition"
 					float4 vertex :POSITION;
 					float4 color :COLOR;
 					float2 texcoord:TEXCOORD0;
-
-					#if defined(EX)
-					float2 uvMask:TEXCOORD1;
-					#endif
-
 					UNITY_VERTEX_INPUT_INSTANCE_ID
 				};
 
@@ -86,12 +80,8 @@ Shader "UI/S_UITransition"
 					float4 vertex:SV_POSITION;
 					half4 color:COLOR;
 					float2 texcoord:TEXCOORD0;
-					float4 worldPosition:TEXCOORD1;
-					
-					half param :TEXCOORD2;
-					#if defined(EX)
-					half4 uvMask:TEXCOORD3;
-					#endif
+					float4 wpos:TEXCOORD1;
+					half3 param :TEXCOORD2;
 
 					UNITY_VERTEX_OUTPUT_STEREO
 				};
@@ -100,66 +90,56 @@ Shader "UI/S_UITransition"
 				float4 _ClipRect;//Unity管理:2D裁剪用
 				half4 _Color;
 				sampler2D _MainTex;
-				float4 _MainTex_TexelSize;
 				sampler2D _ParamTex;
+				sampler2D _TransitionTexture;
 
 				v2f vert(a2v v)
 				{
 					v2f o;
 					UNITY_SETUP_INSTANCE_ID(v);
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-					o.worldPosition = v.vertex;
-					o.vertex=UnityObjectToClipPos(v.vertex);
-					o.color = v.color*_Color;
-					//因为UV外扩了,把归正的UV,解析出来
-					o.texcoord = UnpackToVec2(v.texcoord.x)*2-0.5;
-					o.param = v.texcoord.y;
-					#if defined(EX)
-					o.uvMask.xy = UnpackToVec2(v.uvMask.x);
-					o.uvMask.zw = UnpackToVec2(v.uvMask.y);
-					#endif
+
+					o.wpos = v.vertex;
+					o.vertex = UnityObjectToClipPos(v.vertex);
+
+					o.texcoord = UnpackToVec2(v.texcoord.x);//原来的UV
+					o.param = UnpackToVec3(v.texcoord.y);//特效区域UV,特效索引
+
 					return o;
 				}
 
 				half4 frag(v2f i):SV_TARGET
 				{
-					half4 param = tex2D(_ParamTex,float2(0.5,i.param));
-					half effectFactor = param.x;
-					half colorFactor = param.y;
-					half blurFactor = param.z;
+					fixed4 param1 = tex2D(_ParamTex,float2(0.25,i.param.z));
+					fixed effectFactor = param1.x;
+					float alpha = tex2D(_TransitionTexture,i.param.xy).a;
 
-					#if PIXEL//像素化
-					half2 pixelSize = max(2,(1-effectFactor*0.95)*_MainTex_TexelSize.zw);//_MainTex_TexelSize.zw图片大小
-					i.texcoord = round(i.texcoord*pixelSize)/pixelSize;//像素取整/像素尺寸
+					half4 color = tex2D(_MainTex,i.texcoord)+_TextureSampleAdd;
+					color.a*=UnityGet2DClipping(i.wpos.xy,_ClipRect);
+
+					#if FADE//单纯用噪音图的alpha,进行alpha混合,是有渐变过渡的
+					color.a*=saturate(alpha+(effectFactor*2-1));
+					#elif CUTOFF//是没有渐变过渡的
+					color.a*=step(0.001,color.a*alpha-1+effectFactor);
+					#elif DISSOLVE
+
+					fixed width = param1.y/4;
+					fixed softness = param1.z;
+					fixed3 dissolveCoor = tex2D(_ParamTex,float2(0.75,i.param.z)).rgb;
+					float factor = alpha - (1-effectFactor) * (1+width)+width;//计算宽度边
+
+					//计算渐变软边
+					fixed edgeLerp = step(factor,color.a)*saturate((width-factor)/16/softness);
+					color.rgb +=dissolveCoor.rgb*edgeLerp;//软边颜色
+					color.a *= saturate(factor*32/softness);//宽度和软边alpha
+
 					#endif
 
-					//模糊
-					#if defined(UI_BLUR) && EX
-					half4 color = (Tex2DBlurring(_MainTex,i.texcoord,blurFactor*_MainTex_TexelSize.xy*2,i.uvMask)
-						+ _TextureSampleAdd);
-					#elif defined(UI_BLUR)
-					half4 color = (Tex2DBlurring(_MainTex,i.texcoord,blurFactor*_MainTex_TexelSize.xy*2)
-						+ _TextureSampleAdd);
-					#else
-					half4 color = (tex2D(_MainTex,i.texcoord)+_TextureSampleAdd);
-					#endif
+					color *= i.color;
 
-					//视野裁剪
-					color.a *=UnityGet2DClipping(i.worldPosition.xy,_ClipRect);
-
-					//裁剪
 					#if UNITY_UI_ALPHACLIP
-					clip(color.a-0.001)
+					clip (color.a - 0.001);
 					#endif
-
-					//色调用
-					#if defined(UI_TONE)
-					color = ApplyToneEffect(color,effectFactor);
-					#endif
-
-					//最后的颜色叠加处理
-					color = ApplyColorEffect(color,half4(i.color.rgb,colorFactor));
-					color.a *= i.color.a;
 
 					return color;
 				}
