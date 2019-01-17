@@ -9,12 +9,21 @@ namespace UIEffect.Editors
     {
         protected static GUIContent content = new GUIContent();
 
+        protected void FindProperty(out SerializedProperty sp, string name, SerializedProperty so = null)
+        {
+            sp = so == null
+                ? serializedObject.FindProperty(name)
+                : so.FindPropertyRelative(name);
+        }
+
         protected SerializedProperty FindProperty(string name, SerializedProperty so = null)
         {
             return so == null
                 ? serializedObject.FindProperty(name)
                 : so.FindPropertyRelative(name);
         }
+
+
 
         protected void CreateLine(SerializedProperty sp, string text = null)
         {

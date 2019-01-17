@@ -6,7 +6,8 @@ namespace UIEffect
 {
     public enum TransitionMode
     {
-        Fade = 0, //alpha退去
+        None = 0, //无效果
+        Fade, //alpha退去
         Cutoff, //剪切
         Dissolve, //溶解
     }

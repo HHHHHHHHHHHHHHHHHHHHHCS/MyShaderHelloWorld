@@ -105,6 +105,8 @@ Shader "UI/S_UITransition"
 					o.texcoord = UnpackToVec2(v.texcoord.x);//原来的UV
 					o.param = UnpackToVec3(v.texcoord.y);//特效区域UV,特效索引
 
+					o.color = v.color * _Color;
+
 					return o;
 				}
 
@@ -129,7 +131,7 @@ Shader "UI/S_UITransition"
 					float factor = alpha - (1-effectFactor) * (1+width)+width;//计算宽度边
 
 					//计算渐变软边
-					fixed edgeLerp = step(factor,color.a)*saturate((width-factor)/16/softness);
+					fixed edgeLerp = step(factor,color.a)*saturate((width-factor)*16/softness);
 					color.rgb +=dissolveCoor.rgb*edgeLerp;//软边颜色
 					color.a *= saturate(factor*32/softness);//宽度和软边alpha
 

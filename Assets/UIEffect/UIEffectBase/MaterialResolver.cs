@@ -24,7 +24,7 @@ namespace UIEffect
                 return null;
             }
 
-            string[] keywords = append.Where(x => 0 < (int)x)
+            string[] keywords = append.Where(x => (int)x>0)
                 .Select(x => x.ToString().ToUpper())
                 .ToArray();
             Material mat = GetMaterial(shader, append);
