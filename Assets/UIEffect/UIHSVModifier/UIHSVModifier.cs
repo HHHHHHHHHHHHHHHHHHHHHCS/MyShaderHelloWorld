@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UIEffect;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -158,13 +159,14 @@ namespace UIEffect
 
         protected override void SetDirty()
         {
+            //在shader统一处理
             //要被偏移的颜色的RGB 转换 成色调,饱和度,曝光度
-            Color.RGBToHSV(targetColor, out float h, out float s, out float v);
-
+            ///Color.RGBToHSV(targetColor, out float h, out float s, out float v);
+            
             ParamTex.RegisterMaterial(TargetGraphic.material);
-            ParamTex.SetData(this, 0, h); //param1.x:要被偏移的颜色的色调
-            ParamTex.SetData(this, 1, s); //param1.y:要被偏移的颜色的饱和度
-            ParamTex.SetData(this, 2, v); //param1.z:要被偏移的颜色的曝光度
+            ParamTex.SetData(this, 0, targetColor.r); //param1.x:要被偏移的颜色的r
+            ParamTex.SetData(this, 1, targetColor.g); //param1.y:要被偏移的颜色的g
+            ParamTex.SetData(this, 2, targetColor.b); //param1.z:要被偏移的颜色的b
             ParamTex.SetData(this, 3, range); //param1.w:识别的范围
             //加0.5转正,因为color不支持负数
             ParamTex.SetData(this, 4, hue + 0.5f); //param2.x:色调的偏移

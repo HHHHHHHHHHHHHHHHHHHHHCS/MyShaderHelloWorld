@@ -69,7 +69,7 @@ Shader "UI/S_UIHSVModifier"
 			struct v2f
 			{
 				float4 vertex:SV_POSITION;
-				fixed4 color:COLOR;
+				half4 color:COLOR;
 				float2 texcoord:TEXCOORD0;
 				float4 wPos :TEXCOORD1;
 				half param:TEXCOORD2;//特效图的index
@@ -102,7 +102,7 @@ Shader "UI/S_UIHSVModifier"
 				const half4 k = half4(0.0,-1.0/3.0,2.0/3.0,-1.0);
 				const half e = 1.0e-10;//避免除以0的尴尬
 				half4 p = lerp(half4(c.bg,k.wz),half4(c.gb,k.xy),step(c.b,c.g));
-				half4 q = lerp(half4(p.xyw,c.r),half4(c.r,p.yzw),step(p.x,c.r));
+				half4 q = lerp(half4(p.xyw,c.r),half4(c.r,p.yzx),step(p.x,c.r));
 
 				half d = q.x-min(q.w,q.y);
 				return half3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
@@ -111,20 +111,25 @@ Shader "UI/S_UIHSVModifier"
 			//hsv转换成rgb
 			half3 hsv2rgb(half3 c)
 			{
-				const half4 k = half4(1.0,2.0,1.0/3.0,3.0);
+				const half4 k = half4(1.0,2.0/3.0,1.0/3.0,3.0);
 				c = half3(c.x,clamp(c.yz,0.0,1.0));
 				half3 p = abs(frac(c.xxx+k.xyz)*6.0-k.www);
 				return c.z*lerp(k.xxx,clamp(p-k.xxx,0.0,1.0),c.y);
 			}
-			
-			fixed4 frag(v2f i):SV_TARGET
-			{
-				fixed4 param1 = tex2D(_ParamTex,float2(0.25,i.param));
-				fixed4 param2 = tex2D(_ParamTex,float2(0.75,i.param));
-				fixed3 targetHSV= param1.rgb;//要被偏移的颜色
-				fixed3 targetRange = param1.w;//识别的范围
-				fixed3 hsvShift = param2.xyz-0.5;//偏移后的HSV ,C#里面+0.5 转正了,所以这里-0.5
 
+			half4 doo(half3 f){
+				return half4(f,1);
+			}
+
+
+			//hsv要gamma空间才能用 ,现在有BUG
+			half4 frag(v2f i):SV_TARGET
+			{
+				half4 param1 = tex2D(_ParamTex,float2(0.25,i.param));
+				half4 param2 = tex2D(_ParamTex,float2(0.75,i.param));
+				half3 targetHSV= param1.rgb;//要被偏移的颜色转hsv
+				half3 targetRange = param1.w;//识别的范围
+				half3 hsvShift = param2.xyz;//偏移后的HSV ,C#里面+0.5 转正了,所以这里-0.5
 				half4 color = tex2D(_MainTex,i.texcoord);
 
 				color.a *= UnityGet2DClipping(i.wPos.xy,_ClipRect);//视野剔除
@@ -134,15 +139,62 @@ Shader "UI/S_UIHSVModifier"
 				clip(color.a-0.001);
 				#endif
 
-				half3 hsv = rgb2hsv(color.rgb);
+				half3 hsv = color.rgb;
+
+
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					hsvShift=saturate(LinearToGammaSpace(hsvShift) - 0.5);
+					hsvShift = GammaToLinearSpace(hsvShift);
+					hsv=LinearToGammaSpace(hsv);
+				#else
+					hsvShift-=0.5;
+				#endif
+
+
+				targetHSV= rgb2hsv(targetHSV);
+				hsv=rgb2hsv(hsv);
+
+
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					hsv=GammaToLinearSpace(hsv);
+					targetHSV=GammaToLinearSpace(targetHSV);
+				#endif
+
+
 				half3 range = abs(hsv-targetHSV);
-				half diff=max(max(min(1-range.x,range.x),min(1-range.y,range.y)/10),min(1-range.z,range.z)/10);
+				half3 range2 = 1 - range;
 
-				fixed masked = step(diff,targetRange);
-				color.rgb = hsv2rgb(hsv+hsvShift*masked);
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					range=GammaToLinearSpace(range);
+					range2=GammaToLinearSpace(range2);
+				#endif
 
-				return (color + _TextureSampleAdd) * i.color;//先进行颜色偏移,在做通道和颜色叠加
+
+				half diff = max(max(min(range2.x, range.x), min(range2.y, range.y)/10), min(range2.z, range.z)/10);
+
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					diff=GammaToLinearSpace(range);
+				#endif
+
+
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					hsv=GammaToLinearSpace(hsv);
+					targetRange=GammaToLinearSpace(targetRange);
+				#endif
+				half masked = step(diff,targetRange);
+
+				color.rgb= hsv2rgb(hsv+hsvShift*masked);
+
+				#if !defined(UNITY_COLORSPACE_GAMMA)
+					color.rgb=GammaToLinearSpace(color.rgb);
+				#endif
+
+				color = (color + _TextureSampleAdd) * i.color;
+
+
+				return color;//先进行颜色偏移,在做通道和颜色叠加
 			}
+
 
 			ENDCG
 		}

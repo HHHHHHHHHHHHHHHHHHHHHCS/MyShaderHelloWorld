@@ -91,7 +91,7 @@ namespace UIEffect
                 texture = new Texture2D(channels / 4, instanceLimit, TextureFormat.RGBA32, false, false)
                 {
                     filterMode = FilterMode.Point,
-                    wrapMode = TextureWrapMode.Clamp
+                    wrapMode = TextureWrapMode.Clamp,
                 };
 
                 updateList.Add(UpdateParameterTexture);
