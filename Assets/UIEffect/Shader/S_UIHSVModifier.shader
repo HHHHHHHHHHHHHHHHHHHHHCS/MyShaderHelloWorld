@@ -24,7 +24,7 @@ Shader "UI/S_UIHSVModifier"
 		{
 			"Queue"="Transparent"
 			"IgnoreProjector"="True"
-			"ReaderType"="Transparent"
+			"RenderType"="Transparent"
 			"PreviewType"="Plane"
 			"CanUseSpriteAtlas"="True"
 		}
