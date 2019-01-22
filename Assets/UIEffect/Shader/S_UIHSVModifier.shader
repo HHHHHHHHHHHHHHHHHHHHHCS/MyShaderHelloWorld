@@ -120,81 +120,35 @@ Shader "UI/S_UIHSVModifier"
 			half4 doo(half3 f){
 				return half4(f,1);
 			}
-
-
-			//hsv要gamma空间才能用 ,现在有BUG
-			half4 frag(v2f i):SV_TARGET
+			half4 frag(v2f i) :SV_TARGET
 			{
 				half4 param1 = tex2D(_ParamTex,float2(0.25,i.param));
 				half4 param2 = tex2D(_ParamTex,float2(0.75,i.param));
-				half3 targetHSV= param1.rgb;//要被偏移的颜色转hsv
+				half3 targetHSV = param1.rgb;//要被偏移的颜色转hsv
 				half3 targetRange = param1.w;//识别的范围
-				half3 hsvShift = param2.xyz;//偏移后的HSV ,C#里面+0.5 转正了,所以这里-0.5
+				half3 hsvShift = param2.xyz - 0.5;//偏移后的HSV ,C#里面+0.5 转正了,所以这里-0.5
+
 				half4 color = tex2D(_MainTex,i.texcoord);
 
 				color.a *= UnityGet2DClipping(i.wPos.xy,_ClipRect);//视野剔除
-
 				//是否使用clip 隐藏
 				#ifdef UNITY_UI_ALPHACLIP
-				clip(color.a-0.001);
+				clip(color.a - 0.001);
 				#endif
 
 				half3 hsv = color.rgb;
 
+				hsv = rgb2hsv(hsv);
 
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					hsvShift=saturate(LinearToGammaSpace(hsvShift) - 0.5);
-					hsvShift = GammaToLinearSpace(hsvShift);
-					hsv=LinearToGammaSpace(hsv);
-				#else
-					hsvShift-=0.5;
-				#endif
+				half3 range1 = abs(hsv - targetHSV);
+				half3 range2 = 1 - range1;
+				half diff = max(max(min(range2.x, range1.x), min(range2.y, range1.y) / 10), min(range2.z, range1.z) / 10);
 
-
-				targetHSV= rgb2hsv(targetHSV);
-				hsv=rgb2hsv(hsv);
-
-
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					hsv=GammaToLinearSpace(hsv);
-					targetHSV=GammaToLinearSpace(targetHSV);
-				#endif
-
-
-				half3 range = abs(hsv-targetHSV);
-				half3 range2 = 1 - range;
-
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					range=GammaToLinearSpace(range);
-					range2=GammaToLinearSpace(range2);
-				#endif
-
-
-				half diff = max(max(min(range2.x, range.x), min(range2.y, range.y)/10), min(range2.z, range.z)/10);
-
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					diff=GammaToLinearSpace(range);
-				#endif
-
-
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					hsv=GammaToLinearSpace(hsv);
-					targetRange=GammaToLinearSpace(targetRange);
-				#endif
 				half masked = step(diff,targetRange);
+				color.rgb = hsv2rgb(hsv + hsvShift * masked);
 
-				color.rgb= hsv2rgb(hsv+hsvShift*masked);
-
-				#if !defined(UNITY_COLORSPACE_GAMMA)
-					color.rgb=GammaToLinearSpace(color.rgb);
-				#endif
-
-				color = (color + _TextureSampleAdd) * i.color;
-
-
-				return color;//先进行颜色偏移,在做通道和颜色叠加
+				return (color + _TextureSampleAdd) * i.color;//先进行颜色偏移,在做通道和颜色叠加
 			}
-
 
 			ENDCG
 		}

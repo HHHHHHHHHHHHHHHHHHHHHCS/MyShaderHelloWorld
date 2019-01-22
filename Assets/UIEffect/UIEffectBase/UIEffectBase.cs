@@ -8,8 +8,7 @@ namespace UIEffect
     /// <summary>
     /// UI 特效基础接口
     /// </summary>
-    [RequireComponent(typeof(Graphic))]
-    [DisallowMultipleComponent]
+    [RequireComponent(typeof(Graphic)),DisallowMultipleComponent]
     public abstract class UIEffectBase : BaseMeshEffect, IParameterTexture
 #if UNITY_EDITOR
         , ISerializationCallbackReceiver

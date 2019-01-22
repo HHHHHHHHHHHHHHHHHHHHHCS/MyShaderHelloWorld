@@ -88,7 +88,8 @@ namespace UIEffect
 
             if (!texture)
             {
-                texture = new Texture2D(channels / 4, instanceLimit, TextureFormat.RGBA32, false, false)
+                var isLinear = QualitySettings.activeColorSpace == ColorSpace.Linear;
+                texture = new Texture2D(channels / 4, instanceLimit, TextureFormat.RGBA32, false, isLinear)
                 {
                     filterMode = FilterMode.Point,
                     wrapMode = TextureWrapMode.Clamp,
