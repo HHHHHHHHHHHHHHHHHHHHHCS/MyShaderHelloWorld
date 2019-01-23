@@ -19,9 +19,9 @@ namespace UIEffect
     public static class EffectAreaExtensions
     {
         /// <summary>
-        /// 单个字符流光 Text组件用的框
+        /// 单个字符 Text组件用的框
         /// </summary>
-        static readonly Rect rectForCharacter = new Rect(0, 0, 1, 1);
+        private static readonly Rect rectForCharacter = new Rect(0, 0, 1, 1);
 
         /// <summary>
         /// 得到特效的矩形区域
@@ -89,5 +89,48 @@ namespace UIEffect
         Fill, //替换
         Add, //叠加
         Subtract, //相减
+    }
+
+    /// <summary>
+    /// 矩阵2行3竖
+    /// 用于计算顶点位置
+    /// </summary>
+    public struct Matrix2x3
+    {
+        public float m00, m01, m02, m10, m11, m12;
+
+        public Matrix2x3(Rect rect, float cos, float sin)
+        {
+            const float center = 0.5f;
+            float dx = -rect.xMin / rect.width - center;
+            float dy = -rect.yMin / rect.height - center;
+            m00 = cos / rect.width;
+            m01 = -sin / rect.height;
+            m02 = dx * cos - dy * sin + center;
+            m10 = sin / rect.width;
+            m11 = cos / rect.height;
+            m12 = dx * sin + dy * cos + center;
+        }
+
+        public static Vector2 operator *(Matrix2x3 m, Vector2 v)
+        {
+            return new Vector2(
+                (m.m00 * v.x) + (m.m01 * v.y) + m.m02,
+                (m.m10 * v.x) + (m.m11 * v.y) + m.m12
+            );
+        }
+    }
+
+    /// <summary>
+    /// 常用的固定数据
+    /// </summary>
+    public class ConstData
+    {
+        /// <summary>
+        /// 字符串,单个分割用,顺时针
+        /// 一个字是四个顶点,和下面的数组顺序对应
+        /// </summary>
+        public static readonly Vector2[] splitedCharacterPosition =
+            {Vector2.up, Vector2.one, Vector2.right, Vector2.zero};
     }
 }

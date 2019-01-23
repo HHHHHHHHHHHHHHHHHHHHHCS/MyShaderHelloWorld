@@ -255,8 +255,8 @@ namespace UIEffect
                 vh.PopulateUIVertex(ref vertex, i);
                 if (effectEachCharacter)
                 {
-                    x = splitedCharacterPosition[i % 4].x;
-                    y = splitedCharacterPosition[i % 4].y;
+                    x = ConstData.splitedCharacterPosition[i % 4].x;
+                    y = ConstData.splitedCharacterPosition[i % 4].y;
                 }
                 else
                 {

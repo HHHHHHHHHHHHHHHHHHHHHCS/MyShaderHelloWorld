@@ -304,7 +304,7 @@ namespace UIEffect
 
                 //根据矩阵标准化顶点位置
                 var vertexPos = effectEachCharacter
-                    ? splitedCharacterPosition[i % 4]
+                    ? ConstData.splitedCharacterPosition[i % 4]
                     : (Vector2)vertex.position;
                 var normalizedPos = localMatrix * vertexPos;
                 
