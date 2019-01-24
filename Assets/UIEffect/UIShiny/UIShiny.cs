@@ -310,7 +310,7 @@ namespace UIEffect
                 
                 vertex.uv0 = new Vector2(
                     Packer.ToFloat(vertex.uv0.x, vertex.uv0.y), //原来的UV
-                    Packer.ToFloat(normalizedPos.y, normalizedIndex)); //光柱的中心点位置 特效的索引
+                    Packer.ToFloat(normalizedPos.y, normalizedIndex)); //离中心点的位置 特效的索引
 
                 vh.SetUIVertex(vertex, i);
             }

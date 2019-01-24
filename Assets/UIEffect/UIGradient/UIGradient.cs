@@ -58,9 +58,9 @@ namespace UIEffect
         private float offset2;
 
         /// <summary>
-        /// 特效区域模式
+        /// 特效区域模式,文字组件才有
         /// </summary>
-        [SerializeField, Tooltip("特效区域模式")] private EffectArea effectArea;
+        [SerializeField, Tooltip("特效区域模式,文字组件才有")] private EffectArea effectArea;
 
         /// <summary>
         /// 颜色空间模式
@@ -195,22 +195,22 @@ namespace UIEffect
         /// <summary>
         /// 颜色梯度Diagonal用
         /// </summary>
-        public float Offset2
+        public Vector2 Offset2
         {
-            get => offset2;
-
+            get => new Vector2(offset2, offset1);
             set
             {
-                if (!Mathf.Approximately(offset2, value))
+                if (offset1 != value.y || offset2 != value.x)
                 {
-                    offset2 = value;
+                    offset1 = value.y;
+                    offset2 = value.x;
                     graphic.SetVerticesDirty();
                 }
             }
         }
 
         /// <summary>
-        /// 梯度区域模式
+        /// 特效区域模式,文字组件才有
         /// </summary>
         public EffectArea EffectArea
         {
@@ -241,6 +241,9 @@ namespace UIEffect
             }
         }
 
+        /// <summary>
+        /// 其实这里也可以用shader来写
+        /// </summary>
         public override void ModifyMesh(VertexHelper vh)
         {
             if (!IsActive())
@@ -248,10 +251,10 @@ namespace UIEffect
                 return;
             }
 
+            //得到区域
             Rect rect = effectArea.GetEffectArea(vh, TargetGraphic);
-            ;
-            UIVertex vertex = default;
 
+            //计算标准化矩阵
             float rad = rotation * Mathf.Deg2Rad;
             Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
             if (!ignoreAspectRatio && direction >= Direction.Angle)
@@ -259,7 +262,47 @@ namespace UIEffect
                 dir.x *= rect.height / rect.width;
                 dir = dir.normalized;
             }
-            //todo:
+
+            Matrix2x3 localMatrix = new Matrix2x3(rect, dir.x, dir.y);
+
+
+            Color color;
+            UIVertex vertex = default;
+            Vector2 normalizedPos; //标准化,x,y梯度色lerp用
+            for (int i = 0; i < vh.currentVertCount; i++)
+            {
+                vh.PopulateUIVertex(ref vertex, i);
+
+                //字打散用,加位置偏移
+                if (TargetGraphic is Text && effectArea == EffectArea.Character)
+                {
+                    normalizedPos = (localMatrix * ConstData.splitedCharacterPosition[i % 4]) + Offset2;
+                }
+                else
+                {
+                    normalizedPos = localMatrix * vertex.position + Offset2;
+                }
+
+                //颜色梯度
+                if (direction == Direction.Diagonal)
+                {
+                    color = Color.LerpUnclamped(
+                        Color.LerpUnclamped(color1, color2, normalizedPos.x),
+                        Color.LerpUnclamped(color3, color4, normalizedPos.x),
+                        normalizedPos.y);
+                }
+                else
+                {
+                    color = Color.LerpUnclamped(color2, color1, normalizedPos.y);
+                }
+
+                //颜色gamma,linear 偏正
+                vertex.color *= (colorSpace == ColorSpace.Gamma) ? color.gamma
+                    : (colorSpace == ColorSpace.Linear) ? color.linear
+                    : color;
+
+                vh.SetUIVertex(vertex, i);
+            }
         }
     }
 }
