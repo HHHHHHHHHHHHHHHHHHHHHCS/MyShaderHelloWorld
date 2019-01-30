@@ -14,15 +14,15 @@ namespace UIEffect
         private const string shaderName = "UI/UICaputredImage";
 
 
-        private static int copyId;//复制ID
-        private static int effectId1;//特效ID1
-        private static int effectId2;//特效ID2
-        private static int effectFactorId;//特效进度ID
-        private static int colorFactorId;//颜色进度ID
-        private static CommandBuffer commandBuffer;//图片Buffer
+        private static int copyId = Shader.PropertyToID("_UIEffectCapture_ScreenCopyId"); //复制ID
+        private static int effectId1 = Shader.PropertyToID("_UIEffectCapture_EffectId1"); //特效ID1
+        private static int effectId2 = Shader.PropertyToID("_UIEffectCapture_EffectId2"); //特效ID2
+        private static int effectFactorId = Shader.PropertyToID("_EffectFactor"); //特效进度ID
+        private static int colorFactorId = Shader.PropertyToID("_ColorFactor"); //颜色进度ID
+        private static CommandBuffer commandBuffer = new CommandBuffer(); //渲染命令
 
-        private RenderTexture rt;//渲染后的图片
-        private RenderTargetIdentifier rtId;//图片ID
+        private RenderTexture rt; //渲染的图片
+        private RenderTargetIdentifier rtId; //渲染的图片的ID
 
         /// <summary>
         /// 特效的播放进度
@@ -194,6 +194,200 @@ namespace UIEffect
         /// 是否立即启动效果
         /// </summary>
         public bool ImmediateCapturing => immediateCapturing;
+
+        /// <summary>
+        /// 激活时候,根据是否激活播放来播放
+        /// </summary>
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (captureOnEnable && Application.isPlaying)
+            {
+                Capture();
+            }
+        }
+
+        /// <summary>
+        /// 隐藏的时候,释放资源
+        /// </summary>
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (captureOnEnable && Application.isPlaying)
+            {
+                Release(false);
+                texture = null;
+            }
+        }
+
+        /// <summary>
+        /// 销毁的时候,释放资源
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            Release();
+            base.OnDestroy();
+        }
+
+        /// <summary>
+        /// 重新设置顶点数据
+        /// </summary>
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            if (texture == null || color.a < 1 / 255f || canvasRenderer.GetAlpha() < 1 / 255f)
+            {
+                //如果图片不可见,要么没有图片
+                vh.Clear();
+            }
+            else
+            {
+                //重置顶点颜色
+                base.OnPopulateMesh(vh);
+                UIVertex vt = default;
+                Color c = new Color(1, 1, 1, color.a);
+                for (int i = 0; i < vh.currentVertCount; i++)
+                {
+                    vh.PopulateUIVertex(ref vt, i);
+                    vt.color = c;
+                    vh.SetUIVertex(vt, i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 降低采样
+        /// </summary>
+        public void GetDesamplingSize(DesamplingRate rate, out int w, out int h)
+        {
+            /*
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                var res = UnityEditor.UnityStats.screenRes.Split('x');
+                w = int.Parse(res[0]);
+                h = int.Parse(res[1]);
+            }
+            else
+#endif
+            {
+                w = Screen.width;
+                h = Screen.height;
+            }
+            */
+
+            w = Screen.width;
+            h = Screen.height;
+
+            if (rate == DesamplingRate.None)
+            {
+                return;
+            }
+
+            float aspect = w / h;
+
+            //用2的开发图片,进行降低采样
+            if (w < h)
+            {
+                h = Mathf.ClosestPowerOfTwo(h / (int) rate); //ClosestPowerOfTwo:返回离val最近的2的开发
+                w = Mathf.CeilToInt(h * aspect);
+            }
+            else
+            {
+                w = Mathf.ClosestPowerOfTwo(w / (int) rate);
+                h = Mathf.CeilToInt(w / aspect);
+            }
+        }
+
+        /// <summary>
+        /// 雕塑效果
+        /// </summary>
+        public void Capture()
+        {
+            var rootCanvas = canvas.rootCanvas;
+
+            if (fitToScreen)
+            {
+                //是否全屏效果
+                var rootTransform = rootCanvas.transform as RectTransform;
+                var size = rootTransform.rect.size;
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.x);
+                rectTransform.position = rootTransform.position;
+            }
+
+            //w,h不符合不一致 ,释放重新创建
+            GetDesamplingSize(desamplingRate, out var w, out var h);
+            if (rt && (rt.width != w || rt.height != h))
+            {
+                Release(ref rt);
+            }
+
+            if (!rt)
+            {//重新创建图片
+                //w,h,缓存模版位数,图片格式,写入读取图片的颜色空间
+                rt = RenderTexture.GetTemporary(w, h, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
+                rt.filterMode = filterMode;
+                rt.useMipMap = false;
+                rt.wrapMode = TextureWrapMode.Clamp;
+                rtId = new RenderTargetIdentifier(rt);
+            }
+
+
+            SetupCommandBuffer();
+        }
+
+        private void SetupCommandBuffer()
+        {
+        }
+
+        public void Release()
+        {
+            Release(true);
+            texture = null;
+            SetDirty();
+        }
+
+        /// <summary>
+        /// 设置自己要被清除
+        /// </summary>
+        private void SetDirty()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                UnityEditor.EditorUtility.SetDirty(this);
+            }
+#endif
+        }
+
+        private void Release(bool releaseRT)
+        {
+            if (releaseRT)
+            {
+                texture = null;
+                Release(ref rt);
+            }
+
+            if (commandBuffer != null)
+            {
+                commandBuffer.Clear();
+                if (releaseRT)
+                {
+                    commandBuffer.Release();
+                    commandBuffer = null;
+                }
+            }
+        }
+
+
+        private void Release(ref RenderTexture obj)
+        {
+            if (obj)
+            {
+                RenderTexture.ReleaseTemporary(obj);
+                obj = null;
+            }
+        }
 
 #if UNITY_EDITOR
         protected override void Reset()
