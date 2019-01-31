@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -21,7 +22,7 @@ namespace UIEffect
         private static int colorFactorId = Shader.PropertyToID("_ColorFactor"); //颜色进度ID
         private static CommandBuffer commandBuffer = new CommandBuffer(); //渲染命令
 
-        private RenderTexture rt; //渲染的图片
+        private RenderTexture rt; //渲染后的图片
         private RenderTargetIdentifier rtId; //渲染的图片的ID
 
         /// <summary>
@@ -196,6 +197,11 @@ namespace UIEffect
         public bool ImmediateCapturing => immediateCapturing;
 
         /// <summary>
+        /// 渲染后的图片
+        /// </summary>
+        public RenderTexture CapturedTexture => rt;
+
+        /// <summary>
         /// 激活时候,根据是否激活播放来播放
         /// </summary>
         protected override void OnEnable()
@@ -241,7 +247,7 @@ namespace UIEffect
             }
             else
             {
-                //重置顶点颜色
+                //设置顶点颜色,只要alpha
                 base.OnPopulateMesh(vh);
                 UIVertex vt = default;
                 Color c = new Color(1, 1, 1, color.a);
@@ -283,12 +289,12 @@ namespace UIEffect
                 return;
             }
 
-            float aspect = w / h;
+            float aspect = (float)w / h;
 
             //用2的开发图片,进行降低采样
             if (w < h)
             {
-                h = Mathf.ClosestPowerOfTwo(h / (int) rate); //ClosestPowerOfTwo:返回离val最近的2的开发
+                h = Mathf.ClosestPowerOfTwo(h / (int) rate); //ClosestPowerOfTwo:返回离val最近的2的平方
                 w = Mathf.CeilToInt(h * aspect);
             }
             else
@@ -323,7 +329,8 @@ namespace UIEffect
             }
 
             if (!rt)
-            {//重新创建图片
+            {
+                //重新创建图片
                 //w,h,缓存模版位数,图片格式,写入读取图片的颜色空间
                 rt = RenderTexture.GetTemporary(w, h, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
                 rt.filterMode = filterMode;
@@ -336,10 +343,84 @@ namespace UIEffect
             SetupCommandBuffer();
         }
 
+        //设置渲染命令
         private void SetupCommandBuffer()
         {
+            //设置材质球
+            Material mat = effectMaterial;
+            //渲染命令实例化
+            if (commandBuffer == null)
+            {
+                commandBuffer = new CommandBuffer();
+            }
+
+            //设置原图
+            GetDesamplingSize(DesamplingRate.None, out int w, out int h);
+            commandBuffer.GetTemporaryRT(copyId, w, h, 0, filterMode);
+#if UNITY_EDITOR
+            commandBuffer.Blit(
+                Resources.FindObjectsOfTypeAll<RenderTexture>().FirstOrDefault(x => x.name == "GameView RT"), copyId);
+#else
+            commandBuffer.Blit(BuiltinRenderTextureType.BindableTexture, copyId);
+#endif
+
+            //设置播放进度和颜色
+            commandBuffer.SetGlobalVector(effectFactorId, new Vector4(effectFactor, 0));
+            commandBuffer.SetGlobalVector(colorFactorId,
+                new Vector4(effectColor.r, effectColor.g, effectColor.b, effectColor.a));
+
+            //得到降低采样的图片
+            GetDesamplingSize(reductionRate, out w, out h);
+            commandBuffer.GetTemporaryRT(effectId1, w, h, 0, filterMode);
+            commandBuffer.ReleaseTemporaryRT(copyId);
+
+            //设置模糊图片,根据模糊次数多次effectId1->effectId2 或者 effectId1->effectId2
+            if (blurMode != BlurMode.None)
+            {
+                commandBuffer.GetTemporaryRT(effectId2, w, h, 0, FilterMode);
+                for (int i = 0; i < blurIterations; i++)
+                {
+                    commandBuffer.SetGlobalVector(effectFactorId, new Vector4(blurFactor, 0));
+                    commandBuffer.Blit(effectId1, effectId2, mat, 1);
+                    commandBuffer.SetGlobalVector(effectFactorId, new Vector4(0, blurFactor));
+                    commandBuffer.Blit(effectId2, effectId1, mat, 1);
+                }
+
+                commandBuffer.ReleaseTemporaryRT(effectId2);
+            }
+
+            //设置到原图
+            commandBuffer.Blit(effectId1, rtId);
+            commandBuffer.ReleaseTemporaryRT(effectId1);
+
+#if UNITY_EDITOR
+            //编辑器模式下
+            //如果不是播放状态,直接更新特效图片,跳出
+            //如果是播放状态,预先执行渲染命令,在根据是否立即更新而更新
+            if (!Application.isPlaying)
+            {
+                Graphics.ExecuteCommandBuffer(commandBuffer);
+                UpdateTexture();
+                return;
+            }
+
+            Graphics.ExecuteCommandBuffer(commandBuffer);
+#endif
+
+            //正常模式,根据是否立即更新图片,执行渲染命再令更新图片,没有预先执行渲染命令
+            if (immediateCapturing)
+            {
+                UpdateTexture();
+            }
+            else
+            {
+                canvas.rootCanvas.GetComponent<CanvasScaler>().StartCoroutine(CallUpdateTextureOnNextFrame());
+            }
         }
 
+        /// <summary>
+        /// 释放
+        /// </summary>
         public void Release()
         {
             Release(true);
@@ -360,6 +441,9 @@ namespace UIEffect
 #endif
         }
 
+        /// <summary>
+        /// 释放图片,是否要释放RT
+        /// </summary>
         private void Release(bool releaseRT)
         {
             if (releaseRT)
@@ -380,6 +464,9 @@ namespace UIEffect
         }
 
 
+        /// <summary>
+        /// 释放RT
+        /// </summary>
         private void Release(ref RenderTexture obj)
         {
             if (obj)
@@ -390,6 +477,9 @@ namespace UIEffect
         }
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// inspector点击Reset
+        /// </summary>
         protected override void Reset()
         {
             blurIterations = 3;
@@ -399,5 +489,29 @@ namespace UIEffect
             base.Reset();
         }
 #endif
+
+        /// <summary>
+        /// 延迟一帧更新图片
+        /// </summary>
+        private IEnumerator CallUpdateTextureOnNextFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            UpdateTexture();
+        }
+
+        /// <summary>
+        /// 立即更新图片
+        /// Editor下,渲染命令被外部预先执行
+        /// 正常是执行渲染命令,释放图片,设置图片,设置清除数据
+        /// </summary>
+        private void UpdateTexture()
+        {
+#if !UNITY_EDITOR
+            Graphics.ExecuteCommandBuffer(commandBuffer);
+#endif
+            Release(false);
+            texture = CapturedTexture;
+            SetDirty();
+        }
     }
 }
