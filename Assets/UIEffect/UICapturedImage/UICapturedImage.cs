@@ -12,7 +12,7 @@ namespace UIEffect
     /// </summary>
     public class UICapturedImage : RawImage
     {
-        private const string shaderName = "UI/UICaputredImage";
+        private const string shaderName = "UI/S_UICapturedImage";
 
 
         private static int copyId = Shader.PropertyToID("_UIEffectCapture_ScreenCopyId"); //复制ID
