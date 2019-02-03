@@ -261,7 +261,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 降低采样
+        /// 降低采样,得到宽高
         /// </summary>
         public void GetDesamplingSize(DesamplingRate rate, out int w, out int h)
         {
