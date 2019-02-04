@@ -21,11 +21,17 @@ namespace UIEffect.Editors
         private const int bits4 = (1 << 4) - 1;
         private const int bits2 = (1 << 2) - 1;
 
+        private static readonly GUIContent contentEffectColor = new GUIContent("颜色特效");
+
         private bool customAdvancedOption = false;
 
+        private SerializedProperty material;
         private SerializedProperty texture;
         private SerializedProperty color;
         private SerializedProperty raycastTarget;
+        private SerializedProperty effectMode;
+        private SerializedProperty effectFactor;
+        private SerializedProperty colorMode;
         private SerializedProperty desamplingRate;
         private SerializedProperty reductionRate;
         private SerializedProperty filterMode;
@@ -35,7 +41,7 @@ namespace UIEffect.Editors
         private SerializedProperty captureOnEnable;
         private SerializedProperty immediateCapturing;
 
-        private QualityMode qualityMode
+        private QualityMode Quality
         {
             get
             {
@@ -65,14 +71,120 @@ namespace UIEffect.Editors
             }
         }
 
+        public override void OnInspectorGUI()
+        {
+            var graphic = target as UICapturedImage;
+
+            //基础
+            EditorGUILayout.PropertyField(texture);
+            EditorGUILayout.PropertyField(color);
+            EditorGUILayout.PropertyField(raycastTarget);
+
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("效果", EditorStyles.boldLabel);
+
+            //材质球
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.PropertyField(material);
+            EditorGUI.EndDisabledGroup();
+
+            //特效模式
+            EditorGUILayout.PropertyField(effectMode);
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(effectFactor);
+                EditorGUI.indentLevel--;
+            }
+
+            //颜色模式
+            EditorGUILayout.PropertyField(colorMode);
+            EditorGUI.indentLevel++;
+            EditorGUI.BeginChangeCheck();
+            EditorGUI.showMixedValue = color.hasMultipleDifferentValues;
+#if UNITY_2018_1_OR_NEWER
+            color.colorValue =
+                EditorGUILayout.ColorField(contentEffectColor, color.colorValue, true, false, false);
+#else
+				spColor.colorValue =
+ EditorGUILayout.ColorField (contentEffectColor, spColor.colorValue, true, false, false, null);
+#endif
+            if (EditorGUI.EndChangeCheck())
+            {
+                color.serializedObject.ApplyModifiedProperties();
+            }
+            EditorGUILayout.PropertyField(effectFactor);
+            EditorGUI.indentLevel--;
+
+            //进阶设置
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("进阶设置", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(captureOnEnable);
+            EditorGUILayout.PropertyField(keepSizeToRootCanvas);
+            EditorGUILayout.PropertyField(immediateCapturing);
+
+            //品质设定
+            EditorGUI.BeginChangeCheck();
+            QualityMode quality = Quality;
+            quality = (QualityMode) EditorGUILayout.EnumPopup("效果品质", quality);
+            if (EditorGUI.EndChangeCheck())
+            {
+                customAdvancedOption = (quality == QualityMode.Custom);
+                Quality = quality;
+            }
+
+
+            //自定义品质
+            if (customAdvancedOption)
+            {
+                if (blurMode.intValue != 0)
+                {
+                    EditorGUILayout.PropertyField(iterations);
+                }
+                //降低采样
+                DrawDesamplingRate(reductionRate);
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("最终图片设置", EditorStyles.boldLabel);
+
+                //提升采样
+                EditorGUILayout.PropertyField(filterMode);
+                DrawDesamplingRate(desamplingRate);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.helpBox))
+            {
+                GUILayout.Label("测试");
+
+                if (GUILayout.Button("播放", "ButtonLeft"))
+                {
+                    graphic.Release();
+                    EditorApplication.delayCall += graphic.Capture;
+                }
+
+                EditorGUI.BeginDisabledGroup(!graphic.CapturedTexture);
+                if (GUILayout.Button("结束", "ButtonRight"))
+                {
+                    graphic.Release();
+                }
+
+                EditorGUI.EndDisabledGroup();
+            }
+        }
+
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
+            material = serializedObject.FindProperty("effectMaterial");
             texture = serializedObject.FindProperty("m_Texture");
             color = serializedObject.FindProperty("m_Color");
             raycastTarget = serializedObject.FindProperty("m_RaycastTarget");
+            effectMode = serializedObject.FindProperty("effectMode");
+            effectFactor = serializedObject.FindProperty("effectFactor");
+            colorMode = serializedObject.FindProperty("colorMode");
             desamplingRate = serializedObject.FindProperty("desamplingRate");
             reductionRate = serializedObject.FindProperty("reductionRate");
             filterMode = serializedObject.FindProperty("filterMode");

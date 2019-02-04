@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace UIEffect
 {
     /// <summary>
-    /// 艺术品图片
+    /// 捕获图片
     /// </summary>
     public class UICapturedImage : RawImage
     {
@@ -20,7 +20,7 @@ namespace UIEffect
         private static int effectId2 = Shader.PropertyToID("_UIEffectCapture_EffectId2"); //特效ID2
         private static int effectFactorId = Shader.PropertyToID("_EffectFactor"); //特效进度ID
         private static int colorFactorId = Shader.PropertyToID("_ColorFactor"); //颜色进度ID
-        private static CommandBuffer commandBuffer = new CommandBuffer(); //渲染命令
+        private static CommandBuffer commandBuffer; //渲染命令
 
         private RenderTexture rt; //渲染后的图片
         private RenderTargetIdentifier rtId; //渲染的图片的ID
