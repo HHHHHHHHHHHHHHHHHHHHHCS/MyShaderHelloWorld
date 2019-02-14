@@ -21,7 +21,7 @@ namespace UIEffect.Editors
         private const int bits4 = (1 << 4) - 1;
         private const int bits2 = (1 << 2) - 1;
 
-        private static readonly GUIContent contentEffectColor = new GUIContent("颜色特效");
+        private static readonly GUIContent content = new GUIContent();
 
         private bool customAdvancedOption = false;
 
@@ -32,12 +32,15 @@ namespace UIEffect.Editors
         private SerializedProperty effectMode;
         private SerializedProperty effectFactor;
         private SerializedProperty colorMode;
+        private SerializedProperty effectColor;
+        private SerializedProperty colorFactor;
         private SerializedProperty desamplingRate;
         private SerializedProperty reductionRate;
         private SerializedProperty filterMode;
         private SerializedProperty iterations;
         private SerializedProperty keepSizeToRootCanvas;
         private SerializedProperty blurMode;
+        private SerializedProperty blurFactor;
         private SerializedProperty captureOnEnable;
         private SerializedProperty immediateCapturing;
 
@@ -85,42 +88,54 @@ namespace UIEffect.Editors
 
             //材质球
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.PropertyField(material);
+            CreateLine(material, "材质球");
             EditorGUI.EndDisabledGroup();
 
             //特效模式
-            EditorGUILayout.PropertyField(effectMode);
+            CreateLine(effectMode, "特效模式");
+            if(effectMode.intValue!=(int)EffectMode.None)
             {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(effectFactor);
+                CreateLine(effectFactor, "特效程度");
                 EditorGUI.indentLevel--;
             }
 
             //颜色模式
-            EditorGUILayout.PropertyField(colorMode);
+            CreateLine(colorMode, "颜色模式");
             EditorGUI.indentLevel++;
             EditorGUI.BeginChangeCheck();
             EditorGUI.showMixedValue = color.hasMultipleDifferentValues;
+            content.text = "颜色特效";
 #if UNITY_2018_1_OR_NEWER
-            color.colorValue =
-                EditorGUILayout.ColorField(contentEffectColor, color.colorValue, true, false, false);
+            effectColor.colorValue =
+                EditorGUILayout.ColorField(content, effectColor.colorValue, true, false, false);
 #else
-				spColor.colorValue =
- EditorGUILayout.ColorField (contentEffectColor, spColor.colorValue, true, false, false, null);
+            effectColor.colorValue =
+                EditorGUILayout.ColorField(content, effectColor.colorValue, true, false, false, null);
 #endif
+
             if (EditorGUI.EndChangeCheck())
             {
                 color.serializedObject.ApplyModifiedProperties();
             }
-            EditorGUILayout.PropertyField(effectFactor);
+            CreateLine(colorFactor, "颜色程度");
             EditorGUI.indentLevel--;
+
+            //模糊程度
+            CreateLine(blurMode, "模糊模式");
+            if (blurMode.intValue != (int) BlurMode.None)
+            {
+                EditorGUI.indentLevel++;
+                CreateLine(blurFactor, "模糊程度");
+                EditorGUI.indentLevel--;
+            }
 
             //进阶设置
             GUILayout.Space(10);
             EditorGUILayout.LabelField("进阶设置", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(captureOnEnable);
-            EditorGUILayout.PropertyField(keepSizeToRootCanvas);
-            EditorGUILayout.PropertyField(immediateCapturing);
+            CreateLine(captureOnEnable, "Enable立即启用");
+            CreateLine(keepSizeToRootCanvas, "填充父节点");
+            CreateLine(immediateCapturing, "是否立即执行");
 
             //品质设定
             EditorGUI.BeginChangeCheck();
@@ -128,27 +143,26 @@ namespace UIEffect.Editors
             quality = (QualityMode) EditorGUILayout.EnumPopup("效果品质", quality);
             if (EditorGUI.EndChangeCheck())
             {
-                customAdvancedOption = (quality == QualityMode.Custom);
                 Quality = quality;
             }
-
+            customAdvancedOption = (quality == QualityMode.Custom);
 
             //自定义品质
             if (customAdvancedOption)
             {
                 if (blurMode.intValue != 0)
                 {
-                    EditorGUILayout.PropertyField(iterations);
+                    CreateLine(iterations, "模糊次数");
                 }
                 //降低采样
-                DrawDesamplingRate(reductionRate);
+                DrawDesamplingRate(reductionRate,true);
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("最终图片设置", EditorStyles.boldLabel);
 
                 //提升采样
-                EditorGUILayout.PropertyField(filterMode);
-                DrawDesamplingRate(desamplingRate);
+                CreateLine(filterMode, "滤波模式");
+                DrawDesamplingRate(desamplingRate,false);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -185,12 +199,15 @@ namespace UIEffect.Editors
             effectMode = serializedObject.FindProperty("effectMode");
             effectFactor = serializedObject.FindProperty("effectFactor");
             colorMode = serializedObject.FindProperty("colorMode");
+            effectColor = serializedObject.FindProperty("effectColor");
+            colorFactor = serializedObject.FindProperty("colorFactor");
             desamplingRate = serializedObject.FindProperty("desamplingRate");
             reductionRate = serializedObject.FindProperty("reductionRate");
             filterMode = serializedObject.FindProperty("filterMode");
             iterations = serializedObject.FindProperty("blurIterations");
             keepSizeToRootCanvas = serializedObject.FindProperty("fitToScreen");
             blurMode = serializedObject.FindProperty("blurMode");
+            blurFactor = serializedObject.FindProperty("blurFactor");
             captureOnEnable = serializedObject.FindProperty("captureOnEnable");
             immediateCapturing = serializedObject.FindProperty("immediateCapturing");
         }
@@ -198,14 +215,20 @@ namespace UIEffect.Editors
         /// <summary>
         /// 画采样率界面用
         /// </summary>
-        private void DrawDesamplingRate(SerializedProperty sp)
+        private void DrawDesamplingRate(SerializedProperty sp,bool isReduct)
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.PropertyField(sp);
+                CreateLine(sp, isReduct?"提升采样":"降低采样");
                 (target as UICapturedImage).GetDesamplingSize((DesamplingRate) sp.intValue, out int w, out int h);
                 GUILayout.Label($"{w}x{h}", EditorStyles.miniLabel);
             }
+        }
+
+        private void CreateLine(SerializedProperty sp,string text)
+        {
+            content.text = text;
+            EditorGUILayout.PropertyField(sp, content);
         }
     }
 }

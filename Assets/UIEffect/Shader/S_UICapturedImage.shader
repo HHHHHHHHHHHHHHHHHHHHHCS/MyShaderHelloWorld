@@ -17,7 +17,7 @@ Shader "UI/S_UICapturedImage"
 			#pragma fragment frag
 			#pragma target 2.0
 
-			#pragma shader_feature _ GRAYSCALE SEPIA NEGA PixelShader
+			#pragma shader_feature _ GRAYSCALE SEPIA NEGA PIXEL
 			#pragma shader_feature _ ADD SUBTRACT FILL
 
 			#include "UnityCG.cginc"
@@ -26,7 +26,7 @@ Shader "UI/S_UICapturedImage"
 			sampler2D _MainTex;
 			float4 _MainTex_TexelSize;
 			uniform half4 _EffectFactor;
-			uniform fixed4 _ColorFactor;
+			uniform half4 _ColorFactor;
 
 			v2f_img vert(appdata_img v)
 			{
@@ -39,10 +39,10 @@ Shader "UI/S_UICapturedImage"
 				return o;
 			}
 
-			fixed4 frag(v2f_img i):SV_Target
+			half4 frag(v2f_img i):SV_Target
 			{
 				half effectFactor = _EffectFactor.x;
-				fixed4 colorFactor = _ColorFactor;
+				half4 colorFactor = _ColorFactor;
 
 				#if PIXEL
 				half2 pixelScale = max(2,(1-effectFactor)*_MainTex_TexelSize.zw);
@@ -75,7 +75,7 @@ Shader "UI/S_UICapturedImage"
 			#pragma fragment frag_blur
 			#pragma target 2.0
 
-			#pragma shader_feature FASTBLUR MEDIUMBLUR DETAILBLUR
+			#pragma shader_feature _ FASTBLUR MEDIUMBLUR DETAILBLUR
 
 			#include "UnityCG.cginc"
 			#include "UIEffectBase.cginc"
@@ -84,10 +84,10 @@ Shader "UI/S_UICapturedImage"
 			float4 _MainTex_TexelSize;
 			uniform half4 _EffectFactor;
 
-			fixed4 frag_blur(v2f_img i):SV_TARGET
+			half4 frag_blur(v2f_img i):SV_TARGET
 			{
 				half2 blurFactor = _EffectFactor.xy;
-				half4 color = Tex2DBlurring(_MainTex,i.uv,blurFactor*_MainTex_TexelSize.xy*2);
+				half4 color = Tex2DBlurring1D(_MainTex,i.uv,blurFactor*_MainTex_TexelSize.xy*2);
 				color.a =1;
 				return color;
 			}

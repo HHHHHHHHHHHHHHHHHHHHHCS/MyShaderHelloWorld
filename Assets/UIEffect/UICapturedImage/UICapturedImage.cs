@@ -265,7 +265,6 @@ namespace UIEffect
         /// </summary>
         public void GetDesamplingSize(DesamplingRate rate, out int w, out int h)
         {
-            /*
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
@@ -278,11 +277,8 @@ namespace UIEffect
             {
                 w = Screen.width;
                 h = Screen.height;
-            }
-            */
 
-            w = Screen.width;
-            h = Screen.height;
+            }
 
             if (rate == DesamplingRate.None)
             {
@@ -317,9 +313,10 @@ namespace UIEffect
                 var rootTransform = rootCanvas.transform as RectTransform;
                 var size = rootTransform.rect.size;
                 rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
-                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.x);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
                 rectTransform.position = rootTransform.position;
             }
+
 
             //w,h不符合不一致 ,释放重新创建
             GetDesamplingSize(desamplingRate, out var w, out var h);
@@ -328,7 +325,7 @@ namespace UIEffect
                 Release(ref rt);
             }
 
-            if (!rt)
+            if (!rt||!rt.IsCreated())
             {
                 //重新创建图片
                 //w,h,缓存模版位数,图片格式,写入读取图片的颜色空间
@@ -337,11 +334,13 @@ namespace UIEffect
                 rt.useMipMap = false;
                 rt.wrapMode = TextureWrapMode.Clamp;
                 rtId = new RenderTargetIdentifier(rt);
+                
             }
 
 
             SetupCommandBuffer();
         }
+
 
         //设置渲染命令
         private void SetupCommandBuffer()
@@ -368,10 +367,11 @@ namespace UIEffect
             commandBuffer.SetGlobalVector(effectFactorId, new Vector4(effectFactor, 0));
             commandBuffer.SetGlobalVector(colorFactorId,
                 new Vector4(effectColor.r, effectColor.g, effectColor.b, effectColor.a));
-
+            
             //得到降低采样的图片
             GetDesamplingSize(reductionRate, out w, out h);
             commandBuffer.GetTemporaryRT(effectId1, w, h, 0, filterMode);
+            commandBuffer.Blit(copyId, effectId1, mat, 0);
             commandBuffer.ReleaseTemporaryRT(copyId);
 
             //设置模糊图片,根据模糊次数多次effectId1->effectId2 或者 effectId1->effectId2
@@ -417,6 +417,9 @@ namespace UIEffect
                 canvas.rootCanvas.GetComponent<CanvasScaler>().StartCoroutine(CallUpdateTextureOnNextFrame());
             }
         }
+
+
+
 
         /// <summary>
         /// 释放
@@ -471,6 +474,7 @@ namespace UIEffect
         {
             if (obj)
             {
+                obj.Release();
                 RenderTexture.ReleaseTemporary(obj);
                 obj = null;
             }
@@ -487,6 +491,33 @@ namespace UIEffect
             desamplingRate = DesamplingRate.x1;
             reductionRate = DesamplingRate.x1;
             base.Reset();
+        }
+
+        /// <summary>
+        /// 加载和修改数据的时候调用
+        /// </summary>
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            UnityEditor.EditorApplication.delayCall += () => UpdateMaterial(false);
+        }
+
+        protected void UpdateMaterial(bool ignoreInPlayMode)
+        {
+            if (!this || ignoreInPlayMode && Application.isPlaying)
+            {
+                return;
+            }
+
+            var mat = MaterialResolver.GetOrGenerateMaterialVariant(Shader.Find(shaderName), effectMode, ColorMode,
+                BlurMode);
+
+            if (effectMaterial != mat)
+            {
+                material = null;
+                effectMaterial = mat;
+                SetDirty();
+            }
         }
 #endif
 

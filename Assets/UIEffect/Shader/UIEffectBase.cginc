@@ -167,4 +167,36 @@
 
 		return o/sum;
 	}
+
+	//一维模糊用
+	//Fast:3x3
+	//Medium:5x5
+	//Detail:7x7
+	//tex:原图片,texcoord:UV,blur:采样点偏移
+	half4 Tex2DBlurring1D (sampler2D tex, half2 uv, half2 blur)
+	{
+		#if FASTBLUR
+		const int KERNEL_SIZE = 3;
+		#elif MEDIUMBLUR
+		const int KERNEL_SIZE = 5;
+		#elif DETAILBLUR
+		const int KERNEL_SIZE = 7;
+		#else
+		const int KERNEL_SIZE = 1;
+		#endif
+		float4 o = 0;
+		float sum = 0;
+		float weight;
+		half2 texcood;
+		for(int i = -KERNEL_SIZE/2; i <= KERNEL_SIZE/2; i++)
+		{
+			texcood = uv;
+			texcood.x += blur.x * i;
+			texcood.y += blur.y * i;
+			weight = 1.0/(abs(i)+2);
+			o += tex2D(tex, texcood)*weight;
+			sum += weight;
+		}
+		return o / sum;
+	}
 #endif
