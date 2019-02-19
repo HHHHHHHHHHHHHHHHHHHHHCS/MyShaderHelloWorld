@@ -32,9 +32,9 @@ namespace UIEffect
 
         private readonly string propertyName; //shader参数 texture的name
         private readonly int channels; //一组有几个参数 4的倍数(rgba)
-        private readonly int instanceLimit; //最多几个特效组
+        private readonly int instanceLimit; //最多几个特效组,2的次方
         private readonly byte[] data; //图片数据
-        private readonly Stack<int> effectStack; //对象池 缓存池
+        private readonly Stack<int> effectStack; //缓存池,储存特效的index
 
         private int propertyId; //shader参数 texture的id
         private Texture2D texture; //图片数据
@@ -50,8 +50,8 @@ namespace UIEffect
         public ParameterTexture(int _channels, int _instanceLimit, string _propertyName)
         {
             propertyName = _propertyName;
-            channels = ((_channels - 1) / 4 + 1) * 4;
-            instanceLimit = ((_instanceLimit - 1) / 2 + 1) * 2;
+            channels = ((_channels - 1) / 4 + 1) * 4;//4的倍数
+            instanceLimit = ((_instanceLimit - 1) / 2 + 1) * 2;//2的次方
             data = new byte[channels * instanceLimit];
 
             effectStack = new Stack<int>(instanceLimit);
@@ -95,13 +95,14 @@ namespace UIEffect
                     wrapMode = TextureWrapMode.Clamp,
                 };
 
+
                 updateList.Add(UpdateParameterTexture);
             }
         }
 
 
         /// <summary>
-        /// 参数图片改变事件
+        /// 参数修改后,图片改变事件
         /// </summary>
         private void UpdateParameterTexture()
         {
@@ -162,11 +163,11 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 设置参数图片数据 value:(在0-1之间 会被扩展到0-255)
+        /// 设置参数图片数据 value:(在0-1之间 会被映射到0-255)
         /// </summary>
         /// <param name="target">目标</param>
         /// <param name="channelId">参数位置</param>
-        /// <param name="value">参数值(在0-1之间 会被扩展到0-255)</param>
+        /// <param name="value">参数值(在0-1之间 会被映射到0-255)</param>
         public void SetData(IParameterTexture target, int channelId, float value)
         {
             SetData(target, channelId, (byte) (Mathf.Clamp01(value) * 255));
@@ -189,7 +190,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 得到索引(在0-1之间的),在UV用
+        /// 得到索引在UV中的映射,UV用(在0-1之间的)
         /// </summary>
         public float GetNormalizedIndex(IParameterTexture target)
         {
