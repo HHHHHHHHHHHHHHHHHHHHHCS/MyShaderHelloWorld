@@ -19,6 +19,9 @@ namespace UIEffect
         /// </summary>
         protected static readonly List<UIVertex> tempVerts = new List<UIVertex>();
 
+        /// <summary>
+        /// 特效材质球
+        /// </summary>
         [SerializeField] protected Material effectMaterial;
 
         /// <summary>
