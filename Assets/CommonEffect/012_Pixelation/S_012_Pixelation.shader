@@ -25,7 +25,7 @@
 
 			struct v2f
 			{
-				half4 pos:POSITION;
+				half4 pos:SV_POSITION;
 				half2 uv:TEXCOORD0;
 			};
 
@@ -33,7 +33,7 @@
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv= TRANSFORM_TEX(v.texcoord,_MainTex);
+				o.uv = TRANSFORM_TEX(v.texcoord,_MainTex);
 				return o;
 			}
 

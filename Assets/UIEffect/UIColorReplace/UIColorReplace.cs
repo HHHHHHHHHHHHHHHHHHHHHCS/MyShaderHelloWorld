@@ -16,23 +16,23 @@ namespace UIEffect
 
         [Header("要被替换的颜色")]
         /// <summary>
-        /// 要被偏移的颜色/目标颜色
+        /// 要被替换的颜色/目标颜色
         /// </summary>
         [ColorUsage(false), SerializeField, Tooltip("要被替换的颜色")]
         private Color targetColor = Color.red;
 
         /// <summary>
-        /// 颜色偏移的范围
+        /// 颜色识别的范围
         /// </summary>
-        [Range(0, 3f), SerializeField, Tooltip("替换颜色的范围")]
+        [Range(0, 3f), SerializeField, Tooltip("颜色识别的范围")]
         private float range = 0.1f;
 
 
-        [Header("替换的颜色")]
+        [Header("替换后的颜色")]
         /// <summary>
-        /// 替换的颜色
+        /// 替换后的颜色
         /// </summary>
-        [ColorUsage(false), SerializeField, Tooltip("要被替换的颜色")]
+        [ColorUsage(false), SerializeField, Tooltip("替换后的颜色")]
         private Color replaceColor = Color.red;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 替换的颜色范围
+        /// 颜色识别的范围
         /// </summary>
         public float Range
         {
@@ -73,7 +73,7 @@ namespace UIEffect
         }
 
         /// <summary>
-        /// 色调的偏移
+        /// 替换后的颜色
         /// </summary>
         public Color ReplaceColor
         {
