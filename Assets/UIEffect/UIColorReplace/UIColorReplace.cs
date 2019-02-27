@@ -112,17 +112,19 @@ namespace UIEffect
             }
         }
 
+        /// <summary>
+        /// 设置参数
+        /// </summary>
         protected override void SetDirty()
         {
-
             ParamTex.RegisterMaterial(TargetGraphic.material);
             ParamTex.SetData(this, 0, targetColor.r); //param1.x:要被替换的颜色的r
             ParamTex.SetData(this, 1, targetColor.g); //param1.y:要被替换的颜色的g
             ParamTex.SetData(this, 2, targetColor.b); //param1.z:要被替换的颜色的b
             ParamTex.SetData(this, 3, range/3); //param1.w:识别的范围
-            ParamTex.SetData(this, 4, replaceColor.r ); //param2.x:替换颜色的r
-            ParamTex.SetData(this, 5, replaceColor.g); //param2.y:替换颜色的g
-            ParamTex.SetData(this, 6, replaceColor.b); //param2.z:替换颜色的b
+            ParamTex.SetData(this, 4, replaceColor.r ); //param2.x:替换后的颜色的r
+            ParamTex.SetData(this, 5, replaceColor.g); //param2.y:替换后的颜色的g
+            ParamTex.SetData(this, 6, replaceColor.b); //param2.z:替换后的颜色的b
         }
 
 #if UNITY_EDITOR
