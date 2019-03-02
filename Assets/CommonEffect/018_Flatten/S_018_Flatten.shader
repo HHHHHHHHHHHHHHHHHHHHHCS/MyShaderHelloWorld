@@ -22,7 +22,8 @@
 
 		void vert(inout appdata_full v)
 		{
-			v.vertex.y = v.vertex.y - (1 + v.vertex.y) * _Elevation;
+			//v.vertex.y = v.vertex.y - (1 + v.vertex.y) * _Elevation;
+			v.vertex.y = v.vertex.y * (1 - _Elevation) - _Elevation;
 		}
 
 		void surf(Input IN,inout SurfaceOutput o)
