@@ -96,7 +96,7 @@ Shader "UI/S_UIColorReplace"
 
 			half4 frag(v2f i):SV_TARGET
 			{
-				half4 param1 =tex2D(_ParamTex,float2(0.25,i.param));
+				half4 param1 = tex2D(_ParamTex,float2(0.25,i.param));
 				half4 param2 = tex2D(_ParamTex,float2(0.75,i.param));
 				half3 targetColor = param1.rgb;//要被替换的颜色
 				half range = param1.w*3;//要被替换的范围,前面除以3了
@@ -104,12 +104,10 @@ Shader "UI/S_UIColorReplace"
 				half4 color = tex2D(_MainTex,i.texcoord);
 
 				color.a *=UnityGet2DClipping(i.wPos.xy,_ClipRect);
-
 				//是否使用clip 隐藏
 				#ifdef UNITY_UI_ALPHACLIP
 				clip(color.a-0.001);
 				#endif
-
 
 
 				half3 offset = half3(color.r-targetColor.r,color.g-targetColor.g,color.b-targetColor.b);
