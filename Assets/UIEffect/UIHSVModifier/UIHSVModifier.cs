@@ -157,6 +157,9 @@ namespace UIEffect
             }
         }
 
+        /// <summary>
+        /// 设置参数
+        /// </summary>
         protected override void SetDirty()
         {
             //不在shader里面转是因为会计算多次

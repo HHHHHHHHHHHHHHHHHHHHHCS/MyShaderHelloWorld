@@ -10,7 +10,6 @@ namespace UIEffect
     /// </summary>
     public class UIColorReplace : UIEffectBase
     {
-
         public const string shaderName = "UI/S_UIColorReplace";
         private static readonly ParameterTexture paramTex = new ParameterTexture(7, 128, "_ParamTex");
 
