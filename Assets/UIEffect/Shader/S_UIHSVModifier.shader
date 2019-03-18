@@ -1,4 +1,4 @@
-﻿//颜色偏移
+﻿//颜色HSV偏移
 //注意gamma linear颜色的空间
 Shader "UI/S_UIHSVModifier"
 {
@@ -117,9 +117,6 @@ Shader "UI/S_UIHSVModifier"
 				return c.z*lerp(k.xxx,clamp(p-k.xxx,0.0,1.0),c.y);
 			}
 
-			half4 doo(half3 f){
-				return half4(f,1);
-			}
 			half4 frag(v2f i) :SV_TARGET
 			{
 				half4 param1 = tex2D(_ParamTex,float2(0.25,i.param));
