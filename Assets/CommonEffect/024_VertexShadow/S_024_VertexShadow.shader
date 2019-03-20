@@ -46,5 +46,5 @@
 		}
 	}
 
-	Fallback "VertexLit"
+	Fallback "VertexLit"//别忘记这个 
 }
