@@ -96,6 +96,39 @@ Shader "UI/S_UIHSVModifier"
 				return o;
 			}
 
+			//效率底下的
+			half3 _rgb2hsv(half3 c)
+			{
+				const half e = 1.0e-10;//无限接近0 step 用
+				const _1_6 = 1/6 , _1_3 = 1/3 , _2_3 = 2/3;
+
+				half cmax = max(c.r,max(c.g,c.b));
+				half cmin = min(c.r,min(c.g,c.b));
+				half d = cmax - cmin;
+
+				half v = cmax;
+				half s = lerp(0,d/cmax,step(e,cmax));
+				half h = 0;
+				if(d==0)
+				{
+					h = 0;
+				}
+				else if(cmax==c.r)
+				{
+					h = _1_6*(c.g-c.b)/d;
+				}
+				else if(cmax==c.g)
+				{
+					h = _1_6*(c.b-c.r)/d + _1_3;
+				}
+				else if(cmax==c.b)
+				{
+					h = _1_6*(c.r-c.g)/d + _2_3;
+				}
+
+				return half3(0,0,0);
+			}
+
 			//rgb转换成hsv
 			half3 rgb2hsv(half3 c)
 			{
