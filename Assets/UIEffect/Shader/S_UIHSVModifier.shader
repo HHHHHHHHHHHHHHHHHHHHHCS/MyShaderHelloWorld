@@ -96,18 +96,29 @@ Shader "UI/S_UIHSVModifier"
 				return o;
 			}
 
-			//效率底下的
+			//效率低下的
 			half3 _rgb2hsv(half3 c)
 			{
 				const half e = 1.0e-10;//无限接近0 step 用
-				const _1_6 = 1/6 , _1_3 = 1/3 , _2_3 = 2/3;
+				const half _1_6 = 1/6.0 , _1_3 = 1/3.0 , _2_3 = 2/3.0;
 
 				half cmax = max(c.r,max(c.g,c.b));
 				half cmin = min(c.r,min(c.g,c.b));
 				half d = cmax - cmin;
 
 				half v = cmax;
+
+				/*
+				half s = 0;
+				if(d!=0)
+				{
+					s=d/cmax;
+				}
+				*/
+
 				half s = lerp(0,d/cmax,step(e,cmax));
+
+				/*
 				half h = 0;
 				if(d==0)
 				{
@@ -125,8 +136,20 @@ Shader "UI/S_UIHSVModifier"
 				{
 					h = _1_6*(c.r-c.g)/d + _2_3;
 				}
+				*/
+				
+				half h = 
+					lerp(0
+						,lerp(
+							lerp(_1_6*(c.r-c.g)/d + _2_3
+								,_1_6*(c.b-c.r)/d + _1_3
+							,step(cmax,c.g))
+						,_1_6*(c.g-c.b)/d
+						,step(cmax,c.r))
+					,step(e,d));
 
-				return half3(0,0,0);
+
+				return half3(h,s,v);
 			}
 
 			//rgb转换成hsv
@@ -168,8 +191,8 @@ Shader "UI/S_UIHSVModifier"
 
 				half3 hsv = color.rgb;
 
-				hsv = rgb2hsv(hsv);
-
+				hsv = _rgb2hsv(hsv);
+				return half4(hsv,1);
 				half3 range1 = abs(hsv - targetHSV);
 				half3 range2 = 1 - range1;
 				half diff = max(max(min(range2.x, range1.x), min(range2.y, range1.y) / 10), min(range2.z, range1.z) / 10);
