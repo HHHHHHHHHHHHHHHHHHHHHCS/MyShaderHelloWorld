@@ -97,6 +97,7 @@ Shader "UI/S_UIHSVModifier"
 			}
 
 			//效率低下的
+			/*
 			half3 _rgb2hsv(half3 c)
 			{
 				const half e = 1.0e-10;//无限接近0 step 用
@@ -108,35 +109,31 @@ Shader "UI/S_UIHSVModifier"
 
 				half v = cmax;
 
-				/*
-				half s = 0;
-				if(d!=0)
-				{
-					s=d/cmax;
-				}
-				*/
+				//half s = 0;
+				//if(d!=0)
+				//{
+				//	s=d/cmax;
+				//}
 
 				half s = lerp(0,d/cmax,step(e,cmax));
 
-				/*
-				half h = 0;
-				if(d==0)
-				{
-					h = 0;
-				}
-				else if(cmax==c.r)
-				{
-					h = _1_6*(c.g-c.b)/d;
-				}
-				else if(cmax==c.g)
-				{
-					h = _1_6*(c.b-c.r)/d + _1_3;
-				}
-				else if(cmax==c.b)
-				{
-					h = _1_6*(c.r-c.g)/d + _2_3;
-				}
-				*/
+				//half h = 0;
+				//if(d==0)
+				//{
+				//	h = 0;
+				//}
+				//else if(cmax==c.r)
+				//{
+				//	h = _1_6*(c.g-c.b)/d;
+				//}
+				//else if(cmax==c.g)
+				//{
+				//	h = _1_6*(c.b-c.r)/d + _1_3;
+				//}
+				//else if(cmax==c.b)
+				//{
+				//	h = _1_6*(c.r-c.g)/d + _2_3;
+				//}
 				
 				half h = 
 					lerp(0
@@ -151,6 +148,7 @@ Shader "UI/S_UIHSVModifier"
 
 				return half3(h,s,v);
 			}
+			*/
 
 			//rgb转换成hsv
 			half3 rgb2hsv(half3 c)
@@ -191,8 +189,7 @@ Shader "UI/S_UIHSVModifier"
 
 				half3 hsv = color.rgb;
 
-				hsv = _rgb2hsv(hsv);
-				return half4(hsv,1);
+				hsv = rgb2hsv(hsv);
 				half3 range1 = abs(hsv - targetHSV);
 				half3 range2 = 1 - range1;
 				half diff = max(max(min(range2.x, range1.x), min(range2.y, range1.y) / 10), min(range2.z, range1.z) / 10);
@@ -200,7 +197,7 @@ Shader "UI/S_UIHSVModifier"
 				half masked = step(diff,targetRange);
 				color.rgb = hsv2rgb(hsv + hsvShift * masked);
 
-				return (color + _TextureSampleAdd) * i.color;//先进行颜色偏移,在做通道和颜色叠加
+				return (color + _TextureSampleAdd) * i.color;//先进行颜色偏移,在做通道和顶点颜色相乘
 			}
 
 			ENDCG
