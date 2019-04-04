@@ -6,8 +6,9 @@
 		_BumpTex("Normal Map",2D) = "bump"{}
 		_DispTex("Displacement Map",2D) = "gray"{}
 		_TexVal("Tessellation Value",Range(1,40)) = 1
-		_DispVal("Displacement factor",Range(0,1,)) = 0
+		_DispVal("Displacement factor",Range(0,1)) = 0
 	}
+
 	SubShader
 	{
 
@@ -20,10 +21,43 @@
 
 		struct a2v
 		{
-			float4 vertex : POSTION;
-			
+			float4 vertex : POSITION;
+			float3 normal : NORMAL;
+			float4 tangent : TANGENT;
+			float2 texcoord : TEXCOORD0;
+		};
+
+		float _TexVal;
+
+		float4 tess()
+		{
+			return _TexVal;
+		}
+		
+		sampler2D _DispTex;
+		float _DispVal;
+
+		void vert(inout a2v v)
+		{
+			float val = tex2Dlod(_DispTex,float4(v.texcoord.xy,0,0)).r*_DispVal;
+			v.vertex.xyz += v.normal * val;
 		}
 
+		
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+
+		sampler2D _MainTex;
+		sampler2D _BumpTex;
+
+		void surf(Input IN,inout SurfaceOutput o)
+		{
+			half4 c = tex2D(_MainTex,IN.uv_MainTex);
+			o.Albedo = c.rgb;
+			o.Normal = UnpackNormal(tex2D(_BumpTex,IN.uv_MainTex));
+		}
 
 		ENDCG
 
