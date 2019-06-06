@@ -7,7 +7,6 @@
 	}
 	SubShader
 	{
-		/*
 		Pass
 		{
 			CGPROGRAM
@@ -36,11 +35,24 @@
 				
 				float vertX = v.vertex.x + 0.5;
 				
-				v.vertex.xyz = (1 - vertX) * (1 - vertX) * begin.xyz
-				+ 2.0 * (1 - vertX) * vertX * _ControlPoint.xyz;
-				+ vertX * vertX * end.xyz;
+				float x = v.vertex.x;
+				float y = v.vertex.y;
+				float z = v.vertex.z;
 				
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				float3 temp;
+
+				//temp = (1 - vertX) * (1 - vertX) * begin.xyz
+				//+ 2.0 * (1 - vertX) * vertX * _ControlPoint.xyz
+				//+ vertX * vertX * end.xyz;
+				
+				temp.x = x;
+				temp.y = y * (2 * x * x + 0.5);
+				temp.z = z * (2 * x * x + 0.5);
+				
+				temp.xyz += (0.5-2*x*x)* _ControlPoint.xyz;
+
+				
+				o.pos = UnityObjectToClipPos(temp);
 				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 				return o;
 			}
@@ -52,6 +64,5 @@
 			ENDCG
 			
 		}
-		*/
 	}
 }
