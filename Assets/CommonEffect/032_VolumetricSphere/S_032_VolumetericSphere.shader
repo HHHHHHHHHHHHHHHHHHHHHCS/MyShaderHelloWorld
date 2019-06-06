@@ -1,4 +1,4 @@
-﻿Shader "CommandEffect/S_032_VolumetericSphere"
+﻿Shader "CommonEffect/S_032_VolumetericSphere"
 {
 	Properties
 	{

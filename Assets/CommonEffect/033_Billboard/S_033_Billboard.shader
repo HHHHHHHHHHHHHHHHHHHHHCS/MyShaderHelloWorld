@@ -1,4 +1,4 @@
-﻿Shader "Command/S_033_Billboard"
+﻿Shader "CommonEffect/S_033_Billboard"
 {
 	Properties
 	{
