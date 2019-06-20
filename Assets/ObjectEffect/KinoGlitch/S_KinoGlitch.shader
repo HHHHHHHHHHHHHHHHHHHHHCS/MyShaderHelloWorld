@@ -13,8 +13,8 @@
 	
 	float2 _ScanLineJitter;//(displacement,threshold)
 	//float2 _VerticalJump;//(amount,time)
-	//float2 _HorizontalShake;
-	//float2 _ColorDrift;//(amount,time)
+	float _HorizontalShake;
+	float2 _ColorDrift;//(amount,time)
 	
 	float nrand(float x, float y)
 	{
@@ -28,12 +28,19 @@
 		
 		//随机出来的Y 能不能进行偏移  * 偏移强度
 		float jitter = nrand(v, _Time.x) * 2 - 1;
+		//左右闪动偏移
 		jitter *= step(_ScanLineJitter.y, abs(jitter)) * _ScanLineJitter.x;
 		
+		//左右大偏移
+		float shake = (nrand(_Time.x, 2) - 0.5) * _HorizontalShake;
 		
-		half4 src1 = tex2D(_MainTex, frac(float2(u + jitter, v)));
+		//float jump = lerp(v, frac(v + _VerticalJump.y), _VerticalJump.x);
+		float drift = sin(_ColorDrift.y) * _ColorDrift.x;
 		
-		return src1;
+		half4 src1 = tex2D(_MainTex, frac(float2(u + jitter + shake, v)));
+		half4 src2 = tex2D(_MainTex, frac(float2(u + jitter + shake + drift, v)));
+		
+		return half4(src1.r, src2.g, src1.b, 1);
 	}
 	
 	ENDCG
