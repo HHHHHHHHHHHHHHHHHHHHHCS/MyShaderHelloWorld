@@ -35,13 +35,13 @@ public class KinoGlitchCamera : MonoBehaviour
             return;
         }
 
-        verticalJump += Time.deltaTime * verticalJump * 11.3f;
+        verticalJumpTime += Time.deltaTime * verticalJump * 11.3f;
 
         var sl_thresh = Mathf.Clamp01(1.0f - scanLineJitter * 1.2f);
         var sl_disp = 0.002f + Mathf.Pow(scanLineJitter, 3) * 0.05f;
         mat.SetVector("_ScanLineJitter", new Vector2(sl_disp, sl_thresh));
 
-        var vj = new Vector2(verticalJump, verticalJump);
+        var vj = new Vector2(verticalJump, verticalJumpTime);
         mat.SetVector("_VerticalJump", vj);
 
 
