@@ -4,6 +4,8 @@
     {
         _MainTex ("Texture", 2D) = "white" { }
         _Diffuse ("Color", Color) = (1, 1, 1, 1)
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+        _OutlineWidth ("Outline Width", Range(0, 2)) = 0.1
     }
     SubShader
     {
@@ -26,16 +28,27 @@
                 float4 vertex: SV_POSITION;
             };
             
+            half4 _OutlineColor;
+            half _OutlineWidth;
+            
             v2f vert(appdata_base v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                // v.vertex.xyz += v.normal * _OutlineWidth;
+                // o.vertex = UnityObjectToClipPos(v.vertex);
+                
+                
+                float4 pos = mul(UNITY_MATRIX_MV,v.vertex);
+                float3 normal = normalize(UnityObjectToViewPos(v.normal));
+                pos += float4(normal,0) * _OutlineWidth;
+                o.vertex = mul(UNITY_MATRIX_P, pos);
+                
                 return o;
             }
             
-            half4 frag(v2f i):SV_TARGET
+            half4 frag(v2f i): SV_TARGET
             {
-                return 1;
+                return _OutlineColor;
             }
             
             
