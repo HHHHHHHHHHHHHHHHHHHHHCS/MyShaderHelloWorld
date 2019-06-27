@@ -6,8 +6,11 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
+		Tags { "Queue" = "Transparent" "RenderType" = "Opaque" }
 		LOD 100
+		
+		Blend One One // 加法混合
+		ZWrite Off //关闭深度写入
 		
 		Pass
 		{
@@ -31,8 +34,12 @@
 			
 			struct v2f
 			{
-				float2 uv: TEXCOORD0;
 				float4 vertex: SV_POSITION;
+				half4 color: COLOR;
+				float4 uv0: TEXCOORD0;
+				float4 uv1: TEXCOORD1;
+				float4 uv2: TEXCOORD2;
+				float4 uv3: TEXCOORD3;
 			};
 			
 			sampler2D _MainTex;
@@ -42,13 +49,26 @@
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.color = v.color;
+				o.uv0.xy = TRANSFORM_TEX(v.uv0.xy, _MainTex);
+				o.uv0.zw = v.uv0.zw;
+				o.uv1 = v.uv1;
+				o.uv2 = v.uv2;
+				o.uv3 = v.uv3;
 				return o;
 			}
 			
-			fixed4 frag(v2f i): SV_Target
+			half4 frag(v2f i): SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
+				half4 col = tex2D(_MainTex, i.uv0.xy);
+				
+				col *= i.color;
+				
+				float particleAgePercent = i.uv0.z;
+				half4 colorRed = half4(1, 0, 0, 1);
+				
+				col = lerp(col, colorRed * col.a, particleAgePercent);
+				
 				return col;
 			}
 			ENDCG
