@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" { }
+		_TimeOffset ("Noise Offset", Range(0, 20)) = 10
 	}
 	SubShader
 	{
@@ -45,9 +46,22 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			
+			uniform float _TimeOffset;
+			
 			v2f vert(appdata v)
 			{
 				v2f o;
+				
+				float sinFrequency = 5.0;
+				float sinAmplitude = 4.0;
+				
+				float time = _Time.y + _TimeOffset;
+				float sinOffset = sin(time * sinFrequency) * sinAmplitude;
+				float agePercent = v.uv0.z;
+				
+				float3 vertexOffset = float3(0, sinOffset * agePercent, 0);
+				v.vertex.xyz += vertexOffset;
+				
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.color = v.color;
 				o.uv0.xy = TRANSFORM_TEX(v.uv0.xy, _MainTex);
