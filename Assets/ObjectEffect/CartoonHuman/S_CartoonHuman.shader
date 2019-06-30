@@ -8,6 +8,7 @@
         _OutlineWidth ("Outline Width", Range(0, 2)) = 0.1
         _Steps ("Steps", Range(1, 20)) = 1
         _ToonEffect ("ToonEffect", Range(0,1)) = 0.5
+        _RampTex("Ramp Texture",2D) = "white"{}
     }
     SubShader
     {
@@ -87,6 +88,7 @@
             half4 _Diffuse;
             float _Steps;
             float _ToonEffect;
+            sampler2D _RampTex;
             
             v2f vert(appdata v)
             {
@@ -103,15 +105,22 @@
                 half3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
                 
                 half4 albedo = tex2D(_MainTex, i.uv);
+
                 
                 half3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
                 
+                //半兰伯特
                 float diffLight = dot(worldLightDir, i.worldNormal) * 0.5 + 0.5;
                 
+                //平滑
+                diffLight=smoothstep(0,1,diffLight);
+
                 float toon = floor(diffLight * _Steps) / _Steps;
-                diffLight = lerp(diffLight, toon, _ToonEffect);
+                //diffLight = lerp(diffLight, toon, _ToonEffect);
+
+                half4 rampColor =tex2D(_RampTex,half2(toon,0.5));
                 
-                half3 diffuse = _LightColor0.rgb * albedo * _Diffuse.rgb * diffLight;
+                half3 diffuse = _LightColor0.rgb * albedo * _Diffuse.rgb * diffLight * rampColor;
                 
                 return half4(ambient + diffuse, 1);
             }
