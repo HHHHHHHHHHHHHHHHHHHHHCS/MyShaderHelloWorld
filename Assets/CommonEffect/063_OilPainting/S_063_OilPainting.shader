@@ -1,4 +1,4 @@
-﻿Shader "CommonEffect/S_063_OilPaintin"
+﻿Shader "CommonEffect/S_063_OilPainting"
 {
 	Properties
 	{

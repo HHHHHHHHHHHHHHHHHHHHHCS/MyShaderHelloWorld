@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_063_OilPaintin
-  m_Shader: {fileID: 4800000, guid: 410226264378310469f013f58e1474bb, type: 3}
+  m_Name: M_064_PrintChr
+  m_Shader: {fileID: 4800000, guid: e07633b4c4538e94d82cf0a1b762e618, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -18,11 +18,10 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: df9ca9e05a4b70646b2df182d72e0364, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Floats:
-    - _Radius: 10
+    - _Factor1: 10
+    - _Factor2: 10
+    - _Factor3: 10
+    - _GridSize: 1
     m_Colors: []
