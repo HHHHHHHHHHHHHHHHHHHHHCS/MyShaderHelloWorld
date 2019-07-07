@@ -12,7 +12,7 @@
         _RimColor ("Rim Color", Color) = (0, 0, 0, 1)
         _RimPower ("Rim Power", Range(0, 3)) = 0.20
         _XRayColor ("XRay Color", Color) = (1, 1, 1, 1)
-        _XRayPower ("XRay Power", Range(0.001, 3)) = 1
+        _XRayPower ("XRay Power", Range(0.001, 3)) = 1.5
     }
     SubShader
     {
@@ -21,6 +21,8 @@
         
         Pass
         {
+            Tags { "RenderType" = "Transparent" "Queue" = "Transparent" "ForceNoShadowCasting" = "True" }
+            Blend SrcAlpha One
             ZTest Greater
             ZWrite off
             
@@ -33,8 +35,7 @@
             struct v2f
             {
                 float4 vertex: SV_POSITION;
-                float3 worldPos: TEXCOORD0;
-                float3 worldNormal: TEXCOORD1;
+                float rim: TEXCOORD0;
             };
             
             half4 _XRayColor;
@@ -44,16 +45,16 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
+                float3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                float3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+                o.rim = pow(1 - dot(viewDir, worldNormal), 1 / _XRayPower);
                 return o;
             }
             
             half4 frag(v2f i): SV_TARGET
             {
-                float3 normal = normalize(i.worldNormal);
-                float3 viewDir = 1 - normalize(UnityWorldSpaceViewDir(i.worldPos));
-                half4 col = _XRayColor * pow(dot(viewDir, normal), 1 / _XRayPower);
+                half4 col = _XRayColor * i.rim;
                 return col;
             }
             
