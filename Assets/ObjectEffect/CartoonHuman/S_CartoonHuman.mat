@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CartoonHuman
+  m_Name: S_CartoonHuman
   m_Shader: {fileID: 4800000, guid: d08992f3946889749b888e888c978746, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
