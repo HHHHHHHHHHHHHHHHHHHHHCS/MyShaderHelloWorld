@@ -21,7 +21,7 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - _Density: 5
-    - _Grid: 30
+    - _Grid: 50
     - _SpeedMax: 20
     - _SpeedMin: 2
     m_Colors: []
