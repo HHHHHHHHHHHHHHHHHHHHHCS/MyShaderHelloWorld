@@ -4,6 +4,8 @@
     {
         _MainTex ("Texture", 2D) = "white" { }
         _Diffuse ("Color", Color) = (1, 1, 1, 1)
+        _BumpMap ("Bump Map", 2D) = "white" { }
+        _BumpScale ("Bump Scale", float) = 1
         _OutlineColor ("Outline Color", Color) = (0, 0, 0, 0)
         _OutlineWidth ("Outline", Range(0, 0.2)) = 0.1
         _Step ("Step", Range(1, 30)) = 3
@@ -77,27 +79,40 @@
             {
                 float4 vertex: POSITION;
                 half3 normal: NORMAL;
+                half4 tangent: tangent;
                 float2 uv: TEXCOORD0;
             };
             
             struct v2f
             {
                 float4 pos: SV_POSITION;
-                float2 uv: TEXCOORD0;
-                half3 worldNormal: TEXCOORD1;
-                half3 worldPos: TEXCOORD2;
+                float4 uv: TEXCOORD0;
+                float4 TtoW0: TEXCOORD1;
+                float4 TtoW1: TEXCOORD2;
+                float4 TtoW2: TEXCOORD3;
             };
             
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            sampler2D _BumpMap;
+            float4 _BumpMap_ST;
+            float _BumpScale;
             
             v2f vert(a2v v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv.zw = TRANSFORM_TEX(v.uv, _BumpMap);
+                
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
+                float3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                float3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
+                float3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w;
+                
+                o.TtoW0 = float4(worldNormal.x, worldTangent.x, worldBinormal.x, worldPos.x);
+                o.TtoW1 = float4(worldNormal.y, worldTangent.y, worldBinormal.y, worldPos.y);
+                o.TtoW2 = float4(worldNormal.z, worldTangent.z, worldBinormal.z, worldPos.z);
                 return o;
             }
             
@@ -107,14 +122,21 @@
             
             half4 frag(v2f i): SV_TARGET
             {
+                float3 worldPos = float3(i.TtoW0.w, i.TtoW1.w, i.TtoW2.w);
+                
+                
                 half4 ambient = UNITY_LIGHTMODEL_AMBIENT;
                 
-                half4 albedo = tex2D(_MainTex, i.uv);
+                half4 albedo = tex2D(_MainTex, i.uv.xy);
                 
                 half3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-                half3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos).xyz);
+                half3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos).xyz);
                 
-                half lambert = dot(lightDir, i.worldNormal) * 0.5 + 0.5;
+                half4 packedNormal = tex2D(_BumpMap, i.uv.zw);
+                half3 tangentNormal = UnpackNormal(packedNormal).rgb;
+                half3 normal = normalize(half3(dot(i.TtoW0.xyz, tangentNormal), dot(i.TtoW1.xyz, tangentNormal), dot(i.TtoW2.xyz, tangentNormal)));
+                
+                half lambert = dot(lightDir, normal) * 0.5 + 0.5;
                 lambert = smoothstep(0, 1, lambert);
                 float toon = floor(lambert * _Step) / _Step;
                 lambert = lerp(lambert, toon, _ToonEffect);
