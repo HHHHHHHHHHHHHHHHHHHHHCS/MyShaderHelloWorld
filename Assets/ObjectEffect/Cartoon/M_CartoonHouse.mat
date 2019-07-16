@@ -30,8 +30,12 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _OutlineWidth: 0.05
+    - _SnowDir: 1
+    - _SnowLevel: 0.5
     - _Step: 5
-    - _ToonEffect: 0.5
+    - _ToonEffect: 1
     m_Colors:
     - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SnowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SnowDir: {r: 0, g: 1, b: 0, a: 0}

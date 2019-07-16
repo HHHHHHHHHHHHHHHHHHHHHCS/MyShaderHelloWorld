@@ -10,6 +10,9 @@
         _OutlineWidth ("Outline", Range(0, 0.2)) = 0.1
         _Step ("Step", Range(1, 30)) = 3
         _ToonEffect ("Toon Effect", Range(0, 1)) = 0.5
+        _SnowLevel ("Snow Level", Range(0, 1)) = 0.5
+        _SnowColor ("Snow Color", Color) = (1, 1, 1, 1)
+        _SnowDir ("Snow Dir", Vector) = (0, 1, 0, 0)
     }
     SubShader
     {
@@ -72,6 +75,7 @@
             
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile _ SNOW_ON
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
             
@@ -120,6 +124,10 @@
             half _Step;
             half _ToonEffect;
             
+            float _SnowLevel;
+            float4 _SnowColor;
+            half3 _SnowDir;
+            
             half4 frag(v2f i): SV_TARGET
             {
                 float3 worldPos = float3(i.TtoW0.w, i.TtoW1.w, i.TtoW2.w);
@@ -141,9 +149,19 @@
                 float toon = floor(lambert * _Step) / _Step;
                 lambert = lerp(lambert, toon, _ToonEffect);
                 
+                
                 half4 diffuse = albedo * _Diffuse * _LightColor0.rgba * lambert ;
                 
-                return  ambient + diffuse ;
+                half4 color = ambient + diffuse;
+                
+                #ifdef  SNOW_ON
+                if (dot(normal, _SnowDir) > lerp(1, -1, _SnowLevel))
+                {
+                    color.rgb = _SnowColor.rgb;
+                }
+                #endif
+
+                return  color;
             }
             
             ENDCG
