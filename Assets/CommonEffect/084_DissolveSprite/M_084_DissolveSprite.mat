@@ -28,5 +28,5 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Threshold: 0.195
+    - _Threshold: 0.692
     m_Colors: []
