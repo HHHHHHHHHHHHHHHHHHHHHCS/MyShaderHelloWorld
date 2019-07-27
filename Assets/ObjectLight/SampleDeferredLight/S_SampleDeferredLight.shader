@@ -69,9 +69,9 @@
                 o.gBuffer0.rgb = color;//基础颜色
                 o.gBuffer0.a = 1;//遮挡
                 o.gBuffer1.rgb = _Specular;//高光颜色
-                o.gBuffer1.a = _Gloss;//高光系数
-                o.gBuffer2 = float4(normalize(i.worldNormal), 1);//世界法线
-                o.gBuffer3 = half4(color,1);//自发光 ,lightmap , 反射探针 深度缓冲等
+                o.gBuffer1.a = _Gloss / 256.0;//高光系数
+                o.gBuffer2 = float4(normalize(i.worldNormal) * 0.5 + 0.5, 1);//世界法线
+                o.gBuffer3 = half4(color, 1);//自发光 ,lightmap , 反射探针 深度缓冲等
                 return o;
             }
             
