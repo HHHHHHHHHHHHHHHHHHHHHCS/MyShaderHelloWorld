@@ -1,4 +1,4 @@
-﻿Shader "CommonEffect/S_086_BasicLightingPerFragment"
+﻿Shader "CommonEffect/S_088_BlinnPhong"
 {
 	Properties
 	{
@@ -14,16 +14,17 @@
 		
 		[Header(Specular)]
 		[Toggle] _Spec ("Enabled?", float) = 0.0
-		_Shininess ("Shininess", Range(0.1, 10)) = 1.0
-		_SpecColor ("Soecular Color", Color) = (1.0, 1.0, 1.0, 1.0)
+		_Shininess ("Shinness", Range(0.1, 100)) = 1.0
+		_SpecColor ("Specular Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		
 		[Header(Emission)]
 		_EmissionTex ("Emission texture", 2D) = "gray" { }
-		_EmiVal ("Intensity", float) = 0.0
-		[HDR]_EmiColor ("Color", Color) = (1.0, 1.0, 1.0, 1.0)
+		_EmiVal ("Intensity", float) = 0.
+		[HDR]_EmiColor ("Color", color) = (1., 1., 1., 1.)
 	}
 	SubShader
 	{
+		
 		Pass
 		{
 			Tags { "RenderType" = "Opaque" "Queue" = "Geometry" "LightMode" = "ForwardBase" }
@@ -100,9 +101,9 @@
 				
 				#if _SPEC_ON
 					
-					float3 refl = normalize(reflect(-lightDir, worldNormal));
-					float RDotV = max(0.0, dot(refl, viewDir));
-					half4 spec =  pow(RDotV, _Shininess) * _LightColor0 * ceil(NDotL) * _SpecColor;
+					float3 HalfVector = normalize(lightDir + viewDir);
+					float NDotH = max(0.0, dot(worldNormal, HalfVector));
+					half4 spec = max(0.0, dot(worldNormal, lightDir))*pow(NDotH, _Shininess) * _LightColor0 * _SpecColor;
 					
 					light += spec;
 				#endif
