@@ -10,6 +10,7 @@
         Pass
         {
             CGPROGRAM
+            
             //基本targe支持MRT
             #pragma target 3.0
             #pragma vertex vert
@@ -40,6 +41,26 @@
                 float3 ray: TEXCOORD1;
             };
             
+            v2f vert(a2v i)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(i.vertex);
+                o.uv = ComputeScreenPos(o.pos);
+                o.ray = UnityObjectToViewPos(i.vertex) * float3(-1, -1, 1);
+                //如果绘制的是全屏的Quad 则返回0 否则返回1
+                o.ray = lerp(o.ray, i.normal, _LightAsQuad);
+                return o;
+            }
+            
+            half4 frag(v2f i): SV_TARGET
+            {
+                float2 uv = i.uv.xy / i.uv.w;
+                
+                //通过深度和方向重新构造世界坐标
+                float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv);
+                depth=Linear01Depth(depth);
+                return 0;
+            }
             
             ENDCG
             
