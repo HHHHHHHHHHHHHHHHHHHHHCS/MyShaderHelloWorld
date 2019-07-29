@@ -59,6 +59,13 @@
                 //通过深度和方向重新构造世界坐标
                 float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv);
                 depth=Linear01Depth(depth);
+                //ray只能代表方向 不能代表长度 _ProjectionParams.z 是远平面的距离  然后 xyz是等比例缩放 远平面距离/等比例的z 的长度方向
+                float3 rayToFraPlan = i.ray*(_ProjectionParams.z/i.ray.z);
+                float4 viewPos = float4(rayToFraPlan*depth,1);
+                float3 worldPos = mul(unity_CameraToWorld,viewPos).xyz;
+
+                //和阴影的Distance进行计算 如果过远则舍弃
+                float fadeDist = UnityComputeShadowFadeDistance(worldPos,viewPos.z);
                 return 0;
             }
             
