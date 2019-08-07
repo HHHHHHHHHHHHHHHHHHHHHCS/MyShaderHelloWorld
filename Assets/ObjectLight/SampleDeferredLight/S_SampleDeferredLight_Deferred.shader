@@ -54,8 +54,17 @@
             
             half4 frag(v2f i): SV_TARGET
             {
+                //UnityDeferredLibrary.cginc -> UnityDeferredCalculateLightParams() 可以代替下面开始...结束的这个函数
+                /*
+                float3 worldPos;
+                float2 uv;
+                half3 lightDir;
+                float atten;
+                float fadeDist;
+                UnityDeferredCalculateLightParams(i, worldPos, uv, lightDir, atten, fadeDist);
+                */
+                //############开始
                 float2 uv = i.uv.xy / i.uv.w;
-                
                 //通过深度和方向重新构造世界坐标
                 float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv);
                 depth = Linear01Depth(depth);
@@ -79,12 +88,36 @@
                     
                     atten *= UnityDeferredComputeShadow(worldPos, fadeDist, uv);
                     
+                #elif defined(DIRECTIONAL) || defined(DIRECTIONAL_COOKIE)
+                    half3 lightDir = -_LightDir.xyz;
+                    float atten = 1.0;
+                    
+                    atten *= UnityDeferredComputeShadow(worldPos, fadeDist, uv);
+                    
+                    #if defined(DIRECTIONAL_COOKIE)
+                        float4 uvCookie = mul(unity_WorldToLight, float4(worldPos, 1));
+                        //这里是方向光不是透视的  所以不用除以W
+                        atten *= tex2Dbias(_LightTextureB0, float4(uvCookie.xy, 0, -8)).w;
+                    #endif
+                #elif defined(POINT) || defined(POINT_COOKIE)
+                    float3 toLight = _LightPos.xyz - worldPos;
+                    half3 lightDir = normalize(toLight);;
+                    
+                    float atten = tex2D(_LightTextureB0, dot(toLight, toLight) * _LightPos.w).r;
+                    
+                    atten *= UnityDeferredComputeShadow(worldPos, fadeDist, uv);
+                    
+                    #if defined(POINT_COOKIE)
+                        float4 uvCookie = mul(unity_WorldToLight, float4(worldPos, 1));
+                        atten *= texCUBEbias(_LightTextureB0, float4(uvCookie.xyz, -8)).w;
+                    #endif
+                    
                 #else
                     half3 lightDir = 0;
                     float atten = 0;
                     
                 #endif
-                
+                //############结束
                 
                 return 0;
             }
