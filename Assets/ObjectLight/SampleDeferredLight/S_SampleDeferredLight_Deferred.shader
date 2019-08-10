@@ -17,7 +17,7 @@
             #pragma fragment frag
             #pragma multi_compile_lightpass
             //代表排除不支持MRT的硬件
-            #pragma exclude_renderers norm
+            #pragma exclude_renderers nomrt
             
             #include "UnityCG.cginc"
             #include "UnityDeferredLibrary.cginc"
@@ -119,8 +119,83 @@
                 #endif
                 //############结束
                 
-                return 0;
+                half3 lightColor = _LightColor.rgb * atten;
+                half4 gbuffer0 = tex2D(_CameraGBufferTexture0, uv);
+                half4 gbuffer1 = tex2D(_CameraGBufferTexture1, uv);
+                half4 gbuffer2 = tex2D(_CameraGBufferTexture2, uv);
+                
+                half3 diffuseColor = gbuffer0.rgb;
+                half3 specularColor = gbuffer1.rgb;
+                float gloss = gbuffer1.a * 50;
+                float3 worldNormal = normalize(gbuffer2.xyz * 2 - 1);
+                
+                half3 viewDir = UnityWorldToViewPos(worldPos);
+                half3 halfDir = normalize(lightDir + viewDir);
+                
+                half3 diffuse = lightColor * diffuseColor * max(0, dot(worldNormal, lightDir));
+                half3 specular = lightColor * specularColor * pow(max(0, dot(worldNormal, halfDir)), gloss);
+                
+                half4 col = half4(diffuse + specular, 1);
+                
+                return col;
             }
+            
+            ENDCG
+            
+        }
+        
+        Pass
+        {
+            //理论上一个通道就够了 第二个通道处理HDR
+            ZTest Always
+            Cull Off
+            ZWrite Off
+            
+            Stencil
+            {
+                ref[_StencilNonBackground]
+                readMask[_StecilNonBackground]
+                
+                compback equal
+                compfront equal
+            }
+            
+            CGPROGRAM
+            
+            #pragma target 3.0
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma exclude_renderers nomrt
+            
+            #include "UnityCG.cginc"
+            
+            sampler2D _LightBuffer;
+            
+            struct v2f
+            {
+                float4 vertex: SV_POSITION;
+                float2 texcoord: TEXCOORD0;
+            };
+            
+            v2f vert(float4 vertex: POSITION, float2 texcoord: TEXCOORD0)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(vertex);
+                o.texcoord = texcoord;
+                //单通道立体渲染，目前主要用于VR
+                #ifdef UNITY_SINGLE_PASS_STEREO
+                    //unity_StereoScaleOffset一个长度为2的数组，代表两个眼睛的一些偏移值等，还是用在VR立体渲染中的
+                    o.texoord = TransformStereoScreenSpaceTex(o.texcoord, 1.0);
+                #endif
+                return o;
+            }
+            
+            half4 frag(v2f i): SV_TARGET
+            {
+                return 0;
+                return - log2(tex2D(_LightBuffer, i.texcoord));
+            }
+            
             
             ENDCG
             

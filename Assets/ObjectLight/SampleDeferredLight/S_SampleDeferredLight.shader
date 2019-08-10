@@ -63,6 +63,7 @@
             
             DeferredOutput frag(v2f i)
             {
+                //unity_SpecCube0 天空盒
                 DeferredOutput o;
                 //延迟渲染对不透明的支持不是很好  所以这里没有A
                 half3 color = tex2D(_MainTex, i.uv).rgb * _Diffuse.rgb;
