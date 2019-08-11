@@ -3,12 +3,12 @@
     Properties { }
     SubShader
     {
-        ZWrite Off
-        Blend One One
-        Tags { "RenderType" = "Opaque" }
-        
         Pass
         {
+            ZWrite Off
+            //LDR:Blend DstColor Zero    HDR:Blend One One
+            Blend [_SrcBlend] [_DstBlend]
+            
             CGPROGRAM
             
             //基本targe支持MRT
@@ -18,6 +18,7 @@
             #pragma multi_compile_lightpass
             //代表排除不支持MRT的硬件
             #pragma exclude_renderers nomrt
+            #pragma multi_compile _ UNITY_HDR_ON
             
             #include "UnityCG.cginc"
             #include "UnityDeferredLibrary.cginc"
@@ -26,7 +27,7 @@
             sampler2D _CameraGBufferTexture0;
             sampler2D _CameraGBufferTexture1;
             sampler2D _CameraGBufferTexture2;
-            sampler2D _CameraGBufferTexture3;
+            //_CameraGBufferTexture3 是Unity 自己给的 不用加
             
             struct a2v
             {
@@ -34,6 +35,7 @@
                 float3 normal: NORMAL;
             };
             
+            //unity_v2f_deferred 也是这个结构体
             struct v2f
             {
                 float4 pos: SV_POSITION;
@@ -55,14 +57,15 @@
             half4 frag(v2f i): SV_TARGET
             {
                 //UnityDeferredLibrary.cginc -> UnityDeferredCalculateLightParams() 可以代替下面开始...结束的这个函数
-                /*
+                /**/
                 float3 worldPos;
                 float2 uv;
                 half3 lightDir;
                 float atten;
                 float fadeDist;
                 UnityDeferredCalculateLightParams(i, worldPos, uv, lightDir, atten, fadeDist);
-                */
+                /**/
+                /*
                 //############开始
                 float2 uv = i.uv.xy / i.uv.w;
                 //通过深度和方向重新构造世界坐标
@@ -118,6 +121,7 @@
                     
                 #endif
                 //############结束
+                */
                 
                 half3 lightColor = _LightColor.rgb * atten;
                 half4 gbuffer0 = tex2D(_CameraGBufferTexture0, uv);
@@ -126,10 +130,10 @@
                 
                 half3 diffuseColor = gbuffer0.rgb;
                 half3 specularColor = gbuffer1.rgb;
-                float gloss = gbuffer1.a * 50;
+                float gloss = gbuffer1.a * 255;
                 float3 worldNormal = normalize(gbuffer2.xyz * 2 - 1);
                 
-                half3 viewDir = UnityWorldToViewPos(worldPos);
+                half3 viewDir = UnityWorldSpaceViewDir(worldPos);
                 half3 halfDir = normalize(lightDir + viewDir);
                 
                 half3 diffuse = lightColor * diffuseColor * max(0, dot(worldNormal, lightDir));
@@ -137,7 +141,11 @@
                 
                 half4 col = half4(diffuse + specular, 1);
                 
-                return col;
+                #ifdef UNITY_HDR_ON
+                    return col;
+                #else
+                    return exp2(-col);
+                #endif
             }
             
             ENDCG
@@ -146,7 +154,9 @@
         
         Pass
         {
-            //理论上一个通道就够了 第二个通道处理HDR
+            //理论上一个通道就够了 第二个通道处理LDR
+            //转码Pass 针对LDR的转码处理
+            
             ZTest Always
             Cull Off
             ZWrite Off
@@ -192,7 +202,6 @@
             
             half4 frag(v2f i): SV_TARGET
             {
-                return 0;
                 return - log2(tex2D(_LightBuffer, i.texcoord));
             }
             

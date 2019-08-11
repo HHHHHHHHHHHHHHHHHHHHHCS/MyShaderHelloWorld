@@ -5,7 +5,7 @@
         _MainTex ("Main Texture", 2D) = "white" { }
         _Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
         _Specular ("Specular", Color) = (1, 1, 1, 1)
-        _Gloss ("Gloss", Range(8.0, 256)) = 20
+        _Gloss ("Gloss", Range(8.0, 255)) = 20
     }
     SubShader
     {
@@ -17,8 +17,11 @@
             
             CGPROGRAM
             
+            #pragma target 3.0
             #pragma vertex vert
             #pragma fragment frag
+            #pragma exclude_renderers nomrt
+			#pragma multi_compile _ UNITY_HDR_ON
             
             #include "UnityCG.cginc"
             
@@ -39,10 +42,10 @@
             
             struct DeferredOutput
             {
-                float4 gBuffer0: SV_TARGET0;
-                float4 gBuffer1: SV_TARGET1;
-                float4 gBuffer2: SV_TARGET2;
-                float4 gBuffer3: SV_TARGET3;
+                half4 gBuffer0: SV_TARGET0;
+                half4 gBuffer1: SV_TARGET1;
+                half4 gBuffer2: SV_TARGET2;
+                half4 gBuffer3: SV_TARGET3;
             };
             
             sampler2D _MainTex;
@@ -56,7 +59,7 @@
                 v2f o;
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.vertex = UnityWorldToClipPos(o.worldPos);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 return o;
             }
@@ -70,8 +73,11 @@
                 o.gBuffer0.rgb = color;//基础颜色
                 o.gBuffer0.a = 1;//遮挡
                 o.gBuffer1.rgb = _Specular;//高光颜色
-                o.gBuffer1.a = _Gloss / 256.0;//高光系数
+                o.gBuffer1.a = _Gloss / 255.0;//高光系数
                 o.gBuffer2 = float4(normalize(i.worldNormal) * 0.5 + 0.5, 1);//世界法线
+                #if !defined(UNITY_HDR_ON)
+                    color.rgb = exp2(-color.rgb);
+                #endif
                 o.gBuffer3 = half4(color, 1);//自发光 ,lightmap , 反射探针 深度缓冲等
                 return o;
             }
