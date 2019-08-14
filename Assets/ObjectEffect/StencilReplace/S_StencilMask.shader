@@ -1,25 +1,21 @@
-﻿Shader "HCS/S_StencilReplace"
+﻿Shader "HCS/S_StencilMask"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" { }
         _StencilRef ("StencilRef", Range(0, 100)) = 1
-        _Alpha ("Alpha", Range(0, 1.0)) = 1.0
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+		Tags { "RenderType" = "Opaque"   "Queue" = "Transparent+1"}
+
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
-            
-            
             ZTest Always//别忘记开启深度测试
             Stencil
             {
                 Ref[_StencilRef]
-                Comp GEqual//大于或者等于
-                Pass Replace//成功则写入
+                Comp equal
             }
             
             CGPROGRAM
@@ -43,7 +39,6 @@
             
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            half _Alpha;
             
             v2f vert(appdata v)
             {
@@ -56,11 +51,11 @@
             half4 frag(v2f i): SV_Target
             {
                 half4 col = tex2D(_MainTex, i.uv);
-                col.a = _Alpha;
                 return col;
             }
             ENDCG
             
         }
+
     }
 }

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_StencilReplace_Alpha
-  m_Shader: {fileID: 4800000, guid: 424a8956fd071b7459656e573fd0c19a, type: 3}
+  m_Name: M_StencilReplace_Mask
+  m_Shader: {fileID: 4800000, guid: 7154afafd022f514dbcef195a67c21a4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,12 +20,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 70703852a50b9944597bc0f5d85c3852, type: 3}
+        m_Texture: {fileID: 2800000, guid: 338135240025ec145998c0be4c39190e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Alpha: 0
+    - _Alpha: 1
     - _AlphaScale: 1
-    - _StencilRef: 4
+    - _StencilRef: 10
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
