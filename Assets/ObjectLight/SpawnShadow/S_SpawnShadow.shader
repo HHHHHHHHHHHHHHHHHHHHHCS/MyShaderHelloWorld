@@ -1,4 +1,4 @@
-﻿Shader "HCS/SpawnShadow"
+﻿Shader "HCS/S_SpawnShadow"
 {
     Properties
     {
