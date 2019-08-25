@@ -13,6 +13,13 @@ public class PostRendererDepth : MonoBehaviour
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        Graphics.Blit(src,dest,mat);
+        if (mat)
+        {
+            Graphics.Blit(src, dest, mat);
+        }
+        else
+        {
+            Graphics.Blit(src, dest);
+        }
     }
 }

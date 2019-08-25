@@ -52,6 +52,7 @@
 			half4 frag(v2f i): SV_TARGET
 			{
 				half4 col = tex2D(_MainTex, i.uv);
+				//自己没有渲染在深度图上
 				float screenZ = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.screenPos)));
 				
 				float halfWidth = _IntersectionWidth / 2;
