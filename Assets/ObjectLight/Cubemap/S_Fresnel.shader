@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Reflect" 
+﻿Shader "HCS/S_Fresnel" 
 {
 	Properties 
 	{
@@ -81,7 +81,7 @@
 				
 				// Mix the diffuse color with the reflected color
 				fixed3 color = ambient + lerp(diffuse, reflection, fresnel) * atten;
-				
+
 				return fixed4(color, 1.0);
 			}
 			
