@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 723238283}
   - component: {fileID: 723238282}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,8 +714,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322015537}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.19385688, y: 0.806127, z: -0.39732188, w: 0.3933372}
+  m_LocalPosition: {x: -5.0019217, y: 5.668003, z: 3.4429417}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

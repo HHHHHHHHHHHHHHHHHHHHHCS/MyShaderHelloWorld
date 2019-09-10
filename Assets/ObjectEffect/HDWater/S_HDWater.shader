@@ -39,16 +39,24 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.scrPos = ComputeScreenPos(o.vertex);
-                COMPUTE_EYEDEPTH(o.scrPos.z);//计算顶点深度
+                COMPUTE_EYEDEPTH(o.scrPos.z);//计算顶点深度 这时候在[NearClip,FarClip]内
                 return o;
             }
             
             half4 frag(v2f i): SV_Target
             {
+                //这个深度 是深度图中的
                 float depth = tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos)).r;//深度值[0,1]
-                //depth = Linear01Depth(depth); //把[near,far]映射到[0,1]
-                //depth = LinearEyeDepth(depth);//深度根据相机的裁剪范围的值[0.3,1000],是将经过透视投影变换的深度值还原了
-                return half4(depth, depth, depth, 1);
+                //也可以用下面这个Unity define的方法  原理一样
+                //SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture,UNITY_PROJ_COORD(i.scrPos))
+                //下面的UV要手动除以i.srcPos.w 才可以 达到类似的效果 
+                //SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,i.scrPos/i.srcPos.w)
+                depth = LinearEyeDepth(depth);//深度根据相机的裁剪范围的值[NearClip,FarClip],是将经过透视投影变换 的深度值还原到NearClip FarClip
+                //depth = Linear01Depth(depth); //把[NearClip,FarClip]映射到[0,1]
+
+                //实际差的深度 = 深度图深度-物体深度
+                float deltaDepth = depth - i.scrPos.z;
+                return half4(deltaDepth, deltaDepth, deltaDepth, 1);
             }
             ENDCG
             
