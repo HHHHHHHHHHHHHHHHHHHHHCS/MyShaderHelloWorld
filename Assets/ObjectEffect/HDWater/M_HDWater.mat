@@ -23,9 +23,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: feeae0eb4f81fde4a92bb444436a97f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _DepthRange: 1
     - _TransAmount: 0.5
+    - _WaterSpeed: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _WaterDeepColor: {r: 0, g: 0.116279125, b: 1, a: 1}
