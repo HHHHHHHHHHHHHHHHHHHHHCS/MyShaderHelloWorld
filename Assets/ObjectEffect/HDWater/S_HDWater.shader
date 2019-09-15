@@ -1,4 +1,4 @@
-﻿Shader "Unlit/S_HDWater"
+﻿Shader "HCS/S_HDWater"
 {
     Properties
     {
@@ -8,6 +8,10 @@
         _DepthRange ("Depth Range", Range(0.001, 1)) = 0.8
         _NormalTex ("Normal Texture", 2D) = "white" { }
         _WaterSpeed ("Water Speed", Range(0, 20)) = 5
+        _Refract ("Refract", Range(0, 5)) = 0.5
+        _Gloss ("Gloss", Range(0, 10)) = 5
+        _Specular ("Specular", Range(0, 8)) = 1
+        _SpecularColor ("SpecularColor", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -45,8 +49,11 @@
             sampler2D_float _CameraDepthTexture;
             sampler2D _NormalTex;
             float4 _NormalTex_ST;
-            
             float _WaterSpeed;
+            float _Refract;
+            float _Gloss;
+            float _Specular;
+            half4 _SpecularColor;
             
             v2f vert(appdata v)
             {
@@ -67,13 +74,14 @@
                 
                 float3 H = normalize(L + V) ;
                 
-                half3 ambient = col * UNITY_LIGHTMODEL_AMBIENT;
+                half3 ambient = col * unity_AmbientSky;
                 
-                float NoH = max(dot(N, L), 0) / 2 + 0.5 ;
-                half3 diffuse = col * _LightColor0 * NoH;
+                //float NoH = max(dot(N, L), 0) / 2 + 0.5 ;
+                float NOL = max(dot(N, L), 0);
+                half3 diffuse = col * _LightColor0 * NOL;
                 
-                float PowHoN = pow(max(dot(H, N), 0), 8);
-                half3 specular = _LightColor0 * PowHoN;
+                float PowNoH = pow(max(dot(N, H), 0), _Specular);
+                half3 specular = _SpecularColor * _LightColor0 * PowNoH * _Gloss;
                 
                 return ambient + diffuse + specular;
             }
@@ -96,7 +104,10 @@
                 half4 bump1 = tex2D(_NormalTex, i.uv_normal + float2(_WaterSpeed * frac(_Time.x), 0));
                 half4 bump2 = tex2D(_NormalTex, float2(1 - i.uv_normal.y, i.uv_normal.x) + float2(_WaterSpeed * frac(_Time.x), 0));
                 half3 normal = UnpackNormal((bump1 + bump2) * 0.5);
-                normal = UnityObjectToWorldNormal(normal);
+                float2 offset = UnityObjectToWorldNormal(normal).xy * _Refract;
+                bump1 = tex2D(_NormalTex, i.uv_normal + offset +float2(_WaterSpeed * frac(_Time.x), 0));
+                bump2 = tex2D(_NormalTex, float2(1 - i.uv_normal.y, i.uv_normal.x) + offset +float2(_WaterSpeed * frac(_Time.x), 0));
+                normal = UnpackNormal((bump1 + bump2) * 0.5);
                 
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
                 col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
