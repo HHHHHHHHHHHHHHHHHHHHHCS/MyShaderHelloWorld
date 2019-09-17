@@ -4,8 +4,8 @@
     {
         _WaterShallowColor ("Water Shallow Color", Color) = (1, 1, 1, 1)
         _WaterDeepColor ("Water Deep Color", Color) = (1, 1, 1, 1)
-        _TransAmount ("Water Transparent", Range(0, 1)) = 0.5
-        _DepthRange ("Depth Range", Range(0.001, 1)) = 0.8
+        _TransAmount ("Water Transparent", Range(0, 10)) = 1
+        _DepthRange ("Depth Range", Range(0.001, 10)) = 1
         _NormalTex ("Normal Texture", 2D) = "white" { }
         _WaterSpeed ("Water Speed", Range(0, 20)) = 5
         _Refract ("Refract", Range(0, 5)) = 0.5
@@ -112,6 +112,8 @@
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
                 col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
                 //col.a = _TransAmount;
+                col.a = min(_TransAmount, deltaDepth) / _TransAmount;
+                
                 return col;
             }
             ENDCG
