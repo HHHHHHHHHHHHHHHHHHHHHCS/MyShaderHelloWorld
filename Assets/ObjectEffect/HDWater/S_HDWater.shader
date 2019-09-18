@@ -12,6 +12,12 @@
         _Gloss ("Gloss", Range(0, 10)) = 5
         _Specular ("Specular", Range(0, 8)) = 1
         _SpecularColor ("SpecularColor", Color) = (1, 1, 1, 1)
+        _WaveTex ("Wave Texure", 2D) = "white" { }
+        _NoiseTex ("Noise Texure", 2D) = "white" { }
+        _WaveSpeed ("Wave Speed", float) = 1
+        _WaveRange ("Wave Range", float) = 0.5
+        _WaveRangeA ("WaveRangeA", float) = 1
+        _WaveRangeB ("_WaveRangeB", float) = 1
     }
     SubShader
     {
@@ -42,6 +48,7 @@
                 float4 scrPos: TEXCOORD0;
                 float3 wpos: TEXCOORD1;
                 float2 uv_normal: TEXCOORD2;
+                float2 uv_noise: TEXCOORD3;
             };
             
             half4 _WaterShallowColor, _WaterDeepColor;
@@ -54,6 +61,14 @@
             float _Gloss;
             float _Specular;
             half4 _SpecularColor;
+            sampler2D _WaveTex;
+            sampler2D _NoiseTex;
+            float4 _NoiseTex_ST;
+            float _WaveSpeed;
+            float _WaveRange;
+            float _WaveRangeA;
+            float _WaveRangeB;
+            
             
             v2f vert(appdata v)
             {
@@ -63,6 +78,7 @@
                 COMPUTE_EYEDEPTH(o.scrPos.z);//计算顶点深度 这时候在[NearClip,FarClip]内
                 o.wpos = mul(unity_ObjectToWorld, o.vertex);
                 o.uv_normal = TRANSFORM_TEX(v.uv, _NormalTex);
+                o.uv_noise = TRANSFORM_TEX(v.uv, _NoiseTex);
                 return o;
             }
             
@@ -108,6 +124,11 @@
                 bump1 = tex2D(_NormalTex, i.uv_normal + offset +float2(_WaterSpeed * frac(_Time.x), 0));
                 bump2 = tex2D(_NormalTex, float2(1 - i.uv_normal.y, i.uv_normal.x) + offset +float2(_WaterSpeed * frac(_Time.x), 0));
                 normal = UnpackNormal((bump1 + bump2) * 0.5);
+                
+                //波浪
+                half waveA = min(_WaveRangeA, deltaDepth) / _WaveRangeA;
+                half waveB = 1 - min(_WaveRangeB, deltaDepth) / _WaveRangeB;
+                half4 noiserColor = tex2D(_NoiseTex, i.uv_noise);
                 
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
                 col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
