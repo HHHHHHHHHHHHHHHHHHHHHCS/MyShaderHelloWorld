@@ -1,4 +1,6 @@
-﻿Shader "HCS/S_MotionBlurDepth"
+﻿//只能用于物体不动 摄像头动
+//否则要保存上一帧数的深度图
+Shader "HCS/S_MotionBlurDepth"
 {
 	Properties
 	{
@@ -49,13 +51,32 @@
 				#endif
 				return o;
 			}
-
-			half4 frag(v2f i):SV_TARGET
+			
+			half4 frag(v2f i): SV_TARGET
 			{
-				half4 col = tex2D(_MainTex,i.uv.xy);
-
-				//todo:
-				float depth = UNITY_SAMPLE_DEPTH();
+				half4 col = tex2D(_MainTex, i.uv.xy);
+				
+				float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv.zw));
+				float4 H = float4(i.uv.x * 2 - 1, i.uv.y * 2 - 1, depth * 2 - 1, 1);//NDC坐标
+				float4 D = mul(_CurrentInverseVP, H);
+				float4 W = D / D.w;//将齐次坐标W分量变1得到世界坐标
+				
+				float4 currentPos = H;
+				float4 lastPos = mul(_LastVP, W);
+				lastPos /= lastPos.w;
+				
+				//采样连个点所在直线上的点  进行模糊
+				float2 velocity = (currentPos - lastPos) / 2.0;
+				float2 uv = i.uv;
+				uv += velocity;
+				const int numSamples = 3;
+				for (int index = 1; index < numSamples; index ++, uv += velocity)
+				{
+					col += tex2D(_MainTex, uv);
+				}
+				col /= numSamples;
+				
+				return col;
 			}
 			
 			ENDCG
