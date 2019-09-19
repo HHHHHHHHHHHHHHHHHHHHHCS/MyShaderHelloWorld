@@ -17,12 +17,17 @@
         _WaveSpeed ("Wave Speed", float) = 1
         _WaveRange ("Wave Range", float) = 0.5
         _WaveRangeA ("WaveRangeA", float) = 1
-        _WaveRangeB ("_WaveRangeB", float) = 1
+        _WaveDelta ("WaveDelta", float) = 0.5
     }
     SubShader
     {
         Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
         LOD 100
+        
+        GrabPass
+        {
+            "GrabPass"
+        }
         
         Pass
         {
@@ -67,7 +72,8 @@
             float _WaveSpeed;
             float _WaveRange;
             float _WaveRangeA;
-            float _WaveRangeB;
+            float _WaveDelta;
+            
             
             
             v2f vert(appdata v)
@@ -126,12 +132,14 @@
                 normal = UnpackNormal((bump1 + bump2) * 0.5);
                 
                 //波浪
-                half waveA = min(_WaveRangeA, deltaDepth) / _WaveRangeA;
-                half waveB = 1 - min(_WaveRangeB, deltaDepth) / _WaveRangeB;
+                half waveA = 1 - min(_WaveRangeA, deltaDepth) / _WaveRangeA;
                 half4 noiserColor = tex2D(_NoiseTex, i.uv_noise);
+                half4 waveColor = tex2D(_WaveTex, float2(waveA + _WaveRange * sin(_Time.x * _WaveSpeed + noiserColor.r), 1) + offset);
+                half4 waveColor2 = tex2D(_WaveTex, float2(waveA + _WaveRange * sin(_Time.x * _WaveSpeed + _WaveDelta + noiserColor.r), 1) + offset);
                 
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
                 col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
+                col.rgb += (waveColor.rgb + waveColor2.rgb) * waveA;
                 //col.a = _TransAmount;
                 col.a = min(_TransAmount, deltaDepth) / _TransAmount;
                 
