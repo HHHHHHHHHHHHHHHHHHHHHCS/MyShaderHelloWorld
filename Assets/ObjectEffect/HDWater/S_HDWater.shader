@@ -18,6 +18,7 @@
         _WaveRange ("Wave Range", float) = 0.5
         _WaveRangeA ("WaveRangeA", float) = 1
         _WaveDelta ("WaveDelta", float) = 0.5
+        _Distortion ("Distortion", float) = 10
     }
     SubShader
     {
@@ -26,7 +27,7 @@
         
         GrabPass
         {
-            "GrabPass"
+            "_GrabPass"
         }
         
         Pass
@@ -73,6 +74,9 @@
             float _WaveRange;
             float _WaveRangeA;
             float _WaveDelta;
+            sampler2D _GrabPass;
+            float4 _GrabPass_TexelSize;
+            float _Distortion;
             
             
             
@@ -92,7 +96,10 @@
             {
                 float3 N = normalize(normal);
                 float3 L = normalize(-UnityWorldSpaceLightDir(wpos));
-                float3 V = normalize(UnityWorldSpaceViewDir(wpos));
+                float3 V = UnityWorldSpaceViewDir(wpos) ;
+                V.xy += V.z * normal.xy;
+                V = normalize(V);
+                
                 
                 float3 H = normalize(L + V) ;
                 
@@ -137,11 +144,17 @@
                 half4 waveColor = tex2D(_WaveTex, float2(waveA + _WaveRange * sin(_Time.x * _WaveSpeed + noiserColor.r), 1) + offset);
                 half4 waveColor2 = tex2D(_WaveTex, float2(waveA + _WaveRange * sin(_Time.x * _WaveSpeed + _WaveDelta + noiserColor.r), 1) + offset);
                 
+                //抓屏
+                float2 gOffset = normal.xy * _Distortion * _GrabPass_TexelSize.xy;
+                i.scrPos.xy = gOffset * i.scrPos.z + i.scrPos.xy;
+                half3 reflCol = tex2D(_GrabPass, i.scrPos.xy / i.scrPos.w);
+                
+                
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
                 col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
-                col.rgb += (waveColor.rgb + waveColor2.rgb) * waveA;
-                //col.a = _TransAmount;
-                col.a = min(_TransAmount, deltaDepth) / _TransAmount;
+                //col.rgb += (waveColor.rgb + waveColor2.rgb) * waveA ;
+                //col.rgb *= reflCol;
+                col.a = min(_TransAmount, deltaDepth) / _TransAmount ;
                 
                 return col;
             }
