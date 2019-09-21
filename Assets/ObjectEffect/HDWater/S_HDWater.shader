@@ -19,6 +19,8 @@
         _WaveRangeA ("WaveRangeA", float) = 1
         _WaveDelta ("WaveDelta", float) = 0.5
         _Distortion ("Distortion", float) = 10
+        _Cubemap ("Cubemap", Cube) = "_Skybox" { }
+        _FresnelScale ("Fresnel", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -45,6 +47,7 @@
             struct appdata
             {
                 float4 vertex: POSITION;
+                float4 normal: NORMAL;
                 float2 uv: TEXCOORD0;
             };
             
@@ -53,8 +56,10 @@
                 float4 vertex: SV_POSITION;
                 float4 scrPos: TEXCOORD0;
                 float3 wpos: TEXCOORD1;
-                float2 uv_normal: TEXCOORD2;
-                float2 uv_noise: TEXCOORD3;
+                half3 worldView: TEXCOORD2;
+                half3 worldNormal: TEXCOORD3;
+                float2 uv_normal: TEXCOORD4;
+                float2 uv_noise: TEXCOORD5;
             };
             
             half4 _WaterShallowColor, _WaterDeepColor;
@@ -77,8 +82,8 @@
             sampler2D _GrabPass;
             float4 _GrabPass_TexelSize;
             float _Distortion;
-            
-            
+            samplerCUBE  _Cubemap;
+            float _FresnelScale;
             
             v2f vert(appdata v)
             {
@@ -86,17 +91,19 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.scrPos = ComputeScreenPos(o.vertex);
                 COMPUTE_EYEDEPTH(o.scrPos.z);//计算顶点深度 这时候在[NearClip,FarClip]内
-                o.wpos = mul(unity_ObjectToWorld, o.vertex);
+                o.wpos = mul(unity_ObjectToWorld, v.vertex);
+                o.worldView = UnityWorldSpaceViewDir(o.wpos);
+                o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.uv_normal = TRANSFORM_TEX(v.uv, _NormalTex);
                 o.uv_noise = TRANSFORM_TEX(v.uv, _NoiseTex);
                 return o;
             }
             
-            half3 CalcBlinnPhong(half3 col, half3 normal, half3 wpos)
+            half3 CalcBlinnPhong(half3 col, half3 normal, half3 wpos, half3 wView, half fresnel)
             {
                 float3 N = normalize(normal);
                 float3 L = normalize(-UnityWorldSpaceLightDir(wpos));
-                float3 V = UnityWorldSpaceViewDir(wpos) ;
+                float3 V = wView ;
                 V.xy += V.z * normal.xy;
                 V = normalize(V);
                 
@@ -109,7 +116,7 @@
                 float NOL = max(dot(N, L), 0);
                 half3 diffuse = col * _LightColor0 * NOL;
                 
-                float PowNoH = pow(max(dot(N, H), 0), _Specular);
+                float PowNoH = pow(max(dot(N, H), 0), _Specular) * fresnel;
                 half3 specular = _SpecularColor * _LightColor0 * PowNoH * _Gloss;
                 
                 return ambient + diffuse + specular;
@@ -117,6 +124,9 @@
             
             half4 frag(v2f i): SV_Target
             {
+                half3 worldView = normalize(i.worldView);
+                half3 worldNormal = normalize(i.worldNormal);
+                
                 //这个深度 是深度图中的
                 float depth = tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos)).r;//深度值[0,1]
                 //也可以用下面这个Unity define的方法  原理一样
@@ -149,11 +159,18 @@
                 i.scrPos.xy = gOffset * i.scrPos.z + i.scrPos.xy;
                 half3 reflCol = tex2D(_GrabPass, i.scrPos.xy / i.scrPos.w);
                 
+                //菲尼尔
+                half3 worldRefl = reflect(-worldView, worldNormal);
+                half3 reflaction = texCUBE(_Cubemap, worldRefl).rgb;
+                half _fresnel = pow(1 - dot(worldView, worldNormal), 5);
+                half fresnel = _FresnelScale + (1 - _FresnelScale) * _fresnel;
+                half3 refAndRel = lerp(reflCol, reflaction, fresnel);
+                
+                //return half4(refAndRel,1);
                 
                 half4 col = lerp(_WaterShallowColor, _WaterDeepColor, saturate(min(deltaDepth, _DepthRange) / _DepthRange));
-                col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos);
-                //col.rgb += (waveColor.rgb + waveColor2.rgb) * waveA ;
-                //col.rgb *= reflCol;
+                col.rgb = CalcBlinnPhong(col.rgb, normal, i.wpos, worldView, saturate(10 *  _fresnel)) * refAndRel;
+                col.rgb += (waveColor.rgb + waveColor2.rgb) * waveA ;
                 col.a = min(_TransAmount, deltaDepth) / _TransAmount ;
                 
                 return col;
