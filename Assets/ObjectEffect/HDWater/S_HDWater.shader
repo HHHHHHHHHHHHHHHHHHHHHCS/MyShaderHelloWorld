@@ -164,7 +164,7 @@
                 half3 reflaction = texCUBE(_Cubemap, worldRefl).rgb;
                 half _fresnel = pow(1 - dot(worldView, worldNormal), 5);
                 half fresnel = _FresnelScale + (1 - _FresnelScale) * _fresnel;
-                half3 refAndRel = lerp(reflCol, reflaction, fresnel);
+                half3 refAndRel = lerp(reflCol, reflaction, saturate(fresnel));
                 
                 //return half4(refAndRel,1);
                 
