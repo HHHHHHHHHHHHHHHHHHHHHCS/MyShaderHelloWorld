@@ -21,14 +21,18 @@
         
         Pass
         {
+            Tags { "LightMode" = "ForwardBase" }
+            
             CGPROGRAM
             
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
             
+            #include"UnityStandardUtils.cginc"
+            #include"AutoLight.cginc"
             #include "UnityCG.cginc"
+            #include "UnityPBSLighting.cginc"
+            
             
             struct appdata
             {
@@ -38,9 +42,12 @@
             
             struct v2f
             {
-                float2 uv: TEXCOORD0;
-                UNITY_FOG_COORDS(1)
+                
                 float4 vertex: SV_POSITION;
+                float2 uv_main: TEXCOORD0;
+                float2 uv_wet: TEXCOORD1;
+                float2 uv_normal: TEXCOORD2;
+                float3 worldPos: TEXCOORD3;
             };
             
             half4 _Color;
@@ -62,18 +69,45 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o, o.vertex);
+                o.uv_main = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv_wet = TRANSFORM_TEX(v.uv, _WetMap);
+                o.uv_normal = TRANSFORM_TEX(v.uv, _Normal);
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
             
             fixed4 frag(v2f i): SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+                half wetness = tex2D(_WetMap, i.uv_wet).r;
+                half4 col = tex2D(_MainTex, i.uv_main) * lerp(_Color, _WetColor, wetness);
+                
+                half3 normal = lerp(UnpackScaleNormal(tex2D(_Normal, i.uv_normal), _NormalScale), half3(0, 0, 1), wetness);
+                
+                half metallic = lerp(_Metallic, _WetMetallic, wetness);
+                half smoothness = lerp(_Glossiness, _WetGlossiness, wetness);
+                
+                float3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
+                float3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
+                float3 worldNormal = ((normal));
+                
+                fixed3 albedo = col;
+                
+                half3 specColor;
+                half oneMinusReflectivity;
+                albedo = DiffuseAndSpecularFromMetallic(albedo, metallic, specColor, oneMinusReflectivity);
+                
+                UnityLight DirectLight;
+                DirectLight.dir = worldLightDir;
+                DirectLight.color = _LightColor0.xyz;
+                DirectLight.ndotl = DotClamped(worldNormal, worldLightDir);
+                
+                UnityIndirect InDirectLight;
+                InDirectLight.diffuse = 1;
+                InDirectLight.specular = 0;
+                
+                return UNITY_BRDF_PBS(albedo, specColor, oneMinusReflectivity,
+                smoothness, worldNormal, worldViewDir,
+                DirectLight, InDirectLight);
             }
             ENDCG
             
