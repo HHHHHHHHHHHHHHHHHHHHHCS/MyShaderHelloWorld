@@ -57,8 +57,15 @@
 		Pass
 		{
 			Tags { "RenderMode" = "ForwardBase" }
-			//TODO:
+			
 			Cull Back
+			
+			Stencil
+			{
+				Ref 2
+				Comp Always
+				Pass Replace
+			}
 			
 			CGPROGRAM
 			
@@ -69,12 +76,20 @@
 			
 		}
 		
+		
 		Pass
 		{
 			Tags { "RenderMode" = "ForwardBase" }
 			
 			Cull Front
 			
+			Stencil
+			{
+				Ref 1
+				Comp Always
+				Pass Replace
+			}
+
 			CGPROGRAM
 			
 			#pragma vertex vert
@@ -83,6 +98,8 @@
 			ENDCG
 			
 		}
+		
+		
 		
 		Pass
 		{
