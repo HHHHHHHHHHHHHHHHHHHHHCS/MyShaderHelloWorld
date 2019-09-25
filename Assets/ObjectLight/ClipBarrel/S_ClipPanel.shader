@@ -6,7 +6,7 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "Queue" = "Geometry+1" }
 		LOD 100
 		
 		Pass
@@ -16,7 +16,7 @@
 				Ref 1
 				Comp Equal
 			}
-
+			
 			CGPROGRAM
 			
 			#pragma vertex vert
