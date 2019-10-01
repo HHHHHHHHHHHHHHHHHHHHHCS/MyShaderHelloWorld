@@ -189,7 +189,65 @@ public class LensFlare_Bloom : MonoBehaviour
         material.SetFloat(id_sampleScale, 0.5f + logh - logh_i);
         material.SetFloat(id_intensity, Mathf.Max(0.0f, settings.intensity));
 
-        //TODO:
+        //脏图
+        bool useDirtTexture = false;
+        if (settings.dirtTexture != null)
+        {
+            material.SetTexture(id_dirtTex, settings.dirtTexture);
+            material.SetFloat(id_dirtIntensity, settings.dirtIntensity);
+            useDirtTexture = true;
+        }
+
+        //滤波Pass
+        var prefiltered = RenderTexture.GetTemporary(tw, th, 0, rtFormat);
+        Graphics.Blit(src, prefiltered, material, settings.antiFlicker ? 1 : 0);
+
+        //缩小 生成 mipmap 
+        var last = prefiltered;
+        for (var level = 0; level < iterations; level++)
+        {
+            blurBuffer1[level] =
+                RenderTexture.GetTemporary(last.width / 2, last.height / 2, 0, rtFormat);
+            Graphics.Blit(last, blurBuffer1[level], material, level == 0 ? (settings.antiFlicker ? 3 : 2) : 4);
+            last = blurBuffer1[level];
+        }
+
+        //倒循环放大图片
+        for (var level = iterations - 2; level >= 0; level--)
+        {
+            var baseTex = blurBuffer1[level];
+            material.SetTexture(id_baseTex, baseTex);
+            blurBuffer2[level] = RenderTexture.GetTemporary(baseTex.width, baseTex.height, 0, rtFormat);
+            Graphics.Blit(last, blurBuffer2[level], material, settings.highQuality ? 6 : 5);
+            last = blurBuffer2[level];
+        }
+
+        //最后处理
+        int pass = useDirtTexture ? 9 : 7;
+        pass += settings.highQuality ? 1 : 0;
+
+        //融合
+        material.SetTexture(id_baseTex, src);
+        Graphics.Blit(last, dest, material, pass);
+
+        //释放
+        for (var i = 0; i < maxIterations; i++)
+        {
+            if (blurBuffer1[i] != null)
+            {
+                RenderTexture.ReleaseTemporary(blurBuffer1[i]);
+            }
+
+            if (blurBuffer2[i] != null)
+            {
+                RenderTexture.ReleaseTemporary(blurBuffer2[i]);
+            }
+
+            blurBuffer1[i] = null;
+            blurBuffer2[i] = null;
+        }
+
+        RenderTexture.ReleaseTemporary(prefiltered);
     }
 
     #endregion
