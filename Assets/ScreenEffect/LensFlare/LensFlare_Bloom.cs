@@ -39,7 +39,7 @@ public class LensFlare_Bloom : MonoBehaviour
         [SerializeField] [Tooltip("高清,控制过滤器质量和缓冲区分辨率")]
         public bool highQuality;
 
-        [SerializeField] [Tooltip("抗锯齿,额外的滤波器可以减少锯齿")]
+        [SerializeField] [Tooltip("抗高亮,额外的滤波器可以平滑高亮")]
         public bool antiFlicker;
 
         [Tooltip("增加屏幕的脏感觉")] public Texture dirtTexture;
@@ -80,7 +80,7 @@ public class LensFlare_Bloom : MonoBehaviour
         {
             if (shader == null)
             {
-                const string shaderName = "HCS/LenFlare/Bloom";
+                const string shaderName = "HCS/S_LensFlare_Bloom";
                 shader = Shader.Find(shaderName);
             }
 
@@ -181,7 +181,7 @@ public class LensFlare_Bloom : MonoBehaviour
         var curve = new Vector3(threshold - knee, knee * 2, 0.25f / knee);
         material.SetVector(id_curve, curve);
 
-        //抗锯齿
+        //抗高亮  平衡高亮
         var pfo = !settings.highQuality && settings.antiFlicker;
         material.SetFloat(id_prefilterOffs, pfo ? -0.5f : 0.0f);
 
