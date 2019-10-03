@@ -72,33 +72,35 @@ public class LensFlare_Bloom : MonoBehaviour
 
     #endregion
 
-    [SerializeField, HideInInspector] private Shader shader;
+    [SerializeField, HideInInspector] private Shader _shader;
 
     public Shader TheShader
     {
         get
         {
-            if (shader == null)
+            if (_shader == null)
             {
                 const string shaderName = "HCS/S_LensFlare_Bloom";
-                shader = Shader.Find(shaderName);
+                _shader = Shader.Find(shaderName);
             }
 
-            return shader;
+            return _shader;
         }
     }
 
 
-    private Material material;
+    private Material _material;
 
     public Material TheMaterial
     {
         get
         {
-            if (material == null)
-                material = LensFlare_ImageEffectHelper.CheckShaderAndCreateMaterial(shader);
-            return material;
+            if (_material == null)
+                _material = LensFlare_ImageEffectHelper.CheckShaderAndCreateMaterial(TheShader);
+            return _material;
         }
+
+        private set => _material = value;
     }
 
 
@@ -137,16 +139,16 @@ public class LensFlare_Bloom : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!LensFlare_ImageEffectHelper.IsSupported(shader, true, false, this))
+        if (!LensFlare_ImageEffectHelper.IsSupported(TheShader, true, false, this))
             enabled = false;
     }
 
     private void OnDisable()
     {
-        if (material != null)
-            DestroyImmediate(material);
+        if (TheMaterial != null)
+            DestroyImmediate(TheMaterial);
 
-        material = null;
+        TheMaterial = null;
     }
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -174,33 +176,33 @@ public class LensFlare_Bloom : MonoBehaviour
 
         //阀值
         var threshold = settings.ThresholdLinear;
-        material.SetFloat(id_threshold, threshold);
+        TheMaterial.SetFloat(id_threshold, threshold);
 
         //卷积属性
         var knee = threshold * settings.softKnee + 1e-5f;
         var curve = new Vector3(threshold - knee, knee * 2, 0.25f / knee);
-        material.SetVector(id_curve, curve);
+        TheMaterial.SetVector(id_curve, curve);
 
         //抗高亮  平衡高亮
         var pfo = !settings.highQuality && settings.antiFlicker;
-        material.SetFloat(id_prefilterOffs, pfo ? -0.5f : 0.0f);
+        TheMaterial.SetFloat(id_prefilterOffs, pfo ? -0.5f : 0.0f);
 
         //强度
-        material.SetFloat(id_sampleScale, 0.5f + logh - logh_i);
-        material.SetFloat(id_intensity, Mathf.Max(0.0f, settings.intensity));
+        TheMaterial.SetFloat(id_sampleScale, 0.5f + logh - logh_i);
+        TheMaterial.SetFloat(id_intensity, Mathf.Max(0.0f, settings.intensity));
 
         //脏图
         bool useDirtTexture = false;
         if (settings.dirtTexture != null)
         {
-            material.SetTexture(id_dirtTex, settings.dirtTexture);
-            material.SetFloat(id_dirtIntensity, settings.dirtIntensity);
+            TheMaterial.SetTexture(id_dirtTex, settings.dirtTexture);
+            TheMaterial.SetFloat(id_dirtIntensity, settings.dirtIntensity);
             useDirtTexture = true;
         }
 
         //滤波Pass
         var prefiltered = RenderTexture.GetTemporary(tw, th, 0, rtFormat);
-        Graphics.Blit(src, prefiltered, material, settings.antiFlicker ? 1 : 0);
+        Graphics.Blit(src, prefiltered, TheMaterial, settings.antiFlicker ? 1 : 0);
 
         //缩小 生成 mipmap 
         var last = prefiltered;
@@ -208,7 +210,7 @@ public class LensFlare_Bloom : MonoBehaviour
         {
             blurBuffer1[level] =
                 RenderTexture.GetTemporary(last.width / 2, last.height / 2, 0, rtFormat);
-            Graphics.Blit(last, blurBuffer1[level], material, level == 0 ? (settings.antiFlicker ? 3 : 2) : 4);
+            Graphics.Blit(last, blurBuffer1[level], TheMaterial, level == 0 ? (settings.antiFlicker ? 3 : 2) : 4);
             last = blurBuffer1[level];
         }
 
@@ -216,9 +218,9 @@ public class LensFlare_Bloom : MonoBehaviour
         for (var level = iterations - 2; level >= 0; level--)
         {
             var baseTex = blurBuffer1[level];
-            material.SetTexture(id_baseTex, baseTex);
+            TheMaterial.SetTexture(id_baseTex, baseTex);
             blurBuffer2[level] = RenderTexture.GetTemporary(baseTex.width, baseTex.height, 0, rtFormat);
-            Graphics.Blit(last, blurBuffer2[level], material, settings.highQuality ? 6 : 5);
+            Graphics.Blit(last, blurBuffer2[level], TheMaterial, settings.highQuality ? 6 : 5);
             last = blurBuffer2[level];
         }
 
@@ -227,8 +229,8 @@ public class LensFlare_Bloom : MonoBehaviour
         pass += settings.highQuality ? 1 : 0;
 
         //融合
-        material.SetTexture(id_baseTex, src);
-        Graphics.Blit(last, dest, material, pass);
+        TheMaterial.SetTexture(id_baseTex, src);
+        Graphics.Blit(last, dest, TheMaterial, pass);
 
         //释放
         for (var i = 0; i < maxIterations; i++)
