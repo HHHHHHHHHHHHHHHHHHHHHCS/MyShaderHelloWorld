@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LenFlare_MulSub"
+﻿Shader "HCS/S_LensFlare_MulSub"
 {
 	Properties
 	{
