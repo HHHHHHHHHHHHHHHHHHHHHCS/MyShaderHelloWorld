@@ -11,8 +11,6 @@
 	{
 		Pass
 		{
-			
-			
 			CGPROGRAM
 			
 			#pragma vertex vert
@@ -48,7 +46,7 @@
 			half4 frag(v2f i): SV_TARGET
 			{
 				half4 col = tex2D(_MainTex, i.uv);
-				float uv = i.uv - float2(0.5, 0.5);
+				float2 uv = i.uv - float2(0.5, 0.5);
 				
 				for (int k = 3; k < _NumGhost + 3; k ++)
 				{

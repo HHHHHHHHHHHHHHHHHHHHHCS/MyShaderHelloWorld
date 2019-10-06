@@ -55,35 +55,40 @@ public class LensFlare_Main : MonoBehaviour
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        material.SetFloat("_Sub",subtract);
-        material.SetFloat("_Mul",multiply);
-        RenderTexture downsampled = RenderTexture.GetTemporary(Screen.width>>downsample,Screen.height>>downsample,0,RenderTextureFormat.DefaultHDR);
-        Graphics.Blit(src,downsampled,material);
-        RenderTexture ghosts = RenderTexture.GetTemporary(Screen.width >> downsample, Screen.height >> downsample, 0, RenderTextureFormat.DefaultHDR);
+        material.SetFloat("_Sub", subtract);
+        material.SetFloat("_Mul", multiply);
+        RenderTexture downsampled = RenderTexture.GetTemporary(Screen.width >> downsample, Screen.height >> downsample,
+            0, RenderTextureFormat.DefaultHDR);
+        Graphics.Blit(src, downsampled, material);
+
+        RenderTexture ghosts = RenderTexture.GetTemporary(Screen.width >> downsample, Screen.height >> downsample, 0,
+            RenderTextureFormat.DefaultHDR);
         ghostMaterial.SetInt("_NumGhost", numberOfGhosts);
-        ghostMaterial.SetFloat("Displace",displacement);
-        ghostMaterial.SetFloat("_Falloff",fallOff);
-        Graphics.Blit(downsampled,ghosts,ghostMaterial);
+        ghostMaterial.SetFloat("_Displace", displacement);
+        ghostMaterial.SetFloat("_Falloff", fallOff);
+        Graphics.Blit(downsampled, ghosts, ghostMaterial);
+
+
         RenderTexture radialWarped =
             RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
 
-        radialWarpMaterial.SetFloat("_HaloFalloff",haloFalloff);
+        radialWarpMaterial.SetFloat("_HaloFalloff", haloFalloff);
         radialWarpMaterial.SetFloat("_HaloWidth", haloWidth);
         radialWarpMaterial.SetFloat("_HaloSub", haloSubtract);
-        Graphics.Blit(src,radialWarped,radialWarpMaterial);
+        Graphics.Blit(src, radialWarped, radialWarpMaterial);
 
-        additiveMaterial.SetTexture("_MainTex1",radialWarped);
-
+        additiveMaterial.SetTexture("_MainTex1", radialWarped);
         RenderTexture added =
             RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
-        Graphics.Blit(ghosts,added,additiveMaterial);
+        Graphics.Blit(ghosts, added, additiveMaterial);
 
-        RenderTexture aberration = RenderTexture.GetTemporary(Screen.width,Screen.height,0,RenderTextureFormat.DefaultHDR);
-
+        RenderTexture aberration =
+            RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
         aberrationMaterial.SetTexture("_ChromaticAberration_Spectrum", chromaticAberrationSpectrum);
         aberrationMaterial.SetFloat("_ChromaticAberration_Amount", chromaticAberration);
-        aberrationMaterial.SetInt("_Distance_Function", (int)chromaticAberrationDistanceFunction);
+        aberrationMaterial.SetInt("_Distance_Function", (int) chromaticAberrationDistanceFunction);
         Graphics.Blit(added, aberration, aberrationMaterial);
+
 
         RenderTexture blur = RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
         blurMaterial.SetInt("_BlurSize", blurSize);
@@ -91,9 +96,12 @@ public class LensFlare_Main : MonoBehaviour
         blurMaterial.SetInt("_Direction", 1);
         Graphics.Blit(aberration, blur, blurMaterial);
 
-        RenderTexture blur1 = RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
+
+        RenderTexture blur1 =
+            RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.DefaultHDR);
         blurMaterial.SetInt("_Direction", 0);
         Graphics.Blit(blur, blur1, blurMaterial);
+
 
         additiveMaterial.SetTexture("_MainTex1", blur1);
         Graphics.Blit(src, dest, additiveMaterial);
