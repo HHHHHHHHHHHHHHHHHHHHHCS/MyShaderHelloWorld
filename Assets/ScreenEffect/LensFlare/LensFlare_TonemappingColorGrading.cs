@@ -51,11 +51,11 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
     #region Attributes
 
     [AttributeUsage(AttributeTargets.Field)]
-    public class SettingGroup : Attribute
+    public class SettingsGroup : Attribute
     {
     }
 
-    public class IndentGroup : PropertyAttribute
+    public class IndentedGroup : PropertyAttribute
     {
     }
 
@@ -67,6 +67,10 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
     {
         public int minSizePerWheel = 60;
         public int maxSizePerWheel = 150;
+
+        public ColorWheelGroup()
+        {
+        }
 
         public ColorWheelGroup(int _min, int _max)
         {
@@ -94,7 +98,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
 
     #region Settings
 
-    [SerializeField]
+    [Serializable]
     public struct EyeAdaptationSettings
     {
         public bool enabled;
@@ -111,7 +115,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         [Tooltip("在游戏视图中显示亮度对象。")] public bool showDebug;
 
         public static EyeAdaptationSettings defaultSettings =>
-            new EyeAdaptationSettings()
+            new EyeAdaptationSettings
             {
                 enabled = false,
                 showDebug = false,
@@ -167,7 +171,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
                     enabled = false,
                     tonemapper = Tonemapper.Neutral,
                     exposure = 1f,
-                    //TODO://curve = CurvesSettings.defaultCurve,
+                    curve = CurvesSettings.defaultCurve,
                     neutralBlackIn = 0.02f,
                     neutralWhiteIn = 10f,
                     neutralBlackOut = 0f,
@@ -179,5 +183,505 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         }
     }
 
+    [Serializable]
+    public struct LUTSettings
+    {
+        public bool enabled;
+
+        [Tooltip("自定义查找的图片(格式 比如:256 x 16)")] public Texture texture;
+
+        [Range(0f, 1f), Tooltip("Blending factor")]
+        public float contribution;
+
+        public static LUTSettings defaultSettings =>
+            new LUTSettings()
+            {
+                enabled = false,
+                texture = null,
+                contribution = 1f
+            };
+    }
+
+
+    public struct ColorWheelsSettings
+    {
+        [ColorUsage(false)] public Color shadows;
+
+        [ColorUsage(false)] public Color midtones;
+
+        [ColorUsage(false)] public Color highlights;
+
+        public static ColorWheelsSettings defaultSettings
+        {
+            get
+            {
+                return new ColorWheelsSettings()
+                {
+                    shadows = Color.white,
+                    midtones = Color.white,
+                    highlights = Color.white
+                };
+            }
+        }
+    }
+
+    [Serializable]
+    public struct BasicsSettings
+    {
+        [Range(-2f, 2f), Tooltip("将白平衡设置为自定义色温。")]
+        public float temperatureShift;
+
+        [Range(-2f, 2f), Tooltip("设置白平衡以补偿绿色或洋红色调。")]
+        public float tint;
+
+        [Space, Range(-0.5f, 0.5f), Tooltip("改变所有颜色的色调。")]
+        public float hue;
+
+        [Range(0f, 2f), Tooltip("推动所有颜色的强度。")] public float saturation;
+
+        [Range(-1f, 1f),
+         Tooltip("调整饱和度，使剪裁最小化，颜色接近全饱和。")]
+        public float vibrance;
+
+        [Range(0f, 10f), Tooltip("使所有颜色变亮或变暗。")]
+        public float value;
+
+        [Space, Range(0f, 2f), Tooltip("扩展或缩小色调值的整体范围。")]
+        public float contrast;
+
+        [Range(0.01f, 5f), Tooltip("对比度增益曲线。控制曲线的陡度。")]
+        public float gain;
+
+        [Range(0.01f, 5f), Tooltip("对源应用POW函数。")]
+        public float gamma;
+
+        public static BasicsSettings defaultSettings
+        {
+            get
+            {
+                return new BasicsSettings
+                {
+                    temperatureShift = 0f,
+                    tint = 0f,
+                    contrast = 1f,
+                    hue = 0f,
+                    saturation = 1f,
+                    value = 1f,
+                    vibrance = 0f,
+                    gain = 1f,
+                    gamma = 1f
+                };
+            }
+        }
+    }
+
+
+    [Serializable]
+    public struct ChannelMixerSettings
+    {
+        public int currentChannel;
+        public Vector3[] channels;
+
+        public static ChannelMixerSettings defaultSettings
+        {
+            get
+            {
+                return new ChannelMixerSettings
+                {
+                    currentChannel = 0,
+                    channels = new[]
+                    {
+                        new Vector3(1f, 0f, 0f),
+                        new Vector3(0f, 1f, 0f),
+                        new Vector3(0f, 0f, 1f)
+                    }
+                };
+            }
+        }
+    }
+
+    [Serializable]
+    public struct CurvesSettings
+    {
+        [Curve] public AnimationCurve master;
+
+        [Curve(1f, 0f, 0f, 1f)] public AnimationCurve red;
+
+        [Curve(0f, 1f, 0f, 1f)] public AnimationCurve green;
+
+        [Curve(0f, 1f, 1f, 1f)] public AnimationCurve blue;
+
+        public static AnimationCurve defaultCurve
+        {
+            get { return new AnimationCurve(new Keyframe(0f, 0f, 1f, 1f), new Keyframe(1f, 1f, 1f, 1f)); }
+        }
+
+        public static CurvesSettings defaultSettings
+        {
+            get
+            {
+                return new CurvesSettings
+                {
+                    master = defaultCurve,
+                    red = defaultCurve,
+                    green = defaultCurve,
+                    blue = defaultCurve
+                };
+            }
+        }
+    }
+
+    public enum ColorGradingPrecision
+    {
+        Normal = 16,
+        High = 32
+    }
+
+    [Serializable]
+    public struct ColorGradingSettings
+    {
+        public bool enabled;
+
+        [Tooltip(
+            "LUT 精度. \"Normal\" 用 256x16, \"High\" 用 1024x32. 建议使用 \"Normal\"在手机上")]
+        public ColorGradingPrecision precision;
+
+        [Space, ColorWheelGroup] public ColorWheelsSettings colorWheels;
+
+        [Space, IndentedGroup] public BasicsSettings basics;
+
+        [Space, ChannelMixer] public ChannelMixerSettings channelMixer;
+
+        [Space, IndentedGroup] public CurvesSettings curves;
+
+        [Space, Tooltip("使用抖动来尝试解决最小化黑暗区域中的色带。")]
+        public bool useDithering;
+
+        [Tooltip("在GameView的左上角显示生成的LUT。")] public bool showDebug;
+
+        public static ColorGradingSettings defaultSettings
+        {
+            get
+            {
+                return new ColorGradingSettings
+                {
+                    enabled = false,
+                    useDithering = false,
+                    showDebug = false,
+                    precision = ColorGradingPrecision.Normal,
+                    colorWheels = ColorWheelsSettings.defaultSettings,
+                    basics = BasicsSettings.defaultSettings,
+                    channelMixer = ChannelMixerSettings.defaultSettings,
+                    curves = CurvesSettings.defaultSettings
+                };
+            }
+        }
+
+        internal void Reset()
+        {
+            curves = CurvesSettings.defaultSettings;
+        }
+    }
+
+    [SerializeField, SettingsGroup]
+    private EyeAdaptationSettings _eyeAdaptation = EyeAdaptationSettings.defaultSettings;
+
+    public EyeAdaptationSettings EyeAdaptation
+    {
+        get { return _eyeAdaptation; }
+        set { _eyeAdaptation = value; }
+    }
+
+    [SerializeField, SettingsGroup] private TonemappingSettings _tonemapping = TonemappingSettings.defaultSettings;
+
+    public TonemappingSettings Tonemapping
+    {
+        get { return _tonemapping; }
+        set
+        {
+            _tonemapping = value;
+            SetTonemapperDirty();
+        }
+    }
+
+    [SerializeField, SettingsGroup] private ColorGradingSettings _colorGrading = ColorGradingSettings.defaultSettings;
+
+    public ColorGradingSettings ColorGrading
+    {
+        get { return _colorGrading; }
+        set
+        {
+            _colorGrading = value;
+            SetDirty();
+        }
+    }
+
+    [SerializeField, SettingsGroup] private LUTSettings _lut = LUTSettings.defaultSettings;
+
+    public LUTSettings Lut
+    {
+        get { return _lut; }
+        set { _lut = value; }
+    }
+
     #endregion
+
+    private Texture2D _identityLut;
+    private RenderTexture _internalLut;
+    private Texture2D _curveTexture;
+    private Texture2D _tonemapperCurve;
+    private float _tonemapperCurveRange;
+
+    private Texture2D IdentityLut
+    {
+        get
+        {
+            if (_identityLut == null || _identityLut.height != lutSize)
+            {
+                DestroyImmediate(_identityLut);
+                _identityLut = GenerateIdentityLut(lutSize);
+            }
+
+            return _identityLut;
+        }
+    }
+
+    private RenderTexture InternalLutRt
+    {
+        get
+        {
+            if (_internalLut == null || !_internalLut.IsCreated() || _internalLut.height != lutSize)
+            {
+                DestroyImmediate(_internalLut);
+                _internalLut = new RenderTexture(lutSize * lutSize, lutSize, 0, RenderTextureFormat.ARGB32)
+                {
+                    name = "Internal LUT",
+                    filterMode = FilterMode.Bilinear,
+                    anisoLevel = 0,
+                    hideFlags = HideFlags.DontSave
+                };
+            }
+
+            return _internalLut;
+        }
+    }
+
+    private Texture2D CurveTexture
+    {
+        get
+        {
+            if (_curveTexture == null)
+            {
+                _curveTexture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true)
+                {
+                    name = "Curve texture",
+                    wrapMode = TextureWrapMode.Clamp,
+                    filterMode = FilterMode.Bilinear,
+                    anisoLevel = 0,
+                    hideFlags = HideFlags.DontSave
+                };
+            }
+
+            return _curveTexture;
+        }
+    }
+
+    private Texture2D TonemapperCurve
+    {
+        get
+        {
+            if (_tonemapperCurve == null)
+            {
+                TextureFormat format = TextureFormat.RGB24;
+                if (SystemInfo.SupportsTextureFormat(TextureFormat.RFloat))
+                    format = TextureFormat.RFloat;
+                else if (SystemInfo.SupportsTextureFormat(TextureFormat.RHalf))
+                    format = TextureFormat.RHalf;
+
+                _tonemapperCurve = new Texture2D(256, 1, format, false, true)
+                {
+                    name = "Tonemapper curve texture",
+                    wrapMode = TextureWrapMode.Clamp,
+                    filterMode = FilterMode.Bilinear,
+                    anisoLevel = 0,
+                    hideFlags = HideFlags.DontSave
+                };
+            }
+
+            return _tonemapperCurve;
+        }
+    }
+
+    [SerializeField] private Shader _shader;
+
+    public Shader Shader
+    {
+        get
+        {
+            if (_shader == null)
+                _shader = Shader.Find("HCS/TonemappingColorGrading");
+
+            return _shader;
+        }
+    }
+
+    private Material _material;
+
+    public Material Material
+    {
+        get
+        {
+            if (_material == null)
+                _material = LensFlare_ImageEffectHelper.CheckShaderAndCreateMaterial(Shader);
+
+            return _material;
+        }
+    }
+
+    public bool IsGammaColorSpace
+    {
+        get { return QualitySettings.activeColorSpace == ColorSpace.Gamma; }
+    }
+
+    public int lutSize
+    {
+        get { return (int) ColorGrading.precision; }
+    }
+
+    private enum Pass
+    {
+        LutGen,
+        AdaptationLog,
+        AdaptationExpBlend,
+        AdaptationExp,
+        TonemappingOff,
+        TonemappingACES,
+        TonemappingCurve,
+        TonemappingHable,
+        TonemappingHejlDawson,
+        TonemappingPhotographic,
+        TonemappingReinhard,
+        TonemappingNeutral,
+        AdaptationDebug
+    }
+
+    public bool validRenderTextureFormat { get; private set; }
+    public bool validUserLutSize { get; private set; }
+
+    private bool dirty = true;
+    private bool tonemapperDirty = true;
+
+    private RenderTexture smallAdaptiveRt;
+    private RenderTextureFormat adaptiveRtFormat;
+
+    private int adaptationSpeedID;
+    private int middleGreyID;
+    private int adaptationMinID;
+    private int adaptationMaxID;
+    private int lumTexID;
+    private int toneCurveRangeID;
+    private int toneCurveID;
+    private int exposureID;
+    private int neutralTonemapperParams1ID;
+    private int neutralTonemapperParams2ID;
+    private int whiteBalanceID;
+    private int liftID;
+    private int gammaID;
+    private int gainID;
+    private int contrastGainGammaID;
+    private int vibranceID;
+    private int HSVID;
+    private int channelMixerRedID;
+    private int channelMixerGreenID;
+    private int channelMixerBlueID;
+    private int curveTexID;
+    private int internalLutTexID;
+    private int internalLutParamsID;
+    private int userLutTexID;
+    private int userLutParamsID;
+
+    public void SetDirty()
+    {
+        dirty = true;
+    }
+
+    public void SetTonemapperDirty()
+    {
+        tonemapperDirty = true;
+    }
+
+    private void Awake()
+    {
+        adaptationSpeedID = Shader.PropertyToID("_AdaptationSpeed");
+        middleGreyID = Shader.PropertyToID("_MiddleGrey");
+        adaptationMinID = Shader.PropertyToID("_AdaptationMin");
+        adaptationMaxID = Shader.PropertyToID("_AdaptationMax");
+        lumTexID = Shader.PropertyToID("_LumTex");
+        toneCurveRangeID = Shader.PropertyToID("_ToneCurveRange");
+        toneCurveID = Shader.PropertyToID("_ToneCurve");
+        exposureID = Shader.PropertyToID("_Exposure");
+        neutralTonemapperParams1ID = Shader.PropertyToID("_NeutralTonemapperParams1");
+        neutralTonemapperParams2ID = Shader.PropertyToID("_NeutralTonemapperParams2");
+        whiteBalanceID = Shader.PropertyToID("_WhiteBalance");
+        liftID = Shader.PropertyToID("_Lift");
+        gammaID = Shader.PropertyToID("_Gamma");
+        gainID = Shader.PropertyToID("_Gain");
+        contrastGainGammaID = Shader.PropertyToID("_ContrastGainGamma");
+        vibranceID = Shader.PropertyToID("_Vibrance");
+        HSVID = Shader.PropertyToID("_HSV");
+        channelMixerRedID = Shader.PropertyToID("_ChannelMixerRed");
+        channelMixerGreenID = Shader.PropertyToID("_ChannelMixerGreen");
+        channelMixerBlueID = Shader.PropertyToID("_ChannelMixerBlue");
+        curveTexID = Shader.PropertyToID("_CurveTex");
+        internalLutTexID = Shader.PropertyToID("_InternalLutTex");
+        internalLutParamsID = Shader.PropertyToID("_InternalLutParams");
+        userLutTexID = Shader.PropertyToID("_UserLutTex");
+        userLutParamsID = Shader.PropertyToID("_UserLutParams");
+    }
+
+    private void OnEnable()
+    {
+        if (!LensFlare_ImageEffectHelper.IsSupported(Shader, false, true, this))
+        {
+            enabled = false;
+            return;
+        }
+
+        SetDirty();
+        SetTonemapperDirty();
+    }
+
+    private void OnDisable()
+    {
+        if (Material != null)
+            DestroyImmediate(Material);
+
+        if (IdentityLut != null)
+            DestroyImmediate(IdentityLut);
+
+        if (InternalLutRt != null)
+            DestroyImmediate(InternalLutRt);
+
+        if (smallAdaptiveRt != null)
+            DestroyImmediate(smallAdaptiveRt);
+
+        if (CurveTexture != null)
+            DestroyImmediate(CurveTexture);
+
+        if (TonemapperCurve != null)
+            DestroyImmediate(TonemapperCurve);
+
+        _material = null;
+        _identityLut = null;
+        _internalLut = null;
+        smallAdaptiveRt = null;
+        _curveTexture = null;
+        _tonemapperCurve = null;
+    }
+
+    private void OnValidate()
+    {
+        SetDirty();
+        SetTonemapperDirty();
+    }
 }
