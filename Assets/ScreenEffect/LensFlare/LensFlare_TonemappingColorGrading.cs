@@ -105,9 +105,9 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
 
         [Min(0f), Tooltip("中点调整")] public float middleGrey;
 
-        [Tooltip("尽可能最高的曝光值。调整这个值来修改你最亮的区域。")] public float min;
+        [Tooltip("尽可能最高的曝光值。调整这个值来修改你最暗的区域。")] public float min;
 
-        [Tooltip("尽可能的最低曝光值。调整此值以修改级别中最暗的区域。")]
+        [Tooltip("尽可能的最低曝光值。调整这个值来修改你最亮的区域。")]
         public float max;
 
         [Min(0f), Tooltip("线性适应速度。越高越快。")] public float speed;
@@ -842,4 +842,40 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
     }
 
     private RenderTexture[] m_AdaptRts = null;
+
+    [ImageEffectTransformsToLDR]
+    private void OnRenderImage(RenderTexture src, RenderTexture dest)
+    {
+#if UNITY_EDITOR
+        validRenderTextureFormat = true;
+
+        if (src.format != RenderTextureFormat.ARGBHalf && src.format != RenderTextureFormat.ARGBFloat)
+            validRenderTextureFormat = false;
+#endif
+
+        Material.shaderKeywords = null;
+
+        RenderTexture rtSquared = null;
+
+        if (EyeAdaptation.enabled)
+        {
+            bool freshlyBrewedSmallRt = CheckSmallAdaptiveRt();
+            int srcSize = src.width < src.height ? src.width : src.height;
+
+            //快速 2的倍数(低或者相等)  half size
+            int adaptiveSize = srcSize;
+            adaptiveSize |= (adaptiveSize >> 1);
+            adaptiveSize |= (adaptiveSize >> 2);
+            adaptiveSize |= (adaptiveSize >> 4);
+            adaptiveSize |= (adaptiveSize >> 8);
+            adaptiveSize |= (adaptiveSize >> 16);
+            adaptiveSize -= (adaptiveSize >> 1);
+
+            rtSquared = RenderTexture.GetTemporary(adaptiveSize, adaptiveSize, 0, adaptiveRtFormat);
+            Graphics.Blit(src,rtSquared);
+
+            //TODO:
+
+        }
+    }
 }
