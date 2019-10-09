@@ -684,4 +684,162 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         SetDirty();
         SetTonemapperDirty();
     }
+
+    private static Texture2D GenerateIdentityLut(int dim)
+    {
+        Color[] newC = new Color[dim * dim * dim];
+        float oneOverDim = 1f / ((float) dim - 1f);
+
+        for (int i = 0; i < dim; i++)
+        for (int j = 0; j < dim; j++)
+        for (int k = 0; k < dim; k++)
+            newC[i + (j * dim) + (k * dim * dim)] =
+                new Color((float) i * oneOverDim, Mathf.Abs((float) j * oneOverDim), Mathf.Abs((float) k * oneOverDim),
+                    1f);
+
+        Texture2D tex2D = new Texture2D(dim * dim, dim, TextureFormat.RGB24, false, false)
+        {
+            name = "Identity Lut",
+            filterMode = FilterMode.Bilinear,
+            anisoLevel = 0,
+            hideFlags = HideFlags.DontSave
+        };
+        tex2D.SetPixels(newC);
+        tex2D.Apply();
+
+        return tex2D;
+    }
+
+    //Judd等人的标准光源色度分析模型。
+    // http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D
+    //稍微修改一下，用D65白点（X=0.31271，Y=0.32902）调整。
+    private float StandardIlluminantY(float x)
+    {
+        return 2.87f * x - 3f * x * x - 0.27509507f;
+    }
+
+    // CIE xy 色度 to CAT02 LMS.
+    // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
+    private Vector3 CIExyToLMS(float x, float y)
+    {
+        float Y = 1f;
+        float X = Y * x / y;
+        float Z = Y * (1f - x - y) / y;
+
+        float L = 0.7328f * X + 0.4296f * Y - 0.1624f * Z;
+        float M = -0.7036f * X + 1.6975f * Y + 0.0061f * Z;
+        float S = 0.0030f * X + 0.0136f * Y + 0.9834f * Z;
+
+        return new Vector3(L, M, S);
+    }
+
+    //得到LMS空间下白平衡
+    private Vector3 GetWhiteBalance()
+    {
+        float t1 = ColorGrading.basics.temperatureShift;
+        float t2 = ColorGrading.basics.tint;
+
+        // 参考白点的CIE xy
+        // 注意: 0.31271 = x 值 在 D65 白点
+        float x = 0.31271f - t1 * (t1 < 0f ? 0.1f : 0.05f);
+        float y = StandardIlluminantY(x) + t2 * 0.05f;
+
+        // 计算lms空间中的系数。
+        Vector3 w1 = new Vector3(0.949237f, 1.03542f, 1.08728f); // D65 白点
+        Vector3 w2 = CIExyToLMS(x, y);
+        return new Vector3(w1.x / w2.x, w1.y / w2.y, w1.z / w2.z);
+    }
+
+    private static Color NormalizeColor(Color c)
+    {
+        float sum = (c.r + c.g + c.b) / 3f;
+
+        if (Mathf.Approximately(sum, 0f))
+            return new Color(1f, 1f, 1f, 1f);
+
+        return new Color()
+        {
+            r = c.r / sum,
+            g = c.g / sum,
+            b = c.b / sum,
+            a = 1f
+        };
+    }
+
+
+    private void GenCurveTexture()
+    {
+        AnimationCurve master = ColorGrading.curves.master;
+        AnimationCurve red = ColorGrading.curves.red;
+        AnimationCurve green = ColorGrading.curves.green;
+        AnimationCurve blue = ColorGrading.curves.blue;
+
+        Color[] pixels = new Color[256];
+
+        for (float i = 0f; i <= 1f; i += 1f / 255f)
+        {
+            float m = Mathf.Clamp(master.Evaluate(i), 0f, 1f);
+            float r = Mathf.Clamp(red.Evaluate(i), 0f, 1f);
+            float g = Mathf.Clamp(green.Evaluate(i), 0f, 1f);
+            float b = Mathf.Clamp(blue.Evaluate(i), 0f, 1f);
+            pixels[(int)Mathf.Floor(i * 255f)] = new Color(r, g, b, m);
+        }
+
+        CurveTexture.SetPixels(pixels);
+        CurveTexture.Apply();
+    }
+
+    private bool CheckUserLut()
+    {
+        validUserLutSize = Lut.texture.height == (int)Mathf.Sqrt(Lut.texture.width);
+        return validUserLutSize;
+    }
+
+    private bool CheckSmallAdaptiveRt()
+    {
+        if (smallAdaptiveRt != null)
+            return false;
+
+        adaptiveRtFormat = RenderTextureFormat.ARGBHalf;
+
+        if (SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGHalf))
+            adaptiveRtFormat = RenderTextureFormat.RGHalf;
+
+        smallAdaptiveRt = new RenderTexture(1, 1, 0, adaptiveRtFormat) {hideFlags = HideFlags.DontSave};
+
+        return true;
+    }
+
+    private void OnGUI()
+    {
+        if (Event.current.type != EventType.Repaint)
+            return;
+
+        int yoffset = 0;
+
+        // Color grading debug
+        if (InternalLutRt != null && ColorGrading.enabled && ColorGrading.showDebug)
+        {
+            Graphics.DrawTexture(new Rect(0f, yoffset, lutSize * lutSize, lutSize), InternalLutRt);
+            yoffset += lutSize;
+        }
+
+        // Eye Adaptation debug
+        if (smallAdaptiveRt != null && EyeAdaptation.enabled && EyeAdaptation.showDebug)
+        {
+            Material.SetPass((int)Pass.AdaptationDebug);
+            Graphics.DrawTexture(new Rect(0f, yoffset, 256, 16), smallAdaptiveRt, Material);
+        }
+    }
+
+    public Texture2D BakeLUT()
+    {
+        Texture2D lut = new Texture2D(InternalLutRt.width, InternalLutRt.height, TextureFormat.RGB24, false, true);
+        RenderTexture.active = InternalLutRt;
+        lut.ReadPixels(new Rect(0f, 0f, lut.width, lut.height), 0, 0);
+        RenderTexture.active = null;
+        return lut;
+    }
+
+    private RenderTexture[] m_AdaptRts = null;
 }
