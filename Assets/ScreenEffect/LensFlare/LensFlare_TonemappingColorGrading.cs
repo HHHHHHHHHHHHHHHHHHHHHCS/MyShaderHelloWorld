@@ -190,7 +190,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
 
         [Tooltip("自定义查找的图片(格式 比如:256 x 16)")] public Texture texture;
 
-        [Range(0f, 1f), Tooltip("Blending factor")]
+        [Range(0f, 1f), Tooltip("混合因子")]
         public float contribution;
 
         public static LUTSettings defaultSettings =>
@@ -766,6 +766,43 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         };
     }
 
+    private void GenerateLiftGammaGain(out Color lift, out Color gamma, out Color gain)
+    {
+        Color nLift = NormalizeColor(ColorGrading.colorWheels.shadows);
+        Color nGamma = NormalizeColor(ColorGrading.colorWheels.midtones);
+        Color nGain = NormalizeColor(ColorGrading.colorWheels.highlights);
+
+        float avgLift = (nLift.r + nLift.g + nLift.b) / 3f;
+        float avgGamma = (nGamma.r + nGamma.g + nGamma.b) / 3f;
+        float avgGain = (nGain.r + nGain.g + nGain.b) / 3f;
+
+        // Magic numbers
+        const float liftScale = 0.1f;
+        const float gammaScale = 0.5f;
+        const float gainScale = 0.5f;
+
+        float liftR = (nLift.r - avgLift) * liftScale;
+        float liftG = (nLift.g - avgLift) * liftScale;
+        float liftB = (nLift.b - avgLift) * liftScale;
+
+        float gammaR = Mathf.Pow(2f, (nGamma.r - avgGamma) * gammaScale);
+        float gammaG = Mathf.Pow(2f, (nGamma.g - avgGamma) * gammaScale);
+        float gammaB = Mathf.Pow(2f, (nGamma.b - avgGamma) * gammaScale);
+
+        float gainR = Mathf.Pow(2f, (nGain.r - avgGain) * gainScale);
+        float gainG = Mathf.Pow(2f, (nGain.g - avgGain) * gainScale);
+        float gainB = Mathf.Pow(2f, (nGain.b - avgGain) * gainScale);
+
+        const float minGamma = 0.01f;
+        float invGammaR = 1f / Mathf.Max(minGamma, gammaR);
+        float invGammaG = 1f / Mathf.Max(minGamma, gammaG);
+        float invGammaB = 1f / Mathf.Max(minGamma, gammaB);
+
+        lift = new Color(liftR, liftG, liftB);
+        gamma = new Color(invGammaR, invGammaG, invGammaB);
+        gain = new Color(gainR, gainG, gainB);
+    }
+
 
     private void GenCurveTexture()
     {
@@ -971,12 +1008,92 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
                 const float f = 0.30f;
 
                 Material.SetVector(neutralTonemapperParams1ID, new Vector4(a, b, c, d));
-                Material.SetVector(neutralTonemapperParams2ID, new Vector4(e, f, Tonemapping.neutralWhiteLevel, Tonemapping.neutralWhiteClip / scaleFactorHalf));
-
+                Material.SetVector(neutralTonemapperParams2ID,
+                    new Vector4(e, f, Tonemapping.neutralWhiteLevel, Tonemapping.neutralWhiteClip / scaleFactorHalf));
             }
 
             Material.SetFloat(exposureID, Tonemapping.exposure);
-            renderPass += (int)Tonemapping.tonemapper + 1;
+            renderPass += (int) Tonemapping.tonemapper + 1;
         }
+
+        if (ColorGrading.enabled)
+        {
+            if (dirty || !_internalLut.IsCreated())
+            {
+                Color lift, gamma, gain;
+
+                GenerateLiftGammaGain(out lift, out gamma, out gain);
+                GenCurveTexture();
+
+                Material.SetVector(whiteBalanceID, GetWhiteBalance());
+                Material.SetVector(liftID, lift);
+                Material.SetVector(gammaID, gamma);
+                Material.SetVector(gainID, gain);
+                Material.SetVector(contrastGainGammaID,
+                    new Vector3(ColorGrading.basics.contrast, ColorGrading.basics.gain,
+                        1f / ColorGrading.basics.gamma));
+                Material.SetFloat(vibranceID, ColorGrading.basics.vibrance);
+                Material.SetVector(HSVID, new Vector4(ColorGrading.basics.hue
+                    , ColorGrading.basics.saturation, ColorGrading.basics.value));
+                Material.SetVector(channelMixerRedID, ColorGrading.channelMixer.channels[0]);
+                Material.SetVector(channelMixerGreenID, ColorGrading.channelMixer.channels[1]);
+                Material.SetVector(channelMixerBlueID, ColorGrading.channelMixer.channels[2]);
+                Material.SetTexture(curveTexID, CurveTexture);
+                // 表示需要进行渲染纹理恢复操作
+                // 发生在渲染到渲染纹理而该纹理又没有被提前清空或者销毁的情况下
+                // 如果发出警告可以用这个清除
+                InternalLutRt.MarkRestoreExpected();
+                Graphics.Blit(_identityLut, InternalLutRt, Material, (int) Pass.LutGen);
+                dirty = false;
+            }
+
+            Material.EnableKeyword("ENABLE_COLOR_GRADING");
+
+            if (ColorGrading.useDithering)
+                Material.EnableKeyword("ENABLE_DITHERING");
+
+            Material.SetTexture(internalLutTexID, InternalLutRt);
+            Material.SetVector(internalLutParamsID,
+                new Vector3(1f / InternalLutRt.width, 1f / InternalLutRt.height, InternalLutRt.height - 1f));
+        }
+
+        if (Lut.enabled && Lut.texture != null && CheckUserLut())
+        {
+            Material.SetTexture(userLutTexID, Lut.texture);
+            Material.SetVector(userLutParamsID, new Vector4(1f / Lut.texture.width, 1f / Lut.texture.height, Lut.texture.height - 1f, Lut.contribution));
+            Material.EnableKeyword("ENABLE_USER_LUT");
+        }
+
+        Graphics.Blit(src,dest,Material,renderPass);
+
+        //清理
+        if (EyeAdaptation.enabled)
+        {
+            for (int i = 0; i < adaptRts.Length; i++)
+                RenderTexture.ReleaseTemporary(adaptRts[i]);
+
+            RenderTexture.ReleaseTemporary(rtSquared);
+        }
+
+#if UNITY_EDITOR
+        //如果我们有一个on frame end callabck，我们需要传递一个有效的result纹理
+        //如果destination为空，我们将其写入backbuffer，因此需要将其复制出来。
+        //很慢，也不令人惊讶，但仅限编辑
+        if (onFrameEndEditorOnly != null)
+        {
+            if (dest == null)
+            {
+                RenderTexture rt = RenderTexture.GetTemporary(src.width, src.height, 0);
+                Graphics.Blit(src, rt, Material, renderPass);
+                onFrameEndEditorOnly(rt);
+                RenderTexture.ReleaseTemporary(rt);
+                RenderTexture.active = null;
+            }
+            else
+            {
+                onFrameEndEditorOnly(dest);
+            }
+        }
+#endif
     }
 }
