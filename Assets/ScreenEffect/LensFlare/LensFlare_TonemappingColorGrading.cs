@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 using UnityEngine.Events;
 
 [ExecuteInEditMode]
@@ -107,8 +108,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
 
         [Tooltip("尽可能最高的曝光值。调整这个值来修改你最暗的区域。")] public float min;
 
-        [Tooltip("尽可能的最低曝光值。调整这个值来修改你最亮的区域。")]
-        public float max;
+        [Tooltip("尽可能的最低曝光值。调整这个值来修改你最亮的区域。")] public float max;
 
         [Min(0f), Tooltip("线性适应速度。越高越快。")] public float speed;
 
@@ -782,7 +782,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
             float r = Mathf.Clamp(red.Evaluate(i), 0f, 1f);
             float g = Mathf.Clamp(green.Evaluate(i), 0f, 1f);
             float b = Mathf.Clamp(blue.Evaluate(i), 0f, 1f);
-            pixels[(int)Mathf.Floor(i * 255f)] = new Color(r, g, b, m);
+            pixels[(int) Mathf.Floor(i * 255f)] = new Color(r, g, b, m);
         }
 
         CurveTexture.SetPixels(pixels);
@@ -791,7 +791,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
 
     private bool CheckUserLut()
     {
-        validUserLutSize = Lut.texture.height == (int)Mathf.Sqrt(Lut.texture.width);
+        validUserLutSize = Lut.texture.height == (int) Mathf.Sqrt(Lut.texture.width);
         return validUserLutSize;
     }
 
@@ -827,7 +827,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         // Eye Adaptation debug
         if (smallAdaptiveRt != null && EyeAdaptation.enabled && EyeAdaptation.showDebug)
         {
-            Material.SetPass((int)Pass.AdaptationDebug);
+            Material.SetPass((int) Pass.AdaptationDebug);
             Graphics.DrawTexture(new Rect(0f, yoffset, 256, 16), smallAdaptiveRt, Material);
         }
     }
@@ -841,7 +841,7 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
         return lut;
     }
 
-    private RenderTexture[] m_AdaptRts = null;
+    private RenderTexture[] adaptRts = null;
 
     [ImageEffectTransformsToLDR]
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -872,10 +872,111 @@ public class LensFlare_TonemappingColorGrading : MonoBehaviour
             adaptiveSize -= (adaptiveSize >> 1);
 
             rtSquared = RenderTexture.GetTemporary(adaptiveSize, adaptiveSize, 0, adaptiveRtFormat);
-            Graphics.Blit(src,rtSquared);
+            Graphics.Blit(src, rtSquared);
 
-            //TODO:
+            int downsample = (int) Mathf.Log(rtSquared.width, 2f);
 
+            int div = 2;
+
+            if (adaptRts == null || adaptRts.Length != downsample)
+            {
+                adaptRts = new RenderTexture[downsample];
+            }
+
+            for (int i = 0; i < downsample; i++)
+            {
+                adaptRts[i] =
+                    RenderTexture.GetTemporary(rtSquared.width / div, rtSquared.height / div, 0, adaptiveRtFormat);
+                div <<= 1;
+            }
+
+            //downsample pyramid
+            var lumRt = adaptRts[downsample - 1];
+            Graphics.Blit(rtSquared, adaptRts[0], Material, (int) Pass.AdaptationLog);
+
+            for (int i = 0; i < downsample - 1; i++)
+            {
+                Graphics.Blit(adaptRts[i], adaptRts[i + 1]);
+                lumRt = adaptRts[i + 1];
+            }
+
+            smallAdaptiveRt.MarkRestoreExpected();
+
+            Material.SetFloat(adaptationSpeedID, Mathf.Max(EyeAdaptation.speed, 0.001f));
+
+#if UNITY_EDITOR
+            if (Application.isPlaying && !freshlyBrewedSmallRt)
+                Graphics.Blit(lumRt, smallAdaptiveRt, Material, (int) Pass.AdaptationExpBlend);
+            else
+                Graphics.Blit(lumRt, smallAdaptiveRt, Material, (int) Pass.AdaptationExp);
+#else
+            Graphics.Blit(lumRt,smallAdaptiveRt,Material,freshlyBrewedSmallRt?(int)Pass.AdaptationExp:(int)Pass.AdaptationExpBlend);
+#endif
+
+            Material.SetFloat(middleGreyID, EyeAdaptation.middleGrey);
+            Material.SetFloat(adaptationMinID, Mathf.Pow(2f, EyeAdaptation.min));
+            Material.SetFloat(adaptationMaxID, Mathf.Pow(2f, EyeAdaptation.max));
+            Material.SetTexture(lumTexID, smallAdaptiveRt);
+            Material.EnableKeyword("ENABLE_EYE_ADAPTATION");
+        }
+
+        int renderPass = (int) Pass.TonemappingOff;
+
+        if (Tonemapping.enabled)
+        {
+            if (Tonemapping.tonemapper == Tonemapper.Curve)
+            {
+                if (tonemapperDirty)
+                {
+                    float range = 1f;
+
+                    if (Tonemapping.curve.length > 0)
+                    {
+                        range = Tonemapping.curve[Tonemapping.curve.length - 1].time;
+
+                        for (float i = 0f; i <= 1f; i += 1f / 255f)
+                        {
+                            float c = Tonemapping.curve.Evaluate(i * range);
+                            TonemapperCurve.SetPixel(Mathf.FloorToInt(i * 255f), 0, new Color(c, c, c));
+                        }
+
+                        TonemapperCurve.Apply();
+                    }
+
+                    _tonemapperCurveRange = 1f / range;
+                    tonemapperDirty = false;
+                }
+
+
+                Material.SetFloat(toneCurveRangeID, _tonemapperCurveRange);
+                Material.SetTexture(toneCurveID, TonemapperCurve);
+            }
+            else if (Tonemapping.tonemapper == Tonemapper.Neutral)
+            {
+                const float scaleFactor = 20f;
+                const float scaleFactorHalf = scaleFactor * 0.5f;
+
+                float inBlack = Tonemapping.neutralBlackIn * scaleFactor + 1f;
+                float outBlack = Tonemapping.neutralBlackOut * scaleFactorHalf + 1f;
+                float inWhite = Tonemapping.neutralWhiteIn / scaleFactor;
+                float outWhite = 1f - Tonemapping.neutralWhiteOut / scaleFactor;
+                float blackRatio = inBlack / outBlack;
+                float whiteRatio = inWhite / outWhite;
+
+                const float a = 0.2f;
+                float b = Mathf.Max(0f, Mathf.LerpUnclamped(0.57f, 0.37f, blackRatio));
+                float c = Mathf.LerpUnclamped(0.01f, 0.24f, whiteRatio);
+                float d = Mathf.Max(0f, Mathf.LerpUnclamped(0.02f, 0.20f, blackRatio));
+                const float e = 0.02f;
+                const float f = 0.30f;
+
+                Material.SetVector(neutralTonemapperParams1ID, new Vector4(a, b, c, d));
+                Material.SetVector(neutralTonemapperParams2ID, new Vector4(e, f, Tonemapping.neutralWhiteLevel, Tonemapping.neutralWhiteClip / scaleFactorHalf));
+
+            }
+
+            Material.SetFloat(exposureID, Tonemapping.exposure);
+            renderPass += (int)Tonemapping.tonemapper + 1;
         }
     }
 }
