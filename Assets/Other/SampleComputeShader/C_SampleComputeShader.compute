@@ -1,0 +1,37 @@
+//C#访问的入口函数
+#pragma kernel CSMain
+
+//线程组和线程
+#define thread_group_x 2
+#define thread_group_y 2
+
+#define thread_x 2
+#define thread_y 2
+
+//pre和next是我们要从CPU传进来的，result是在GPU计算好之后传回给CPU
+/*
+struct MyVector
+{
+	float x;
+	float y;
+	float z;
+};
+RWStructuredBuffer<MyVector> data;
+*/
+RWStructuredBuffer<float3> Result;
+
+RWStructuredBuffer<float3> preVertices;
+
+RWStructuredBuffer<float3> nextVertices;
+
+//单个线程组 包含的线程数 = 2*2*1 (即x*y*z) 
+//总线程数量 C#传入总数据/单线程数据 如传入 16 则 线程数为 16/(2*2*1) = 4
+//或者在C#中定义总线程数量
+[numthreads(2, 2, 1)]
+//id 范围(0,0,0)~(3,3,0). 线程组.x*单线程数量.x - 1
+void CSMain(uint3 id: SV_DispatchThreadID)
+{
+	int index = id.x + (id.y * thread_x * thread_group_x) + (id.z * thread_group_x * thread_group_y * thread_x * thread_y);
+	
+	Result[index] = preVertices[index] + nextVertices[index];
+}
