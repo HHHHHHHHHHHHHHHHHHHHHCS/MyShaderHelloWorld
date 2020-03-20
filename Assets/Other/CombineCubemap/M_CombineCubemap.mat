@@ -20,27 +20,27 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackImage:
-        m_Texture: {fileID: 2800000, guid: a5834a81a9ce7ca469fc105c6b9fb57c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0f7213c5e1fb8644ca5c91d2cb7a8506, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BottomImage:
-        m_Texture: {fileID: 2800000, guid: 6d32d37f1c65f62499ba5f939b135722, type: 3}
+        m_Texture: {fileID: 2800000, guid: 678edb893bb18264dab40b3ba7051bc9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontImage:
-        m_Texture: {fileID: 2800000, guid: a3e54e6e96b65584dbf9a01b49be7b48, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8c3a77ca061fd4c4d8d6d89e106335ef, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftImage:
-        m_Texture: {fileID: 2800000, guid: 46a3626a0a9bfe5448298e442f568aa1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 883a0d5e49a1ae048823de57f657c739, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightImage:
-        m_Texture: {fileID: 2800000, guid: 150c6aaa4d7d5ec4c895cf69c2c63d14, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ffca9959cf817b4c867dba8255ac4a8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TopImage:
-        m_Texture: {fileID: 2800000, guid: a4b8a8ba244a8214d9211e7638e15a58, type: 3}
+        m_Texture: {fileID: 2800000, guid: b0c43de1f5ee2884ea764ccbb105ea10, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats: []
