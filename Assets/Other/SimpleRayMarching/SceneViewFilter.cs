@@ -27,7 +27,6 @@ public class SceneViewFilter : MonoBehaviour
             return;
         if (!Camera.main)
             return;
-        ;
         SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter>();
         SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter>();
 
@@ -35,6 +34,15 @@ public class SceneViewFilter : MonoBehaviour
         {
             ReCreate(sv);
             return;
+        }
+
+        for (int i = 0; i < cameraFilters.Length; i++)
+        {
+            if (cameraFilters[i].hasChanged || sceneFilters[i].enabled != cameraFilters[i].enabled)
+            {
+                EditorUtility.CopySerialized(cameraFilters[i], sceneFilters[i]);
+                cameraFilters[i].hasChanged = false;
+            }
         }
     }
 

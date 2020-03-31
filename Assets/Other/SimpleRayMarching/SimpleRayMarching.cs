@@ -6,8 +6,19 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SimpleRayMarching : SceneViewFilter
 {
-    public Shader shader;
     private Material _rayMarchMat;
+    private Camera _cam;
+
+    public Shader shader;
+
+    public float maxDistance = 100;
+    [Range(1, 300)] public int maxIterations = 30;
+    [Range(0.1f, 0.001f)] public float accuracy = 0.001f;
+
+    [Header("Sphere")]
+    public Vector4[] spheres;
+    public Color spheresColor = Color.white;
+    public float sphereSmooth = 1;
 
     public Material RayMarchMat
     {
@@ -24,8 +35,6 @@ public class SimpleRayMarching : SceneViewFilter
             return _rayMarchMat;
         }
     }
-
-    private Camera _cam;
 
     public Camera Cam
     {
@@ -51,6 +60,20 @@ public class SimpleRayMarching : SceneViewFilter
         RayMarchMat.SetMatrix("_CamFrustum", CamFrustum(Cam));
         RayMarchMat.SetMatrix("_CamToWorld", Cam.cameraToWorldMatrix);
 
+        RayMarchMat.SetFloat("_MaxDistance", maxDistance);
+        RayMarchMat.SetFloat("_Accuracy", accuracy);
+        RayMarchMat.SetFloat("_MaxIterations", maxIterations);
+
+        if (spheres == null)
+        {
+            spheres = new Vector4[0];
+        }
+        RayMarchMat.SetVectorArray("_Spheres", spheres);
+        RayMarchMat.SetInt("_SpheresNum", spheres.Length);
+        RayMarchMat.SetColor("_SphereSColor", spheresColor);
+        RayMarchMat.SetFloat("_SphereSmooth", sphereSmooth);
+
+
         RenderTexture.active = dest;
         RayMarchMat.SetTexture("_MainTex", src);
 
@@ -69,7 +92,7 @@ public class SimpleRayMarching : SceneViewFilter
         //BL
         //unit 是 texture 的编号
         GL.MultiTexCoord2(0, 0.0f, 0.0f);
-        GL.Vertex3(0.0f, 0.0f, 3.0f);//z储存CamFrustum 的 row
+        GL.Vertex3(0.0f, 0.0f, 3.0f); //z储存CamFrustum 的 row
         //BR
         GL.MultiTexCoord2(0, 1.0f, 0.0f);
         GL.Vertex3(1.0f, 0.0f, 2.0f);

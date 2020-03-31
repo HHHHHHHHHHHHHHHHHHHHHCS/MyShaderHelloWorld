@@ -291,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999242943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -310,3 +310,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 4b9a076ed4c75ff4d82f814f7e8972d1, type: 3}
+  maxDistance: 100
+  maxIterations: 30
+  accuracy: 0.001
+  spheres:
+  - {x: -1.38, y: 0, z: 0, w: 1}
+  - {x: 2.18, y: 0, z: 0, w: 2}
+  - {x: 0.71, y: 4.92, z: 0, w: 2.88}
+  - {x: 0, y: -2.83, z: 0, w: 1.16}
+  spheresColor: {r: 1, g: 1, b: 1, a: 1}
+  sphereSmooth: 1

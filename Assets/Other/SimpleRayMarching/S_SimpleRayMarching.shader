@@ -26,6 +26,13 @@
 			//Setup
 			sampler2D _CameraDepthTexture;
 			float4x4 _CamFrustum, _CamToWorld;
+			float _Accuracy, _MaxIterations, _MaxDistance;
+			//sphere
+			float4 _Spheres[100];
+			int _SpheresNum;
+			float4 _SpheresColor;
+			float _SphereSmooth;
+
 			
 			struct a2v
 			{
@@ -85,44 +92,49 @@
 				return o;
 			}
 			
-			float DistanceField(float3 p)
+			float4 DistanceField(float3 p)
 			{
-				const float _sphereRadius = 0.5;
-				return SDSphere(p, _sphereRadius);
+				float4 combines;
+				combines = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[0].xyz, _Spheres[0].w));
+				for (int i = 1; i < _SpheresNum; i ++)
+				{
+					float4 sphereAdd = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[i].xyz, _Spheres[i].w));
+					combines = OpUS(combines, sphereAdd, _SphereSmooth);
+				}
+				return combines;
 			}
 			
 			float3 GetNormal(float3 p)
 			{
 				const float2 offset = float2(0.001f, 0.0f);
 				float3 n = float3(
-					DistanceField(p + offset.xyy) - DistanceField(p - offset.xyy),
-					DistanceField(p + offset.yxy) - DistanceField(p - offset.yxy),
-					DistanceField(p + offset.yyx) - DistanceField(p - offset.yyx)
+					DistanceField(p + offset.xyy).w - DistanceField(p - offset.xyy).w,
+					DistanceField(p + offset.yxy).w - DistanceField(p - offset.yxy).w,
+					DistanceField(p + offset.yyx).w - DistanceField(p - offset.yyx).w
 				);
 				return normalize(n);
 			}
 			
-			RayHit RayMarching(Ray ray, float depth)
+			RayHit RayMarching(Ray ray, float depth, int maxInterations, int maxDistance, int atten)
 			{
-				const float maxDistance = 99999;
-
 				RayHit hit = CreateRayHit();
 				float t = 0;
-				for (int i = 0; i < 30; i ++)
+				for (int i = 0; i < maxInterations; i ++)
 				{
 					if (t > maxDistance || t >= depth)
 					{
-						hit.position.w = 0;
+						hit.position = float4(0, 0, 0, 0);
 						break;
 					}
 					
 					float3 p = ray.origin + ray.direction * t;
 					float4 d = DistanceField(p);
 					
-					if(d.w < 0.01)
+					if(d.w < _Accuracy)
 					{
 						hit.position = float4(p, 1.0f);
 						hit.normal = GetNormal(p);
+						hit.color = d.rgb / atten;
 						break;
 					}
 					
@@ -133,8 +145,18 @@
 			
 			float4 frag(v2f i): SV_TARGET
 			{
+				float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r);
+				depth *= length(i.ray.xyz);
 				Ray ray = CreateRay(_WorldSpaceCameraPos, normalize(i.ray.xyz));
-				return float4(ray.direction, 1.0);
+				RayHit hit;
+				float4 result = 0;
+				hit = RayMarching(ray, depth, _MaxIterations, _MaxDistance, 1);
+				if(hit.position.w == 1)
+				{
+					result = 1;//float4(abs(hit.color/10),1);
+				}
+				
+				return result;
 			}
 			
 			ENDCG
