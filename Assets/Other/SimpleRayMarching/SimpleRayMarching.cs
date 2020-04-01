@@ -15,9 +15,20 @@ public class SimpleRayMarching : SceneViewFilter
     [Range(1, 300)] public int maxIterations = 30;
     [Range(0.1f, 0.001f)] public float accuracy = 0.001f;
 
-    [Header("Sphere")]
-    public Vector4[] spheres;
-    public Color spheresColor = Color.white;
+
+    [Space(10)] [Header("Light")] public Light directionalLight;
+
+    [Space(10)] [Header("Shadow")] public float shadowDistance = 1000;
+    public float shadowIntensity = 3;
+    public bool softShadow = true;
+    public float softShadowPenumbra = 3;
+
+    [Space(10)] [Header("AO")] public float aoStepSize = 0.1f;
+    public float aoIterations = 3;
+    public float aoIntensity = 0.5f;
+
+    [Space(10)] [Header("Sphere")] public Vector4[] spheres;
+    [ColorUsage(false, true)] public Color spheresColor = Color.white;
     public float sphereSmooth = 1;
 
     public Material RayMarchMat
@@ -57,9 +68,37 @@ public class SimpleRayMarching : SceneViewFilter
             return;
         }
 
+        //Matrix
         RayMarchMat.SetMatrix("_CamFrustum", CamFrustum(Cam));
         RayMarchMat.SetMatrix("_CamToWorld", Cam.cameraToWorldMatrix);
 
+        //Light
+        if (directionalLight == null || directionalLight.type != LightType.Directional)
+        {
+            RayMarchMat.SetVector("_LightCol", Color.black);
+            RayMarchMat.SetVector("_LightDir", Vector3.forward);
+            RayMarchMat.SetFloat("_LightIntensity", 0);
+        }
+        else //(directionalLight.type == LightType.Directional)
+        {
+            RayMarchMat.SetColor("_LightCol", directionalLight.color);
+            RayMarchMat.SetVector("_LightDir", directionalLight.transform.forward);
+            RayMarchMat.SetFloat("_LightIntensity", directionalLight.intensity);
+        }
+
+        //Shadow
+        RayMarchMat.SetVector("_ShadowData"
+            , new Vector4(
+                shadowDistance, shadowIntensity, softShadowPenumbra, softShadow ? 1f : 0f
+            ));
+
+        //AO
+        RayMarchMat.SetVector("_AOData"
+            , new Vector3(
+                aoStepSize, aoIterations, aoIntensity
+            ));
+
+        //Render Object
         RayMarchMat.SetFloat("_MaxDistance", maxDistance);
         RayMarchMat.SetFloat("_Accuracy", accuracy);
         RayMarchMat.SetFloat("_MaxIterations", maxIterations);
@@ -68,9 +107,10 @@ public class SimpleRayMarching : SceneViewFilter
         {
             spheres = new Vector4[0];
         }
+
         RayMarchMat.SetVectorArray("_Spheres", spheres);
         RayMarchMat.SetInt("_SpheresNum", spheres.Length);
-        RayMarchMat.SetColor("_SphereSColor", spheresColor);
+        RayMarchMat.SetColor("_SpheresColor", spheresColor);
         RayMarchMat.SetFloat("_SphereSmooth", sphereSmooth);
 
 

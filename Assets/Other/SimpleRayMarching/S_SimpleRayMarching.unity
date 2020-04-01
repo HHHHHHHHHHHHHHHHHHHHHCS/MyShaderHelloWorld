@@ -313,10 +313,18 @@ MonoBehaviour:
   maxDistance: 100
   maxIterations: 30
   accuracy: 0.001
+  directionalLight: {fileID: 776746073}
+  shadowDistance: 0.11
+  shadowIntensity: 3
+  softShadow: 1
+  softShadowPenumbra: 3
+  aoStepSize: 0.1
+  aoIterations: 3
+  aoIntensity: 0.5
   spheres:
-  - {x: -1.38, y: 0, z: 0, w: 1}
-  - {x: 2.18, y: 0, z: 0, w: 2}
-  - {x: 0.71, y: 4.92, z: 0, w: 2.88}
-  - {x: 0, y: -2.83, z: 0, w: 1.16}
-  spheresColor: {r: 1, g: 1, b: 1, a: 1}
+  - {x: -4.67, y: 2.22, z: 0, w: 1}
+  - {x: -2.91, y: 0.15, z: 0, w: 2}
+  - {x: -0.97, y: 4.92, z: 0, w: 2.88}
+  - {x: 0.05, y: -2.83, z: 0.06, w: 1.07}
+  spheresColor: {r: 1, g: 0, b: 0, a: 1}
   sphereSmooth: 1

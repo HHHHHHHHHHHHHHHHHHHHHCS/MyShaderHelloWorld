@@ -27,12 +27,20 @@
 			sampler2D _CameraDepthTexture;
 			float4x4 _CamFrustum, _CamToWorld;
 			float _Accuracy, _MaxIterations, _MaxDistance;
+			//light
+			float3 _LightCol;
+			float3 _LightDir;
+			float _LightIntensity;
+			//shadow
+			float4 _ShadowData;
+			//AO
+			float3 _AOData;
 			//sphere
 			float4 _Spheres[100];
 			int _SpheresNum;
 			float4 _SpheresColor;
 			float _SphereSmooth;
-
+			
 			
 			struct a2v
 			{
@@ -115,13 +123,60 @@
 				return normalize(n);
 			}
 			
+			float HardShadow(float3 ro, float3 rd, float mint, float maxt)
+			{
+				for (float t = mint; t < maxt; )
+				{
+					float h = DistanceField(ro + rd * t).w;
+					if (h < 0.001)
+					{
+						return 0.0;
+					}
+					t += h;
+				}
+				return 1.0;
+			}
+			
+			float SoftShadow(float3 ro, float3 rd, float mint, float maxt, float k)
+			{
+				float result = 1.0;
+				for (float t = mint; t < maxt; )
+				{
+					float h = DistanceField(ro + rd * t).w;
+					if(h < 0.001)
+					{
+						return 0.0;
+					}
+					result = min(result, k * h / t);
+					t += h;
+				}
+				return result;
+			}
+			
+			float AmbientOcclusion(float3 p, float3 n)
+			{
+				float aoStepSize = _AOData.x;
+				float aoInterations = _AOData.y;
+				float aoIntensity = _AOData.z;
+				
+				float step = aoStepSize;
+				float ao = 0.0;
+				float dist;
+				for (int i = 0; i < aoInterations; ++ i)
+				{
+					dist = step * i;
+					ao += max(0.0f, (dist - DistanceField(p + n * dist).w) / dist);
+				}
+				return(1.0f - ao * aoIntensity);
+			}
+			
 			RayHit RayMarching(Ray ray, float depth, int maxInterations, int maxDistance, int atten)
 			{
 				RayHit hit = CreateRayHit();
 				float t = 0;
 				for (int i = 0; i < maxInterations; i ++)
 				{
-					if (t > maxDistance || t >= depth)
+					if(t > maxDistance || t >= depth)
 					{
 						hit.position = float4(0, 0, 0, 0);
 						break;
@@ -143,6 +198,31 @@
 				return hit;
 			}
 			
+			float3 Shading(inout Ray ray, RayHit hit, float3 col)
+			{
+				float3 light = (_LightCol * dot(-_LightDir, hit.normal) * 0.5 + 0.5) * _LightIntensity;
+				
+				
+				float shadowDistance = _ShadowData.x;
+				float shadowIntensity = _ShadowData.y;
+				float softShadowPenumbra = _ShadowData.z;
+				bool softShadow = _ShadowData.w;
+				float shadow;
+				if(softShadow)
+				{
+					shadow = SoftShadow(hit.position.xyz, -_LightDir, 0.1, shadowDistance, softShadowPenumbra) * 0.5 + 0.5;
+				}
+				else
+				{
+					shadow = HardShadow(hit.position.xyz, -_LightDir, 0.1, shadowDistance) * 0.5 + 0.5;
+				}
+				shadow = max(0.0, pow(shadow, shadowIntensity));
+				
+				float ao = AmbientOcclusion(hit.position.xyz, hit.normal);
+				
+				return float3(hit.color * light) * shadow * ao;
+			}
+			
 			float4 frag(v2f i): SV_TARGET
 			{
 				float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r);
@@ -153,7 +233,8 @@
 				hit = RayMarching(ray, depth, _MaxIterations, _MaxDistance, 1);
 				if(hit.position.w == 1)
 				{
-					result = 1;//float4(abs(hit.color/10),1);
+					float3 col = Shading(ray, hit, col);
+					result = float4(col, 1);
 				}
 				
 				return result;
