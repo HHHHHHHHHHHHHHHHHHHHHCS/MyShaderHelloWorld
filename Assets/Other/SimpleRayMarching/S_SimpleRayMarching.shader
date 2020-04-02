@@ -198,6 +198,49 @@
 				return hit;
 			}
 			
+			float nrand(float2 uv)
+			{
+				return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
+			}
+			
+			float3 NormalAt(float3 p)
+			{
+				float dist = DistanceField(p).w;
+				float2 epsilon = float2(0.001, 0.0);
+				return normalize(float3(dist - DistanceField(p - epsilon.xyy).w,
+				dist - DistanceField(p - epsilon.yxy).w,
+				dist - DistanceField(p - epsilon.yyx).w));
+			}
+			
+			float3 Transparent(inout Ray ray, inout RayHit hit, in float3 col)
+			{
+				float3 oriCol = col;
+				float3 col2 = col;
+				float3 pos = hit.position.xyz;
+				float3 rd = ray.direction;//ViewDir
+				float3 nor = hit.normal;//*nrand(col.xy);
+				float fre = clamp(1.0 + dot(rd, nor), 0.0, 1.0);
+				float3 hal = normalize(_LightDir - rd);
+				float3 ref = reflect(-rd, nor);
+				float spe1 = clamp(dot(nor, hal), 0.0, 1.0);//Blinn-Phong高光
+				float spe2 = clamp(dot(ref, _LightDir), 0.0, 1.0);//Phong高光
+				
+				float ds = 1.6 - col.g;
+				
+				col += ds * 1.5 * float3(1.0, 0.9, 0.8) * pow(spe1, 80.0);//Blinn-Phong高光
+				col += ds * 0.2 * float3(0.9, 1.0, 1.0) * smoothstep(0.4, 0.8, fre);//菲尼尔
+				col += ds * 0.9 * float3(0.6, 0.7, 1.0) * smoothstep(-0.5, 0.5, -reflect(rd, nor).y) * smoothstep(0.2, 0.4, fre);//接近Blinn-Phong高光的菲尼尔
+				col += ds * 0.5 * float3(1.0, 0.9, 0.8) * pow(spe2, 80.0);//Phong高光
+				col += ds * 0.5 * float3(1.0, 0.9, 0.8) * pow(spe2, 16.0);//Phong高光范围更大
+				
+				//透过物体要修改了射线
+				ray.direction = normalize(reflect(ray.direction, hit.normal));
+				ray.origin = hit.position.xyz + (ray.direction * 0.1);
+				
+				float3 temp = lerp(col, oriCol, smoothstep(0.6, 1.0, fre));
+				return temp;
+			}
+			
 			float3 Shading(inout Ray ray, RayHit hit, float3 col)
 			{
 				float3 light = (_LightCol * dot(-_LightDir, hit.normal) * 0.5 + 0.5) * _LightIntensity;
@@ -208,7 +251,7 @@
 				float softShadowPenumbra = _ShadowData.z;
 				bool softShadow = _ShadowData.w;
 				float shadow;
-				if(softShadow)
+				if (softShadow)
 				{
 					shadow = SoftShadow(hit.position.xyz, -_LightDir, 0.1, shadowDistance, softShadowPenumbra) * 0.5 + 0.5;
 				}
@@ -220,20 +263,21 @@
 				
 				float ao = AmbientOcclusion(hit.position.xyz, hit.normal);
 				
-				return float3(hit.color * light) * shadow * ao;
+				return Transparent(ray, hit, col);//float3(hit.color * light * Transparent(ray, hit, col)) * shadow * ao;
 			}
 			
 			float4 frag(v2f i): SV_TARGET
 			{
 				float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r);
 				depth *= length(i.ray.xyz);
+				float3 col = tex2D(_MainTex, i.uv);
 				Ray ray = CreateRay(_WorldSpaceCameraPos, normalize(i.ray.xyz));
 				RayHit hit;
-				float4 result = 0;
+				float4 result = float4(col, 1);
 				hit = RayMarching(ray, depth, _MaxIterations, _MaxDistance, 1);
-				if(hit.position.w == 1)
+				if (hit.position.w == 1)
 				{
-					float3 col = Shading(ray, hit, col);
+					col = Shading(ray, hit, col);
 					result = float4(col, 1);
 				}
 				

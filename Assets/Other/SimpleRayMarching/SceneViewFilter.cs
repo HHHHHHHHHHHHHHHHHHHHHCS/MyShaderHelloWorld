@@ -27,6 +27,11 @@ public class SceneViewFilter : MonoBehaviour
             return;
         if (!Camera.main)
             return;
+
+
+        Camera.main.transform.SetPositionAndRotation(
+            sv.camera.transform.position, sv.camera.transform.rotation);
+
         SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter>();
         SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter>();
 
