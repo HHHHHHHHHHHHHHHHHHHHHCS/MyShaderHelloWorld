@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_065_TruchetCircles"
+﻿Shader "CommonEffect/S_065_TruchetCircles"
 {
 	Properties
 	{

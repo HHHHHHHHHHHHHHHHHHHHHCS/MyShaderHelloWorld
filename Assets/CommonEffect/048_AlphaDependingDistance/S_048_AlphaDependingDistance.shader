@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_048_AlphaDependingDistance"
+﻿Shader "CommonEffect/S_048_AlphaDependingDistance"
 {
 	Properties
 	{

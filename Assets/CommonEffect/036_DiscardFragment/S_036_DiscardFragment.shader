@@ -1,4 +1,4 @@
-﻿Shader "CommndEffect/S_036_DiscardFragment"
+﻿Shader "CommonEffect/S_036_DiscardFragment"
 {
 	Properties
 	{

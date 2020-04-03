@@ -24,18 +24,42 @@
 			
 			sampler2D _MainTex;
 			//Setup
+			//-------------------------------
 			sampler2D _CameraDepthTexture;
 			float4x4 _CamFrustum, _CamToWorld;
 			float _Accuracy, _MaxIterations, _MaxDistance;
-			//light
+			
+			//Light
+			//-------------------------------
 			float3 _LightCol;
 			float3 _LightDir;
 			float _LightIntensity;
-			//shadow
+			
+			//Reflection
+			//-------------------------------
+			samplerCUBE _ReflectionCube;
+			// int _ReflectionCount = _ReflectionData.x;
+			// float _ReflectionIntensity = _ReflectionData.y;
+			// float _EnvRefIntensity = _ReflectionData.z;
+			float3 _ReflectionData;
+			
+			//Shadow
+			//-------------------------------
+			// float shadowDistance = _ShadowData.x;
+			// float shadowIntensity = _ShadowData.y;
+			// float softShadowPenumbra = _ShadowData.z;
+			// bool softShadow = _ShadowData.w;
 			float4 _ShadowData;
+			
 			//AO
+			//-------------------------------
+			// float aoStepSize = _AOData.x;
+			// float aoInterations = _AOData.y;
+			// float aoIntensity = _AOData.z;
 			float3 _AOData;
-			//sphere
+			
+			//Sphere
+			//-------------------------------
 			float4 _Spheres[100];
 			int _SpheresNum;
 			float4 _SpheresColor;
@@ -170,33 +194,7 @@
 				return(1.0f - ao * aoIntensity);
 			}
 			
-			RayHit RayMarching(Ray ray, float depth, int maxInterations, int maxDistance, int atten)
-			{
-				RayHit hit = CreateRayHit();
-				float t = 0;
-				for (int i = 0; i < maxInterations; i ++)
-				{
-					if(t > maxDistance || t >= depth)
-					{
-						hit.position = float4(0, 0, 0, 0);
-						break;
-					}
-					
-					float3 p = ray.origin + ray.direction * t;
-					float4 d = DistanceField(p);
-					
-					if(d.w < _Accuracy)
-					{
-						hit.position = float4(p, 1.0f);
-						hit.normal = GetNormal(p);
-						hit.color = d.rgb / atten;
-						break;
-					}
-					
-					t += d.w;
-				}
-				return hit;
-			}
+			
 			
 			float nrand(float2 uv)
 			{
@@ -233,7 +231,7 @@
 				col += ds * 0.5 * float3(1.0, 0.9, 0.8) * pow(spe2, 80.0);//Phong高光
 				col += ds * 0.5 * float3(1.0, 0.9, 0.8) * pow(spe2, 16.0);//Phong高光范围更大
 				
-				//透过物体要修改了射线
+				//射到物体  修改射线 用于弹射
 				ray.direction = normalize(reflect(ray.direction, hit.normal));
 				ray.origin = hit.position.xyz + (ray.direction * 0.1);
 				
@@ -263,7 +261,35 @@
 				
 				float ao = AmbientOcclusion(hit.position.xyz, hit.normal);
 				
-				return Transparent(ray, hit, col);//float3(hit.color * light * Transparent(ray, hit, col)) * shadow * ao;
+				return float3(hit.color * light * Transparent(ray, hit, col)) * shadow * ao;
+			}
+			
+			RayHit RayMarching(Ray ray, float depth, int maxInterations, int maxDistance, int atten)
+			{
+				RayHit hit = CreateRayHit();
+				float t = 0;
+				for (int i = 0; i < maxInterations; i ++)
+				{
+					if(t > maxDistance || t >= depth)
+					{
+						hit.position = float4(0, 0, 0, 0);
+						break;
+					}
+					
+					float3 p = ray.origin + ray.direction * t;
+					float4 d = DistanceField(p);
+					
+					if(d.w < _Accuracy)
+					{
+						hit.position = float4(p, 1.0f);
+						hit.normal = GetNormal(p);
+						hit.color = d.rgb / atten;
+						break;
+					}
+					
+					t += d.w;
+				}
+				return hit;
 			}
 			
 			float4 frag(v2f i): SV_TARGET
@@ -273,15 +299,33 @@
 				float3 col = tex2D(_MainTex, i.uv);
 				Ray ray = CreateRay(_WorldSpaceCameraPos, normalize(i.ray.xyz));
 				RayHit hit;
-				float4 result = float4(col, 1);
+				float4 result = 0;
 				hit = RayMarching(ray, depth, _MaxIterations, _MaxDistance, 1);
-				if (hit.position.w == 1)
+				if(hit.position.w == 1)
 				{
 					col = Shading(ray, hit, col);
 					result = float4(col, 1);
+					
+					int _ReflectionCount = _ReflectionData.x;
+					float _ReflectionIntensity = _ReflectionData.y;
+					float _EnvRefIntensity = _ReflectionData.z;
+					result += float4(texCUBE(_ReflectionCube, hit.normal).rgb * _EnvRefIntensity * _ReflectionIntensity, 0);
+					for (int i = 1; i < _ReflectionCount; ++ i)
+					{
+						hit = RayMarching(ray, _MaxDistance / i, _MaxIterations / i, _MaxDistance / i, i * i);
+						if(hit.position.w == 1)
+						{
+							float3 s = Shading(ray, hit, col);
+							result += float4(s * _ReflectionIntensity, 0);
+						}
+						else
+						{
+							break;
+						}
+					}
 				}
 				
-				return result;
+				return float4(col * (1.0 - result.w) + result.xyz * result.w, 1.0);
 			}
 			
 			ENDCG

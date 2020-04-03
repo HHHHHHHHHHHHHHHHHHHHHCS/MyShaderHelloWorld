@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_051_FrontFaces"
+﻿Shader "CommonEffect/S_051_FrontFaces"
 {
 	Properties
 	{

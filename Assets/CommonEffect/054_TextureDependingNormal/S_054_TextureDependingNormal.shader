@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_054_TextureDependingNormal"
+﻿Shader "CommonEffect/S_054_TextureDependingNormal"
 {
 	Properties
 	{

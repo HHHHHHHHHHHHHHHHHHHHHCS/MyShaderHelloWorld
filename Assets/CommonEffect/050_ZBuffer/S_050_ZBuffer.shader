@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_050_ZBuffer"
+﻿Shader "CommonEffect/S_050_ZBuffer"
 {
 	
 	SubShader

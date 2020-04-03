@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_049_Spotlight"
+﻿Shader "CommonEffect/S_049_Spotlight"
 {
 	Properties
 	{

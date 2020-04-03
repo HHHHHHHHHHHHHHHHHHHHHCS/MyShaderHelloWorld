@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_047_PerFragment"
+﻿Shader "CommonEffect/S_047_PerFragment"
 {
 	Properties
 	{

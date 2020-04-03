@@ -1,4 +1,4 @@
-﻿Shader "CommandEffect/S_029_SoccerLawnField"
+﻿Shader "CommonEffect/S_029_SoccerLawnField"
 {
 	Properties
 	{

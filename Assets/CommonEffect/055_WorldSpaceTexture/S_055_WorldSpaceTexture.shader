@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_055_WorldSpaceTexture"
+﻿Shader "CommonEffect/S_055_WorldSpaceTexture"
 {
 	Properties
 	{

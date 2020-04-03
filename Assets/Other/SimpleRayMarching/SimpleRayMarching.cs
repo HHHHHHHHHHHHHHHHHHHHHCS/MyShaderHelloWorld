@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [ExecuteInEditMode]
 public class SimpleRayMarching : SceneViewFilter
@@ -12,20 +13,24 @@ public class SimpleRayMarching : SceneViewFilter
     public Shader shader;
 
     public float maxDistance = 100;
-    [Range(1, 300)] public int maxIterations = 30;
+    [Range(1, 300)] public int maxIterations = 100;
     [Range(0.1f, 0.001f)] public float accuracy = 0.001f;
-
 
     [Space(10)] [Header("Light")] public Light directionalLight;
 
-    [Space(10)] [Header("Shadow")] public float shadowDistance = 1000;
+    [Space(10)] [Header("Reflection")] public ReflectionProbe reflectionProbe;
+    public int _ReflectionCount = 8;
+    public float _ReflectionIntensity = 0.50f;
+    public float _EnvRefIntensity = 0.35f;
+
+    [Space(10)] [Header("Shadow")] public float shadowDistance = 10;
     public float shadowIntensity = 3;
     public bool softShadow = true;
     public float softShadowPenumbra = 3;
 
     [Space(10)] [Header("AO")] public float aoStepSize = 0.1f;
     public float aoIterations = 3;
-    public float aoIntensity = 0.5f;
+    public float aoIntensity = 1f;
 
     [Space(10)] [Header("Sphere")] public Vector4[] spheres;
     [ColorUsage(false, true)] public Color spheresColor = Color.white;
@@ -85,6 +90,38 @@ public class SimpleRayMarching : SceneViewFilter
             RayMarchMat.SetVector("_LightDir", directionalLight.transform.forward);
             RayMarchMat.SetFloat("_LightIntensity", directionalLight.intensity);
         }
+
+        //Reflection
+        if (reflectionProbe)
+        {
+            if (reflectionProbe.mode == ReflectionProbeMode.Baked)
+            {
+                RayMarchMat.SetTexture("_ReflectionCube"
+                    , reflectionProbe.bakedTexture);
+            }
+            else if (reflectionProbe.mode == ReflectionProbeMode.Custom)
+            {
+                RayMarchMat.SetTexture("_ReflectionCube"
+                    , reflectionProbe.customBakedTexture);
+            }
+            else if (reflectionProbe.mode == ReflectionProbeMode.Realtime)
+            {
+                RayMarchMat.SetTexture("_ReflectionCube"
+                    , reflectionProbe.realtimeTexture);
+            }
+        }
+        else
+        {
+            RayMarchMat.SetTexture("_ReflectionCube"
+                , Texture2D.blackTexture);
+        }
+
+        RayMarchMat.SetTexture("_ReflectionCube"
+            , reflectionProbe.customBakedTexture);
+        RayMarchMat.SetVector("_ReflectionData"
+            , new Vector3(
+                _ReflectionCount, _ReflectionIntensity, _EnvRefIntensity
+            ));
 
         //Shadow
         RayMarchMat.SetVector("_ShadowData"

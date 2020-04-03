@@ -1,4 +1,4 @@
-﻿Shader "CommondEffect/S_045_Section"
+﻿Shader "CommonEffect/S_045_Section"
 {
 	Properties
 	{
