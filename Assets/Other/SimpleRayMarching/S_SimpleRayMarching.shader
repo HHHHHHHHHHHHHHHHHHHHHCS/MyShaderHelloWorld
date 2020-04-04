@@ -54,16 +54,24 @@
 			//AO
 			//-------------------------------
 			// float aoStepSize = _AOData.x;
-			// float aoInterations = _AOData.y;
+			// float aoIterations = _AOData.y;
 			// float aoIntensity = _AOData.z;
 			float3 _AOData;
 			
 			//Sphere
 			//-------------------------------
-			float4 _Spheres[100];
+			float4 _Spheres[1023];
 			int _SpheresNum;
+			float4 _SpheresRigi[1023];
+			int _SpheresRigiNum;
 			float4 _SpheresColor;
 			float _SphereSmooth;
+			
+			//Plane
+			//-----------------------
+			float4 _PlanePos;
+			float4 _PlaneUp;
+			float4 _PlaneColor;
 			
 			
 			struct a2v
@@ -126,13 +134,34 @@
 			
 			float4 DistanceField(float3 p)
 			{
-				float4 combines;
-				combines = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[0].xyz, _Spheres[0].w));
-				for (int i = 1; i < _SpheresNum; i ++)
+				float4 combines = 0;
+				
+				if (_SpheresNum > 0)
 				{
-					float4 sphereAdd = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[i].xyz, _Spheres[i].w));
-					combines = OpUS(combines, sphereAdd, _SphereSmooth);
+					combines = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[0].xyz, _Spheres[0].w));
+					for (int i = 1; i < _SpheresNum; ++ i)
+					{
+						float4 sphereAdd = float4(_SpheresColor.rgb, SDSphere(p - _Spheres[i].xyz, _Spheres[i].w));
+						combines = OpUS(combines, sphereAdd, _SphereSmooth);
+					}
 				}
+				
+				if(_SpheresRigiNum > 0)
+				{
+					float4 sphere = float4(_SpheresColor.rgb, SDSphere(p - _SpheresRigi[0].xyz, _SpheresRigi[0].w));
+					for (int i = 1; i < _SpheresRigiNum; ++ i)
+					{
+						float4 sphereAdd2 = float4(_SpheresColor.rgb, SDSphere(p - _SpheresRigi[i].xyz, _SpheresRigi[i].w));
+						sphere = OpUS(sphere, sphereAdd2, _SphereSmooth);
+					}
+					combines = OpUS(combines, sphere, _SphereSmooth);
+				}
+				
+				if(_PlanePos.w > 0)
+				{
+					combines = OpUS(combines, float4(_PlaneColor.rgb, SDPlane(p - _PlanePos.xyz, _PlaneUp)), _SphereSmooth);
+				}
+				
 				return combines;
 			}
 			
@@ -152,7 +181,7 @@
 				for (float t = mint; t < maxt; )
 				{
 					float h = DistanceField(ro + rd * t).w;
-					if (h < 0.001)
+					if(h < 0.001)
 					{
 						return 0.0;
 					}
@@ -180,13 +209,13 @@
 			float AmbientOcclusion(float3 p, float3 n)
 			{
 				float aoStepSize = _AOData.x;
-				float aoInterations = _AOData.y;
+				float aoIterations = _AOData.y;
 				float aoIntensity = _AOData.z;
 				
 				float step = aoStepSize;
 				float ao = 0.0;
 				float dist;
-				for (int i = 0; i < aoInterations; ++ i)
+				for (int i = 0; i < aoIterations; ++ i)
 				{
 					dist = step * i;
 					ao += max(0.0f, (dist - DistanceField(p + n * dist).w) / dist);
@@ -242,7 +271,6 @@
 			float3 Shading(inout Ray ray, RayHit hit, float3 col)
 			{
 				float3 light = (_LightCol * dot(-_LightDir, hit.normal) * 0.5 + 0.5) * _LightIntensity;
-				
 				
 				float shadowDistance = _ShadowData.x;
 				float shadowIntensity = _ShadowData.y;

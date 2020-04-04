@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -29,12 +30,16 @@ public class SimpleRayMarching : SceneViewFilter
     public float softShadowPenumbra = 3;
 
     [Space(10)] [Header("AO")] public float aoStepSize = 0.1f;
-    public float aoIterations = 3;
+    public int aoIterations = 3;
     public float aoIntensity = 1f;
 
     [Space(10)] [Header("Sphere")] public Vector4[] spheres;
+    public Transform[] spheresRigi;
     [ColorUsage(false, true)] public Color spheresColor = Color.white;
     public float sphereSmooth = 1;
+
+    [Space(10)] [Header("Plane")] public Transform plane;
+    [ColorUsage(false, true)] public Color planeColor = Color.white;
 
     public Material RayMarchMat
     {
@@ -116,8 +121,6 @@ public class SimpleRayMarching : SceneViewFilter
                 , Texture2D.blackTexture);
         }
 
-        RayMarchMat.SetTexture("_ReflectionCube"
-            , reflectionProbe.customBakedTexture);
         RayMarchMat.SetVector("_ReflectionData"
             , new Vector3(
                 _ReflectionCount, _ReflectionIntensity, _EnvRefIntensity
@@ -140,16 +143,48 @@ public class SimpleRayMarching : SceneViewFilter
         RayMarchMat.SetFloat("_Accuracy", accuracy);
         RayMarchMat.SetFloat("_MaxIterations", maxIterations);
 
-        if (spheres == null)
+        //Sphere
+        if (spheres != null && spheres.Length > 0)
         {
-            spheres = new Vector4[0];
+            RayMarchMat.SetVectorArray("_Spheres", spheres);
         }
 
-        RayMarchMat.SetVectorArray("_Spheres", spheres);
         RayMarchMat.SetInt("_SpheresNum", spheres.Length);
+
+        if (spheresRigi != null && spheresRigi.Length > 0)
+        {
+            RayMarchMat.SetVectorArray("_SpheresRigi"
+                , spheresRigi.Select(rigi =>
+                {
+                    if (rigi == null)
+                    {
+                        return Vector4.zero;
+                    }
+
+                    var pos = rigi.transform.position;
+                    var col = rigi.GetComponent<SphereCollider>();
+                    return new Vector4(pos.x, pos.y, pos.z, col == null ? 0f : col.radius);
+                }).ToArray());
+        }
+
+        RayMarchMat.SetInt("_SpheresRigiNum", spheresRigi.Length);
+
         RayMarchMat.SetColor("_SpheresColor", spheresColor);
         RayMarchMat.SetFloat("_SphereSmooth", sphereSmooth);
 
+        //Plane
+        if (plane != null)
+        {
+            var position = plane.position;
+            RayMarchMat.SetVector("_PlanePos"
+                , new Vector4(position.x, position.y, position.z, 1.0f));
+            RayMarchMat.SetVector("_PlaneUp", plane.up);
+            RayMarchMat.SetVector("_PlaneColor", planeColor);
+        }
+        else
+        {
+            RayMarchMat.SetVector("_PlanePos", Vector4.zero);
+        }
 
         RenderTexture.active = dest;
         RayMarchMat.SetTexture("_MainTex", src);
