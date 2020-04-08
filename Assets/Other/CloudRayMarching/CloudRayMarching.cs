@@ -10,7 +10,6 @@ public class CloudRayMarching : SceneViewFilter
     private Camera _cam;
 
     public Shader shader;
-    public Transform lightDir;
     public Texture2D noiseTex;
     public float cloudSmooth = 1.0f;
     public Transform[] cloudRigi;

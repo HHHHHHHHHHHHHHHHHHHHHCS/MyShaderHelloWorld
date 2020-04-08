@@ -301,7 +301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 817132342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.63, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -384,8 +384,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544707121}
-  m_LocalRotation: {x: -0.05942699, y: 0.5296428, z: -0.03729193, w: -0.8453143}
-  m_LocalPosition: {x: 3.211021, y: -0.1061452, z: -1.0595433}
+  m_LocalRotation: {x: -0.20359819, y: 0.5153717, z: -0.12771527, w: -0.8225744}
+  m_LocalPosition: {x: 1.9873037, y: 1.0476987, z: -1.6700609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -405,7 +405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sync: 1
   shader: {fileID: 4800000, guid: f984f95a035d92d489dc14781ef1d005, type: 3}
-  lightDir: {fileID: 2139164570}
   noiseTex: {fileID: 2800000, guid: 33e4c7cf2adbac642818acf637306fab, type: 3}
   cloudSmooth: 1
   cloudRigi:

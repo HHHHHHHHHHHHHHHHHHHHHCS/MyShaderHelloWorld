@@ -1,8 +1,6 @@
 #if !defined(CloudNoise_INCLUDED)
 	#define CloudNoise_INCLUDED
 	
-	#define HASHSCALE3 float3(.1031, .1030, .0973)
-	
 	sampler2D _NoiseTex;
 	
 	float Noise(in float3 x)

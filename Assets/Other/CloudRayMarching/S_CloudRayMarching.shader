@@ -104,7 +104,7 @@
 				if (_CloudRigiNum > 0)
 				{
 					combines = SDSphere(p - _CloudRigi[0].xyz, _CloudRigi[0].w);
-					for (int i = 1; i < _CloudRigiNum; ++ i)
+					for (int i = 0; i < _CloudRigiNum; ++ i)
 					{
 						float cloudAdd = SDSphere(p - _CloudRigi[i].xyz, _CloudRigi[i].w);
 						combines = OpIS(combines, cloudAdd, -0.5);
@@ -143,12 +143,13 @@
 				float4 sum = 0;
 				float3 pos = ro + rd * t;
 				
-				for (int i = 0; i < 30; ++ i)
+				for (int t = 0; t < 1024; ++ t)
+				//while(true)
 				{
 					float dist = length(pos - _CloudRigi[0].xyz);
-					for (int t = 1; t < _CloudRigiNum; ++ t)
+					for (int i = 0; i < _CloudRigiNum; ++ i)
 					{
-						float cloudAdd = length(pos - _CloudRigi[t].xyz);
+						float cloudAdd = length(pos - _CloudRigi[i].xyz);
 						dist = OpIS(dist, cloudAdd, -0.5);
 					}
 					if (dist > cloudSmooth + 0.01 || sum.a > 0.99 || t > depth)
