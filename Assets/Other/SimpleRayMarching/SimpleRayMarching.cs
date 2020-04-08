@@ -147,9 +147,12 @@ public class SimpleRayMarching : SceneViewFilter
         if (spheres != null && spheres.Length > 0)
         {
             RayMarchMat.SetVectorArray("_Spheres", spheres);
+            RayMarchMat.SetInt("_SpheresNum", spheres.Length);
         }
-
-        RayMarchMat.SetInt("_SpheresNum", spheres.Length);
+        else
+        {
+            RayMarchMat.SetInt("_SpheresNum", 0);
+        }
 
         if (spheresRigi != null && spheresRigi.Length > 0)
         {

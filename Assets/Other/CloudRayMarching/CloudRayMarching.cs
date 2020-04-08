@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -9,6 +10,10 @@ public class CloudRayMarching : SceneViewFilter
     private Camera _cam;
 
     public Shader shader;
+    public Transform lightDir;
+    public Texture2D noiseTex;
+    public float cloudSmooth = 1.0f;
+    public Transform[] cloudRigi;
 
     public Material RayMarchMat
     {
@@ -43,7 +48,7 @@ public class CloudRayMarching : SceneViewFilter
     {
         if (!RayMarchMat)
         {
-            Graphics.Blit(src,dest);
+            Graphics.Blit(src, dest);
             return;
         }
 
@@ -52,9 +57,34 @@ public class CloudRayMarching : SceneViewFilter
         RayMarchMat.SetMatrix("_CamToWorld", Cam.cameraToWorldMatrix);
 
 
-
         RenderTexture.active = dest;
         RayMarchMat.SetTexture("_MainTex", src);
+
+        RayMarchMat.SetTexture("_NoiseTex", noiseTex);
+
+        RayMarchMat.SetFloat("_CloudSmooth", cloudSmooth);
+
+        if (cloudRigi != null && cloudRigi.Length > 0)
+        {
+            RayMarchMat.SetVectorArray("_CloudRigi"
+                , cloudRigi.Select(ts =>
+                {
+                    if (ts == null)
+                    {
+                        return Vector4.zero;
+                    }
+
+                    var pos = ts.position;
+                    var maxSize = Mathf.Max(ts.lossyScale.x, ts.lossyScale.y, ts.lossyScale.z);
+                    return new Vector4(pos.x, pos.y, pos.z, maxSize);
+                }).ToArray());
+            RayMarchMat.SetInt("_CloudRigiNum", cloudRigi.Length);
+        }
+        else
+        {
+            RayMarchMat.SetInt("_CloudRigiNum", 0);
+        }
+
 
         //压入当前的MVP 
         GL.PushMatrix();

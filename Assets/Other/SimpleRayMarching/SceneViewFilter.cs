@@ -9,6 +9,10 @@ using UnityEditor;
 public class SceneViewFilter : MonoBehaviour
 {
 #if UNITY_EDITOR
+    public static bool _syncCamera = true;
+
+    public bool sync = true;
+
     private bool hasChanged = false;
 
     static SceneViewFilter()
@@ -18,6 +22,7 @@ public class SceneViewFilter : MonoBehaviour
 
     public virtual void OnValidate()
     {
+        _syncCamera = sync;
         hasChanged = true;
     }
 
@@ -28,9 +33,12 @@ public class SceneViewFilter : MonoBehaviour
         if (!Camera.main)
             return;
 
+        if (_syncCamera)
+        {
+            Camera.main.transform.SetPositionAndRotation(
+                sv.camera.transform.position, sv.camera.transform.rotation);
+        }
 
-        Camera.main.transform.SetPositionAndRotation(
-            sv.camera.transform.position, sv.camera.transform.rotation);
 
         SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter>();
         SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter>();

@@ -41,9 +41,9 @@
 		float f;
 		f = 0.5 * Noise(q);
 		q *= 2.02;
-		f = 0.25 * Noise(q);
+		f += 0.25 * Noise(q);
 		q *= 2.03;
-		f = 0.125 * Noise(q);
+		f += 0.125 * Noise(q);
 		return clamp(1.5 - p.y - 2.0 + 1.75 * f, 0.0, 1.0);
 	}
 	
