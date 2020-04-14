@@ -6,8 +6,8 @@ using UnityEngine.Sprites;
 [AddComponentMenu("UI/Circle Image")]
 public class CircleImage : BaseImage
 {
-    private List<Vector3> innerVertices = new List<Vector3>();
-    private List<Vector3> outterVertices = new List<Vector3>();
+    protected List<Vector3> innerVertices = new List<Vector3>();
+    protected List<Vector3> outterVertices = new List<Vector3>();
 
     [Tooltip("圆形或扇形填充比例")] [Range(0, 1)] public float fillPercent = 1f;
     [Tooltip("是否填充圆形")] public bool fill = true;
