@@ -1,30 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class RayTrace : MonoBehaviour
 {
     private static readonly int VerticesID = Shader.PropertyToID("_Vertices");
+    private static readonly int HDRColorID = Shader.PropertyToID("_HDRColor");
+    private static readonly int RefractedColorID = Shader.PropertyToID("_RefractedColor");
+    private static readonly int ReflectedColorID = Shader.PropertyToID("_ReflectedColor");
     private static readonly int LightPosID = Shader.PropertyToID("_LightPos");
+    private static readonly int LightColorID = Shader.PropertyToID("_LightColor");
+    private static readonly int MagicTextureID = Shader.PropertyToID("_MagicTexture");
     private static readonly int MagicOriginID = Shader.PropertyToID("_MagicOrigin");
     private static readonly int MagicAlphaID = Shader.PropertyToID("_MagicAlpha");
+    private static readonly int SkyBoxID = Shader.PropertyToID("_SkyBox");
 
-
-    public List<GameObject> models;
+    public Transform root;
 
     public Material material;
 
+    [ColorUsage(false, true)] public Color hdrColor;
+    [ColorUsage(false)] public Color refractedColor;
+    [ColorUsage(false)] public Color reflectedColor;
+
     public Light pointLight;
+    [ColorUsage(false)] public Color lightColor;
 
     public Transform magicCircle;
+    public Texture2D magicTexture;
 
-    public float magicAlpha;
-
+    private float magicAlpha;
+    private List<GameObject> models;
     private List<Vector4> boundingSphere;
 
     private void OnEnable()
     {
+        AddModels();
         CalculateBoundingSphere();
     }
 
@@ -48,9 +61,33 @@ public class RayTrace : MonoBehaviour
         }
     }
 
+    private void AddModels()
+    {
+        if (models == null)
+        {
+            models = new List<GameObject>();
+        }
+
+        if (root == null)
+        {
+            return;
+        }
+
+        models.Clear();
+        foreach (var item in root.GetComponentsInChildren<MeshRenderer>().Select(x => x.gameObject))
+        {
+            models.Add(item);
+        }
+    }
+
     private void CalculateBoundingSphere()
     {
         boundingSphere = new List<Vector4>();
+
+        if (models == null)
+        {
+            return;
+        }
 
         foreach (var model in models)
         {
@@ -113,6 +150,11 @@ public class RayTrace : MonoBehaviour
 
         foreach (var model in models)
         {
+            if (!model)
+            {
+                continue;
+            }
+
             Matrix4x4 localToWorld = model.transform.localToWorldMatrix;
 
             MeshFilter mf = model.GetComponent<MeshFilter>();
@@ -130,7 +172,7 @@ public class RayTrace : MonoBehaviour
 
             //一个点 通过矩阵变换 新的点
             //这里把origin转到世界坐标
-            Vector3 origin = localToWorld.MultiplyPoint(boundingSphere[count]);
+            Vector3 origin = localToWorld.MultiplyPoint((Vector3) boundingSphere[count]);
 
             var lossyScale = model.transform.lossyScale;
             float maxScale = Mathf.Max(lossyScale.x, lossyScale.y,
@@ -149,7 +191,7 @@ public class RayTrace : MonoBehaviour
                     case "Diamond":
                         vec.w = 0;
                         break;
-                    case "Plane":
+                    case "Floor":
                         vec.w = 1;
                         break;
                     case "Trillion":
@@ -170,9 +212,37 @@ public class RayTrace : MonoBehaviour
             }
         }
 
-        material.SetVectorArray(VerticesID, list);
-        material.SetVector(LightPosID, pointLight.transform.position);
-        material.SetVector(MagicOriginID, magicCircle.position);
-        material.SetFloat(MagicAlphaID, magicAlpha);
+        if (list.Count > 0)
+        {
+            material.SetVectorArray(VerticesID, list);
+        }
+
+        material.SetColor(HDRColorID, hdrColor);
+        material.SetColor(ReflectedColorID, reflectedColor);
+        material.SetColor(RefractedColorID, refractedColor);
+
+
+        if (pointLight)
+        {
+            material.SetVector(LightPosID, pointLight.transform.position);
+            material.SetColor(LightColorID, lightColor);
+        }
+
+        if (magicCircle)
+        {
+            material.SetVector(MagicOriginID, magicCircle.position);
+            material.SetFloat(MagicAlphaID, magicAlpha);
+            material.SetTexture(MagicTextureID, magicTexture);
+        }
+
+        if (RenderSettings.skybox)
+        {
+            material.SetTexture(SkyBoxID, RenderSettings.skybox.GetTexture("_Tex"));
+        }
+    }
+
+    public void SetMagicAlpha(float alpha)
+    {
+        magicAlpha = alpha;
     }
 }

@@ -97,12 +97,15 @@ public class ClickObj : MonoBehaviour
 
     private void PyramidClickAct()
     {
-        Debug.Log("PyramidClickAct");
+        Debug.Log(1);
+        Camera.main.GetComponent<RayTrace>().SetMagicAlpha(1.0f);
     }
 
     private void PyramidCancelAct()
     {
-        Debug.Log("PyramidCancelAct");
+        Debug.Log(0);
+
+        Camera.main.GetComponent<RayTrace>().SetMagicAlpha(0.0f);
     }
 
     private void TrillionClickAct()
