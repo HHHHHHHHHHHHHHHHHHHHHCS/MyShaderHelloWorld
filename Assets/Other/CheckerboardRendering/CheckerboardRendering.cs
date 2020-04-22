@@ -6,25 +6,37 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Camera))]
 public class CheckerboardRendering : MonoBehaviour
 {
-    private Camera mainCam;
+    public bool offon;
 
     public CameraEvent evt0, evt1, evt2;
 
     public Shader blitCameraMotionVectorsShader;
+    public Shader checkerboardRenderingShader;
+
 
     public RenderTexture rt0, rt1, motionRT;
 
-    private Material blitCameraMotionVectorsMaterial;
+    private Camera mainCam;
 
-    private CommandBuffer cb0, cb1,cb2;
+    private Material blitCameraMotionVectorsMaterial;
+    private Material checkerboardRenderingMaterial;
+
+    private CommandBuffer cb0, cb1, cb2;
 
     private int frame = 0;
 
     private void Awake()
     {
+        if (!offon)
+        {
+            return;
+        }
+
         blitCameraMotionVectorsMaterial = new Material(blitCameraMotionVectorsShader);
+        checkerboardRenderingMaterial = new Material(checkerboardRenderingShader);
 
         mainCam = GetComponent<Camera>();
+        mainCam.allowMSAA = true;
 
         cb0 = new CommandBuffer();
         cb1 = new CommandBuffer();
@@ -57,28 +69,14 @@ public class CheckerboardRendering : MonoBehaviour
 
         motionRT = new RenderTexture(Screen.width / 2, Screen.height / 2, 0, RenderTextureFormat.RGHalf);
         motionRT.name = "Motion Frame";
-    }
 
-    private void Update()
-    {
-        frame = (frame +1 ) % 2;
-
-        Rect camRect = mainCam.pixelRect;
-        camRect.x = frame == 0 ? 0.25f : 0.75f;
-        mainCam.pixelRect = camRect;
 
         cb0.Clear();
         cb0.BeginSample("CB0");
-        if (frame == 0)
-        {
-            cb0.Blit(BuiltinRenderTextureType.CameraTarget, rt0);
-        }
-        else
-        {
-            cb0.Blit(BuiltinRenderTextureType.CameraTarget, rt1);
-        }
-
+        cb0.SetGlobalInt("_FrameCnt", frame);
+        cb0.Blit(BuiltinRenderTextureType.CameraTarget, frame == 0 ? rt0 : rt1);
         cb0.EndSample("CB0");
+
 
         cb1.Clear();
         cb1.BeginSample("CB1");
@@ -87,10 +85,33 @@ public class CheckerboardRendering : MonoBehaviour
 
         cb2.Clear();
         cb2.BeginSample("CB2");
-        cb2.Blit( motionRT, BuiltinRenderTextureType.CameraTarget);
+        cb2.SetGlobalTexture("_RT0", rt0);
+        cb2.SetGlobalTexture("_RT1", rt1);
+        cb2.SetGlobalTexture("_MotionTexture", motionRT);
+        cb2.Blit(null, BuiltinRenderTextureType.CameraTarget, checkerboardRenderingMaterial);
         cb2.EndSample("CB2");
-
     }
 
+    private void Update()
+    {
+        if (!offon)
+        {
+            return;
+        }
 
+        frame = (frame + 1) % 2;
+
+        Rect camRect = mainCam.pixelRect;
+        camRect.x = frame == 0 ? 0.25f : 0.75f;
+        mainCam.pixelRect = camRect;
+
+
+
+        cb0.Clear();
+        cb0.BeginSample("CB0");
+        cb0.SetGlobalInt("_FrameCnt", frame);
+        cb0.Blit(BuiltinRenderTextureType.CameraTarget, frame == 0 ? rt0 : rt1);
+        cb0.EndSample("CB0");
+
+    }
 }
