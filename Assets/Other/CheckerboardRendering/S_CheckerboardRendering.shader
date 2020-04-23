@@ -33,7 +33,7 @@
 			
 			uint _FrameCnt;
 			
-			const float Epsilon = 0.0001;
+			const float Epsilon = 0.00001;
 			
 			#define Up 0
 			#define Down 1
@@ -73,7 +73,7 @@
 				color[Left] = ReadFromQuadrant(qtr_res_pixel + offsets[Left], quadrants[1]);
 				color[Right] = ReadFromQuadrant(qtr_res_pixel + offsets[Right], quadrants[1]);
 				
-				return float4((color[Up].rgb + color[Down].rgb + color[Left].rgb + color[Left].rgb + color[Right].rgb) * 0.25, 1.0);
+				return float4((color[Up].rgb + color[Down].rgb + color[Left].rgb + color[Right].rgb) * 0.25, 1.0);
 			}
 			
 			void GetCardinalOffsets(int quadrant, out int2 offsets[4], out int quadrants[2])

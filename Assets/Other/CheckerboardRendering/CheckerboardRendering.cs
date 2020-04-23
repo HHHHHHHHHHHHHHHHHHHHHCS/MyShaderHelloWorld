@@ -13,7 +13,7 @@ public class CheckerboardRendering : MonoBehaviour
     public Shader blitCameraMotionVectorsShader;
     public Shader checkerboardRenderingShader;
 
-
+    public RenderTexture targetRT;
     public RenderTexture rt0, rt1, motionRT;
 
     private Camera mainCam;
@@ -110,8 +110,11 @@ public class CheckerboardRendering : MonoBehaviour
         cb0.Clear();
         cb0.BeginSample("CB0");
         cb0.SetGlobalInt("_FrameCnt", frame);
+//        cb0.Blit(BuiltinRenderTextureType.CameraTarget
+//            , frame == 0 ? rt0 : rt1
+//            ,RenderBufferLoadAction.Load
+//            , RenderBufferStoreAction.Resolve);
         cb0.Blit(BuiltinRenderTextureType.CameraTarget, frame == 0 ? rt0 : rt1);
         cb0.EndSample("CB0");
-
     }
 }
