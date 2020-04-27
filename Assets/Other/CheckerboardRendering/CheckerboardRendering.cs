@@ -25,12 +25,25 @@ public class CheckerboardRendering : MonoBehaviour
 
     private int frame = 0;
 
-    private void Awake()
+    private Mesh fullScreenTriangle;
+
+    private void Start()
     {
         if (!offon)
         {
             return;
         }
+
+        fullScreenTriangle = new Mesh();
+        fullScreenTriangle.SetVertices(new List<Vector3>()
+        {
+            new Vector3(-1f, -1f, 0f),
+            new Vector3(-1f, 3f, 0f),
+            new Vector3(3f, -1f, 0f),
+        });
+        fullScreenTriangle.SetIndices(new[] {0, 1, 2}, MeshTopology.Triangles, 0, false);
+        fullScreenTriangle.UploadMeshData(false);
+
 
         blitCameraMotionVectorsMaterial = new Material(blitCameraMotionVectorsShader);
         checkerboardRenderingMaterial = new Material(checkerboardRenderingShader);
@@ -74,13 +87,16 @@ public class CheckerboardRendering : MonoBehaviour
         cb0.Clear();
         cb0.BeginSample("CB0");
         cb0.SetGlobalInt("_FrameCnt", frame);
-        cb0.Blit(BuiltinRenderTextureType.CameraTarget, frame == 0 ? rt0 : rt1);
+        cb0.SetRenderTarget(frame == 0 ? rt0 : rt1, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
+        cb0.SetGlobalTexture("_MainTex", BuiltinRenderTextureType.CameraTarget);
+        cb0.DrawMesh(fullScreenTriangle, Matrix4x4.identity, blitCameraMotionVectorsMaterial, 0, 1);
         cb0.EndSample("CB0");
-
 
         cb1.Clear();
         cb1.BeginSample("CB1");
-        cb1.Blit(BuiltinRenderTextureType.MotionVectors, motionRT, blitCameraMotionVectorsMaterial);
+        cb1.SetRenderTarget(motionRT);
+        cb1.SetGlobalTexture("_MainTex", BuiltinRenderTextureType.MotionVectors);
+        cb1.DrawMesh(fullScreenTriangle, Matrix4x4.identity, blitCameraMotionVectorsMaterial, 0, 0);
         cb1.EndSample("CB1");
 
         cb2.Clear();
@@ -106,15 +122,12 @@ public class CheckerboardRendering : MonoBehaviour
         mainCam.pixelRect = camRect;
 
 
-
         cb0.Clear();
         cb0.BeginSample("CB0");
         cb0.SetGlobalInt("_FrameCnt", frame);
-//        cb0.Blit(BuiltinRenderTextureType.CameraTarget
-//            , frame == 0 ? rt0 : rt1
-//            ,RenderBufferLoadAction.Load
-//            , RenderBufferStoreAction.Resolve);
-        cb0.Blit(BuiltinRenderTextureType.CameraTarget, frame == 0 ? rt0 : rt1);
+        cb0.SetRenderTarget(frame == 0 ? rt0 : rt1, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
+        cb0.SetGlobalTexture("_MainTex", BuiltinRenderTextureType.CameraTarget);
+        cb0.DrawMesh(fullScreenTriangle, Matrix4x4.identity, blitCameraMotionVectorsMaterial, 0,1);
         cb0.EndSample("CB0");
     }
 }
