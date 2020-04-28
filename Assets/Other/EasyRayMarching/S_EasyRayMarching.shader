@@ -49,7 +49,21 @@
 			{
 				float d = length(p) - 0.5;
 				
+				d = length(float2(length(p.xy) - 0.5, p.z)) - 0.1;
+				d = length(float2(length(p.xz) - 0.5, p.y)) - 0.1;
+				
 				return d;
+			}
+			
+			float3 GetNormal(float3 p)
+			{
+				float2 offset = float2(1e-2, 0);
+				float3 n = GetDist(p).xxx - float3(
+					GetDist(p - offset.xyy),
+					GetDist(p - offset.yxy),
+					GetDist(p - offset.yyx)
+				);
+				return normalize(n);
 			}
 			
 			float Raymarch(float3 ro, float3 rd)
@@ -81,7 +95,9 @@
 				
 				if(d < MAX_DIST)
 				{
-					col.r = 1;
+					float3 p = ro + rd * d;
+					float3 n = GetNormal(p);
+					col.rgb = n;
 				}
 				
 				return col;
