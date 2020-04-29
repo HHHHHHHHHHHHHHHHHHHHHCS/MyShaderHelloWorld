@@ -30,8 +30,10 @@
 			
 			struct v2f
 			{
-				float2 uv: TEXCOORD0;
 				float4 vertex: SV_POSITION;
+				float2 uv: TEXCOORD0;
+				float3 ro: TEXCOORD1;
+				float3 hitPos: TEXCOORD2;
 			};
 			
 			sampler2D _MainTex;
@@ -42,6 +44,8 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.ro = mul(unity_WorldToObject, _WorldSpaceCameraPos);
+				o.hitPos = v.vertex;
 				return o;
 			}
 			
@@ -87,18 +91,26 @@
 			{
 				float2 uv = i.uv - 0.5;
 				
-				float3 ro = float3(0, 0, -3);
-				float3 rd = normalize(float3(uv.x, uv.y, 1));
+				float3 ro = i.ro;//float3(0, 0, -3);
+				float3 rd = normalize(i.hitPos - ro);//normalize(float3(uv.x, uv.y, 1));
 				
 				float d = Raymarch(ro, rd);
+				float4 texCol = tex2D(_MainTex, i.uv);
 				float4 col = 0;
-				
-				if(d < MAX_DIST)
+				float m = dot(uv, uv);
+				float lerpVal = smoothstep(.1, .2, m);
+				if (d < MAX_DIST)
 				{
 					float3 p = ro + rd * d;
 					float3 n = GetNormal(p);
 					col.rgb = n;
 				}
+				else if(lerpVal < 0.001)
+				{
+					discard;
+				}
+				
+				col = lerp(col, texCol, lerpVal) ;
 				
 				return col;
 			}
