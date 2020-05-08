@@ -51,6 +51,23 @@
 				return length(p - c) - r;
 			}
 			
+			float SDCylinder(float3 p, float3 a, float3 b, float r)
+			{
+				float3 ab = b - a;
+				float3 ap = p - a;
+				
+				float t = dot(ab, ap) / dot(ab, ab);
+				//t = clamp(t, 0.0, 1.0);//去掉头尾限制
+				
+				float3 c = a + t * ab;
+				
+				float x = length(p - c) - r;
+				float y = (abs(t - 0.5) - 0.5) * length(ab);
+				float e = length(max(float2(x, y), 0.0));
+				float i = min(max(x, y), 0);//用于阴影 bias
+				return e + i;
+			}
+			
 			float SDSphere(float3 p, float3 s, float r)
 			{
 				float sphereDist = length(p - s.xyz) - r;
@@ -70,14 +87,27 @@
 				return height;
 			}
 			
+			float SDBox(float3 p, float3 c, float3 size)
+			{
+				return length(max(abs(p - c) - size, 0));
+			}
+			
 			float GetDist(float3 p)
 			{
-				float sphereDist = SDSphere(p, float3(0, 1, 6), 1);
 				float planeDist = SDPlane(p, float3(0, 0, 0));
+				float sphereDist = SDSphere(p, float3(0, 1, 6), 1);
 				float capsuleDist = SDCapsule(p, float3(0, 1, 6), float3(1, 2, 6), 0.2);
 				float torusDist = SDTorus(p, float3(-0.5, 0.5, 6), float2(1.5, 0.5));
+				float boxDist = SDBox(p, float3(-3, 0.5, 6), float3(0.3, 0.4, 0.5));
+				float cylinderDist = SDCylinder(p, float3(0, 0.3, 3), float3(3, 0.3, 5), 0.2);
 				
-				float d = min(torusDist, planeDist);
+				
+				float d = min(sphereDist, planeDist);
+				d = min(capsuleDist, d);
+				d = min(torusDist, d);
+				d = min(boxDist, d);
+				d = min(cylinderDist, d);
+				
 				return d;
 			}
 			
@@ -134,7 +164,7 @@
 				float2 uv = i.uv - 0.5;
 				
 				float3 col = float3(0.0, 0.0, 0.0);
-				float3 ro = float3(0, 2, 0);
+				float3 ro = float3(1, 2, -2);
 				//视野偏移用
 				float3 rd = normalize(float3(uv.x - 0.15, uv.y - 0.20, 1.0));
 				
