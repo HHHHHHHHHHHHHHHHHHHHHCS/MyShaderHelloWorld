@@ -33,6 +33,8 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			
+			float2 _MousePos;
+			
 			v2f vert(appdata v)
 			{
 				v2f o;
@@ -94,7 +96,7 @@
 				return col;
 			}
 			
-			float4 Eye(float2 uv, int side)
+			float4 Eye(float2 uv, int side, float2 m, float smile)
 			{
 				uv -= 0.5;
 				uv.x *= side;
@@ -102,18 +104,25 @@
 				float d = length(uv);
 				float4 irisCol = float4(0.3, 0.5, 1.0, 1.0);
 				float4 col = lerp(1.0, irisCol, smoothstep(0.1, 0.7, d) * 0.5);
+				col.a = smoothstep(0.5, 0.48, d);
 				
 				col.rgb *= 1.0 - smoothstep(0.45, 0.5, d) * 0.5 * saturate(-uv.y - uv.x * side);
+				
+				d = length(uv - m * 0.5);
 				col.rgb = lerp(col.rgb, 0.0, smoothstep(0.3, 0.28, d));
 				irisCol.rgb *= 1.0 + smoothstep(0.3, 0.05, d);
-				col.rgb = lerp(col.rgb, irisCol, smoothstep(0.28, 0.25, d));
-				col.rgb = lerp(col.rgb, 0.0, smoothstep(0.16, 0.14, d));
+				float irisMask = smoothstep(0.28, 0.25, d);
+				col.rgb = lerp(col.rgb, irisCol, irisMask);
+				
+				d = length(uv - m * 0.6);
+				float pupileSize = lerp(0.4, 0.16, smile);
+				float pupilMask = smoothstep(pupileSize, pupileSize * 0.85, d);
+				col.rgb = lerp(col.rgb, 0.0, pupilMask);
 				
 				float highLight = smoothstep(0.1, 0.09, length(uv - float2(-0.15, 0.15)));
 				highLight += smoothstep(0.07, 0.05, length(uv + float2(-0.08, 0.08)));
 				
 				col.rgb = lerp(col.rgb, 1.0, highLight);
-				col.a = smoothstep(0.5, 0.48, d);
 				
 				return col;
 			}
@@ -166,14 +175,14 @@
 				return col;
 			}
 			
-			float4 Smiley(float2 uv)
+			float4 Smiley(float2 uv, float2 m, float smile)
 			{
 				float4 col = 0;
 				
 				int side = sign(uv.x);
 				uv.x = abs(uv.x);
 				float4 head = Head(uv);
-				float4 eye = Eye(Within(uv, float4(.03, -0.1, 0.37, 0.25)), side);
+				float4 eye = Eye(Within(uv, float4(.03, -0.1, 0.37, 0.25)), side, m, smile);
 				float4 mouth = Mouth(Within(uv, float4( - .3, -0.4, 0.3, -0.1)));
 				float4 brow = Brow(Within(uv, float4(0.03, 0.2, 0.4, 0.45)));
 				
@@ -191,8 +200,9 @@
 				float4 col = tex2D(_MainTex, i.uv);
 				float2 uv = i.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
-				
-				return Smiley(uv);
+				float2 m = _MousePos - 0.5;
+				float smile = 0.5;//cos(_Time.y) * 0.5 + 0.5;
+				return Smiley(uv, m, smile);
 			}
 			ENDCG
 			
