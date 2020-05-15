@@ -66,9 +66,11 @@ public class ImageEffectCommandBuffer : MonoBehaviour
             {
                 Vector2 mousePos = Input.mousePosition;
                 Vector2 viewPos = mainCam.ScreenToViewportPoint(mousePos);
+                viewPos.x = Mathf.Clamp01(viewPos.x);
+                viewPos.y = Mathf.Clamp01(viewPos.y);
                 //Debug.Log($"({viewPos.x:F5}, {viewPos.y:F5})");
                 effectMaterial.SetVector("_MousePos", viewPos);
             }
         }
     }
-}
+} 

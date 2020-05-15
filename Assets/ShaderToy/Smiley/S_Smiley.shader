@@ -58,11 +58,14 @@
 				return(uv - rect.xy) / (rect.zw - rect.xy);
 			}
 			
-			float4 Brow(float2 uv)
+			float4 Brow(float2 uv, float smile)
 			{
+				float offs = lerp(0.2, 0.0, smile);
+				uv.y += offs;
+				
 				float y = uv.y;
-				uv.y += uv.x * 0.8 - 0.3;
-				uv.x -= 0.1;
+				uv.y += uv.x * lerp(0.5, 0.8, 0.8) - lerp(0.1, 0.3, smile);
+				uv.x -= lerp(-0.1, 0.1, smile);
 				uv -= 0.5;
 				
 				float4 col = 0.0;
@@ -78,11 +81,12 @@
 				
 				float colMask = Remap01(0.7, 0.8, y) * 0.75;
 				colMask *= smoothstep(0.6, 0.9, browMask);
+				colMask *= smile;
 				float4 browCol = lerp(float4(0.4, 0.2, 0.2, 1.0), float4(1.0, 0.75, 0.5, 1.0), colMask) ;
 				
 				
-				uv.y += 0.15;
-				blur += 0.1;
+				uv.y += 0.15 - offs * 0.5;
+				blur += lerp(0.0, 0.1, smile);
 				d1 = length(uv);
 				s1 = smoothstep(0.45, 0.45 - blur, d1);
 				d2 = length(uv - float2(0.1, -0.2) * 0.7);
@@ -119,6 +123,11 @@
 				float pupilMask = smoothstep(pupileSize, pupileSize * 0.85, d);
 				col.rgb = lerp(col.rgb, 0.0, pupilMask);
 				
+				float t = _Time.y;
+				float2 offs = float2(sin(t + uv.y * 25.0), sin(t + uv.x * 25.0));
+				offs *= 0.01 * (1.0 - smile);
+				
+				uv += offs;
 				float highLight = smoothstep(0.1, 0.09, length(uv - float2(-0.15, 0.15)));
 				highLight += smoothstep(0.07, 0.05, length(uv + float2(-0.08, 0.08)));
 				
@@ -127,19 +136,22 @@
 				return col;
 			}
 			
-			float4 Mouth(float2 uv)
+			float4 Mouth(float2 uv, float smile)
 			{
 				uv -= 0.5;
 				
 				float4 col = float4(0.5, 0.18, 0.05, 1.0);
 				
 				uv.y *= 1.5;
-				uv.y -= uv.x * uv.x * 2.0;
-				float d = length(uv);
+				uv.y -= uv.x * uv.x * 2.0 * smile;
 				
+				uv.x *= lerp(2.5, 1.0, smile);
+				float d = length(uv);
 				col.a = smoothstep(0.5, 0.48, d);
 				
-				float td = length(uv - float2(0.0, 0.6));
+				float2 tUV = uv;
+				tUV.y += abs(uv.x) * 0.5 * (1 - smile);
+				float td = length(tUV - float2(0.0, 0.6));
 				
 				float3 toothCol = 1.0 * smoothstep(0.6, 0.35, d);
 				col.rgb = lerp(col.rgb, toothCol, smoothstep(0.4, 0.37, td));
@@ -183,8 +195,8 @@
 				uv.x = abs(uv.x);
 				float4 head = Head(uv);
 				float4 eye = Eye(Within(uv, float4(.03, -0.1, 0.37, 0.25)), side, m, smile);
-				float4 mouth = Mouth(Within(uv, float4( - .3, -0.4, 0.3, -0.1)));
-				float4 brow = Brow(Within(uv, float4(0.03, 0.2, 0.4, 0.45)));
+				float4 mouth = Mouth(Within(uv, float4( - .3, -0.4, 0.3, -0.1)), smile);
+				float4 brow = Brow(Within(uv, float4(0.03, 0.2, 0.4, 0.45)), smile);
 				
 				col = lerp(col, head, head.a);
 				col = lerp(col, eye, eye.a);
@@ -201,7 +213,8 @@
 				float2 uv = i.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				float2 m = _MousePos - 0.5;
-				float smile = 0.5;//cos(_Time.y) * 0.5 + 0.5;
+				uv -= m * (0.25 - dot(uv, uv));
+				float smile = cos(_Time.y) * 0.25 + 0.75;
 				return Smiley(uv, m, smile);
 			}
 			ENDCG
