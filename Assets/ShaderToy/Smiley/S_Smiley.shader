@@ -209,7 +209,6 @@
 			
 			float4 frag(v2f i): SV_Target
 			{
-				float4 col = tex2D(_MainTex, i.uv);
 				float2 uv = i.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				float2 m = _MousePos - 0.5;
