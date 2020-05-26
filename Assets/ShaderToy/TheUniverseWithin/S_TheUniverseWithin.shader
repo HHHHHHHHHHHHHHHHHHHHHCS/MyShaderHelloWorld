@@ -32,6 +32,9 @@
 			
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float2 _MousePos;
+			sampler2D _Noise;
+			
 			
 			v2f vert(appdata v)
 			{
@@ -72,45 +75,38 @@
 			{
 				float d = DistLine(p, a, b);
 				float m = smoothstep(0.03, 0.01, d);
+				float d2 = length(a - b);
 				//避免太长或者太短的线  同时中间过渡
-				m *= smoothstep(1.2, 0.8, length(a - b));
+				m *= smoothstep(1.2, 0.8, length(a - b)) * 0.5
+				+ smoothstep(0.05, 0.03, abs(d2 - 0.75));
 				return m;
 			}
 			
-			float4 frag(v2f input): SV_Target
+			float Layer(float2 uv)
 			{
-				float2 uv = input.uv - 0.5;
-				uv.x *= _ScreenParams.x / _ScreenParams.y;
-				
-				//float d = DistLine(uv, float2(0, 0), float2(1, 1));
-				//float m = smoothstep(0.1, 0.05, d);
-				
 				float m = 0;
-				
-				uv *= 5;
-				
 				float2 gv = frac(uv) - 0.5;
 				float2 id = floor(uv) ;
 				
 				float2 p[9];
-				int index = -1;
+				int i = 0;
 				for (float y = -1; y <= 1; ++ y)
 				{
 					for (float x = -1; x <= 1; ++ x)
 					{
-						p[ ++ index] = GetPos(id, float2(x, y));
+						p[ i ++ ] = GetPos(id, float2(x, y));
 					}
 				}
 				
 				float t = _Time.y * 10;
-				for (index = 0; index < 9; ++ index)
+				for (i = 0; i < 9; ++ i)
 				{
-					m += Line(gv, p[4], p[index]);
+					m += Line(gv, p[4], p[i]);
 					
 					//闪光
-					float2 j = (p[index] - gv) * 15;
+					float2 j = (p[i] - gv) * 15.0;
 					float sparkle = 1.0 / dot(j, j);
-					m += sparkle * (sin(t + p[index].x * 10.0) * 0.5 + 0.5);
+					m += sparkle * (sin(t + p[i].x * 10.0) * 0.5 + 0.5);
 				}
 				//连接顶部 底部 对于左右的线
 				m += Line(gv, p[1], p[3]);
@@ -118,19 +114,51 @@
 				m += Line(gv, p[7], p[3]);
 				m += Line(gv, p[7], p[5]);
 				
-				
-				float4 col = float4(0, 0, 0, 1);
-				col.rgb = m;
-				//测试框
-				// if (gv.x > 0.48 || gv.y > 0.48)
-				// {
-					// 	col.r = 1.0;
-					// }
-					
-					return pow(col, 2.2);
-				}
-				ENDCG
-				
+				return m;
 			}
+			
+			float4 frag(v2f input): SV_Target
+			{
+				float2 uv = input.uv - 0.5;
+				uv.x *= _ScreenParams.x / _ScreenParams.y;
+				float2 mouse = _MousePos - 0.5;
+				
+				float gradient = uv.y;
+				
+				float m = 0;
+				float t = _Time.x;
+				float s, c;
+				sincos(t, s, c);
+				float2x2 rot = float2x2(c, -s, s, c);
+				uv = mul(rot, uv);
+				mouse = mul(rot, mouse);
+				
+				for (float i = 0.0; i < 1.0; i += 0.25)
+				{
+					float z = frac(i + t);
+					float size = lerp(10.0, 0.5, z);
+					//过小 或者 过大 都会变淡
+					float fade = smoothstep(0.0, 0.5, z)
+					* smoothstep(1.0, 0.8, z);
+					m += Layer(uv * size + i * 20 - mouse) * fade;
+				}
+				
+				float3 base = sin(t * 5.0 * float3(0.096, 0.178, 0.397)) * 0.4 + float3(0.325, 0.325, 0.325);
+				float3 col = m * base;
+				float fft = tex2Dlod(_Noise, float4(sin(_Time.x), cos(_Time.x + sin(_Time.x)), 0, 0)) ;
+				gradient *= fft * 0.5;
+				col -= gradient * base;
+				//测试框
+				/*
+				if (uv.x > 0.48 || uv.x > 0.48)
+				{
+					col.r = 1.0;
+				}
+				*/
+				return float4(pow(col, 2.2), 1.0);
+			}
+			ENDCG
+			
 		}
 	}
+}

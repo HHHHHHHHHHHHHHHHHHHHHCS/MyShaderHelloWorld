@@ -8,10 +8,12 @@ using UnityEngine.Rendering;
 public class ImageEffectCommandBuffer : MonoBehaviour
 {
     public bool inputMousePos;
+    public bool inputNoise;
 
     public Shader effectShader;
-
     public Material effectMaterial;
+    
+    public Texture2D noise;
 
     private CommandBuffer cb;
 
@@ -47,10 +49,12 @@ public class ImageEffectCommandBuffer : MonoBehaviour
 
 
         effectMaterial.SetVector("_MousePos", new Vector2(0.5f,0.5f));
+        effectMaterial.SetTexture("_Noise", Texture2D.grayTexture);
     }
 
     private void InitCommandBuffer()
     {
+        AudioSource ass;
         cb = new CommandBuffer {name = "AfterEverything"};
         cb.BeginSample("MyCommandBuffer");
         cb.Blit(BuiltinRenderTextureType.CameraTarget, BuiltinRenderTextureType.CameraTarget, effectMaterial);
@@ -71,6 +75,11 @@ public class ImageEffectCommandBuffer : MonoBehaviour
                 //Debug.Log($"({viewPos.x:F5}, {viewPos.y:F5})");
                 effectMaterial.SetVector("_MousePos", viewPos);
             }
+        }
+
+        if (inputNoise && effectMaterial && noise)
+        {
+            effectMaterial.SetTexture("_Noise", noise);
         }
     }
 } 

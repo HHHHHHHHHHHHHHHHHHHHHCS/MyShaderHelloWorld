@@ -218,8 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputMousePos: 0
+  inputNoise: 1
   effectShader: {fileID: 4800000, guid: 83458cd48aa0fce4db3e942ffc69cb10, type: 3}
   effectMaterial: {fileID: 0}
+  noise: {fileID: 2800000, guid: 378111d105173384aab61e63539333cc, type: 3}
 --- !u!1 &353086827
 GameObject:
   m_ObjectHideFlags: 0
