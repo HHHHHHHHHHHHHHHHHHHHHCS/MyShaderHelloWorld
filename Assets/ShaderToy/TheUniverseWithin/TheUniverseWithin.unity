@@ -217,9 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936bd14976f2f3a43a5289f7268d036a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputMousePos: 0
+  inputMousePos: 1
   inputNoise: 1
-  effectShader: {fileID: 4800000, guid: 83458cd48aa0fce4db3e942ffc69cb10, type: 3}
+  effectShader: {fileID: 4800000, guid: 41b2a3d8ca9b46e4f97a703482133b37, type: 3}
   effectMaterial: {fileID: 0}
   noise: {fileID: 2800000, guid: 378111d105173384aab61e63539333cc, type: 3}
 --- !u!1 &353086827

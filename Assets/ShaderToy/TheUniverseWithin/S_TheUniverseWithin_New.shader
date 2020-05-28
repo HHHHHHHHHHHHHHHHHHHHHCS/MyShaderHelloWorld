@@ -31,6 +31,7 @@
 			};
 			
 			#define NUM_LAYERS 4
+			//#define SIMPLE
 			
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
@@ -78,7 +79,7 @@
 			{
 				float2 pa = p - a;
 				float2 ba = b - a;
-				float h = clamp(dot(pa, ba) / (1e-5 + dot(ba, ba)), 0.0, 1.0);
+				float h = clamp(dot(pa, ba) / (1e-6 + dot(ba, ba)), 0.0, 1.0);
 				return length(pa - ba * h);
 			}
 			
@@ -105,11 +106,48 @@
 				float2 id = floor(st) + n;
 				
 				st = frac(st) - 0.5;
-
+				
 				float2 p[9];
-				int i=0;
-				for(float y = -1.0;y<=1.0;y++)
-				//TODO:ASD
+				int i = 0;
+				for (float y = -1.0; y <= 1.0; y ++)
+				{
+					for (float x = -1.0; x < 1.0; x ++)
+					{
+						p[i ++ ] = GetPos(id, float2(x, y), t);
+					}
+				}
+				
+				float m = 0.0;
+				float sparkle = 0.0;
+				
+				for (int i = 0; i < 9; i ++)
+				{
+					m += Line(p[4], p[i], st);
+					
+					float d = length(st - p[i]);
+					
+					float s = (0.005 / (d * d));
+					s *= smoothstep(1.0, 0.7, d);
+					//时亮时暗
+					float pulse = sin((frac(p[i].x) + frac(p[i]).y + t) * 5.0) * 0.4 + 0.6;
+					pulse = pow(pulse, 20.0);
+					
+					s *= pulse;
+					sparkle += s;
+				}
+				
+				//上下左右 的 格子 的线连接
+				m += Line(p[1], p[3], st);
+				m += Line(p[1], p[5], st);
+				m += Line(p[7], p[5], st);
+				m += Line(p[7], p[3], st);
+				
+				//sparkle * 周期
+				float sPhase = (sin(t + n) + sin(t * .1)) * .25 + .5;
+				sPhase += pow(sin(t * .1) * .5 + .5, 50.) * 5.;
+				m += sparkle * sPhase;//(*.5+.5);
+				
+				return m;
 			}
 			
 			float4 frag(v2f input): SV_Target
@@ -118,39 +156,44 @@
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				float2 mouse = _MousePos - 0.5;
 				
-				float gradient = uv.y;
-				
-				float m = 0;
 				float t = _Time.x;
+				
 				float s, c;
 				sincos(t, s, c);
 				float2x2 rot = float2x2(c, -s, s, c);
-				uv = mul(rot, uv);
-				mouse = mul(rot, mouse);
+				float2 st = mul(rot, uv);
+				mouse = mul(rot * 2.0, mouse);
 				
-				for (float i = 0.0; i < 1.0; i += 0.25)
+				float m = 0;
+				for (float i = 0.0; i < 1.0; i += 1.0 / NUM_LAYERS)
 				{
 					float z = frac(i + t);
-					float size = lerp(10.0, 0.5, z);
+					float size = lerp(15.0, 1.0, z);
 					//过小 或者 过大 都会变淡
-					float fade = smoothstep(0.0, 0.5, z)
+					float fade = smoothstep(0.0, 0.6, z)
 					* smoothstep(1.0, 0.8, z);
-					m += Layer(uv * size + i * 20 - mouse) * fade;
+					m += fade * NetLayer(st * size - mouse * z, i, _Time.y) ;
 				}
 				
-				float3 base = sin(t * 5.0 * float3(0.096, 0.178, 0.397)) * 0.4 + float3(0.325, 0.325, 0.325);
-				float3 col = m * base;
 				float fft = tex2Dlod(_Noise, float4(sin(_Time.x), cos(_Time.x + sin(_Time.x)), 0, 0)) ;
-				gradient *= fft * 0.5;
-				col -= gradient * base;
-				//测试框
-				/*
-				if (uv.x > 0.48 || uv.x > 0.48)
-				{
-					col.r = 1.0;
-				}
-				*/
-				return float4(pow(col, 2.2), 1.0);
+				float glow = -uv.y * fft * 2.0;
+				
+				float3 baseCol = float3(s, cos(t * 0.4), -sin(t * 0.24)) * 0.4 + 0.6;
+				float3 col = baseCol * m;
+				col += baseCol * glow;
+				
+				#ifdef SIMPLE
+					uv *= 10.0;
+					col = float3(1.0, 1.0, 1.0) * NetLayer(uv, 0.0, _Time.y);
+					uv = frac(uv);
+					//if(uv.x>.98 || uv.y>.98) col += 1.;
+				#else
+					col *= 1. - dot(uv, uv);
+					t = fmod(_Time.y, 230.);
+					col *= smoothstep(0., 20., t) * smoothstep(224., 200., t);
+				#endif
+				
+				return float4(col, 1.0);
 			}
 			ENDCG
 			
