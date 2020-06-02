@@ -63,6 +63,13 @@
 				return m;
 			}
 			
+			float Hash21(float2 p)
+			{
+				p = frac(p * float2(123.34, 456.21));
+				p += dot(p, p + 45.32);
+				return frac(p.x * p.y);
+			}
+			
 			float4 frag(v2f input): SV_Target
 			{
 				float2 uv = input.uv - 0.5;
@@ -71,7 +78,15 @@
 				
 				float3 col = float3(0, 0, 0);
 				
-				col += Star(uv, 1.0);
+				float2 gv = frac(uv) - 0.5;
+				float2 id = floor(uv);
+				
+				col += Star(gv, 1.0);
+				
+				if (gv.x > 0.48 || gv.y > 0.48)
+					col.r = 1.0;
+				
+				col += Hash21(id);
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
