@@ -977,17 +977,25 @@
             <e p="S_SimpleBlur.shader" t="Include" />
             <e p="SimpleBlur.cs" t="Include" />
           </e>
+          <e p="TimeStop" t="Include">
+            <e p="S_TimeStop.shader" t="Include" />
+          </e>
         </e>
         <e p="ShaderToy" t="Include">
           <e p="ImageEffectCommandBuffer.cs" t="Include" />
+          <e p="S_BlitTexture.shader" t="Include" />
           <e p="Smiley" t="Include">
             <e p="S_Smiley.shader" t="Include" />
           </e>
           <e p="SpaceGIFStepByStep" t="Include">
             <e p="S_SpaceGIFStepByStep.shader" t="Include" />
           </e>
+          <e p="Starfield" t="Include">
+            <e p="S_Starfield.shader" t="Include" />
+          </e>
           <e p="TheUniverseWithin" t="Include">
             <e p="S_TheUniverseWithin.shader" t="Include" />
+            <e p="S_TheUniverseWithin_New.shader" t="Include" />
           </e>
         </e>
         <e p="UIEffect" t="Include">

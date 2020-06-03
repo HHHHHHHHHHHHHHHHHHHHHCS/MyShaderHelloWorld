@@ -20,11 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +40,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Other/DeferredCheckerBoardRendering/CheckerBoardRendering.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/96/6bdf40f4/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/22/947a21df/Texture2D.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UIEffect/UICapturedImage/UICapturedImage.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -87,6 +95,7 @@
       <updated>1590139046567</updated>
       <workItem from="1590139089600" duration="5000" />
       <workItem from="1590482686379" duration="2547000" />
+      <workItem from="1591149698638" duration="5171000" />
     </task>
     <servers />
   </component>
@@ -105,9 +114,20 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="508" y="186" width="904" height="668" key="find.popup" timestamp="1591154544580">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="508" y="186" width="904" height="668" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591154544580" />
+    <state x="532" y="237" key="run.anything.popup" timestamp="1591154953778">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591154953778" />
   </component>
 </project>
