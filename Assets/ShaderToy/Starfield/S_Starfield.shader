@@ -81,12 +81,17 @@
 				float2 gv = frac(uv) - 0.5;
 				float2 id = floor(uv);
 				
-				col += Star(gv, 1.0);
+				for (float y = -1; y <= 1; ++ y)
+				{
+					for (float x = -1; x <= 1; ++ x)
+					{
+						float2 offs = float2(x, y);
+						float n = Hash21(id + offs); //random between 0 and 1
+						col += Star(gv - offs - float2(n, frac(n * 34.0)) + 0.5, 1.0);
+					}
+				}
 				
-				if (gv.x > 0.48 || gv.y > 0.48)
-					col.r = 1.0;
-				
-				col += Hash21(id);
+				//if (gv.x > 0.48 || gv.y > 0.48) col.r = 1.0;
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
