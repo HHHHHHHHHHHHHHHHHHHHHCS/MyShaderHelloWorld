@@ -60,6 +60,7 @@
 				rays = max(0.0, 1.0 - abs(uv.x * uv.y * 1000.0));
 				m += rays * 0.3 * flare;
 				
+				m *= smoothstep(0.5, 0.2, d);
 				return m;
 			}
 			
@@ -74,7 +75,7 @@
 			{
 				float2 uv = input.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
-				uv *= 3;
+				uv *= 5;
 				
 				float3 col = float3(0, 0, 0);
 				
@@ -87,7 +88,13 @@
 					{
 						float2 offs = float2(x, y);
 						float n = Hash21(id + offs); //random between 0 and 1
-						col += Star(gv - offs - float2(n, frac(n * 34.0)) + 0.5, 1.0);
+						float size = frac(n * 345.32);
+						
+						float star = Star(gv - offs - float2(n, frac(n * 34.0)) + 0.5, smoothstep(0.85, 1.0, size));
+						
+						float3 startCol = sin(float3(0.2, 0.3, 0.9) * frac(n * 2345.2) * 123.2) * 0.5 + 0.5;
+						startCol = startCol * float3(1.0, 0.5, 1.0);
+						col += star * size * startCol;
 					}
 				}
 				
