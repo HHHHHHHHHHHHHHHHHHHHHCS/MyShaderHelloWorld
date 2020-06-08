@@ -30,8 +30,10 @@
 				float4 vertex: SV_POSITION;
 			};
 			
+			#define NUM_LAYERS 8.0
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float2 _MousePos;
 			
 			v2f vert(appdata v)
 			{
@@ -71,12 +73,8 @@
 				return frac(p.x * p.y);
 			}
 			
-			float4 frag(v2f input): SV_Target
+			float3 StarLayer(float2 uv)
 			{
-				float2 uv = input.uv - 0.5;
-				uv.x *= _ScreenParams.x / _ScreenParams.y;
-				uv *= 5;
-				
 				float3 col = float3(0, 0, 0);
 				
 				float2 gv = frac(uv) - 0.5;
@@ -93,12 +91,37 @@
 						float star = Star(gv - offs - float2(n, frac(n * 34.0)) + 0.5, smoothstep(0.85, 1.0, size));
 						
 						float3 startCol = sin(float3(0.2, 0.3, 0.9) * frac(n * 2345.2) * 123.2) * 0.5 + 0.5;
-						startCol = startCol * float3(1.0, 0.5, 1.0);
+						startCol = startCol * float3(1.0, 0.25, 1.0+size);
+						star *= sin(_Time.y * 3.0 + n * UNITY_TWO_PI) * 0.5 + 1.0;
 						col += star * size * startCol;
 					}
 				}
 				
 				//if (gv.x > 0.48 || gv.y > 0.48) col.r = 1.0;
+				
+				return col;
+			}
+			
+			float4 frag(v2f input): SV_Target
+			{
+				float2 uv = input.uv - 0.5;
+				uv.x *= _ScreenParams.x / _ScreenParams.y;
+				float2 M = _MousePos - 0.5;
+				float t = _Time.x;
+				
+				uv += M * 4.0;
+				uv = mul(Rot(t), uv);
+				
+				float3 col = float3(0, 0, 0);
+				
+				for (float i = 0.0; i < 1.0; i += 1.0 / NUM_LAYERS)
+				{
+					float depth = frac(i + t);
+					float scale = lerp(20.0, 0.5, depth);
+					float fade = depth * smoothstep(0.9, 1.0, depth);
+					col += StarLayer(uv * scale + i * 453.2) * depth;
+				}
+				
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
