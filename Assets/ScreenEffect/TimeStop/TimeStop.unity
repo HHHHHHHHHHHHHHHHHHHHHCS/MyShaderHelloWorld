@@ -295,14 +295,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 729831810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936bd14976f2f3a43a5289f7268d036a, type: 3}
+  m_Script: {fileID: 11500000, guid: e10e1ef1e3b599243b359a893b509cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputMousePos: 0
   inputNoise: 0
   effectShader: {fileID: 4800000, guid: b234c47daa1d81a41a29f858c8bf8428, type: 3}
   effectMaterial: {fileID: 2100000, guid: ac26f47b41358d94f9e7e45ec6d764c5, type: 2}
-  noise: {fileID: 0}
 --- !u!1 &1683362676
 GameObject:
   m_ObjectHideFlags: 0

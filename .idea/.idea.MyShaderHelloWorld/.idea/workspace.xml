@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopNoise.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopNoise.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +102,7 @@
       <workItem from="1590482686379" duration="2547000" />
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
+      <workItem from="1591583488707" duration="658000" />
     </task>
     <servers />
   </component>

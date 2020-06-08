@@ -979,6 +979,7 @@
           </e>
           <e p="TimeStop" t="Include">
             <e p="S_TimeStop.shader" t="Include" />
+            <e p="TimeStopCtrl.cs" t="Include" />
           </e>
         </e>
         <e p="ShaderToy" t="Include">

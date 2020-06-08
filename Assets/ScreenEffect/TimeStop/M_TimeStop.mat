@@ -23,11 +23,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 06b7e28b12fa9c74583f2c692d44638f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaveTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _CenterX: 0
     - _CenterY: 0
-    - _ImpactRadius: 0.4
-    - _ImpactRadius1: 1
-    - _Radius: 0.2
+    - _Gray: 0
+    - _ImpactRadius: 0.07
+    - _ImpactRadius1: 0.11
+    - _Radius: 0.19
+    - _TwistIntensity: 0.01
+    - _TwistSpeed: 0.2
+    - _WaveIntensity: 0.01
+    - _WaveShape: 0.3
     m_Colors:
-    - _ImpactColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ImpactColor: {r: 0.9607844, g: 0.18823531, b: 0.5254902, a: 1}

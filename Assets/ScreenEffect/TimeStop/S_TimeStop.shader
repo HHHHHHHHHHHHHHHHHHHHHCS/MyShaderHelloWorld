@@ -3,12 +3,18 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" { }
+		_NoiseTex ("Noise Texture", 2D) = "white" { }
+		[Toggle]_Gray ("Gray", float) = 0
 		_CenterX ("Center X", float) = 0.0
 		_CenterY ("Center Y", float) = 0.0
 		_Radius ("Radius", float) = 0.2
 		_ImpactRadius ("Impact Radius", float) = 0.4
 		_ImpactRadius1 ("Impact Radius1", float) = 1.0
 		_ImpactColor ("Impact Color", Color) = (1, 1, 1, 1)
+		_TwistIntensity ("TwistIntensity", float) = 1
+		_TwistSpeed ("TwistSpeed", float) = 1
+		_WaveIntensity ("WaveIntensity", float) = 1
+		_WaveShape ("WaveShape", float) = 1
 	}
 	SubShader
 	{
@@ -37,11 +43,18 @@
 			};
 			
 			sampler2D _MainTex;
+			sampler2D _NoiseTex;
+			float _Gray;
 			float _CenterX, _CenterY;
 			float _Radius;
 			float _ImpactRadius;
 			float _ImpactRadius1;
 			float4 _ImpactColor;
+			float _TwistIntensity;
+			float _TwistSpeed;
+			float _WaveIntensity;
+			float _WaveShape;
+			
 			
 			v2f vert(appdata v)
 			{
@@ -77,31 +90,47 @@
 				float d = x * x + y * y;
 				
 				
-				float4 col = tex2D(_MainTex, i.uv);
-				float3 finalColor = col;
-				
-				
-				//hsv
-				float3 hsvColor = RGB2HSV(col.rgb);
-				//hsv 跟时间变化
-				hsvColor.x += lerp(0, 0.2, sin(UNITY_TWO_PI * frac(_Time.y * 0.5)));
-				hsvColor.x = frac(hsvColor.x);
-				
-				//反色
-				float3 reversedColor = 1 - HSV2RGB(hsvColor.rgb);
-				
 				//圆太规则了 , 制造出凹凸坑洼的效果
 				float sin_theta = saturate(y / max(sqrt(d), 1e-8));//d = r^2 同时避免NAN
 				float half_theta = asin(sin_theta) * (step(0, x) - 0.5);//根据x进行凹凸
+				
+				
+				float4 col = tex2D(_MainTex, i.uv);
+				float3 finalColor = col;
+				
 				//随时间波动 多个正弦波叠加
 				float deformFactor = (1 + 0.02 * sin(half_theta * 24) * lerp(0, 0.5, sin(UNITY_TWO_PI * _Time.y * 0.5))
 				+ 0.25 * x * sin(1 + half_theta * 6.5) * lerp(0.25, 0.75, sin(UNITY_TWO_PI * _Time.y * 0.2))
 				+ 0.1 * x * x * sin(2 + half_theta * 9.5) * lerp(0.25, 0.75, sin(UNITY_TWO_PI * _Time.y * 0.1))
 				);
 				_Radius *= deformFactor;
+				_ImpactRadius *= deformFactor;
+				_ImpactRadius1 *= deformFactor;
 				
-				if (d < _Radius * _Radius)
-					finalColor = reversedColor;
+				
+				//noise
+				float4 noise = tex2D(_NoiseTex, i.uv + _Time.y * _TwistSpeed);
+				float4 twistedColor = tex2D(_MainTex, i.uv + noise.xy * _TwistIntensity);
+				float4 wave = tex2D(_NoiseTex, half_theta * noise.xy * _WaveShape) * _WaveIntensity;
+				
+				//hsv
+				float3 hsvColor = RGB2HSV(twistedColor.rgb);
+				//hsv 跟时间变化
+				hsvColor.x += lerp(0, 0.2, sin(UNITY_TWO_PI * frac(_Time.y * 0.5)));
+				hsvColor.x = frac(hsvColor.x);
+				//反色
+				float3 reversedColor = 1 - HSV2RGB(hsvColor.rgb) + wave;
+				//灰度圈
+				float rr = _Radius * _Radius;
+				half isGray = step(0.5, _Gray);
+				half insideCircle = step(d, rr);
+				finalColor = lerp(col, reversedColor, insideCircle);
+				fixed3 grayFactor = {
+					0.299, 0.587, 0.114
+				};
+				
+				fixed grayColor = dot(grayFactor, col);
+				finalColor = lerp(finalColor, grayColor, isGray * (1 - insideCircle));
 				
 				//impact wave
 				const float power = 5;
