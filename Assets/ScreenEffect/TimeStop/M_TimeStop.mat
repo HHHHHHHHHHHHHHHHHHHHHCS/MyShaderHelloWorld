@@ -35,9 +35,9 @@ Material:
     - _CenterX: 0
     - _CenterY: 0
     - _Gray: 0
-    - _ImpactRadius: 0.082566306
-    - _ImpactRadius1: 0
-    - _Radius: 0
+    - _ImpactRadius: 0.9972907
+    - _ImpactRadius1: 0.49819377
+    - _Radius: 1.4945813
     - _SampleDist: 0
     - _SampleStrength: 0
     - _TwistIntensity: 0.01

@@ -21,10 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/M_TimeStop.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/M_TimeStop.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +73,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -107,7 +104,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="3847000" />
+      <workItem from="1591665480943" duration="5404000" />
     </task>
     <servers />
   </component>
@@ -137,9 +134,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="508" y="186" width="904" height="668" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591235483573" />
-    <state x="532" y="237" key="run.anything.popup" timestamp="1591154953778">
+    <state x="532" y="237" key="run.anything.popup" timestamp="1591671220541">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591154953778" />
+    <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591671220541" />
   </component>
 </project>
