@@ -15,6 +15,8 @@
 		_TwistSpeed ("TwistSpeed", float) = 1
 		_WaveIntensity ("WaveIntensity", float) = 1
 		_WaveShape ("WaveShape", float) = 1
+		[Header(Blur)]_SampleDist ("Sample Dist", float) = 0
+		_SampleStrength ("Sample Strength", float) = 0
 	}
 	SubShader
 	{
@@ -145,6 +147,80 @@
 				
 				
 				return float4(finalColor, 1.0);
+			}
+			ENDCG
+			
+		}
+		
+		
+		Pass
+		{
+			CGPROGRAM
+			
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+			
+			struct appdata
+			{
+				float4 vertex: POSITION;
+				float2 uv: TEXCOORD0;
+			};
+			
+			struct v2f
+			{
+				float2 uv: TEXCOORD0;
+				float4 vertex: SV_POSITION;
+			};
+			
+			v2f vert(appdata v)
+			{
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.uv = v.uv;
+				return o;
+			}
+			
+			sampler2D _MainTex;
+			float _SampleDist;
+			float _SampleStrength;
+			float  _CenterX;
+			float  _CenterY;
+			
+			half4 frag(v2f i): SV_Target
+			{
+				half4 col = tex2D(_MainTex, i.uv);
+				
+				if (_SampleStrength * _SampleDist == 0)
+				{
+					return col;
+				}
+				
+				half4 sum = col;
+				float2 dir = 0.5 - i.uv + float2(_CenterX, _CenterY);
+				float dist = length(dir);
+				dir /= dist;//normalize
+				float samples[10] = {
+					- 0.08,
+					- 0.05,
+					- 0.03,
+					- 0.02,
+					- 0.01,
+					0.01,
+					0.02,
+					0.03,
+					0.05,
+					0.08
+				};
+				for (int it = 0; it < 10; it ++)
+				{
+					sum += tex2D(_MainTex, i.uv + dir * samples[it] * _SampleDist);
+				}
+				sum /= 11;
+				float t = saturate(dist * _SampleStrength);
+				float4 blur = lerp(col, sum, t);
+				return blur;
 			}
 			ENDCG
 			

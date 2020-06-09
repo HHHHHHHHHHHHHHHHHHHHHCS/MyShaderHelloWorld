@@ -20,9 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopNoise.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopNoise.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/M_TimeStop.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/M_TimeStop.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStop.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +41,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/ResourceAssets/Materials.meta" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffusePixelLevel.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffuseVertexLevel.shader" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SequenceSelectorNameFormater.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/22/947a21df/Texture2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SpacePartitioner.cs" root0="SKIP_HIGHLIGHTING" />
@@ -55,6 +58,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" />
+        <option value="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" />
       </list>
     </option>
   </component>
@@ -103,6 +107,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
+      <workItem from="1591665480943" duration="3847000" />
     </task>
     <servers />
   </component>

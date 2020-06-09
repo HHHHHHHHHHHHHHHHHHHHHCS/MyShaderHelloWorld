@@ -299,9 +299,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputMousePos: 0
-  inputNoise: 0
   effectShader: {fileID: 4800000, guid: b234c47daa1d81a41a29f858c8bf8428, type: 3}
   effectMaterial: {fileID: 2100000, guid: ac26f47b41358d94f9e7e45ec6d764c5, type: 2}
+  radiusTime: 1
+  radiusDelta: 0.25
+  impactRadiusTime: 2
+  impactRadiusDelta: 0
+  impactRadiusTime1: 3
+  impactRadiusDelta1: 0.25
+  sampleDistTime: 2
+  sampleDistDelta: 1
+  sampleStrengthTime: 2
+  sampleStrengthDelta: 1
 --- !u!1 &1683362676
 GameObject:
   m_ObjectHideFlags: 0
