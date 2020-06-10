@@ -18,6 +18,7 @@
 			
 			#include "UnityCG.cginc"
 			
+			
 			struct appdata
 			{
 				float4 vertex: POSITION;
@@ -32,6 +33,8 @@
 			
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			
+			#define mod(uv, m) float2(uv.x - floor(uv.x / m.x) * m.x, uv.y - floor(uv.y / m.y) * m.y)
 			
 			v2f vert(appdata v)
 			{
@@ -51,6 +54,21 @@
 				return c;
 			}
 			
+			float4 HexCoords(float2 uv)
+			{
+				const float2 r = float2(1.0, 1.73);
+				const float2 h = r * 0.5;
+				
+				float2 a = mod(uv, r) - h;
+				float2 b = mod((uv - h), r) - h;
+				
+				float2 gv = length(a) < length(b)?a: b;
+				
+				float2 id = uv - gv;
+				
+				return float4(gv, id);
+			}
+			
 			float4 frag(v2f i): SV_Target
 			{
 				float2 uv = i.uv - 0.5;
@@ -58,9 +76,9 @@
 				
 				float3 col = 0;
 				
-				float2 gv = frac(uv * 10.0);
+				uv *= 5;
 				
-				col.rg = gv;//sin(HexDist(uv) * 10.0 + _Time.y);
+				col.rg = HexCoords(uv).zw * 0.2;
 				
 				return float4(pow(col, 2.2), 1);
 			}

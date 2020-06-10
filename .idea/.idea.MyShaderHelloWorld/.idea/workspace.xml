@@ -20,18 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/HexagonalTiling.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/HexagonalTiling.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +106,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="9153000" />
+      <workItem from="1591665480943" duration="11759000" />
     </task>
     <servers />
   </component>
