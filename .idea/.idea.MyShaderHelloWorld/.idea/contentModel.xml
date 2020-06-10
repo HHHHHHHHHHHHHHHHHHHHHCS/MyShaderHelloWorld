@@ -819,6 +819,11 @@
             <e p="BrightnessSaturationAndContrast.cs" t="Include" />
             <e p="S_BrightnessSaturationAndContrast.shader" t="Include" />
           </e>
+          <e p="CommandBufferSamples" t="Include">
+            <e p="CommandBufferSamples.cs" t="Include" />
+            <e p="S_BlurGlass.shader" t="Include" />
+            <e p="S_BlurGlassQuad.shader" t="Include" />
+          </e>
           <e p="DepthAndLight" t="Include">
             <e p="DepthAndLight.cs" t="Include" />
             <e p="S_DepthAndLight.shader" t="Include" />
@@ -983,6 +988,9 @@
           </e>
         </e>
         <e p="ShaderToy" t="Include">
+          <e p="HexagonalTiling" t="Include">
+            <e p="S_HexagonalTiling.shader" t="Include" />
+          </e>
           <e p="ImageEffectCommandBuffer.cs" t="Include" />
           <e p="S_BlitTexture.shader" t="Include" />
           <e p="Smiley" t="Include">

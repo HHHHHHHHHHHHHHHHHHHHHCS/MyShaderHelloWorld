@@ -20,7 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/HexagonalTiling.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/HexagonalTiling.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SpacePartitioner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/NormalMapTangentSpace/S_NormalMapTangentSpace.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UIEffect/UICapturedImage/UICapturedImage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/96/6bdf40f4/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CommonEffect/055_WorldSpaceTexture/055_WorldSpaceTexture.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" root0="FORCE_HIGHLIGHTING" />
@@ -55,6 +67,7 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" />
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" />
+        <option value="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" />
       </list>
     </option>
   </component>
@@ -104,7 +117,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="5404000" />
+      <workItem from="1591665480943" duration="9153000" />
     </task>
     <servers />
   </component>
@@ -138,5 +151,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591671220541" />
+    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup" timestamp="1591755007002">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591755007002" />
   </component>
 </project>
