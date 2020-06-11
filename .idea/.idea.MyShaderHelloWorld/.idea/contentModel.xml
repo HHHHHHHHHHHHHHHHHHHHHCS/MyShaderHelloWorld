@@ -822,7 +822,9 @@
           <e p="CommandBufferSamples" t="Include">
             <e p="CommandBufferSamples.cs" t="Include" />
             <e p="S_BlurGlass.shader" t="Include" />
-            <e p="S_BlurGlassQuad.shader" t="Include" />
+            <e p="S_ObjBlurGlass.shader" t="Include" />
+            <e p="S_ObjOutline.shader" t="Include" />
+            <e p="S_UberShader.shader" t="Include" />
           </e>
           <e p="DepthAndLight" t="Include">
             <e p="DepthAndLight.cs" t="Include" />

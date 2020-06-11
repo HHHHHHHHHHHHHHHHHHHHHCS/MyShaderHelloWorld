@@ -20,7 +20,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjOutline.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjOutline.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_UberShader.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_UberShader.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_BlitCameraMotionVectors.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_BlitCameraMotionVectors.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_CheckerboardRendering.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_CheckerboardRendering.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/CloudRayMarching/S_CloudRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CloudRayMarching/S_CloudRayMarching.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/EasyRayMarching/S_EasyRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/EasyRayMarching/S_EasyRayMarching.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/RayMarchingSimpleShapes/S_RayMarchingSimpleShapes.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/RayMarchingSimpleShapes/S_RayMarchingSimpleShapes.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_RayTracing.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_RayTracing.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_WorldNormal.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_WorldNormal.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/S_HexagonalTiling.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/S_HexagonalTiling.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/Smiley/S_Smiley.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/Smiley/S_Smiley.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/SpaceGIFStepByStep/S_SpaceGIFStepByStep.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/SpaceGIFStepByStep/S_SpaceGIFStepByStep.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/Starfield/S_Starfield.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/Starfield/S_Starfield.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin_New.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin_New.shader" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +59,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/LensFlare/S_LensFlare_ChromaticAberration.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Other/DeferredCheckerBoardRendering/CheckerBoardRendering.cs" root0="FORCE_HIGHLIGHTING" />
@@ -38,9 +67,11 @@
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffusePixelLevel.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffuseVertexLevel.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Other/AsyncCapture/SyncCapture.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SequenceSelectorNameFormater.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/22/947a21df/Texture2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SpacePartitioner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Other/AsyncCapture/AsyncCapture.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/NormalMapTangentSpace/S_NormalMapTangentSpace.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UIEffect/UICapturedImage/UICapturedImage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" root0="FORCE_HIGHLIGHTING" />
@@ -56,6 +87,7 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" />
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" />
+        <option value="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" />
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" />
       </list>
     </option>
@@ -106,7 +138,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="11759000" />
+      <workItem from="1591665480943" duration="17681000" />
     </task>
     <servers />
   </component>

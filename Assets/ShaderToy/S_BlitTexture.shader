@@ -1,4 +1,4 @@
-﻿Shader "My/S_BlitTexture"
+﻿Shader "ShaderToy/S_BlitTexture"
 {
 	Properties
 	{

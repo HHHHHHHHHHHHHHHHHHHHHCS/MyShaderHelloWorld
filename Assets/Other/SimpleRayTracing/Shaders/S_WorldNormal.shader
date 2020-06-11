@@ -1,4 +1,4 @@
-﻿Shader "My/S_WorldNormal"
+﻿Shader "WorldNormal/S_WorldNormal"
 {
 	Properties { }
 	SubShader

@@ -1,4 +1,4 @@
-﻿Shader "My/S_Starfield"
+﻿Shader "Starfield/S_Starfield"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "My/S_TheUniverseWithin_New"
+﻿Shader "TheUniverseWithin/S_TheUniverseWithin_New"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "My/S_TimeStop"
+﻿Shader "TimeStop/S_TimeStop"
 {
 	Properties
 	{

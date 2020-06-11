@@ -1,4 +1,4 @@
-﻿Shader "My/S_Smiley"
+﻿Shader "Smiley/S_Smiley"
 {
 	Properties
 	{

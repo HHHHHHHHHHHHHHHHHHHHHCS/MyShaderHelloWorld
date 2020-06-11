@@ -1,4 +1,4 @@
-﻿Shader "My/S_BlurGlassQuad"
+﻿Shader "CommandBufferSamples/S_ObjBlurGlass"
 {
 	Properties { }
 	SubShader
@@ -28,7 +28,7 @@
 				float4 srcUV: TEXCOORD1;
 			};
 			
-			sampler2D _BlurCopyTex;
+			sampler2D _BlurTempTex;
 			
 			v2f vert(appdata v)
 			{
@@ -43,8 +43,8 @@
 			
 			float4 frag(v2f i): SV_Target
 			{
-				float4 col = tex2Dproj(_BlurCopyTex, i.srcUV);
-				return col;
+				float3 col = tex2Dproj(_BlurTempTex, i.srcUV).rgb;
+				return float4(col, 1.0);
 			}
 			ENDCG
 			

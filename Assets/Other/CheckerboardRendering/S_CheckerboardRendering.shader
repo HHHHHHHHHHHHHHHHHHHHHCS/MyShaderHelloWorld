@@ -1,4 +1,4 @@
-﻿Shader "My/S_CheckerboardRendering"
+﻿Shader "CheckerboardRendering/S_CheckerboardRendering"
 {
 	Properties { }
 	SubShader

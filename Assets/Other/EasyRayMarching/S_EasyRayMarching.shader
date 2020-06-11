@@ -1,4 +1,4 @@
-﻿Shader "My/S_EasyRayMarching"
+﻿Shader "EasyRayMarching/S_EasyRayMarching"
 {
 	Properties
 	{

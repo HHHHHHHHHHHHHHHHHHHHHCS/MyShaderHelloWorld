@@ -1,4 +1,4 @@
-﻿Shader "My/S_BlurGlass"
+﻿Shader "CommandBufferSamples/S_BlurGlass"
 {
 	Properties
 	{
@@ -33,7 +33,6 @@
 		o.uv = v.uv;
 		return o;
 	}
-	
 	
 	
 	float4 Downsample(float2 uv)

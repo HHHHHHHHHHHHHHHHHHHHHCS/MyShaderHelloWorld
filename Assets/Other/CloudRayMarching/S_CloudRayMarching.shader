@@ -1,4 +1,4 @@
-﻿Shader "My/S_CloudRayMarching"
+﻿Shader "CloudRayMarching/S_CloudRayMarching"
 {
 	Properties
 	{
