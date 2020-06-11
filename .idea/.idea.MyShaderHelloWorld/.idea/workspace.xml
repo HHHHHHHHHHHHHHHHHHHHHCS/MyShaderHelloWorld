@@ -20,35 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjOutline.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjOutline.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_UberShader.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_UberShader.shader.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_BlitCameraMotionVectors.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_BlitCameraMotionVectors.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_CheckerboardRendering.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CheckerboardRendering/S_CheckerboardRendering.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/CloudRayMarching/S_CloudRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/CloudRayMarching/S_CloudRayMarching.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/EasyRayMarching/S_EasyRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/EasyRayMarching/S_EasyRayMarching.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/RayMarchingSimpleShapes/S_RayMarchingSimpleShapes.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/RayMarchingSimpleShapes/S_RayMarchingSimpleShapes.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_RayTracing.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_RayTracing.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_WorldNormal.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/SimpleRayTracing/Shaders/S_WorldNormal.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlass.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_BlurGlassQuad.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/S_TimeStop.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/S_HexagonalTiling.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/HexagonalTiling/S_HexagonalTiling.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/S_BlitTexture.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/Smiley/S_Smiley.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/Smiley/S_Smiley.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/SpaceGIFStepByStep/S_SpaceGIFStepByStep.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/SpaceGIFStepByStep/S_SpaceGIFStepByStep.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/Starfield/S_Starfield.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/Starfield/S_Starfield.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin_New.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShaderToy/TheUniverseWithin/S_TheUniverseWithin_New.shader" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +81,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -138,7 +112,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="17681000" />
+      <workItem from="1591665480943" duration="20699000" />
     </task>
     <servers />
   </component>
@@ -164,6 +138,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="329" y="77" key="SettingsEditor" timestamp="1591857320895">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="329" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1591857320895" />
     <state x="508" y="186" width="904" height="668" key="find.popup" timestamp="1591235483573">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

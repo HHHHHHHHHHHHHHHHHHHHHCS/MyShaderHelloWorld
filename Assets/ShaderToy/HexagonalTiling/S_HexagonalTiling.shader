@@ -64,9 +64,12 @@
 				
 				float2 gv = length(a) < length(b)?a: b;
 				
+				float x = atan2(gv.x, gv.y);
+				float y = 0.5 - HexDist(gv);
+				
 				float2 id = uv - gv;
 				
-				return float4(gv, id);
+				return float4(x, y, id);
 			}
 			
 			float4 frag(v2f i): SV_Target
@@ -76,9 +79,13 @@
 				
 				float3 col = 0;
 				
-				uv *= 5;
+				uv *= 10;
 				
-				col.rg = HexCoords(uv).zw * 0.2;
+				float4 hc = HexCoords(uv + 100.0);
+				
+				float c = smoothstep(0.01, 0.03, hc.y * sin(hc.z * hc.w + _Time.y));
+				
+				col += c;
 				
 				return float4(pow(col, 2.2), 1);
 			}
