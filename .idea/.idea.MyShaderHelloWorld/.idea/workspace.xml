@@ -20,8 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36b87997-eccd-445c-a186-c2d952a3c21f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/Elastic.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/Elastic.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticCamera.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticCamera.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticObject.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticObject.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyShaderHelloWorld/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +44,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/LensFlare/S_LensFlare_ChromaticAberration.shader" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Other/DeferredCheckerBoardRendering/CheckerBoardRendering.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SpacePartitioner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Other/SimpleRayMarching/S_SimpleRayMarching.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ResourceAssets/Materials.meta" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffusePixelLevel.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/DiffuseModel/S_DiffuseVertexLevel.shader" root0="FORCE_HIGHLIGHTING" />
@@ -43,16 +56,15 @@
     <setting file="file://$PROJECT_DIR$/Assets/Other/AsyncCapture/SyncCapture.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SequenceSelectorNameFormater.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/22/947a21df/Texture2D.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.2.12/Editor/Utilities/SpacePartitioner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Other/AsyncCapture/AsyncCapture.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/NormalMapTangentSpace/S_NormalMapTangentSpace.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UIEffect/UICapturedImage/UICapturedImage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A5DB892E-27A8-4FF4-A829-BDEF0A566785/96/6bdf40f4/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CommonEffect/055_WorldSpaceTexture/055_WorldSpaceTexture.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ShaderToy/ImageEffectCommandBuffer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UIEffect/UICircle/SetPropertyUtility.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ObjectLight/Shadows/Shadows/LightingData.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -62,6 +74,8 @@
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/TimeStop/TimeStopCtrl.cs" />
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/S_ObjBlurGlass.shader" />
         <option value="$PROJECT_DIR$/Assets/ScreenEffect/CommandBufferSamples/CommandBufferSamples.cs" />
+        <option value="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticObject.cs" />
+        <option value="$PROJECT_DIR$/Assets/ObjectEffect/Elastic/ElasticCamera.cs" />
       </list>
     </option>
   </component>
@@ -112,7 +126,7 @@
       <workItem from="1591149698638" duration="5171000" />
       <workItem from="1591235314401" duration="767000" />
       <workItem from="1591583488707" duration="658000" />
-      <workItem from="1591665480943" duration="20699000" />
+      <workItem from="1591665480943" duration="24170000" />
     </task>
     <servers />
   </component>

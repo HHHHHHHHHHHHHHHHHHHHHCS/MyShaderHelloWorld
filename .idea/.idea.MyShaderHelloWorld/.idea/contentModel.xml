@@ -381,6 +381,10 @@
           <e p="Dissolve" t="Include">
             <e p="S_Dissolve.shader" t="Include" />
           </e>
+          <e p="Elastic" t="Include">
+            <e p="ElasticCamera.cs" t="Include" />
+            <e p="ElasticObject.cs" t="Include" />
+          </e>
           <e p="FakingLiquid" t="Include">
             <e p="S_FakingLinquid.shader" t="Include" />
           </e>

@@ -15,6 +15,9 @@ public class CommandBufferSamples : MonoBehaviour
 	public Shader objBlurGlassShader;
 	public Shader uberShader;
 
+	public Light mainLight;
+
+	public Renderer[] shadowRenderers;
 	public Renderer[] outlineRenderers;
 	public Renderer[] blurRenderers;
 
@@ -41,7 +44,23 @@ public class CommandBufferSamples : MonoBehaviour
 
 		var camera = GetComponent<Camera>();
 
-		//outline
+		//Shadow
+		//---------------------
+		CommandBuffer shadowCB = new CommandBuffer();
+		shadowCB.name = "ShadowMapTex";
+		//int shadowID = Shader.PropertyToID("_ShadowMapTex");
+		shadowCB.SetShadowSamplingMode(BuiltinRenderTextureType.CurrentActive, ShadowSamplingMode.RawDepth);
+		foreach (var renderer in shadowRenderers)
+		{
+			renderer.enabled = false;
+			//如果不指定Pass 会绘制很多个跟shadow_caster无关的pass
+			shadowCB.DrawRenderer(renderer, renderer.sharedMaterial, 0, 2);
+		}
+
+		//shadowCB.Blit(BuiltinRenderTextureType.CurrentActive, shadowID);
+		mainLight.AddCommandBuffer(LightEvent.AfterShadowMap, shadowCB);
+
+		//Outline
 		//---------------------
 		CommandBuffer outlineCB = new CommandBuffer();
 		outlineCB.name = "Outline";
@@ -62,7 +81,7 @@ public class CommandBufferSamples : MonoBehaviour
 		camera.AddCommandBuffer(CameraEvent.BeforeImageEffects, outlineCB);
 
 
-		//blurGrass
+		//BlurGrass
 		//---------------------
 		CommandBuffer blurGrassCB = new CommandBuffer();
 		blurGrassCB.name = "BlurGrass";
