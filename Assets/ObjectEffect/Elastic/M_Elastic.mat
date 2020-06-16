@@ -20,13 +20,13 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 70703852a50b9944597bc0f5d85c3852, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Duration: 2
     - _Frequency: 5
-    - _PointTime: 0
+    - _PointTime: 9.310718
     m_Colors:
-    - _Normal: {r: 0, g: 1, b: 0, a: 0}
-    - _Position: {r: 0, g: 0, b: 0, a: 1}
+    - _Normal: {r: 0.41981688, g: 0.32421488, b: -0.8477255, a: 0.2}
+    - _Position: {r: 0.20990841, g: 0.16210742, b: -0.4238627, a: 0.6}
