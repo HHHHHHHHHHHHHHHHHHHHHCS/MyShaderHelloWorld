@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_PointCloudQuad
-  m_Shader: {fileID: 4800000, guid: 25fd7e4ebd0999f438440deb46984131, type: 3}
-  m_ShaderKeywords: _DIVIDE_ON
+  m_Name: M_PointCloudQuadEqually
+  m_Shader: {fileID: 4800000, guid: 29c7eff8903a35646937607663374e3c, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Divide: 1
+    - _Divide: 0
     - _Size: 0.01
     m_Colors:
     - _Color: {r: 0, g: 1, b: 1, a: 1}

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_CubeFade
+  m_Shader: {fileID: 4800000, guid: cee3ad51bfcaada4ea3a71038cc73a71, type: 3}
+  m_ShaderKeywords: _DIVIDE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CubeTex:
+        m_Texture: {fileID: 2800000, guid: 70703852a50b9944597bc0f5d85c3852, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: df9ca9e05a4b70646b2df182d72e0364, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCap:
+        m_Texture: {fileID: 2800000, guid: 70703852a50b9944597bc0f5d85c3852, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularShift:
+        m_Texture: {fileID: 2800000, guid: f7452833bb9db40409bb98c68c560afa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Alpha: 0.253
+    - _CubeMaxScale: 0.4
+    - _CubeMinScale: 0.2
+    - _CubeProgress: 0.642
+    - _Divide: 1
+    - _FlareSize: 1
+    - _Glossiness: 0.5
+    - _Interval: 3
+    - _MaxDistanceFromCamera: 1
+    - _Metallic: 0
+    - _MinDistanceFromCamera: 0.5
+    - _PrimaryShift: 0.63
+    - _Progress: 0.504
+    - _ReflectScale: 0.395
+    - _ReflectSharpness: 3.33
+    - _Size: 0.01
+    - _SolidLength: 1
+    - _SolidScale: 0.5
+    - _SpecularScale: 1.029
+    - _SpecularWidth: 1
+    - _WidthScale: 2
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _FadeColor: {r: 0.5, g: 0.5, b: 1, a: 1}
+    - _LightDir: {r: 0, g: 0, b: 0, a: 1}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor_1: {r: 1, g: 1, b: 1, a: 1}
