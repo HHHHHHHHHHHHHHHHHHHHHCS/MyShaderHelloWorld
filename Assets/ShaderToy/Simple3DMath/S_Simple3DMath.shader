@@ -48,13 +48,24 @@
 				return d;
 			}
 			
-			float4 frag(v2f i): SV_Target
+			float4 frag(v2f input): SV_Target
 			{
-				float2 uv = i.uv - 0.5;
+				float2 uv = input.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
-				float3 ro = float3(0.0, 0.0, -3.0);
-				float3 rd = float3(uv.x, uv.y, -2.0) - ro;
+				float3 ro = float3(3.0 * sin(_Time.y), 2.0, -3.0*cos(_Time.y));
+				float3 lookat = float3(0.5, 0.5, 0.5);
+				
+				float zoom = 1.0;
+				
+				float3 f = normalize(lookat - ro);
+				float3 r = cross(float3(0.0, 1.0, 0.0), f);
+				float3 u = cross(f, r);
+				
+				float3 c = ro + f * zoom;
+				float3 i = c + uv.x * r + uv.y * u;
+				
+				float3 rd = i - ro;
 				
 				float3 p = float3(sin(_Time.y), 0.0, 1.0 + cos(_Time.y));
 				
