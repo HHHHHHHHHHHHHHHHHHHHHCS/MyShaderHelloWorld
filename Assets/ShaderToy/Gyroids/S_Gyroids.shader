@@ -54,7 +54,8 @@
 			{
 				float box = SDBox(p - float3(0, 1, 0), float3(1, 1, 1));
 				
-				return box;
+				float gyroid = dot(sin(p),cos(p.zxy));
+				return gyroid;
 			}
 			
 			float RayMarch(float3 ro, float3 rd)
