@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -68,6 +69,42 @@ namespace Lighting2D
 		protected virtual void Start()
 		{
 			Reset();
+		}
+
+		public Mesh PolygonShadowMesh(PolygonCollider2D pol)
+		{
+			var points = pol.GetPath(0);
+			var z = new Vector3(0, 0, 1);
+			MeshBuilder meshBuilder = new MeshBuilder(5 * points.Length, 3 * points.Length);
+			var R_2 = Mathf.Pow(lightDistance, 2);
+			var r_2 = Mathf.Pow(lightVolume, 2);
+
+			for (var i = 0; i < points.Length; i++)
+			{
+				// transform points from collider space to light space
+				Vector3 p0 =
+					transform.worldToLocalMatrix.MultiplyPoint(
+						pol.transform.localToWorldMatrix.MultiplyPoint(points[(i + 1) % points.Length]));
+				Vector3 p1 =
+					transform.worldToLocalMatrix.MultiplyPoint(
+						pol.transform.localToWorldMatrix.MultiplyPoint(points[i]));
+
+				p0.z = p1.z = 0;
+
+				var ang0 = Mathf.Asin(lightVolume / p0.magnitude); //angle between lightDir & tangent of light circle
+				var ang1 = Mathf.Asin(lightVolume / p1.magnitude); //angle between lightDir & tangent of light circle
+
+				Vector3 shadowA = MathUtility.Rotate(p0, -ang0).normalized *
+				                  (Mathf.Sqrt(R_2 - r_2) - p0.magnitude * Mathf.Cos(ang0));
+				Vector3 shadowB = MathUtility.Rotate(p1, ang1).normalized *
+				                  (Mathf.Sqrt(R_2 - r_2) - p1.magnitude * Mathf.Cos(ang1));
+
+				shadowA += p0;
+				shadowB += p1;
+				//TODO:
+			}
+
+			throw new Exception();
 		}
 	}
 }
