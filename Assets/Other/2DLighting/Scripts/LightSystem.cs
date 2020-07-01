@@ -8,15 +8,17 @@ using Object = System.Object;
 
 namespace Lighting2D
 {
-	//[ExecuteInEditMode]
+	//TODO:[ExecuteInEditMode]
 	[RequireComponent(typeof(MeshRenderer))]
 	public class LightSystem : Singleton<LightSystem>
 	{
 		public const int lightMapResolutionScale = 1;
 		public const int shadowMapResolutionScale = 1;
 		public const FilterMode shadowMapFilterMode = FilterMode.Bilinear;
-
+		
+		public Material gaussianMat;
 		public Material lightingMaterial = null;
+		
 		public bool previewInInspector = true;
 		public float exposureLimit = -1;
 

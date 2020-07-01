@@ -68,7 +68,7 @@ namespace Lighting2D
 			AddVertsAndTriangles(mesh.vertices, mesh.triangles, mesh.uv, mesh.uv2);
 		}
 
-		public Mesh toMesh(Mesh mesh)
+		public Mesh ToMesh(Mesh mesh)
 		{
 			mesh.Clear();
 			mesh.vertices = vertices;
@@ -80,7 +80,7 @@ namespace Lighting2D
 
 		public Mesh ToMesh()
 		{
-			return toMesh(new Mesh());
+			return ToMesh(new Mesh());
 		}
 	}
 }
