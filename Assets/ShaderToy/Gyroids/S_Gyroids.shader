@@ -53,7 +53,7 @@
 			float SDGyroid(float3 p, float scale, float thickness, float bias)
 			{
 				p *= scale;
-				float gyroid = abs((dot(sin(p * 2.0), cos(p.zxy * 1.23)) - bias) / (2.0 * scale)) - thickness;
+				float gyroid = abs(dot(sin(p), cos(p.zxy)) - bias) / scale - thickness;
 				return gyroid;
 			}
 			
@@ -61,9 +61,18 @@
 			{
 				float box = SDBox(p - float3(0, 1, 0), float3(1, 1, 1));
 				
-				float gyroid = SDGyroid(p, 8.0, 0.05, 1.);
+				float g1 = SDGyroid(p, 5.23, 0.03, 1.4);
+				float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
+				float g3 = SDGyroid(p, 20.76, 0.03, 0.3);
+				float g4 = SDGyroid(p, 35.76, 0.03, 0.3);
+				float g5 = SDGyroid(p, 60.76, 0.03, 0.3);
 				
-				float d = max(box, gyroid * 0.8);
+				
+				//float g = min(g1, g2); // union
+				//float g = max(g1, -g2); // subtraction
+				float g = g1 - g2 * 0.3 - g3 * 0.2 + g4 * 0.1 + g5 * 0.1;
+				
+				float d = g * 0.8;//max(box, g * 0.8);
 				
 				return d;
 			}
@@ -127,11 +136,11 @@
 				
 				float3 col = float3(0, 0, 0);
 				
-				float3 ro = float3(0, 3, -3);
+				float3 ro = float3(0, 3, -3) * 0.1;
 				ro.yz = mul(Rot(-m.y * 3.14 + 1.0), ro.yz);
 				ro.xz = mul(Rot(-m.x * 6.2831), ro.xz);
 				
-				float3 rd = GetRayDir(uv, ro, float3(0, 1, 0), 1.0);
+				float3 rd = GetRayDir(uv, ro, float3(0, 1, 0), 2.0);
 				
 				float d = RayMarch(ro, rd);
 				
@@ -141,7 +150,10 @@
 					float3 n = GetNormal(p);
 					
 					float dif = dot(n, normalize(float3(1, 2, 3))) * 0.5 + 0.5;
-					col += dif;
+					col += n * 0.5 + 0.5;
+					
+					float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
+					col *= smoothstep(-.1, 0.06, g2) ;
 				}
 				
 				//col *= 0.0;
