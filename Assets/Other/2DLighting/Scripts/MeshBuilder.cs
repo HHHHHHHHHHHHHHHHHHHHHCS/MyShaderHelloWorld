@@ -24,7 +24,7 @@ namespace Lighting2D
 			vertices = new Vector3[vertCount];
 			uv1 = new Vector2[vertCount];
 			uv2 = new Vector2[vertCount];
-			uv2 = new Vector2[triangleCount * 3];
+            triangles = new int[triangleCount * 3];
 		}
 
 		public void ResizeVerts(int vertCount)

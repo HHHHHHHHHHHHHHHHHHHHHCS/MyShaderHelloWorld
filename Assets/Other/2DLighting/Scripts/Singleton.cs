@@ -24,7 +24,7 @@ namespace Lighting2D
 			}
 		}
 
-		public Singleton()
+		public Singleton() : base()
 		{
 			instances.Add(this as T);
 		}

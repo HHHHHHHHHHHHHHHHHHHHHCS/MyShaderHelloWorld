@@ -8,7 +8,7 @@ using Object = System.Object;
 
 namespace Lighting2D
 {
-	//TODO:[ExecuteInEditMode]
+	[ExecuteInEditMode]
 	[RequireComponent(typeof(MeshRenderer))]
 	public class LightSystem : Singleton<LightSystem>
 	{
