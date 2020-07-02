@@ -72,7 +72,7 @@
 				//float g = max(g1, -g2); // subtraction
 				float g = g1 - g2 * 0.3 - g3 * 0.2 + g4 * 0.1 + g5 * 0.1;
 				
-				float d = g * 0.8;//max(box, g * 0.8);
+				float d = max(box, g * 0.8);//g * 0.8;
 				
 				return d;
 			}
@@ -136,7 +136,7 @@
 				
 				float3 col = float3(0, 0, 0);
 				
-				float3 ro = float3(0, 3, -3) * 0.1;
+				float3 ro = float3(0, 3, -3) ;
 				ro.yz = mul(Rot(-m.y * 3.14 + 1.0), ro.yz);
 				ro.xz = mul(Rot(-m.x * 6.2831), ro.xz);
 				
@@ -149,11 +149,14 @@
 					float3 p = ro + rd * d;
 					float3 n = GetNormal(p);
 					
-					float dif = dot(n, normalize(float3(1, 2, 3))) * 0.5 + 0.5;
-					col += n * 0.5 + 0.5;
+					float dif = n.y * 0.5 + 0.5;
+					col += dif * dif;
 					
 					float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
-					col *= smoothstep(-.1, 0.06, g2) ;
+					col *= smoothstep(-0.1, 0.06, g2);
+					
+					float cracks = smoothstep(-0.02, -0.03, g2);
+					col += cracks;
 				}
 				
 				//col *= 0.0;
