@@ -57,9 +57,17 @@
 				return gyroid;
 			}
 			
+			float3 Transofrm(float3 p)
+			{
+				p.z -= _Time.y * 0.1;
+				p.y -= 0.3;
+				return p;
+			}
+			
 			float GetDist(float3 p)
 			{
-				float box = SDBox(p - float3(0, 1, 0), float3(1, 1, 1));
+				p = Transofrm(p);
+				float box = SDBox(p, float3(1, 1, 1));
 				
 				float g1 = SDGyroid(p, 5.23, 0.03, 1.4);
 				float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
@@ -72,7 +80,7 @@
 				//float g = max(g1, -g2); // subtraction
 				float g = g1 - g2 * 0.3 - g3 * 0.2 + g4 * 0.1 + g5 * 0.1;
 				
-				float d = max(box, g * 0.8);//g * 0.8;
+				float d = g * 0.8;//max(box, g * 0.8);//g * 0.8;
 				
 				return d;
 			}
@@ -120,6 +128,13 @@
 				return d;
 			}
 			
+			float3 Background(float3 rd)
+			{
+				float3 col = float3(0.0, 0.0, 0.0);
+				
+				return col;
+			}
+			
 			v2f vert(appdata v)
 			{
 				v2f o;
@@ -133,14 +148,16 @@
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
 				float2 m = _MousePos.xy;
+				float t = _Time.y;
 				
 				float3 col = float3(0, 0, 0);
 				
-				float3 ro = float3(0, 3, -3) ;
+				float3 ro = float3(0, 0, -0.03) ;
 				ro.yz = mul(Rot(-m.y * 3.14 + 1.0), ro.yz);
 				ro.xz = mul(Rot(-m.x * 6.2831), ro.xz);
 				
-				float3 rd = GetRayDir(uv, ro, float3(0, 1, 0), 2.0);
+				float3 lookat = float3(0, 0, 0);
+				float3 rd = GetRayDir(uv, ro, lookat, 0.8);
 				
 				float d = RayMarch(ro, rd);
 				
@@ -152,16 +169,21 @@
 					float dif = n.y * 0.5 + 0.5;
 					col += dif * dif;
 					
+					p = Transofrm(p);
 					float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
 					col *= smoothstep(-0.1, 0.06, g2);
 					
-					float cracks = smoothstep(-0.02, -0.03, g2);
-					col += cracks;
+					float crackWidth = -0.02 + smoothstep(0.0, -0.5, n.y) * 0.02;
+					float cracks = smoothstep(crackWidth, -0.03, g2);
+					float g3 = SDGyroid(p + t * 0.2, 5.76, 0.03, 0.0);
+					float g4 = SDGyroid(p - t * 0.15, 4.76, 0.03, 0.0);
+					
+					cracks *= g3 * g4 * 20.0 + 0.2 * smoothstep(0.2, 0.0, n.y);
+					
+					col += cracks * float3(1.0, 0.4, 0.1) * 3.0;
 				}
 				
-				//col *= 0.0;
-				//d = SDGyroid(float3(uv.xy, _Time.y * 0.1), 20.0, 0.01, 0.0).xxx;
-				//col += abs(d) * 10.0;
+				col = Background(rd);
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
