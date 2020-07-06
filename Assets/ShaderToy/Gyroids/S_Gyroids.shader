@@ -74,11 +74,18 @@
 				float g3 = SDGyroid(p, 20.76, 0.03, 0.3);
 				float g4 = SDGyroid(p, 35.76, 0.03, 0.3);
 				float g5 = SDGyroid(p, 60.76, 0.03, 0.3);
+				float g6 = SDGyroid(p, 110.76, 0.03, 0.3);
 				
 				
 				//float g = min(g1, g2); // union
 				//float g = max(g1, -g2); // subtraction
-				float g = g1 - g2 * 0.3 - g3 * 0.2 + g4 * 0.1 + g5 * 0.1;
+				float g = 0;
+				g += g1;
+				g += -g2 * 0.4;
+				g += -g3 * 0.3;
+				g += g4 * 0.2;
+				g += g5 * 0.2;
+				g += g6 * 0.3;
 				
 				float d = g * 0.8;//max(box, g * 0.8);//g * 0.8;
 				
@@ -106,7 +113,7 @@
 			float3 GetNormal(float3 p)
 			{
 				float d = GetDist(p);
-				float2 e = float2(0.001, 0);
+				float2 e = float2(0.01, 0);
 				
 				float3 n = d - float3(
 					GetDist(p - e.xyy),
@@ -131,6 +138,18 @@
 			float3 Background(float3 rd)
 			{
 				float3 col = float3(0.0, 0.0, 0.0);
+				float t = _Time.y;
+				
+				float y = rd.y * 0.5 + 0.5;
+				
+				col += (1.0 - y) * float3(1.0, 0.4, 0.1) * 2.0;
+				
+				float a = atan2(rd.x, rd.z);
+				float flames = sin(a * 10.0 + t) * sin(a * 7.0 - t) * sin(a * 6.0);
+				flames *= smoothstep(0.8, 0.5, y);
+				col += flames;
+				col = max(col, 0.0);
+				col += (0.5, 0.0, y);
 				
 				return col;
 			}
@@ -142,6 +161,7 @@
 				o.uv = v.uv;
 				return o;
 			}
+			
 			float4 frag(v2f i): SV_Target
 			{
 				float2 uv = i.uv - 0.5;
@@ -169,21 +189,27 @@
 					float dif = n.y * 0.5 + 0.5;
 					col += dif * dif;
 					
+					float height = p.y;
 					p = Transofrm(p);
 					float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
-					col *= smoothstep(-0.1, 0.06, g2);
+					col *= smoothstep(-0.1, 0.1, g2);
 					
-					float crackWidth = -0.02 + smoothstep(0.0, -0.5, n.y) * 0.02;
+					float crackWidth = -0.02 + smoothstep(0.0, -0.5, n.y) * 0.04;
 					float cracks = smoothstep(crackWidth, -0.03, g2);
-					float g3 = SDGyroid(p + t * 0.2, 5.76, 0.03, 0.0);
-					float g4 = SDGyroid(p - t * 0.15, 4.76, 0.03, 0.0);
+					float g3 = SDGyroid(p + t * 0.1, 5.76, 0.03, 0.0);
+					float g4 = SDGyroid(p - t * 0.05, 4.76, 0.03, 0.0);
 					
 					cracks *= g3 * g4 * 20.0 + 0.2 * smoothstep(0.2, 0.0, n.y);
 					
 					col += cracks * float3(1.0, 0.4, 0.1) * 3.0;
+					
+					float g5 = SDGyroid(p - float3(0, t, 0), 3.76, 0.03, 0.0);
+					col += g5 * float3(1, 0.4, 0.1);
 				}
 				
-				col = Background(rd);
+				col = lerp(col, Background(rd), smoothstep(0.0, 7.0, d)) ;
+				
+				//col = Background(rd);
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
