@@ -1,4 +1,4 @@
-﻿Shader "2DLighting/2DLight"
+﻿Shader "Lighting2D/Light2D"
 {
 	Properties
 	{
@@ -22,7 +22,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#include "UnityCG.cginc"
-			#include "2DLighting.cginc"
+			#include "Lighting2D.cginc"
 			
 			struct a2v
 			{

@@ -14,7 +14,7 @@ namespace Lighting2D
 			{
 				foreach (var item in instances)
 				{
-					if (item && item.gameObject.scene != null)
+					if (item && item.gameObject != null)
 					{
 						return item;
 					}

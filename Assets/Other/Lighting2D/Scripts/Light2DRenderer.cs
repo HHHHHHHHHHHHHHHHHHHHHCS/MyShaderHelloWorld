@@ -5,15 +5,21 @@ using UnityEngine;
 
 namespace Lighting2D
 {
-	[ExecuteInEditMode]
-	[ImageEffectAllowedInSceneView]
+	//[ExecuteInEditMode]
+	//[ImageEffectAllowedInSceneView]
 	[RequireComponent(typeof(Camera))]
 	public class Light2DRenderer : MonoBehaviour
 	{
+		private Camera cam;
+
+		private void Awake()
+		{
+			cam = GetComponent<Camera>();
+		}
+
 		private void OnPreRender()
 		{
-			var camera = GetComponent<Camera>();
-			var profile = LightSystem.Instance.SetupCamera(camera);
+			var profile = LightSystem.Instance.SetupCamera(cam);
 			LightSystem.Instance.RenderDeffer(profile);
 		}
 	}

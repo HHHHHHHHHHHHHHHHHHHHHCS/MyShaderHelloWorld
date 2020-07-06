@@ -8,17 +8,16 @@ using Object = System.Object;
 
 namespace Lighting2D
 {
-	[ExecuteInEditMode]
-	[RequireComponent(typeof(MeshRenderer))]
+	//[ExecuteInEditMode]
 	public class LightSystem : Singleton<LightSystem>
 	{
-		public const int lightMapResolutionScale = 1;
-		public const int shadowMapResolutionScale = 1;
-		public const FilterMode shadowMapFilterMode = FilterMode.Bilinear;
-		
+		public int lightMapResolutionScale = 1;
+		public int shadowMapResolutionScale = 1;
+		public FilterMode shadowMapFilterMode = FilterMode.Bilinear;
+
 		public Material gaussianMat;
 		public Material lightingMaterial = null;
-		
+
 		public bool previewInInspector = true;
 		public float exposureLimit = -1;
 
@@ -26,10 +25,19 @@ namespace Lighting2D
 
 		private void Awake()
 		{
+			
 			cameraProfiles = new Dictionary<Camera, Light2DProfile>();
+
 			if (!lightingMaterial)
 			{
 				lightingMaterial = new Material(Shader.Find("Lighting2D/DeferredLighting"));
+				lightingMaterial.hideFlags = HideFlags.HideAndDontSave;
+			}
+
+			if (!gaussianMat)
+			{
+				gaussianMat = new Material(Shader.Find("Lighting2D/Gaussian"));
+				gaussianMat.hideFlags = HideFlags.HideAndDontSave;
 			}
 		}
 
@@ -93,30 +101,34 @@ namespace Lighting2D
 
 			var shadowMap = Shader.PropertyToID("_ShadowMap");
 			cmd.GetTemporaryRT(shadowMap, camera.pixelWidth / shadowMapResolutionScale,
-				camera.pixelHeight / shadowMapResolutionScale);
+				camera.pixelHeight / shadowMapResolutionScale, 0, shadowMapFilterMode);
 
 			var lightMap = profile.lightMap;
 			cmd.SetRenderTarget(lightMap, lightMap);
 			cmd.ClearRenderTarget(true, true, Color.black);
 
-			bool rendererShadow = false;
+			bool renderedShadow = false;
 			var lights = GameObject.FindObjectsOfType<Light2D>();
 			foreach (var light in lights)
 			{
-				if (light.lightShadows != LightShadows.None)
+				if(renderedShadow)
 				{
 					cmd.SetRenderTarget(shadowMap);
 					cmd.ClearRenderTarget(true, true, Color.black);
+				}
+				
+				if (light.lightShadows != LightShadows.None)
+				{
 					cmd.SetRenderTarget(shadowMap);
 					light.RenderShadow(cmd, shadowMap);
-					rendererShadow = true;
+					renderedShadow = true;
 				}
 				else
 				{
-					rendererShadow = false;
+					renderedShadow = false;
 				}
 
-				if (rendererShadow)
+				if (renderedShadow)
 				{
 					cmd.SetRenderTarget(lightMap, lightMap);
 				}

@@ -29,38 +29,38 @@ namespace Lighting2D
 
 		public void ResizeVerts(int vertCount)
 		{
-			Array.Resize(ref vertices, verticesCount);
+			Array.Resize(ref vertices, vertCount);
 			Array.Resize(ref uv1, vertCount);
 			Array.Resize(ref uv2, vertCount);
 		}
 
-		public void AddVertsAndTriangles(Vector3[] vertices, int[] triangles, Vector2[] uv1, Vector2[] uv2)
+		public void AddVertsAndTriangles(Vector3[] _vertices, int[] _triangles, Vector2[] _uv1, Vector2[] _uv2)
 		{
-			if (vertices.Length + verticesCount > vertices.Length)
+			if (_vertices.Length + verticesCount > vertices.Length)
 			{
-				ResizeVerts(vertices.Length + verticesCount);
+				ResizeVerts(_vertices.Length + verticesCount);
 			}
 
-			if (triangles.Length + triangleCount > triangles.Length)
+			if (_triangles.Length + triangleCount > triangles.Length)
 			{
-				Array.Resize(ref triangles, triangles.Length + triangleCount);
+				Array.Resize(ref triangles, _triangles.Length + triangleCount);
 			}
 
 			var offset = verticesCount;
-			for (var i = 0; i < vertices.Length; i++)
+			for (var i = 0; i < _vertices.Length; i++)
 			{
-				vertices[offset + i] = vertices[i];
-				uv1[offset + i] = uv1[i];
-				uv2[offset + i] = uv2[i];
+				vertices[offset + i] = _vertices[i];
+				uv1[offset + i] = _uv1[i];
+				uv2[offset + i] = _uv2[i];
 			}
 
-			for (var i = 0; i < triangles.Length; i++)
+			for (var i = 0; i < _triangles.Length; i++)
 			{
-				this.triangles[triangleCount + i] = triangles[i] + offset;
+				triangles[triangleCount + i] = _triangles[i] + offset;
 			}
 
-			verticesCount += vertices.Length;
-			triangleCount += triangles.Length;
+			verticesCount += _vertices.Length;
+			triangleCount += _triangles.Length;
 		}
 
 		public void AddCopiedMesh(Mesh mesh)

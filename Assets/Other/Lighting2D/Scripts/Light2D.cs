@@ -12,7 +12,7 @@ namespace Lighting2D
 		Textured,
 	}
 
-	//TODO:[ExecuteInEditMode]
+	[ExecuteInEditMode]
 	public class Light2D : Light2DBase
 	{
 		public LightType lightType = LightType.Analytical;
@@ -25,7 +25,7 @@ namespace Lighting2D
 		private Material lightMaterial;
 		private float lastLightDistance;
 
-		protected override string shaderName { get; } = "Lighting2D/2DLight";
+		protected string lightShaderName { get; } = "Lighting2D/Light2D";
 
 		private void Awake()
 		{
@@ -79,7 +79,7 @@ namespace Lighting2D
 		{
 			if (!lightMaterial)
 			{
-				lightMaterial = new Material(Shader.Find("Lighting2D/AnalyticLight"));
+				lightMaterial = new Material(Shader.Find(lightShaderName));
 			}
 
 			lightMaterial.SetTexture("_MainTex", lightTexture);

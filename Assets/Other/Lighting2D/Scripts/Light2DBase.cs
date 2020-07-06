@@ -35,10 +35,10 @@ namespace Lighting2D
 
 		private Mesh tempMesh;
 
-		protected virtual string shaderName { get; } = "Lighting2D/Shadow";
+		protected string shadowShaderName { get; } = "Lighting2D/Shadow2D";
 
 		public abstract void RenderLight(CommandBuffer cmd);
-		
+
 		private void Reset()
 		{
 			if (tempMesh)
@@ -61,11 +61,16 @@ namespace Lighting2D
 				shadowMesh.name = "Shadow Mesh";
 			}
 
-			var shader = Shader.Find(shaderName);
-			if (shadowMat.shader != shader)
+			var shader = Shader.Find(shadowShaderName);
+			if (shadowMat && shadowMat.shader != shader)
 			{
 				GameObject.DestroyImmediate(shadowMat);
 				shadowMat = null;
+				shadowMat = new Material(shader);
+			}
+
+			if (shadowMat == null)
+			{
 				shadowMat = new Material(shader);
 			}
 		}
@@ -312,9 +317,9 @@ namespace Lighting2D
 			if (debugLight)
 			{
 				Gizmos.color = Color.yellow;
-				Gizmos.DrawWireSphere(transform.position,lightVolume);
+				Gizmos.DrawWireSphere(transform.position, lightVolume);
 				Gizmos.color = Color.gray;
-				Gizmos.DrawWireSphere(transform.position,lightDistance);
+				Gizmos.DrawWireSphere(transform.position, lightDistance);
 			}
 		}
 	}
