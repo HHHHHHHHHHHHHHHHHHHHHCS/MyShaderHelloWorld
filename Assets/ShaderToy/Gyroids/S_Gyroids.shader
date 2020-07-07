@@ -57,8 +57,9 @@
 				return gyroid;
 			}
 			
-			float3 Transofrm(float3 p)
+			float3 Transform(float3 p)
 			{
+				p.xy = mul(Rot(p.z * 0.15), p.xy);
 				p.z -= _Time.y * 0.1;
 				p.y -= 0.3;
 				return p;
@@ -66,7 +67,7 @@
 			
 			float GetDist(float3 p)
 			{
-				p = Transofrm(p);
+				p = Transform(p);
 				float box = SDBox(p, float3(1, 1, 1));
 				
 				float g1 = SDGyroid(p, 5.23, 0.03, 1.4);
@@ -172,6 +173,8 @@
 				
 				float3 col = float3(0, 0, 0);
 				
+				uv += sin(uv * 20.0 + t) * 0.01;
+				
 				float3 ro = float3(0, 0, -0.03) ;
 				ro.yz = mul(Rot(-m.y * 3.14 + 1.0), ro.yz);
 				ro.xz = mul(Rot(-m.x * 6.2831), ro.xz);
@@ -190,7 +193,7 @@
 					col += dif * dif;
 					
 					float height = p.y;
-					p = Transofrm(p);
+					p = Transform(p);
 					float g2 = SDGyroid(p, 10.76, 0.03, 0.3);
 					col *= smoothstep(-0.1, 0.1, g2);
 					
@@ -205,12 +208,14 @@
 					
 					float g5 = SDGyroid(p - float3(0, t, 0), 3.76, 0.03, 0.0);
 					col += g5 * float3(1, 0.4, 0.1);
+					
+					//col += smoothstep(0.0, -0.2, height) * float3(1.0, 0.4, 0.1);
 				}
 				
 				col = lerp(col, Background(rd), smoothstep(0.0, 7.0, d)) ;
 				
 				//col = Background(rd);
-				
+				col *= 1.0 - dot(uv, uv);
 				return float4(pow(col, 2.2), 1.0);
 			}
 			ENDCG
