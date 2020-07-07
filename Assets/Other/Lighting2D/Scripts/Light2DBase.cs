@@ -100,6 +100,7 @@ namespace Lighting2D
 
 				p0.z = p1.z = 0;
 
+				//离得越远 影子散的越开
 				var ang0 = Mathf.Asin(lightVolume / p0.magnitude); //angle between lightDir & tangent of light circle
 				var ang1 = Mathf.Asin(lightVolume / p1.magnitude); //angle between lightDir & tangent of light circle
 
@@ -111,6 +112,7 @@ namespace Lighting2D
 				shadowA += p0;
 				shadowB += p1;
 
+				//如果在外侧 则向内侧偏移
 				int meshType = 0;
 				if (Vector3.Cross(p1 - p0, shadowB - p1).z >= 0)
 				{
@@ -120,6 +122,7 @@ namespace Lighting2D
 					shadowB += p0;
 				}
 
+				//如果在外侧 则向内侧偏移
 				if (Vector3.Cross(p0 - shadowA, p1 - p0).z >= 0)
 				{
 					meshType |= 2;
@@ -246,6 +249,7 @@ namespace Lighting2D
 					});
 				}
 
+				//只debug 第一组
 				if (debugShadow)
 				{
 					Debug.DrawLine(transform.localToWorldMatrix.MultiplyPoint(p0),
