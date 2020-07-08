@@ -139,6 +139,7 @@ namespace Lighting2D
 			cmd.SetGlobalFloat("_ExposureLimit", exposureLimit);
 			cmd.SetGlobalTexture("_LightMap", lightMap);
 			cmd.Blit(diffuse, BuiltinRenderTextureType.CameraTarget, lightingMaterial, 0);
+			// GaussianBlur.Blur(256, cmd, BuiltinRenderTextureType.CameraTarget, BuiltinRenderTextureType.CameraTarget, gaussianMat);
 
 			cmd.ReleaseTemporaryRT(shadowMap);
 			cmd.ReleaseTemporaryRT(diffuse);

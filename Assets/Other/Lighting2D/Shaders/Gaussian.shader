@@ -62,25 +62,32 @@
 			
 			inline float3 Gaussian(float2 uv, int r, int R)
 			{
+				// if (r == 0)
+				// 	return GaussianWeight(int2(r, R)) * tex2D(_MainTex, uv.xy);
+				// return GaussianWeight(int2(r, R)) * (
+				// 	tex2D(_MainTex, uv.xy + float2(r, r) * _BlurDirection * _MainTex_TexelSize.xy) +
+				// 	tex2D(_MainTex, uv.xy - float2(r, r) * _BlurDirection * _MainTex_TexelSize.xy));
+				
+				const float weight[5] = {0.5,0.25,0.125,0.0625,0.03125};
 				if (r == 0)
-					return GaussianWeight(int2(r, R)) * tex2D(_MainTex, uv.xy);
-				return GaussianWeight(int2(r, R)) * (
+					return weight[r] * tex2D(_MainTex, uv.xy);
+				return weight[r] * (
 					tex2D(_MainTex, uv.xy + float2(r, r) * _BlurDirection * _MainTex_TexelSize.xy) +
 					tex2D(_MainTex, uv.xy - float2(r, r) * _BlurDirection * _MainTex_TexelSize.xy));
-					}
-					
-					float4 frag(v2f v): SV_TARGET
-					{
-						float3 color;
-						for (int i = 0; i < _BlurRadius; i ++)
-					{
-						color += Gaussian(v.texcoord.xy, i, _BlurRadius - 1);
-					}
-					return float4(color, 1.0);
-				}
-				
-				ENDCG
-				
 			}
+					
+			float4 frag(v2f v): SV_TARGET
+			{
+				float3 color;
+				for (int i = 0; i < _BlurRadius; i ++)
+				{
+					color += Gaussian(v.texcoord.xy, i, _BlurRadius - 1);
+				}
+				return float4(color, 1.0);
+			}
+			
+			ENDCG
+			
 		}
 	}
+}

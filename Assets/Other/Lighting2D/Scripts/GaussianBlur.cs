@@ -10,7 +10,7 @@ namespace Lighting2D
 		public static void Blur(int radius, CommandBuffer cmd, RenderTargetIdentifier src, RenderTargetIdentifier dest,
 			Material mat)
 		{
-			var blurTexture = Shader.PropertyToID("__GaussianBlurTexture");
+			var blurTexture = Shader.PropertyToID("_GaussianBlurTexture");
 			cmd.SetGlobalInt("_BlurRadius", radius);
 			cmd.GetTemporaryRT(blurTexture, -1, -1);
 			cmd.SetGlobalVector("_BlurDirection", new Vector4(1, 0));
