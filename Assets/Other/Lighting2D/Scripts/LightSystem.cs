@@ -8,7 +8,7 @@ using Object = System.Object;
 
 namespace Lighting2D
 {
-	//[ExecuteInEditMode]
+	[ExecuteInEditMode]
 	public class LightSystem : Singleton<LightSystem>
 	{
 		public int lightMapResolutionScale = 1;

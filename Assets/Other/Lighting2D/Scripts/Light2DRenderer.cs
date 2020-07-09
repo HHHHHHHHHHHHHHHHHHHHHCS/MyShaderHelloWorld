@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Lighting2D
 {
-	//[ExecuteInEditMode]
-	//[ImageEffectAllowedInSceneView]
+	[ExecuteInEditMode]
+	[ImageEffectAllowedInSceneView]
 	[RequireComponent(typeof(Camera))]
 	public class Light2DRenderer : MonoBehaviour
 	{
