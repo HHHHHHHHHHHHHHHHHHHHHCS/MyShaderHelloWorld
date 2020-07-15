@@ -30,7 +30,7 @@ Material:
     m_Floats:
     - _FoamStrengh: 0.2
     - _Gloss: 0.002
-    - _RefractionAmount: 20
+    - _RefractionAmount: 31.7
     - _Shape_distortAmount: 0.209
     - _SpecStrengh: 0.0003
     - _TessellateAmount: 13.69
@@ -40,5 +40,6 @@ Material:
     - _YSpeed: 0.2
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TessellateAmount: {r: 4, g: 4, b: 4, a: 4}
     - _Votex_Para: {r: 0.29, g: 0.37, b: 0.92, a: 0}
     - _Votex_Para1: {r: 0.5, g: 0.5, b: -1, a: 0}

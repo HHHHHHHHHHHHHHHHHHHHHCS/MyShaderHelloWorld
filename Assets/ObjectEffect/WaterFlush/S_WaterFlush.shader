@@ -11,7 +11,7 @@
 		_Gloss ("Gloss", Range(0, 0.1)) = 0.1
 		_SpecStrengh ("SpecStrengh", Range(0, 0.01)) = 1
 		_RefractionAmount ("RefractAmount", Range(0, 100)) = 5
-		_TessellateAmount ("TessellateAmount", float) = 4
+		_TessellateAmount ("TessellateAmount", Vector) = (4, 4, 4, 4)
 		
 		_Votex_Para ("Votex Par", vector) = (0.5, 0.5, 0.2, 0)  //x,y:漩涡中心  z:漩涡半径
 		_Votex_Para1 ("Votex Para1", vector) = (0.5, 0.5, 3, 0)//x,y:漩涡底部  z:漩涡深度
@@ -37,11 +37,11 @@
 	
 	sampler2D _NormalTex, _FoamTex;
 	half4 _NormalTex_ST, _FoamTex_ST;
-	float _XSpeed, _YSpeed, _Gloss, _SpecStrengh, _TessellateAmount, _FoamStrengh;
+	float _XSpeed, _YSpeed, _Gloss, _SpecStrengh, _FoamStrengh;
 	half4 _BaseColor, _Votex_Para, _Votex_Para1;
 	float _Votex_distortAmount, _Shape_distortAmount, _RefractionAmount;
 	sampler2D _GrabTex;
-	float4 _GrabTex_TexelSize;
+	float4 _GrabTex_TexelSize, _TessellateAmount;
 	
 	//绕某条轴旋转特定角度(弧度)
 	float3x3 AngleAxis3x3(float angle, float3 axis)
@@ -158,7 +158,6 @@
 		mainColor.rgb += specular * _SpecStrengh * (0.05 + abs(i.localPosition.y) * 400);
 		
 		return mainColor;
-	
 	}
 	
 	
