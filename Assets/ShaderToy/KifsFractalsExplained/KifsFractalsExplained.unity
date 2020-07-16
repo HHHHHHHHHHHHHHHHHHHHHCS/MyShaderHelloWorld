@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputMousePos: 1
-  inputNoise: 0
+  inputNoise: 1
   effectShader: {fileID: 4800000, guid: 188af869f0fe2c949a1624366472ce5c, type: 3}
   effectMaterial: {fileID: 0}
-  noise: {fileID: 0}
+  noise: {fileID: 2800000, guid: df9ca9e05a4b70646b2df182d72e0364, type: 3}

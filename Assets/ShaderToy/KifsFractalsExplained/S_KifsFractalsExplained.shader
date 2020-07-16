@@ -31,6 +31,12 @@
 			};
 			
 			float2 _MousePos;
+			sampler2D _Noise;
+			
+			float2 N(float angle)
+			{
+				return float2(sin(angle), cos(angle));
+			}
 			
 			v2f vert(appdata v)
 			{
@@ -46,15 +52,24 @@
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				float2 mouse = _MousePos - 0.5;
 				
+				uv *= 1.25;
 				float3 col = float3(0, 0, 0);
 				
-				float angle = 2 / 3.0 * 3.1415;
-				float2 n = float2(sin(angle), cos(angle));
+				uv.x = abs(uv.x);
+				uv.y += tan((5.0 / 6.0) * 3.1415) * 0.5;
 				
+				// tan(a) = y / 0.5 -> y = tan(a) * 0.5
+				float2 n = N((5.0 / 6.0) * 3.1415);
+				float d = dot(uv - float2(0.5, 0.0), n);
+				uv -= n * max(0, d) * 2.0;
+				
+				//col += smoothstep(0.01, 0.0, abs(d));
+				
+				n = N(mouse.y * (2.0 / 3.0) * 3.1415);
 				float scale = 1.0;
 				uv.x += 0.5;
 				
-				for (int i = 0; i < 5; i ++)
+				for (int i = 0; i < 4; i ++)
 				{
 					uv *= 3.0;
 					scale *= 3;
@@ -65,9 +80,10 @@
 					uv -= n * min(0.0, dot(uv, n)) * 2.0;
 				}
 				
-				float d = length(uv - float2(clamp(uv.x, -1.0, 1.0), 0));
-				col += smoothstep(1/_ScreenParams.y, 0, d / scale);
-				//col.rg += uv;
+				d = length(uv - float2(clamp(uv.x, -1.0, 1.0), 0));
+				col += smoothstep(1 / _ScreenParams.y, 0, d / scale);
+				uv /= scale;
+				col += tex2D(_Noise, uv * 2.0 + _Time.y * 0.03).rgb;
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
