@@ -29,6 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Step: 1024
+    - _StepWidth: 256
     m_Colors:
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDir: {r: 0, g: -1, b: 0.5, a: 1}
