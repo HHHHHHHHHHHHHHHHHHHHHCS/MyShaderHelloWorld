@@ -46,9 +46,10 @@
 				return m;
 			}
 			
-			float4 Tree(float2 uv, float3 col, float blur)
+			float4 Tree(float2 uv, float x, float y, float3 col, float blur)
 			{
-				float m = TaperBox(uv, 0.03, 0.03, 0.0, 0.25, blur); //trunk
+				//uv -= float2(x, y);
+				float m = TaperBox(uv, 0.03, 0.03, -0.5, 0.25, blur); //trunk
 				m += TaperBox(uv, 0.2, 0.1, 0.25, 0.5, blur);//canopy 1
 				m += TaperBox(uv, 0.15, 0.05, 0.5, 0.75, blur);//canopy 2
 				m += TaperBox(uv, 0.1, 0.0, 0.75, 1.0, blur);//top
@@ -60,6 +61,11 @@
 				col -= shadow * 0.8;
 				
 				return float4(col, m);
+			}
+			
+			float GetHeight(float x)
+			{
+				return sin(x * 0.423) + sin(x) * 0.3;
 			}
 			
 			v2f vert(appdata v)
@@ -75,16 +81,29 @@
 				float2 uv = i.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
+				uv.x += _Time.y * 0.1;
+				
 				//uv.y += 0.5;
 				uv *= 5.0;
 				
 				float3 col = 0;
 				
 				const float blur = 0.005;
+				
+				float id = floor(uv.x);
+				float n = frac(sin(id * 234.12) * 5463.3) * 2.0 - 1.0;
+				float x = n * 0.3;
+				float y = GetHeight(uv.x);
+				
+				col += smoothstep(blur, -blur, uv.y + y);//ground
+				
+				y = GetHeight(id + 0.5 + x);
 				uv.x = frac(uv.x) - 0.5;
-				float4 tree = Tree(uv, float3(1, 1, 1), blur);
-				col.rg = uv;
+				
+				float4 tree = Tree((uv - float2(x, -y)) * float2(1.0, 1.0 + n * 0.2), x, -y, float3(1, 1, 1), blur);
+				//col.rg = uv;
 				col = lerp(col, tree.rgb, tree.a);
+				
 				
 				float thickness = 1.0 / _ScreenParams.y;
 				
