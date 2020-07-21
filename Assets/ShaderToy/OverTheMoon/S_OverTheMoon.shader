@@ -33,6 +33,8 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			
+			float2 _MousePos;
+			
 			float TaperBox(float2 p, float wb, float wt, float yb, float yt, float blur)
 			{
 				float m = smoothstep(-blur, blur, p.y - yb);
@@ -68,6 +70,28 @@
 				return sin(x * 0.423) + sin(x) * 0.3;
 			}
 			
+			float4 Layer(float2 uv, float blur)
+			{
+				float4 col = 0;
+				
+				float id = floor(uv.x);
+				float n = frac(sin(id * 234.12) * 5463.3) * 2.0 - 1.0;
+				float x = n * 0.3;
+				float y = GetHeight(uv.x);
+				
+				float ground = smoothstep(blur, -blur, uv.y + y);//ground
+				col += ground;
+				
+				y = GetHeight(id + 0.5 + x);
+				uv.x = frac(uv.x) - 0.5;
+				
+				float4 tree = Tree((uv - float2(x, -y)) * float2(1.0, 1.0 + n * 0.2), x, -y, float3(1, 1, 1), blur);
+				//col.rg = uv;
+				col.rgb = lerp(col.rgb, tree.rgb, tree.a);
+				col.a = max(ground, tree.a);
+				return col;
+			}
+			
 			v2f vert(appdata v)
 			{
 				v2f o;
@@ -81,28 +105,28 @@
 				float2 uv = i.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
-				uv.x += _Time.y * 0.1;
+				float2 m = _MousePos * 2.0 - 1.0;
 				
-				//uv.y += 0.5;
-				uv *= 5.0;
 				
-				float3 col = 0;
+				float t = _Time.y * 0.3;
 				
-				const float blur = 0.005;
+				float blur = 0.005;
 				
-				float id = floor(uv.x);
-				float n = frac(sin(id * 234.12) * 5463.3) * 2.0 - 1.0;
-				float x = n * 0.3;
-				float y = GetHeight(uv.x);
+				float4 col = 0;
+				float4 layer = 0;
 				
-				col += smoothstep(blur, -blur, uv.y + y);//ground
 				
-				y = GetHeight(id + 0.5 + x);
-				uv.x = frac(uv.x) - 0.5;
+				for (float i = 0; i < 1.0; i += 1.0 / 10.0)
+				{
+					float scale = lerp(30.0, 1.0, i);
+					blur = lerp(0.1, 0.005, i);
+					layer = Layer(uv * scale + float2(t + i * 100, 0) - m, blur);
+					
+					layer.rgb *= (1.0 - i) * float3(0.9, 0.9, 1.0);
+					
+					col = lerp(col, layer, layer.a);
+				}
 				
-				float4 tree = Tree((uv - float2(x, -y)) * float2(1.0, 1.0 + n * 0.2), x, -y, float3(1, 1, 1), blur);
-				//col.rg = uv;
-				col = lerp(col, tree.rgb, tree.a);
 				
 				
 				float thickness = 1.0 / _ScreenParams.y;
@@ -118,7 +142,7 @@
 				}
 				*/
 				
-				return float4(pow(col, 2.2), 1.0);
+				return float4(pow(col.rgb, 2.2), 1.0);
 			}
 			ENDCG
 			
