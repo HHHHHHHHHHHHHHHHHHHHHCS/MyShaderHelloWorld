@@ -92,6 +92,13 @@
 				return col;
 			}
 			
+			float Hash21(float2 p)
+			{
+				p = frac(p * float2(234.45, 765.34));
+				p += dot(p, p + 547.123);
+				return frac(p.x * p.y);
+			}
+			
 			v2f vert(appdata v)
 			{
 				v2f o;
@@ -110,10 +117,22 @@
 				
 				float t = _Time.y * 0.3;
 				
-				float blur = 0.005;
 				
 				float4 col = 0;
+				
+				float twinkle = dot(length(sin(uv + t)), length(cos(uv * float2(22, 6.7) - t * 3.0)));
+				twinkle = sin(twinkle * 10.0) * 0.5 + 0.5;
+				float stars = pow(Hash21(uv), 100) * twinkle;
+				col += stars;
+				//col += twinkle;
+				
+				float moon = smoothstep(0.01, -0.01, length(uv - float2(0.4, 0.2)) - 0.15);
+				col *= 1.0 - moon;
+				moon *= smoothstep(-0.01, 0.1, length(uv - float2(0.5, 0.25)) - 0.15);
+				col += moon;
+				
 				float4 layer = 0;
+				float blur = 0.005;
 				
 				
 				for (float i = 0; i < 1.0; i += 1.0 / 10.0)
@@ -127,7 +146,8 @@
 					col = lerp(col, layer, layer.a);
 				}
 				
-				
+				layer = Layer(uv + float2(t, 0) - m, 0.07);
+				col = lerp(col, layer * 0.1, layer.a);
 				
 				float thickness = 1.0 / _ScreenParams.y;
 				
