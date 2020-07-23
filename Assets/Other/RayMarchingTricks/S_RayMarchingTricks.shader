@@ -28,8 +28,10 @@
 			};
 			
 			#define MAX_STEPS 100
-			#define MAX_DIST 100
+			#define MAX_DIST 100.
 			#define SURF_DIST 0.01
+			
+			float2 _MousePos;
 			
 			v2f vert(appdata v)
 			{
@@ -37,6 +39,19 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
 				return o;
+			}
+			
+			float2x2 Rot(float a)
+			{
+				float s = sin(a);
+				float c = cos(a);
+				return float2x2(c, -s, s, c);
+			}
+			
+			float SMin(float a, float b, float k)
+			{
+				float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+				return lerp(b, a, h) - k * h * (1.0 - h);
 			}
 			
 			float SDCapsule(float3 p, float3 a, float3 b, float r)
@@ -57,7 +72,7 @@
 				float3 ap = p - a;
 				
 				float t = dot(ab, ap) / dot(ab, ab);
-				//t = clamp(t, 0.0, 1.0);//去掉头尾限制
+				t = clamp(t, 0.0, 1.0);//去掉头尾限制
 				
 				float3 c = a + t * ab;
 				
@@ -65,6 +80,7 @@
 				float y = (abs(t - 0.5) - 0.5) * length(ab);
 				float e = length(max(float2(x, y), 0.0));
 				float i = min(max(x, y), 0);//用于阴影 bias
+				
 				return e + i;
 			}
 			
@@ -89,26 +105,21 @@
 			
 			float SDBox(float3 p, float3 c, float3 size)
 			{
-				return length(max(abs(p - c) - size, 0));
+				p = abs(p - c) - size;
+				return length(max(p, 0.0)) + min(max(p.x, max(p.y, p.z)), 0.0);
 			}
 			
 			float GetDist(float3 p)
 			{
-				float planeDist = SDPlane(p, float3(0, 0, 0));
-				float sphereDist = SDSphere(p, float3(0, 1, 6), 1);
-				float capsuleDist = SDCapsule(p, float3(0, 1, 6), float3(1, 2, 6), 0.2);
-				float torusDist = SDTorus(p, float3(-0.5, 0.5, 6), float2(1.5, 0.5));
-				float boxDist = SDBox(p, float3(-3, 0.5, 6), float3(0.3, 0.4, 0.5));
-				float cylinderDist = SDCylinder(p, float3(0, 0.3, 3), float3(3, 0.3, 5), 0.2);
+				float plane = dot(p, normalize(float3(0, 1, 0)));
 				
+				float box = SDBox(p, float3(0, 1, 0), float3(1, 1, 0.1));
+				//box -= sin(p.x * 7.5 + _Time.y * 3.0) * 0.05;
+				//box = abs(box) - 0.1;//镂空
 				
-				float d = min(sphereDist, planeDist);
-				d = min(capsuleDist, d);
-				d = min(torusDist, d);
-				d = min(boxDist, d);
-				d = min(cylinderDist, d);
+				float d = min(plane * 0.6, box);
 				
-				return d;
+				return d ;
 			}
 			
 			float RayMarch(float3 ro, float3 rd)
@@ -120,7 +131,7 @@
 					float3 p = ro + rd * d0;
 					float ds = GetDist(p);
 					d0 += ds;
-					if (d0 > MAX_DIST || ds < SURF_DIST)
+					if (d0 > MAX_DIST || abs(ds) < SURF_DIST)
 						break;
 				}
 				
@@ -143,37 +154,58 @@
 			
 			float GetLight(float3 p)
 			{
-				float3 lightPos = float3(0, 5, 6);
-				lightPos.xz += 2 * float2(sin(_Time.y), cos(_Time.y));
+				float3 lightPos = float3(3, 5, 4);
 				float3 l = normalize(lightPos - p);
 				float3 n = GetNormal(p);
 				
-				float dif = clamp(dot(n, l), 0.0, 1.0);
+				float dif = clamp(dot(n, l) * 0.5 + 0.5, 0.0, 1.0);
 				float d = RayMarch(p + n * SURF_DIST * 2.0, l);
-				if(d < length(lightPos - p))
+				
+				/*
+				if(p.y<0.01 && d < length(lightPos - p))
 				{
 					//plane的阴影用
-					dif *= 0.1;
+					dif *= 0.5;
 				}
+				*/
 				
 				return dif;
+			}
+			
+			float3 R(float2 uv, float3 p, float3 l, float z)
+			{
+				float3 f = normalize(l - p);
+				float3 r = normalize(cross(float3(0, 1, 0), f));
+				float3 u = cross(f, r);
+				float3 c = p + f * z;
+				float3 i = c + uv.x * r + uv.y * u;
+				float3 d = normalize(i - p);
+				return d;
 			}
 			
 			float4 frag(v2f i): SV_Target
 			{
 				float2 uv = i.uv - 0.5;
+				float2 m = _MousePos;
 				
 				float3 col = float3(0.0, 0.0, 0.0);
-				float3 ro = float3(1, 2, -2);
-				//视野偏移用
-				float3 rd = normalize(float3(uv.x - 0.15, uv.y - 0.20, 1.0));
+				float3 ro = float3(0, 4, -5);
 				
+				ro.yz = mul(Rot(-m.y * 3.14 + 1.0), ro.yz);
+				ro.xz = mul(Rot(-m.x * 6.2831), ro.xz);
+				
+				
+				float3 rd = R(uv, ro, float3(0, 1, 0), 1.0);
 				float d = RayMarch(ro, rd);
 				
-				float3 p = ro + rd * d;
-				
-				float dif = GetLight(p);
-				col = float3(dif, dif, dif);
+				if (d < MAX_DIST)
+				{
+					
+					float3 p = ro + rd * d;
+					
+					float dif = GetLight(p);
+					col = float3(dif, dif, dif);
+				}
 				
 				return float4(col, 1.0);
 			}
