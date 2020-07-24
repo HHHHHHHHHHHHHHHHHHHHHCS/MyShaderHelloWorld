@@ -1,4 +1,4 @@
-﻿Shader "HCS/SampleDeferredLight_Deferred"
+﻿Shader "ObjectLight/SampleDeferredLight_Deferred"
 {
     Properties { }
     SubShader

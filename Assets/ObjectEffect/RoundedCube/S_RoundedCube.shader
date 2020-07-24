@@ -1,4 +1,4 @@
-﻿Shader "HCS/RoundedCube"
+﻿Shader "ObjectEffect/RoundedCube"
 {
 	Properties
 	{

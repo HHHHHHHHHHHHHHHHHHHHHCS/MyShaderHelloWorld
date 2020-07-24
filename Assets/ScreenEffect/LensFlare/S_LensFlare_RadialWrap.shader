@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_RadialWrap"
+﻿Shader "ScreenEffect/S_LensFlare_RadialWrap"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "CommandBufferSamples/S_OutlineObj"
+﻿Shader "ScreenEffect/S_OutlineObj"
 {
 	Properties
 	{

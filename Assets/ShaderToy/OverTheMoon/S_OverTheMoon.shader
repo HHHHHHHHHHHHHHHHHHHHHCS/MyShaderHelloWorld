@@ -1,4 +1,4 @@
-﻿Shader "OverTheMoon/S_OverTheMoon"
+﻿Shader "ShaderToy/S_OverTheMoon"
 {
 	Properties
 	{

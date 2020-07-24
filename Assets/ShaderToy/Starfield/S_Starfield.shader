@@ -1,4 +1,4 @@
-﻿Shader "Starfield/S_Starfield"
+﻿Shader "ShaderToy/S_Starfield"
 {
 	Properties
 	{

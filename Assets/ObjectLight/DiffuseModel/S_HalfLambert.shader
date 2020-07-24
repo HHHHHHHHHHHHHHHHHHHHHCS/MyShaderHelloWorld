@@ -1,8 +1,4 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
-
-Shader "HCS/S_HalfLambert"
+﻿Shader "ObjectLight/S_HalfLambert"
 {
 	Properties
 	{

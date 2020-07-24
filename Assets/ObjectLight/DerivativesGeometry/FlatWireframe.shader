@@ -1,4 +1,4 @@
-﻿Shader "HCS/FlatWireframe" {
+﻿Shader "ObjectLight/FlatWireframe" {
 
 	Properties {
 		_Color ("Tint", Color) = (1, 1, 1, 1)

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_StencilSphere"
+﻿Shader "ObjectEffect/S_StencilSphere"
 {
 	Properties
 	{

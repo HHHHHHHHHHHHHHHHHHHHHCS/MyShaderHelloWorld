@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_BunnyFur"
+﻿Shader "ObjectEffect/S_BunnyFur"
 {
 	Properties
 	{

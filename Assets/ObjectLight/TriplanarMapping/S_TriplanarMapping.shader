@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_TriplanarMapping" {
+﻿Shader "Custom/S_TriplanarMapping" {
 
 	Properties {
 		_Color ("Tint", Color) = (1, 1, 1, 1)

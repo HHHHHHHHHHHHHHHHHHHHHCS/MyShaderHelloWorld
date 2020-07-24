@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_BloodDecal"
+﻿Shader "ObjectEffect/S_BloodDecal"
 {
 	Properties
 	{

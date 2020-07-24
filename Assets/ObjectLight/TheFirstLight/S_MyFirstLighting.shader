@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_MyFirstLighting" {
+﻿Shader "Custom/S_MyFirstLighting" {
 	Properties 
 	{
 		_Tint("Main Color",color)=(1,1,1,1)

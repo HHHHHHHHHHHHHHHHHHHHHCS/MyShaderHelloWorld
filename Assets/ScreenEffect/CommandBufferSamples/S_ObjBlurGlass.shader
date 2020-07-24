@@ -1,4 +1,4 @@
-﻿Shader "CommandBufferSamples/S_ObjBlurGlass"
+﻿Shader "ScreenEffect/S_ObjBlurGlass"
 {
 	Properties { }
 	SubShader

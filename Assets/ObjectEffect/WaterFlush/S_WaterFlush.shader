@@ -1,4 +1,4 @@
-﻿Shader "WaterFlush/S_WaterFlush"
+﻿Shader "ObjectEffect/S_WaterFlush"
 {
 	Properties
 	{

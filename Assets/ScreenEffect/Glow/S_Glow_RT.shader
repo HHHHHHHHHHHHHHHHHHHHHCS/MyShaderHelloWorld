@@ -1,4 +1,4 @@
-﻿Shader "HCS/Glow_RT" 
+﻿Shader "ScreenEffect/Glow_RT" 
 {
 	Properties 
 	{

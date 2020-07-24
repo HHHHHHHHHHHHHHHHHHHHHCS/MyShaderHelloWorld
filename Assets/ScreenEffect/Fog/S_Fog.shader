@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Fog" 
+﻿Shader "ScreenEffect/S_Fog" 
 {
 	Properties
 	{

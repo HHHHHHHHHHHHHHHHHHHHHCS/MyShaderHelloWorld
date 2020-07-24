@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_Additive"
+﻿Shader "ScreenEffect/S_LensFlare_Additive"
 {
 	Properties
 	{

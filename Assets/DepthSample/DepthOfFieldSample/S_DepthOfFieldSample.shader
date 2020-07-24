@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DepthOfFieldSample"
+﻿Shader "DepthSample/S_DepthOfFieldSample"
 {
 	Properties
 	{

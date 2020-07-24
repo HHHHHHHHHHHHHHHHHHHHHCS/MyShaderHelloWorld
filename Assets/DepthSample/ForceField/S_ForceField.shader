@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ForceField"
+﻿Shader "DepthSample/S_ForceField"
 {
 	Properties
 	{

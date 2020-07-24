@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ParticleLoop"
+﻿Shader "ObjectEffect/S_ParticleLoop"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "BlitCameraMotionVectors/S_BlitCameraMotionVectors"
+﻿Shader "Other/S_BlitCameraMotionVectors"
 {
 	Properties { }
 	SubShader

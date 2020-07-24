@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Wireframe"
+﻿Shader "ObjectEffect/S_Wireframe"
 {
 	Properties
 	{

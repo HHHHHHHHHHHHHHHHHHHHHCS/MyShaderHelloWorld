@@ -1,4 +1,4 @@
-﻿Shader "Lighting2D/Light2D"
+﻿Shader "Other/Light2D"
 {
 	Properties
 	{

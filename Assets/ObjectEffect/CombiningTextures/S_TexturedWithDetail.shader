@@ -1,4 +1,4 @@
-﻿Shader "HCS/TexturedWithDetail"
+﻿Shader "ObjectEffect/TexturedWithDetail"
 {
 	Properties
 	{

@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
-
-Shader "HCS/S_DiffuseVertexLevel" 
+﻿Shader "ObjectLight/S_DiffuseVertexLevel" 
 {
 	Properties
 	{

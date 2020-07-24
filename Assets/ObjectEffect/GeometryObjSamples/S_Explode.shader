@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_Explode"
+﻿Shader "ObjectEffect/S_Explode"
 {
 	Properties
 	{

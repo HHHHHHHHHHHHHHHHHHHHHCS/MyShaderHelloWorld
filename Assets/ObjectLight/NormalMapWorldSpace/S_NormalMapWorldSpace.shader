@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_NormalMapWorldSpace" {
+﻿Shader "ObjectLight/S_NormalMapWorldSpace" {
 	Properties 
 	{
 		_Color ("Color", Color) = (1,1,1,1)

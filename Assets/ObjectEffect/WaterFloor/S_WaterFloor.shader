@@ -1,4 +1,4 @@
-﻿Shader "Unlit/S_WaterFloor"
+﻿Shader "ObjectEffect/S_WaterFloor"
 {
     Properties
     {

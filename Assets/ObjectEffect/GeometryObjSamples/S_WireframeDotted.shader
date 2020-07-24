@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_WireframeDotted"
+﻿Shader "ObjectEffect/S_WireframeDotted"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DigitalGlitch"
+﻿Shader "ScreenEffect/S_DigitalGlitch"
 {
 	Properties
 	{

@@ -8,12 +8,12 @@
 		_EdgePower ("edgePower", Range(0, 5)) = 1
 		
 		[Header (Pre)]
-		_SampleDistance0("Sample Distance", Range(0, 2)) = 1
+		_SampleDistance1("Sample Distance1", Range(0, 2)) = 0.17
 		
 		[Header (Final)]
-		_UpThrehold("Up Threhold", Range(0, 5)) = 3
-		_LowThrehold ("Low Threhold", Range(0, 5)) = 3
-		_CompareLength ("Compare Length", Range(0, 5)) = 3
+		_UpThrehold("Up Threhold", Range(0, 5)) = 0
+		_LowThrehold ("Low Threhold", Range(0, 5)) = 0
+		_CompareLength ("Compare Length", Range(0, 5)) = 0
 	}
 	SubShader
 	{
@@ -167,8 +167,7 @@
 					gradientDirection.y += Gsy[i] * lumin;
 				}
 				
-				float gradientMagnitude = length(gradientDirection);
-				gradientMagnitude = gradientDirection * gradientDirection;
+				float gradientMagnitude = gradientDirection * gradientDirection;
 				float2 normalizedDirection = normalize(gradientDirection);
 				normalizedDirection = sign(normalizedDirection) * floor(abs(normalizedDirection) + 0.617316); // Offset by 1-sin(pi/8) to set to 0 if near axis, 1 if away
 				normalizedDirection = (normalizedDirection + 1.0) * 0.5; //-1~1 映射为 0~1

@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_ExplodeWithSand"
+﻿Shader "ObjectEffect/S_ExplodeWithSand"
 {
 	Properties
 	{

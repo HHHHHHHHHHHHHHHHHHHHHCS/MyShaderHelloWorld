@@ -1,4 +1,4 @@
-﻿Shader "HCS/EdgeDetection" {
+﻿Shader "ScreenEffect/EdgeDetection" {
 	Properties 
 	{
 		_MainTex("Base (RGB)",2D)="white"{}

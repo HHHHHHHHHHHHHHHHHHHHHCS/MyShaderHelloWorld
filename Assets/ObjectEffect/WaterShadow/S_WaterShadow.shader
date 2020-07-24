@@ -1,4 +1,4 @@
-﻿Shader "HCS/WaterShadow" 
+﻿Shader "ObjectEffect/WaterShadow" 
 {
 	Properties 
 	{

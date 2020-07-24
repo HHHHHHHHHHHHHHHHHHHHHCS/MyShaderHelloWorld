@@ -1,6 +1,6 @@
 ﻿//只能用于物体不动 摄像头动
 //否则要保存上一帧数的深度图
-Shader "HCS/S_MotionBlurDepth"
+Shader "DepthSample/S_MotionBlurDepth"
 {
 	Properties
 	{

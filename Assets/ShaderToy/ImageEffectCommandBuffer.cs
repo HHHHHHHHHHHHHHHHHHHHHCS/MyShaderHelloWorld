@@ -15,11 +15,14 @@ public class ImageEffectCommandBuffer : MonoBehaviour
 	public Shader effectShader;
 	public Material effectMaterial;
 
+	public bool renderFirstPass = false;
+
 	public Texture2D noise;
 
 	private CommandBuffer cb;
 
 	private Camera mainCam;
+
 
 	private void Awake()
 	{
@@ -62,7 +65,33 @@ public class ImageEffectCommandBuffer : MonoBehaviour
 
 		//先把 CurrentActive 渲染出来 到id  不然是null 纯黑色
 		cb.Blit(BuiltinRenderTextureType.CurrentActive, id);
-		cb.Blit(id, BuiltinRenderTextureType.CameraTarget,effectMaterial);
+
+		int count = effectMaterial.passCount;
+
+		if (renderFirstPass || count == 1)
+		{
+			cb.Blit(id, BuiltinRenderTextureType.CameraTarget, effectMaterial);
+		}
+		else
+		{
+			int id1 = Shader.PropertyToID("CopyRT1");
+			cb.GetTemporaryRT(id1, Screen.width, Screen.height, 0, FilterMode.Bilinear);
+
+			for (int i = 0; i < count; ++i)
+			{
+				if (i == count - 1)
+				{
+					cb.Blit(i % 2 == 0 ? id : id1, BuiltinRenderTextureType.CameraTarget, effectMaterial, i);
+				}
+				else
+				{
+					cb.Blit(i % 2 == 0 ? id : id1, i % 2 == 1 ? id : id1, effectMaterial, i);
+				}
+			}
+			
+			cb.ReleaseTemporaryRT(id);
+		}
+
 
 		cb.ReleaseTemporaryRT(id);
 		cb.EndSample("MyCommandBuffer");

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_GhostFeature"
+﻿Shader "ScreenEffect/S_LensFlare_GhostFeature"
 {
 	Properties
 	{

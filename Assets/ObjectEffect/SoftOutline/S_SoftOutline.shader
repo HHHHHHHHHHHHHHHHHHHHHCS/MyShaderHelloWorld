@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_SoftOutline"
+﻿Shader "ObjectEffect/S_SoftOutline"
 {
 	Properties
 	{

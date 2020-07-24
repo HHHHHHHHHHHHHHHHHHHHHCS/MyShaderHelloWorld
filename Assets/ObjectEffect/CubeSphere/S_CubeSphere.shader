@@ -1,4 +1,4 @@
-﻿Shader "HCS/CubeSphere"
+﻿Shader "ObjectEffect/CubeSphere"
 {
 	Properties
 	{

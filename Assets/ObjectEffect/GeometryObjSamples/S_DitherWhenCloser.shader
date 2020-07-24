@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_DitherWhenCloser"
+﻿Shader "ObjectEffect/S_DitherWhenCloser"
 {
 	Properties
 	{

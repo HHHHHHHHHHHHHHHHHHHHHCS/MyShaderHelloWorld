@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ScanLine"
+﻿Shader "DepthSample/S_ScanLine"
 {
 	Properties
 	{

@@ -25,7 +25,7 @@ namespace Lighting2D
 		private Material lightMaterial;
 		private float lastLightDistance;
 
-		protected string lightShaderName { get; } = "Lighting2D/Light2D";
+		protected string lightShaderName { get; } = "Other/Light2D";
 
 		private void Awake()
 		{

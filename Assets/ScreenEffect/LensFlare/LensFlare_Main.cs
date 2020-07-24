@@ -40,12 +40,12 @@ public class LensFlare_Main : MonoBehaviour
 
     private void OnEnable()
     {
-        material = NewMat("HCS/S_LensFlare_SubMul");
-        ghostMaterial = NewMat("HCS/S_LensFlare_GhostFeature");
-        radialWarpMaterial = NewMat("HCS/S_LensFlare_RadialWrap");
-        additiveMaterial = NewMat("HCS/S_LensFlare_Additive");
-        aberrationMaterial = NewMat("HCS/S_LensFlare_ChromaticAberration");
-        blurMaterial = NewMat("HCS/S_LensFlare_GaussianBlur");
+        material = NewMat("ScreenEffect/S_LensFlare_SubMul");
+        ghostMaterial = NewMat("ScreenEffect/S_LensFlare_GhostFeature");
+        radialWarpMaterial = NewMat("ScreenEffect/S_LensFlare_RadialWrap");
+        additiveMaterial = NewMat("ScreenEffect/S_LensFlare_Additive");
+        aberrationMaterial = NewMat("ScreenEffect/S_LensFlare_ChromaticAberration");
+        blurMaterial = NewMat("ScreenEffect/S_LensFlare_GaussianBlur");
     }
 
     private Material NewMat(string shaderName)

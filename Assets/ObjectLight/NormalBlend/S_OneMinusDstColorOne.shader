@@ -1,4 +1,4 @@
-﻿Shader "HCS/OneMinusDstColorOne"
+﻿Shader "ObjectLight/OneMinusDstColorOne"
 {
 	Properties 
 	{

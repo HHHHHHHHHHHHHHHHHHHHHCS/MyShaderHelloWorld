@@ -1,4 +1,4 @@
-﻿Shader "Smiley/S_Smiley"
+﻿Shader "ShaderToy/S_Smiley"
 {
 	Properties
 	{

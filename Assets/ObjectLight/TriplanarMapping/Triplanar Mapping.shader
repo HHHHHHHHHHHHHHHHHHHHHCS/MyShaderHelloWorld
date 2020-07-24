@@ -1,4 +1,4 @@
-Shader "HCS/Triplanar Mapping"
+Shader "Custom/Triplanar Mapping"
 {
 	Properties
 	{

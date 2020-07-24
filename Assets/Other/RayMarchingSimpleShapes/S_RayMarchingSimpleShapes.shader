@@ -1,4 +1,4 @@
-﻿Shader "RayMarchingSimpleShapes/S_RayMarchingSimpleShapes"
+﻿Shader "Other/S_RayMarchingSimpleShapes"
 {
 	Properties { }
 	SubShader

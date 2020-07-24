@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_CubeFade"
+﻿Shader "ObjectEffect/S_CubeFade"
 {
 	Properties
 	{

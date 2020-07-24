@@ -1,4 +1,4 @@
-﻿Shader "Gyroids/S_Gyroids"
+﻿Shader "ShaderToy/S_Gyroids"
 {
 	Properties { }
 	SubShader

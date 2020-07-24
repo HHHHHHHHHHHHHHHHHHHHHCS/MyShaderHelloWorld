@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_OutlineCommandBuffer"
+﻿Shader "ObjectEffect/S_OutlineCommandBuffer"
 {
 	Properties
 	{

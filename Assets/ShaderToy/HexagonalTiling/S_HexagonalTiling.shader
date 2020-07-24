@@ -1,4 +1,4 @@
-﻿Shader "HexagonalTiling/S_HexagonalTiling"
+﻿Shader "ShaderToy/S_HexagonalTiling"
 {
 	Properties
 	{

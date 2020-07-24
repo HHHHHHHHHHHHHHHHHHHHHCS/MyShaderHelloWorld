@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_RealWater" 
+﻿Shader "ObjectEffect/S_RealWater" 
 {
 	Properties 
 	{

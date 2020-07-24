@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DepthAndLight"
+﻿Shader "ScreenEffect/S_DepthAndLight"
 {
 
     Properties

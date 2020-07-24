@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_ChromaticAberration"
+﻿Shader "ScreenEffect/S_LensFlare_ChromaticAberration"
 {
 	Properties
 	{

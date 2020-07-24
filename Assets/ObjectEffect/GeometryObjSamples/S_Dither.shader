@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_Dither"
+﻿Shader "ObjectEffect/S_Dither"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ForwardLight"
+﻿Shader "ObjectLight/S_ForwardLight"
 {
     Properties
     {

@@ -1,4 +1,4 @@
-﻿Shader "RememberBrush/S_RememberBrush"
+﻿Shader "ObjectEffect/S_RememberBrush"
 {
 	Properties
 	{

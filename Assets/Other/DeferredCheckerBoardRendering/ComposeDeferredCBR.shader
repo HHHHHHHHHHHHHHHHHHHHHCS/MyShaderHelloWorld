@@ -1,4 +1,4 @@
-﻿Shader "CheckerBoardRendering/ComposeDeferredCBR"
+﻿Shader "Other/ComposeDeferredCBR"
 {
     Properties
     {

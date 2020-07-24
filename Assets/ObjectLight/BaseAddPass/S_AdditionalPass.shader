@@ -1,4 +1,4 @@
-﻿Shader "HCS/AdditionalPass" 
+﻿Shader "ObjectLight/AdditionalPass" 
 {
 	Properties
 	{

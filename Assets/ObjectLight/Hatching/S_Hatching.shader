@@ -1,4 +1,4 @@
-﻿Shader "HCS/Hatching" 
+﻿Shader "ObjectLight/Hatching" 
 {
 	Properties
 	{

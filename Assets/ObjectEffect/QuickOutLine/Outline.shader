@@ -1,4 +1,4 @@
-﻿Shader "HCS/Outline" 
+﻿Shader "ObjectEffect/Outline" 
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/BrightnessSaturationAndContrast" 
+﻿Shader "ScreenEffect/BrightnessSaturationAndContrast" 
 {
 	Properties 
 	{

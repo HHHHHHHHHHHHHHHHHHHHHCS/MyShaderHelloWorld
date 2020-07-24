@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DeferredLights" 
+﻿Shader "Custom/S_DeferredLights" 
 {
 	Properties 
 	{

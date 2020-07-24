@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_MultipleLights" 
+﻿Shader "ObjectLight/S_MultipleLights" 
 {
 	Properties 
 	{

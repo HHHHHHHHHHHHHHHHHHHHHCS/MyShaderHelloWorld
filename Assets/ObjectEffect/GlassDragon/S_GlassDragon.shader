@@ -1,4 +1,4 @@
-﻿Shader "GlassDragon/S_GlassDragon"
+﻿Shader "ObjectEffect/S_GlassDragon"
 {
 	Properties
 	{

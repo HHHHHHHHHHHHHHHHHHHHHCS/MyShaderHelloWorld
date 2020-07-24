@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_AlphaTest"
+﻿Shader "ObjectLight/S_AlphaTest"
 {
 	Properties 
 	{

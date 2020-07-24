@@ -1,4 +1,4 @@
-﻿Shader "HCS/DepthOfField" 
+﻿Shader "ScreenEffect/DepthOfField" 
 {
 	Properties 
 	{

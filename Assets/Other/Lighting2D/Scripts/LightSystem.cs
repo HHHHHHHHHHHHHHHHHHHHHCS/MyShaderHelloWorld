@@ -30,13 +30,13 @@ namespace Lighting2D
 
 			if (!lightingMaterial)
 			{
-				lightingMaterial = new Material(Shader.Find("Lighting2D/DeferredLighting"));
+				lightingMaterial = new Material(Shader.Find("Other/DeferredLighting"));
 				lightingMaterial.hideFlags = HideFlags.HideAndDontSave;
 			}
 
 			if (!gaussianMat)
 			{
-				gaussianMat = new Material(Shader.Find("Lighting2D/Gaussian"));
+				gaussianMat = new Material(Shader.Find("Other/Gaussian"));
 				gaussianMat.hideFlags = HideFlags.HideAndDontSave;
 			}
 		}

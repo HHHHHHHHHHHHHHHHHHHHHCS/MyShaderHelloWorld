@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_SingleTexture" 
+﻿Shader "ObjectLight/S_SingleTexture" 
 {
 	Properties 
 	{

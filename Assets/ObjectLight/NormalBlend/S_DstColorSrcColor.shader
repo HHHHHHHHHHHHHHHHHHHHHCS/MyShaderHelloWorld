@@ -1,4 +1,4 @@
-﻿Shader "HCS/DstColorSrcColor"
+﻿Shader "ObjectLight/DstColorSrcColor"
 {
 	Properties 
 	{

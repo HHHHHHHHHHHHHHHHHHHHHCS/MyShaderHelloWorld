@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_Bloom"
+﻿Shader "ScreenEffect/S_LensFlare_Bloom"
 {
 	Properties
 	{

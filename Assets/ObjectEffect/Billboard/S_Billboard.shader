@@ -1,4 +1,4 @@
-﻿Shader "HCS/Billboard"
+﻿Shader "ObjectEffect/Billboard"
 {
 	Properties
 	{

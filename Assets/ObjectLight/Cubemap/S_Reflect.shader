@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Reflect" 
+﻿Shader "ObjectLight/S_Reflect" 
 {
 	Properties 
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/EdgeDepth" 
+﻿Shader "ScreenEffect/EdgeDepth" 
 {
 	Properties
 	{

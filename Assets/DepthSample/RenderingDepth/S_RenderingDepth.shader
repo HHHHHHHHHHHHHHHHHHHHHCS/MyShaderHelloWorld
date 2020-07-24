@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_RenderingDepth"
+﻿Shader "DepthSample/S_RenderingDepth"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/OneOne"
+﻿Shader "ObjectLight/OneOne"
 {
 	Properties 
 	{

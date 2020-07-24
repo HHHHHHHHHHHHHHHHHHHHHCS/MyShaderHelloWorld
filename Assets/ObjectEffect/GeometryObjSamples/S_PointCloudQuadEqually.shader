@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_PointCloudQuadEqually"
+﻿Shader "ObjectEffect/S_PointCloudQuadEqually"
 {
 	Properties
 	{

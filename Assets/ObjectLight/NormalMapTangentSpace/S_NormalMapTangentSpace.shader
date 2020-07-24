@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_NormalMapTangentSpace" {
+﻿Shader "ObjectLight/S_NormalMapTangentSpace" {
 	Properties 
 	{
 		_Color ("Color", Color) = (1,1,1,1)

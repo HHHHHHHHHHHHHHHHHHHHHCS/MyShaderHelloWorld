@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_SubMul"
+﻿Shader "ScreenEffect/S_LensFlare_SubMul"
 {
 	Properties
 	{

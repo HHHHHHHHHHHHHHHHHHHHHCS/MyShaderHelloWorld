@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_GlassRefraction"
+﻿Shader "ScreenEffect/S_GlassRefraction"
 {
 	Properties 
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DoubleClipSide" {
+﻿Shader "ObjectLight/S_DoubleClipSide" {
 	Properties
 	{
 		_Color ("Main Tint", Color) = (1,1,1,1)

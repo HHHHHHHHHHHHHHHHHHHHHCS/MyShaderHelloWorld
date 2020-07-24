@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_IntersectionHighlight"
+﻿Shader "DepthSample/S_IntersectionHighlight"
 {
 	Properties
 	{

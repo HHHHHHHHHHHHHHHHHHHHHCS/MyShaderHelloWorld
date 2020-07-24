@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_StencilReplace"
+﻿Shader "ObjectEffect/S_StencilReplace"
 {
     Properties
     {

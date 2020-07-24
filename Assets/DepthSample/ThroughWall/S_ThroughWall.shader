@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ThroughWall"
+﻿Shader "DepthSample/S_ThroughWall"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_AlphaBlend"
+﻿Shader "ObjectLight/S_AlphaBlend"
 {
 	Properties 
 	{

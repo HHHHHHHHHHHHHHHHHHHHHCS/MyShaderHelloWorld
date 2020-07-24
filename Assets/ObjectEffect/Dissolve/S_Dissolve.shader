@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Dissolve"
+﻿Shader "ObjectEffect/S_Dissolve"
 {
 	Properties
 	{

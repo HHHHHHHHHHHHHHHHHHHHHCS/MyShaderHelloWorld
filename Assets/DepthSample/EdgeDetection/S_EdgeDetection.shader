@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_EdgeDetection"
+﻿Shader "DepthSample/S_EdgeDetection"
 {
 	Properties
 	{

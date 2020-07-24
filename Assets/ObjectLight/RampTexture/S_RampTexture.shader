@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_RampTexture" {
+﻿Shader "ObjectLight/S_RampTexture" {
 	Properties{
 		_Color("Color", Color) = (1,1,1,1)
 		_RampTex("Remap Texure", 2D) = "white" {}

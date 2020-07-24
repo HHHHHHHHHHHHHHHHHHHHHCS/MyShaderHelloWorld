@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ClipBarrel"
+﻿Shader "ObjectLight/S_ClipBarrel"
 {
 	Properties
 	{

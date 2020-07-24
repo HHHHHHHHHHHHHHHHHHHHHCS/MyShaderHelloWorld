@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_MaskTexture" 
+﻿Shader "ObjectLight/S_MaskTexture" 
 {
 	Properties 
 	{

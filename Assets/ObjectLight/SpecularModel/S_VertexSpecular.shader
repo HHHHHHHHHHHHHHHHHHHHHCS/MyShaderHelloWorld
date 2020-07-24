@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_VertexSpecular"
+﻿Shader "ObjectLight/S_VertexSpecular"
 {
 	Properties
 	{

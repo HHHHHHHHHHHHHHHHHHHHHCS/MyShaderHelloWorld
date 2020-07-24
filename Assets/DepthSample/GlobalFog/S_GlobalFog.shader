@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_GlobalFog"
+﻿Shader "DepthSample/S_GlobalFog"
 {
 	Properties
 	{

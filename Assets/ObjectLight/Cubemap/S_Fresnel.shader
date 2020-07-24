@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Fresnel" 
+﻿Shader "ObjectLight/S_Fresnel" 
 {
 	Properties 
 	{

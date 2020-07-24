@@ -1,4 +1,4 @@
-﻿Shader "HCS/Glow_Mix" 
+﻿Shader "ScreenEffect/Glow_Mix" 
 {
 	Properties 
 	{

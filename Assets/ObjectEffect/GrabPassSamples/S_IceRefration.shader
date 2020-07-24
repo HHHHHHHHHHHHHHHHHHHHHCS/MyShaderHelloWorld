@@ -1,4 +1,4 @@
-﻿Shader "GrabPassSamples/S_IceRefration"
+﻿Shader "ObjectEffect/S_IceRefration"
 {
 	Properties
 	{

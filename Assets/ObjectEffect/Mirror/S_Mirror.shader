@@ -1,4 +1,4 @@
-﻿Shader "Custom/S_Mirror" 
+﻿Shader "ObjectEffect/S_Mirror" 
 {
 	Properties 
 	{

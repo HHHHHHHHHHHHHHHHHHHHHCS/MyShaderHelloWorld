@@ -1,4 +1,4 @@
-﻿Shader "RayMarchingBasicOperators/S_RayMarchingBasicOperators"
+﻿Shader "Other/S_RayMarchingBasicOperators"
 {
 	Properties { }
 	SubShader

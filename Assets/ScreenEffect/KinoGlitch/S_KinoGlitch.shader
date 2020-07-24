@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_KinoGlitch"
+﻿Shader "ScreenEffect/S_KinoGlitch"
 {
 	Properties
 	{

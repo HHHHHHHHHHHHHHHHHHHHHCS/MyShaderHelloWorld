@@ -1,4 +1,4 @@
-﻿Shader "SimpleRayMarchin/S_SimpleRayMarching"
+﻿Shader "Other/S_SimpleRayMarching"
 {
 	Properties
 	{

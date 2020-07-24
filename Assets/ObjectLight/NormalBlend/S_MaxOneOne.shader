@@ -1,4 +1,4 @@
-﻿Shader "HCS/MaxOneOne"
+﻿Shader "ObjectLight/MaxOneOne"
 {
 	Properties 
 	{

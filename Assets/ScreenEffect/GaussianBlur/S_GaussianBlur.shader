@@ -1,4 +1,4 @@
-﻿Shader "HCS/GaussianBlur" 
+﻿Shader "ScreenEffect/GaussianBlur" 
 {
 	Properties 
 	{

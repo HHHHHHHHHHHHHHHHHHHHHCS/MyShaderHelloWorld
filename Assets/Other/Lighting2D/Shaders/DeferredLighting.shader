@@ -1,4 +1,4 @@
-﻿Shader "Lighting2D/DeferredLighting"
+﻿Shader "Other/DeferredLighting"
 {
 	Properties
 	{

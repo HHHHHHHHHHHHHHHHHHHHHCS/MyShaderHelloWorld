@@ -1,4 +1,4 @@
-﻿Shader "TimeStop/S_TimeStop"
+﻿Shader "ScreenEffect/S_TimeStop"
 {
 	Properties
 	{

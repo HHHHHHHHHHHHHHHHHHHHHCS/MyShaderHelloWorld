@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_StencilPlane"
+﻿Shader "ObjectEffect/S_StencilPlane"
 {
 	Properties
 	{

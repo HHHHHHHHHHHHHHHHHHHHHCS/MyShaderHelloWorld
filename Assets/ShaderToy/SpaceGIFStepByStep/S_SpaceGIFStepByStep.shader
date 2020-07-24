@@ -1,4 +1,4 @@
-﻿Shader "SpaceGIFStepByStep/S_SpaceGIFStepByStep"
+﻿Shader "ShaderToy/S_SpaceGIFStepByStep"
 {
 	Properties { }
 	SubShader

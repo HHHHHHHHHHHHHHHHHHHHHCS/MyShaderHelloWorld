@@ -1,4 +1,4 @@
-﻿Shader "HCS/SamplerBlur" 
+﻿Shader "ScreenEffect/SamplerBlur" 
 {
 	Properties 
 	{

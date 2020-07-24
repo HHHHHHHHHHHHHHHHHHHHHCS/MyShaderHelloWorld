@@ -1,4 +1,4 @@
-﻿Shader "MakeAHeart/S_MakeAHeart"
+﻿Shader "ShaderToy/S_MakeAHeart"
 {
 	Properties { }
 	SubShader

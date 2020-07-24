@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_NormalShadow" 
+﻿Shader "ObjectLight/S_NormalShadow" 
 {
 	Properties
 	{

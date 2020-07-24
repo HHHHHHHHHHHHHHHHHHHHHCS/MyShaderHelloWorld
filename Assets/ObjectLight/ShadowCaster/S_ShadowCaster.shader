@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ShadowCaster" 
+﻿Shader "ObjectLight/S_ShadowCaster" 
 {
 	Properties
 	{

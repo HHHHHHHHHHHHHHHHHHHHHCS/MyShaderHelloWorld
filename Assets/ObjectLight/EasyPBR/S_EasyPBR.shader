@@ -1,4 +1,4 @@
-﻿Shader "Custom/S_EasyPBR"
+﻿Shader "ObjectLight/S_EasyPBR"
 {
 	Properties
 	{

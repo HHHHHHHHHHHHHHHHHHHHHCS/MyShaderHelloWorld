@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Refract" 
+﻿Shader "ObjectLight/S_Refract" 
 {
 	Properties 
 	{

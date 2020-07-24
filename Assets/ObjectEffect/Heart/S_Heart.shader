@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Heart"
+﻿Shader "ObjectEffect/S_Heart"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_BlinnPhong"
+﻿Shader "ObjectLight/S_BlinnPhong"
 {
 	Properties
 	{

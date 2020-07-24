@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_AlphaBlendZwrite"
+﻿Shader "ObjectLight/S_AlphaBlendZwrite"
 {
 	Properties 
 	{

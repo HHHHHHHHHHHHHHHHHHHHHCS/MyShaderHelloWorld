@@ -1,4 +1,4 @@
-﻿Shader "KifsFractalsExplained/S_KifsFractalsExplained"
+﻿Shader "ShaderToy/S_KifsFractalsExplained"
 {
 	Properties
 	{

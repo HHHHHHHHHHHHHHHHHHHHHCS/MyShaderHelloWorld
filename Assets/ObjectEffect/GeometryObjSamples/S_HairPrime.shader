@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_HairPrime"
+﻿Shader "ObjectEffect/S_HairPrime"
 {
 	Properties
 	{

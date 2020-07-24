@@ -1,4 +1,4 @@
-﻿Shader "shadertoy/Heart"
+﻿Shader "ObjectEffect/Heart_1"
 {
 	Properties
 	{

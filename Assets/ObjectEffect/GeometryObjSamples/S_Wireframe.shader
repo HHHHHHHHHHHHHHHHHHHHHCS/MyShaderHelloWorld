@@ -1,4 +1,4 @@
-﻿Shader "GeometryObjSamples/S_Wireframe"
+﻿Shader "ObjectEffect/S_Wireframe"
 {
 	Properties
 	{

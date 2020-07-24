@@ -1,4 +1,4 @@
-﻿Shader "HCS/SampleDeferredLight"
+﻿Shader "ObjectLight/SampleDeferredLight"
 {
     Properties
     {

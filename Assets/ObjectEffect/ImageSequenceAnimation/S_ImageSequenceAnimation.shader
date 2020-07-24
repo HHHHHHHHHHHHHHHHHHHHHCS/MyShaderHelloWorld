@@ -1,4 +1,4 @@
-﻿Shader "HCS/ImageSequenceAnimation" 
+﻿Shader "ObjectEffect/ImageSequenceAnimation" 
 {
 	Properties
 	{

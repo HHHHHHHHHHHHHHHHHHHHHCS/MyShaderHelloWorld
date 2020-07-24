@@ -1,4 +1,4 @@
-﻿Shader "HCS/SrcAlphaOneMinusSrcAlpha"
+﻿Shader "ObjectLight/SrcAlphaOneMinusSrcAlpha"
 {
 	Properties 
 	{

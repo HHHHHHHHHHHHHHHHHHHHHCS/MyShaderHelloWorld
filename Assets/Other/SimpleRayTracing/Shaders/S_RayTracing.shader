@@ -1,4 +1,4 @@
-﻿Shader "RayTracing/S_RayTracing"
+﻿Shader "Other/S_RayTracing"
 {
 	Properties
 	{

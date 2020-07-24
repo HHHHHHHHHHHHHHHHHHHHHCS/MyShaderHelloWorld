@@ -1,4 +1,4 @@
-﻿Shader "HCS/NoiseFog" 
+﻿Shader "ScreenEffect/NoiseFog" 
 {
 	Properties 
 	{

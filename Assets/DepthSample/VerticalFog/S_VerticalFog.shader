@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_VerticalFog"
+﻿Shader "DepthSample/S_VerticalFog"
 {
 	Properties
 	{

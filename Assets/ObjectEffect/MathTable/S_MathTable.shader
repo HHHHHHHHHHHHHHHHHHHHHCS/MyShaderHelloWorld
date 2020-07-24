@@ -1,4 +1,4 @@
-Shader "HCS/MathTable" 
+Shader "ObjectEffect/MathTable" 
 {
     Properties
     {

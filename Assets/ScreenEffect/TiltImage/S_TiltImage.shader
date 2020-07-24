@@ -1,4 +1,4 @@
-﻿Shader "TiltImage/S_TiltImage"
+﻿Shader "ScreenEffect/S_TiltImage"
 {
 	Properties
 	{

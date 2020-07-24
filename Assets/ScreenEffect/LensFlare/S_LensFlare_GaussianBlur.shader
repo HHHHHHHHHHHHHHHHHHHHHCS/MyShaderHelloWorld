@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_LensFlare_GaussianBlur"
+﻿Shader "ScreenEffect/S_LensFlare_GaussianBlur"
 {
 	Properties
 	{

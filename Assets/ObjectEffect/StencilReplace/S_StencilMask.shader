@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_StencilMask"
+﻿Shader "ObjectEffect/S_StencilMask"
 {
     Properties
     {

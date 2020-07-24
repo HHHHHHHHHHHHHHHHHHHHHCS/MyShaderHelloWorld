@@ -1,4 +1,4 @@
-﻿Shader "GrabPassSamples/S_Cloaking"
+﻿Shader "ObjectEffect/S_Cloaking"
 {
 	Properties
 	{

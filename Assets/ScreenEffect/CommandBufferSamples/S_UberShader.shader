@@ -1,4 +1,4 @@
-﻿Shader "CommandBufferSamples/S_UberShader"
+﻿Shader "ScreenEffect/S_UberShader"
 {
 	Properties
 	{

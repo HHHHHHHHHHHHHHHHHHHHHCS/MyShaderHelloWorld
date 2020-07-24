@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Bloom_New" 
+﻿Shader "ScreenEffect/S_Bloom_New" 
 {
 	Properties 
 	{

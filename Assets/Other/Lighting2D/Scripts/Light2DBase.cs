@@ -35,7 +35,7 @@ namespace Lighting2D
 
 		private Mesh tempMesh;
 
-		protected string shadowShaderName { get; } = "Lighting2D/Shadow2D";
+		protected string shadowShaderName { get; } = "Other/Shadow2D";
 
 		public abstract void RenderLight(CommandBuffer cmd);
 

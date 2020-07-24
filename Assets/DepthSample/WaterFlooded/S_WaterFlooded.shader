@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_WaterFlooded"
+﻿Shader "DepthSample/S_WaterFlooded"
 {
 	Properties
 	{

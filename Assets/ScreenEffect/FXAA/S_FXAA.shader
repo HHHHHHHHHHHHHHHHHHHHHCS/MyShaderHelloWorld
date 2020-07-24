@@ -1,4 +1,4 @@
-﻿Shader "HCS/s_FXAA"
+﻿Shader "ScreenEffect/S_FXAA"
 {
     Properties
     {

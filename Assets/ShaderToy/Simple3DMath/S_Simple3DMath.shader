@@ -1,4 +1,4 @@
-﻿Shader "Simple3DMath/S_Simple3DMath"
+﻿Shader "ShaderToy/S_Simple3DMath"
 {
 	Properties { }
 	SubShader

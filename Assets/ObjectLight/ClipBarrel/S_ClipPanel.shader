@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_ClipPanel"
+﻿Shader "ObjectLight/S_ClipPanel"
 {
 	Properties
 	{

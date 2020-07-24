@@ -1,4 +1,4 @@
-﻿Shader "BasicOperators/S_BasicOperators"
+﻿Shader "ShaderToy/S_BasicOperators"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/DepthTex" 
+﻿Shader "ScreenEffect/DepthTex" 
 {
 	Properties 
 	{

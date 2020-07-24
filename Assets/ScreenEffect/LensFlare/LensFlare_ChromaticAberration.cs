@@ -11,7 +11,7 @@ public class LensFlare_ChromaticAberration : MonoBehaviour
 
     private void Awake()
     {
-        material = new Material(Shader.Find("HCS/S_LensFlare_ChromaticAberration"));
+        material = new Material(Shader.Find("ScreenEffect/S_LensFlare_ChromaticAberration"));
     }
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)

@@ -1,4 +1,4 @@
-﻿Shader "HCS/MotionBlur" 
+﻿Shader "ScreenEffect/MotionBlur" 
 {
 	Properties 
 	{

@@ -1,8 +1,4 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
-
-Shader "HCS/S_DiffusePixelLevel"
+﻿Shader "ObjectLight/S_DiffusePixelLevel"
 {
 	Properties
 	{

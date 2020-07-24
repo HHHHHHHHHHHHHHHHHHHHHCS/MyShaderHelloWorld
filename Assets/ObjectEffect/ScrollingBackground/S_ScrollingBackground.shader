@@ -1,4 +1,4 @@
-﻿Shader "HCS/ScrollingBackground" 
+﻿Shader "ObjectEffect/ScrollingBackground" 
 {
 	Properties 
 	{

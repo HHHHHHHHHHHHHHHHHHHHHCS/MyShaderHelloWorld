@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_SpawnShadowAdd"
+﻿Shader "ObjectLight/S_SpawnShadowAdd"
 {
     Properties
     {

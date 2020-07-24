@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DepthMotionBlur" 
+﻿Shader "ScreenEffect/S_DepthMotionBlur" 
 {
 	Properties 
 	{

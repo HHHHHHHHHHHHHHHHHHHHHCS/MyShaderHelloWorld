@@ -1,4 +1,4 @@
-﻿Shader "HCS/MinOneOne"
+﻿Shader "ObjectLight/MinOneOne"
 {
 	Properties 
 	{

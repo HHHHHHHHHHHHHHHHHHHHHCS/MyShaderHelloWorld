@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Shadows" 
+﻿Shader "Custom/S_Shadows" 
 {
 
 	Properties 

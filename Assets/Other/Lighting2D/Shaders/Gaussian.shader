@@ -1,4 +1,4 @@
-﻿Shader "Lighting2D/Gaussian"
+﻿Shader "Other/Gaussian"
 {
 	Properties
 	{

@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_EasyBloom" 
+﻿Shader "ScreenEffect/S_EasyBloom" 
 {
 	Properties 
 	{

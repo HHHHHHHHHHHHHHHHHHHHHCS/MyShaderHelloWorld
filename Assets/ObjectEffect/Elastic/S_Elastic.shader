@@ -1,4 +1,4 @@
-﻿Shader "Elastic/S_Elastic"
+﻿Shader "ObjectEffect/S_Elastic"
 {
 	Properties
 	{

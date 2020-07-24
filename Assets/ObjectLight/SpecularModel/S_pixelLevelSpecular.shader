@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_PixelLevelSpecular"
+﻿Shader "ObjectLight/S_PixelLevelSpecular"
 {
 	Properties
 	{

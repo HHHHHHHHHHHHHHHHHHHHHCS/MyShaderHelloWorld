@@ -1,4 +1,4 @@
-﻿Shader "RayMarchingTricks/S_RayMarchingTricks"
+﻿Shader "Other/S_RayMarchingTricks"
 {
 	Properties { }
 	SubShader

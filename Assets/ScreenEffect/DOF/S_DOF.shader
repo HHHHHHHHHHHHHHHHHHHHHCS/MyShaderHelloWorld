@@ -1,4 +1,4 @@
-﻿Shader "HCS/DOF" 
+﻿Shader "ScreenEffect/DOF" 
 {
 	Properties
 	{

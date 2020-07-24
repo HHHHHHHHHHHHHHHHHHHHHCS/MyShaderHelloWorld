@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_Bumpiness" 
+﻿Shader "ObjectLight/S_Bumpiness" 
 {
 	Properties 
 	{

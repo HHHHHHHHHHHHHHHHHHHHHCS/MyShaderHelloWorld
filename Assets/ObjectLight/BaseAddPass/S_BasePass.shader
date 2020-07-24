@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_BasePass" {
+﻿Shader "ObjectLight/S_BasePass" {
 	Properties {
 		_Diffuse ("Diffuse Color", Color) = (1,1,1,1)
 		_Specular("Specular Color", Color) = (1,1,1,1)

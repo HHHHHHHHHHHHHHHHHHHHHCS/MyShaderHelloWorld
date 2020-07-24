@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_CombineCubemap"
+﻿Shader "Other/S_CombineCubemap"
 {
 	Properties
 	{

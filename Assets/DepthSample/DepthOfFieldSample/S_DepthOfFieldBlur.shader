@@ -1,4 +1,4 @@
-﻿Shader "HCS/S_DepthOfFieldBlur"
+﻿Shader "DepthSample/S_DepthOfFieldBlur"
 {
 	Properties
 	{

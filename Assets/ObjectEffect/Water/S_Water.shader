@@ -1,4 +1,4 @@
-﻿Shader "HCS/Water" 
+﻿Shader "ObjectEffect/Water" 
 {
 	Properties
 	{
