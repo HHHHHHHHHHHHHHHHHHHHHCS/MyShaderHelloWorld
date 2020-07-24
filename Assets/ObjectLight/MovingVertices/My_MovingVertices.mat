@@ -4,9 +4,10 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: HCS_MovingVertices
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: My_MovingVertices
   m_Shader: {fileID: 4800000, guid: 66610e3aabcf0dd4bbd4384fd6a2a53a, type: 3}
   m_ShaderKeywords: _NORMAL_MAP _PARALLAX_MAP
   m_LightmapFlags: 4

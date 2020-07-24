@@ -111,13 +111,27 @@
 			
 			float GetDist(float3 p)
 			{
-				float plane = dot(p, normalize(float3(0, 1, 0)));
+				float plane = p.y;// dot(p, normalize(float3(0, 1, 0)));
 				
-				float box = SDBox(p, float3(0, 1, 0), float3(1, 1, 0.1));
+				float3 bp = p - float3(0, 1, 0);
+				//bp.z += sin(bp.x * 5.0 + _Time.y * 3.0) * 0.1; //波浪效果
+				
+				// bp  = abs(bp); //镜像
+				// bp -= 1.0;
+				
+				// float n = normalize(float3(1, 1, 1));//轴对称
+				// bp -= 2.0 * n * min(0, dot(p, n)) ;
+				
+				float scale = lerp(1.0, 3.0, smoothstep(-1, 1, bp.y));
+				bp.xz *= scale;
+				bp.xz = mul(Rot(smoothstep(0.0, 1, bp.y)), bp.xz);
+				
+				float box = SDBox(bp, float3(0, 0, 0), float3(1, 1, 1)) / scale;
+				
 				//box -= sin(p.x * 7.5 + _Time.y * 3.0) * 0.05;
 				//box = abs(box) - 0.1;//镂空
 				
-				float d = min(plane * 0.6, box);
+				float d = box;//min(plane, box);
 				
 				return d ;
 			}
