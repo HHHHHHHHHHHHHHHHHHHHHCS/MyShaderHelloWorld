@@ -1,4 +1,4 @@
-﻿Shader "ScreenEffect/Tessellation" {
+﻿Shader "Custom/Tessellation" {
 
 	Properties {
 		_Color ("Tint", Color) = (1, 1, 1, 1)
