@@ -69,11 +69,28 @@
 			{
 				float d = DistRay(r, p);
 				
+				size *= length(p);
 				float c = smoothstep(size, size * (1.0 - blur), d);
 				
 				c *= lerp(0.6, 1.0, smoothstep(size * 0.8, size, d));
 				
 				return c;
+			}
+			
+			float3 Streetlights(Ray r, float t, float side)
+			{
+				float s = 1.0 / 10.0;
+				float m = 0.0;
+				
+				for (float i = 0; i < 1.0; i += s)
+				{
+					float ti = frac(t + i + side * s * 0.5);
+					float3 p = float3(2.0, 2.0, 100.0 - ti * 100.0);
+					
+					m += Bokeh(r, p, 0.05, 0.1) * ti * ti * ti;
+				}
+				
+				return float3(1.0, 0.7, 0.3) * m;
 			}
 			
 			v2f vert(appdata v)
@@ -88,7 +105,6 @@
 			{
 				float2 uv = input.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
-				float t = _Time.x;
 				
 				float3 col = float3(0, 0, 0);
 				
@@ -97,11 +113,12 @@
 				
 				Ray r = GetRay(uv, camPos, lookat, 2.0);
 				
-				float3 p = float3(0, 0, 5.0);
+				float side = step(r.d.x, 0.0);
+				r.d.x = abs(r.d.x);
 				
-				float c = Bokeh(r, p, 0.3, 0.1);
+				float t = _Time.y * 0.1;
 				
-				col = float3(1.0, 0.7, 0.3) * c;
+				col = Streetlights(r, t, side);
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
