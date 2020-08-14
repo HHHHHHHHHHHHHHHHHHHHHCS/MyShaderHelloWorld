@@ -32,6 +32,7 @@
 			
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float2 _MousePos;
 			
 			struct Ray
 			{
@@ -77,8 +78,11 @@
 				return c;
 			}
 			
-			float3 Streetlights(Ray r, float t, float side)
+			float3 Streetlights(Ray r, float t)
 			{
+				float side = step(r.d.x, 0.0);
+				r.d.x = abs(r.d.x);
+				
 				float s = 1.0 / 10.0;
 				float m = 0.0;
 				
@@ -92,6 +96,52 @@
 				
 				return float3(1.0, 0.7, 0.3) * m;
 			}
+			
+			float N(float t)
+			{
+				return frac(sin(t * 3456.0) * 6547.0);
+			}
+			
+			float3 HeadLights(Ray r, float t)
+			{
+				float w1 = 0.25;
+				float w2 = w1 * 1.2;
+				
+				float s = 1.0 / 30.0; //0.1
+				float m = 0.0;
+				
+				for (float i = 0; i < 1.0; i += s)
+				{
+					float n = N(i);
+					
+					if (n > 0.1)
+					{
+						continue;
+					}
+					
+					float ti = frac(t + i);
+					float z = 100.0 - ti * 100.0;
+					float fade = ti * ti * ti * ti * ti;
+					float focus = smoothstep(0.9, 1.0, ti);
+					
+					float size = lerp(0.05, 0.03, focus);
+					
+					m += Bokeh(r, float3(-1.0 - w1, 0.15, z), size, 0.1) * fade;
+					m += Bokeh(r, float3(-1.0 + w1, 0.15, z), size, 0.1) * fade;
+					
+					m += Bokeh(r, float3(-1.0 - w2, 0.15, z), size, 0.1) * fade;
+					m += Bokeh(r, float3(-1.0 + w2, 0.15, z), size, 0.1) * fade;
+					
+					float ref = 0.0;
+					ref += Bokeh(r, float3(-1.0 - w2, -0.15, z), size * 3.0, 1.0) * fade;
+					ref += Bokeh(r, float3(-1.0 + w2, -0.15, z), size * 3.0, 1.0) * fade;
+					
+					m += ref * focus;
+				}
+				
+				return float3(0.9, 0.9, 1.0) * m;
+			}
+			
 			
 			v2f vert(appdata v)
 			{
@@ -108,17 +158,16 @@
 				
 				float3 col = float3(0, 0, 0);
 				
+				float2 m = _MousePos;
 				float3 camPos = float3(0, 0.2, 0);
 				float3 lookat = float3(0, 0.2, 1.0);
 				
 				Ray r = GetRay(uv, camPos, lookat, 2.0);
 				
-				float side = step(r.d.x, 0.0);
-				r.d.x = abs(r.d.x);
+				float t = _Time.y * 0.1 + m.x;
 				
-				float t = _Time.y * 0.1;
-				
-				col = Streetlights(r, t, side);
+				col = Streetlights(r, t);
+				col += HeadLights(r, t);
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
