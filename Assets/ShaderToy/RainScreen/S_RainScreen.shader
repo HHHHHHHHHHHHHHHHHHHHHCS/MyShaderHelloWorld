@@ -104,6 +104,8 @@
 			
 			float3 HeadLights(Ray r, float t)
 			{
+				t *= 2;
+				
 				float w1 = 0.25;
 				float w2 = w1 * 1.2;
 				
@@ -142,6 +144,57 @@
 				return float3(0.9, 0.9, 1.0) * m;
 			}
 			
+			float3 TailLights(Ray r, float t)
+			{
+				t *= 0.25;
+				
+				float w1 = 0.25;
+				float w2 = w1 * 1.2;
+				
+				float s = 1.0 / 15.0; //0.1
+				float m = 0.0;
+				
+				for (float i = 0; i < 1.0; i += s)
+				{
+					float n = N(i); //[0,1]
+					
+					if (n > 0.5)
+					{
+						continue;
+					}
+					
+					//n = [0,0.5]
+					
+					float lane = step(0.25, n);//0 or 1
+					
+					float ti = frac(t + i);
+					float z = 100.0 - ti * 100.0;
+					float fade = ti * ti * ti * ti * ti;
+					float focus = smoothstep(0.9, 1.0, ti);
+					
+					float size = lerp(0.05, 0.03, focus);
+					
+					float laneShift = smoothstep(1.0, 0.96, ti);
+					float x = 1.5 - lane * laneShift;
+					
+					float blink = step(0, sin(t * 1000.0)) * 7.0 * lane * step(0.96, ti);
+					
+					m += Bokeh(r, float3(x - w1, 0.15, z), size, 0.1) * fade;
+					m += Bokeh(r, float3(x + w1, 0.15, z), size, 0.1) * fade;
+					
+					m += Bokeh(r, float3(x - w2, 0.15, z), size, 0.1) * fade;
+					m += Bokeh(r, float3(x + w2, 0.15, z), size, 0.1) * fade * (1.0 + blink * 0.1);
+					
+					float ref = 0.0;
+					ref += Bokeh(r, float3(x - w2, -0.15, z), size * 3.0, 1.0) * fade;
+					ref += Bokeh(r, float3(x + w2, -0.15, z), size * 3.0, 1.0) * fade * (1.0 + blink * 0.1);
+					
+					m += ref * focus;
+				}
+				
+				return float3(1.0, 0.1, 0.03) * m;
+			}
+			
 			
 			v2f vert(appdata v)
 			{
@@ -159,8 +212,8 @@
 				float3 col = float3(0, 0, 0);
 				
 				float2 m = _MousePos;
-				float3 camPos = float3(0, 0.2, 0);
-				float3 lookat = float3(0, 0.2, 1.0);
+				float3 camPos = float3(0.5, 0.2, 0);
+				float3 lookat = float3(0.5, 0.2, 1.0);
 				
 				Ray r = GetRay(uv, camPos, lookat, 2.0);
 				
@@ -168,6 +221,8 @@
 				
 				col = Streetlights(r, t);
 				col += HeadLights(r, t);
+				col += TailLights(r, t);
+				
 				
 				return float4(pow(col, 2.2), 1.0);
 			}
