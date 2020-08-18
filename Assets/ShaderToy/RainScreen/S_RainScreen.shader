@@ -40,6 +40,16 @@
 				float3 d;
 			};
 			
+			float N(float t)
+			{
+				return frac(sin(t * 3456.0) * 6547.0);
+			}
+			
+			float4 N14(float t)
+			{
+				return frac(sin(t * float4(123.0, 1024.0, 3456.0, 9564.0)) * float4(6547.0, 345.0, 8799.0, 1564.0));
+			}
+			
 			Ray GetRay(float2 uv, float3 camPos, float3 lookat, float zoom)
 			{
 				Ray ray;
@@ -78,7 +88,7 @@
 				return c;
 			}
 			
-			float3 Streetlights(Ray r, float t)
+			float3 StreetLights(Ray r, float t)
 			{
 				float side = step(r.d.x, 0.0);
 				r.d.x = abs(r.d.x);
@@ -97,10 +107,32 @@
 				return float3(1.0, 0.7, 0.3) * m;
 			}
 			
-			float N(float t)
+			float3 EnvLights(Ray r, float t)
 			{
-				return frac(sin(t * 3456.0) * 6547.0);
+				float side = step(r.d.x, 0.0);
+				r.d.x = abs(r.d.x);
+				
+				float s = 1.0 / 10.0;
+				float3 c = 0.0;
+				
+				for (float i = 0; i < 1.0; i += s)
+				{
+					float ti = frac(t + i + side * s * 0.5);
+					
+					float fade = ti * ti * ti;
+					
+					float4 n = N14(i);
+					float x = lerp(2.5, 10.0, n.x);
+					float y = lerp(0.1, 1.5, n.y);
+					float3 p = float3(x, y, 50.0 - ti * 50.0);
+					
+					float3 col = n.wzy;
+					c += Bokeh(r, p, 0.05, 0.1) * fade * col;
+				}
+				
+				return c;
 			}
+			
 			
 			float3 HeadLights(Ray r, float t)
 			{
@@ -219,9 +251,10 @@
 				
 				float t = _Time.y * 0.1 + m.x;
 				
-				col = Streetlights(r, t);
+				col = StreetLights(r, t);
 				col += HeadLights(r, t);
 				col += TailLights(r, t);
+				col += EnvLights(r, t);
 				
 				
 				return float4(pow(col, 2.2), 1.0);
