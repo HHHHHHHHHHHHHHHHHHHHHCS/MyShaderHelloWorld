@@ -119,15 +119,20 @@
 				{
 					float ti = frac(t + i + side * s * 0.5);
 					
+					float4 n = N14(i + side * 100);
+					
 					float fade = ti * ti * ti;
 					
-					float4 n = N14(i);
+					float occlusion = sin(ti * 6.28 * 10.0 * n.x) * 0.5 + 0.5;
+					
+					fade = occlusion;
+					
 					float x = lerp(2.5, 10.0, n.x);
 					float y = lerp(0.1, 1.5, n.y);
 					float3 p = float3(x, y, 50.0 - ti * 50.0);
 					
 					float3 col = n.wzy;
-					c += Bokeh(r, p, 0.05, 0.1) * fade * col;
+					c += Bokeh(r, p, 0.05, 0.1) * fade * col * 0.5;
 				}
 				
 				return c;
@@ -249,12 +254,14 @@
 				
 				Ray r = GetRay(uv, camPos, lookat, 2.0);
 				
-				float t = _Time.y * 0.1 + m.x;
+				float t = _Time.y * 0.05 + m.x;
 				
 				col = StreetLights(r, t);
 				col += HeadLights(r, t);
 				col += TailLights(r, t);
 				col += EnvLights(r, t);
+				
+				col += (r.d.y+0.25) * float3(0.2, 0.1, 0.5);
 				
 				
 				return float4(pow(col, 2.2), 1.0);
