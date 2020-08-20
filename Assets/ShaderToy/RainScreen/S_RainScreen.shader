@@ -232,6 +232,31 @@
 				return float3(1.0, 0.1, 0.03) * m;
 			}
 			
+			float2 Rain(float2 uv, float t)
+			{
+				t *= 40.0;
+				uv *= 3;
+				
+				float2 a = float2(3.0, 1.0);
+				float2 st = uv * a ;
+				st.y += t * 0.22;
+				st = frac(st) - 0.5;
+				
+				float y = -sin(t + sin(t + sin(t) * 0.5)) * 0.43;
+				float2 p1 = float2(0, y);
+				//除以a 可以变成从椭圆 变回 圆
+				float d = length((st - p1) / a);
+				
+				float m1 = smoothstep(0.07, 0.06, d);
+				
+				//因为x是缩放3倍的
+				if (st.x > 0.46 || st.y > 0.49)
+				{
+					m1 = 1;
+				}
+				return float2(m1, m1);
+			}
+			
 			
 			v2f vert(appdata v)
 			{
@@ -246,24 +271,27 @@
 				float2 uv = input.uv - 0.5;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
+				float2 m = _MousePos;
+				
 				float3 col = float3(0, 0, 0);
 				
-				float2 m = _MousePos;
+				float t = _Time.y * 0.05 + m.x;
+				
 				float3 camPos = float3(0.5, 0.2, 0);
 				float3 lookat = float3(0.5, 0.2, 1.0);
 				
+				float2 rainDistort = Rain(uv, t);
 				Ray r = GetRay(uv, camPos, lookat, 2.0);
 				
-				float t = _Time.y * 0.05 + m.x;
 				
 				col = StreetLights(r, t);
 				col += HeadLights(r, t);
 				col += TailLights(r, t);
 				col += EnvLights(r, t);
 				
-				col += (r.d.y+0.25) * float3(0.2, 0.1, 0.5);
+				col += (r.d.y + 0.25) * float3(0.2, 0.1, 0.5);
 				
-				
+				col = float3(rainDistort, 0.0);
 				return float4(pow(col, 2.2), 1.0);
 			}
 			ENDCG
