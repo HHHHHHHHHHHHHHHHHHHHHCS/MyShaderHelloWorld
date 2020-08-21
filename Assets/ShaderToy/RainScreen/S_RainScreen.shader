@@ -235,26 +235,38 @@
 			float2 Rain(float2 uv, float t)
 			{
 				t *= 40.0;
-				uv *= 3;
+				//uv *= 3;
 				
 				float2 a = float2(3.0, 1.0);
 				float2 st = uv * a ;
+				
+				float2 id = floor(st);
 				st.y += t * 0.22;
+				
+				float n = frac(sin(id.x * 716.34) * 768.34);
+				st.y += n;
+				uv.y += n;
+				
+				id = floor(st);
 				st = frac(st) - 0.5;
 				
+				t += frac(sin(id.x * 716.34 + id.y * 1453.7) * 768.34) * 6.283;
 				float y = -sin(t + sin(t + sin(t) * 0.5)) * 0.43;
 				float2 p1 = float2(0, y);
+				float2 o1 = (st - p1) / a;
 				//除以a 可以变成从椭圆 变回 圆
-				float d = length((st - p1) / a);
+				float d = length(o1);
+				float m1 = smoothstep(0.07, 0.0, d);
 				
-				float m1 = smoothstep(0.07, 0.06, d);
+				float2 o2 = (frac(uv * a.x * float2(1.0, 2.0)) - .5) / float2(1.0, 2.0);
+				d = length(o2);
+				float m2 = smoothstep(0.3 * (0.5 - st.y), 0.0, d) * smoothstep(-0.1, 0.1, st.y - p1.y);
 				
 				//因为x是缩放3倍的
-				if (st.x > 0.46 || st.y > 0.49)
-				{
-					m1 = 1;
-				}
-				return float2(m1, m1);
+				// if (st.x > 0.46 || st.y > 0.49)
+				// 	m1 = 1;
+				
+				return  m1 * o1 * 30.0 + m2 * o2 * 30.0;
 			}
 			
 			
@@ -280,8 +292,14 @@
 				float3 camPos = float3(0.5, 0.2, 0);
 				float3 lookat = float3(0.5, 0.2, 1.0);
 				
-				float2 rainDistort = Rain(uv, t);
-				Ray r = GetRay(uv, camPos, lookat, 2.0);
+				float2 rainDistort = Rain(uv * 5.0, t) * 0.5;
+				rainDistort += Rain(uv * 7.0, t) * 0.5;
+				
+				//轻微扭曲屏幕
+				uv.x += sin(uv.y * 70.0) * 0.005;
+				uv.y += sin(uv.x * 170.0) * 0.003;
+				
+				Ray r = GetRay(uv - rainDistort * 0.5, camPos, lookat, 2.0);
 				
 				
 				col = StreetLights(r, t);
@@ -291,7 +309,7 @@
 				
 				col += (r.d.y + 0.25) * float3(0.2, 0.1, 0.5);
 				
-				col = float3(rainDistort, 0.0);
+				//col = float3(rainDistort, 0.0);
 				return float4(pow(col, 2.2), 1.0);
 			}
 			ENDCG
