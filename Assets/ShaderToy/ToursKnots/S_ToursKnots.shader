@@ -71,6 +71,9 @@
 				float r1 = 1.7;
 				float r2 = 0.2;
 				float2 cp = float2(length(p.xz) - r1, p.y);
+				float a = atan2(p.x, p.z);
+				cp = mul(Rot(a * 2.5), cp);
+				cp.y = abs(cp.y) - 0.3;
 				float d = length(cp) - r2;
 				
 				return d;
