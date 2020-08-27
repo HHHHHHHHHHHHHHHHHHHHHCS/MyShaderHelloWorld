@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" { }
+		_MainTex ("Texture", 2D) = "gray" { }
 	}
 	SubShader
 	{
@@ -68,17 +68,7 @@
 			float GetDist(float3 p)
 			{
 				
-				float r1 = 1.7;
-				float r2 = 0.2;
-				float2 cp = float2(length(p.xz) - r1, p.y);
-				float a = atan2(p.x, p.z);
-				cp = mul(Rot(a * 2.5), cp);
-				cp.y = abs(cp.y) - 0.3;
-				float d = length(cp) - r2;
-				
-				return d;
-				
-				/*
+
 				float r1 = 1.7;
 				float r2 = 0.3;
 				float2 cp = float2(length(p.xz) - r1, p.y);
@@ -89,8 +79,8 @@
 				float d = length(cp) - r2;
 				d = SDBox2D(cp, float2(0.1, 0.3 * (sin(4.0 * a) * 0.5 + 0.5))) - 0.1;
 				
+				//不乘0.6 会导致d 过长 从而有显示瑕疵
 				return d * 0.6;
-				*/
 			}
 			
 			float RayMarch(float3 ro, float3 rd)
@@ -179,12 +169,12 @@
 					float3 n = GetNormal(p);
 					float3 r = reflect(rd, n);
 					
+					//float spec = pow(r.y, 30.0);//错误的卡通效果
 					float spec = pow(max(0.0, r.y), 30.0);
 					float dif = dot(n, normalize(float3(1, 2, 3))) * 0.5 + 0.5;
-					//col = lerp(Bg(r), float3(dif, dif, dif), 0.5) + spec;
-					col = float3(dif, dif, dif);
+					col = lerp(Bg(r), float3(dif, dif, dif), 0.5) + spec;
+					//col = float3(dif, dif, dif);
 				}
-				
 				return float4(col, 1.0);
 			}
 			ENDCG
