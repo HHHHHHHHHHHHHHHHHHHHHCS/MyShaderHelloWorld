@@ -102,7 +102,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.7019608, g: 0.9098039, b: 0.72987133, a: 1}
-    - _ForceDir: {r: -0.10647188, g: -0, b: -0, a: 0}
+    - _ForceDir: {r: -0.03379713, g: 0, b: 0, a: 0}
     - _FreesnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _LiquidCameraOffset: {r: 0.2, g: 0, b: 0, a: 0}
     - _LiquidColor: {r: 0.9333334, g: 0.7137255, b: 0.7176471, a: 1}

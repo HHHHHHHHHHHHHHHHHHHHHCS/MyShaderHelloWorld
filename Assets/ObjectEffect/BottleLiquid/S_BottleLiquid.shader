@@ -23,7 +23,6 @@
 		_Raduis ("Raduis", float) = 0.1
 		_CameraOffset ("Camera Offset", Vector) = (0.2, 0, 0, 0)
 		
-		_ForceDir ("ForceDir", Vector) = (0, 0, 0, 0)
 		_WaveHeight ("Wave Height", float) = 1
 	}
 	SubShader
