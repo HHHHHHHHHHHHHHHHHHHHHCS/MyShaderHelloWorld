@@ -56,7 +56,6 @@ public class ImageEffectCommandBuffer : MonoBehaviour
 
 	private void InitCommandBuffer()
 	{
-		AudioSource ass;
 		cb = new CommandBuffer {name = "AfterEverything"};
 		cb.BeginSample("MyCommandBuffer");
 
