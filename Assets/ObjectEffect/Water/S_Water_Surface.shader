@@ -1,4 +1,4 @@
-﻿Shader "ObjectEffect/Surface_Water"
+﻿Shader "ObjectEffect/S_WaterSurface"
 {
 	Properties
 	{

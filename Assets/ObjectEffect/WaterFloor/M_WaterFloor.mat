@@ -36,7 +36,7 @@ Material:
     - _Metallic: 0
     - _NormalScale: 5
     - _WetGlossiness: 0.5
-    - _WetMetallic: 0
+    - _WetMetallic: 0.261
     - _Wetness: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
