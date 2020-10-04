@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MousePos ("Mouse Pos", Vector) = (0, 0, 0, 0)
+		_MousePos ("Mouse Pos", Vector) = (0, 0, 0)
 		_SeaHeight ("Sea Height", float) = 0.6
 		_SeaChoppy ("Sea Choppy", float) = 4.0
 		_SeaSpeed ("Sea Speed", float) = 0.8
@@ -45,7 +45,7 @@
 			#define EPSILON_NRM (_ScreenParams.z - 1)
 			
 			//sea
-			float4 _MousePos;
+			float2 _MousePos;
 			float _SeaHeight;
 			float _SeaChoppy;
 			float _SeaSpeed;
