@@ -35,6 +35,7 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
+			#include "Lighting.cginc"
 			
 			struct appdata
 			{
@@ -85,13 +86,30 @@
 				float4 mainColor = tex2D(_MainTex, i.uv);
 				float4 mask = tex2D(_MaskTex, i.uv);
 				
-				float spec = pow(max(0, dot(normalize(viewDir + lightDir), i.wNormal)), 8);
+				float spec = dot(normalize(viewDir + lightDir), i.wNormal);
 				
+				float cutOff = step(spec, _OffSet);
 				
+				float3 baseAlbedo = _BaseColor * cutOff;
+				float3 specularAlbedo = _SpecularColor * (1 - cutOff) * _Brightness;
+				float highLight = dot(lightDir, normal);
+				float3 highLightAlbedo = step(_HighLightOffSet, highLight) * _HighLightColor;
+				
+				float3 albedo = mainColor.rgb * (1 - mask) + (baseAlbedo + specularAlbedo + highLightAlbedo) * mask;
+				
+				float rim = 1 - saturate(dot(viewDir, normal));
+				
+				float3 emission = _RimColor.rgb * pow(rim, _RimPower);
 				
 				float d = dot(normal, lightDir) * 0.5 + 0.5;
 				
-				return spec;
+				float4 c;
+				
+				c.rgb = albedo * _LightColor0.rgb + emission;
+				
+				c.a = 1;
+				
+				return c;
 			}
 			ENDCG
 			
