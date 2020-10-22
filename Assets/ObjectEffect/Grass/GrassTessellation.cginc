@@ -14,18 +14,65 @@
 		float3 normal: NORMAL;
 		float4 tangent: TANGENT;
 	};
-
+	
 	struct g2t
 	{
-		float3 edge[3] :SV_TessFactor;
-		float inside :SV_InsideTessFactor;
+		float edge[3]: SV_TessFactor;//细分度
+		float inside: SV_InsideTessFactor;//内部细分度
 	};
-
+	
 	a2v vert(a2v v)
 	{
 		return v;
 	}
-
 	
+	v2g tessVert(a2v v)
+	{
+		v2g o;
+		o.vertex = v.vertex;
+		o.normal = v.normal;
+		o.tangent = v.tangent;
+		return o;
+	}
+	
+	float _TessellationUniform;
+	
+	g2t patchConstantFunction(InputPatch < a2v, 3 > patch)
+	{
+		g2t o;
+		o.edge[0] = _TessellationUniform;
+		o.edge[1] = _TessellationUniform;
+		o.edge[2] = _TessellationUniform;
+		f.inside = _TessellationUniform;
+	}
+	
+	[UNITY_domain("tri")]
+	[UNITY_outputcontrolpoints(3)]
+	[UNITY_ouputtoppology("triangle_cw")]
+	[UNITY_partitioning("integer")]
+	[UNITY_patchconstantfunc("patchConstantFunction")]
+	a2v hull(InputPatch < a2v, 3 > patch, uint id: SV_OutputControlPointID)
+	{
+		return patch[id];
+	}
+	
+	//SV_DomainLocation：由曲面细分阶段阶段传入的顶点位置信息
+	[UNITY_domain("tri")]
+	vertexOutput domain(TessellationFactors factors, OutputPatch < vertexInput, 3 > patch, float3 barycentricCoordinates: SV_DomainLocation)
+	{
+		vertexInput v;
+		​
+		#define MY_DOMAIN_PROGRAM_INTERPOLATE(fieldName) v.fieldName = \
+				patch[0].fieldName * barycentricCoordinates.x + \
+				patch[1].fieldName * barycentricCoordinates.y + \
+				patch[2].fieldName * barycentricCoordinates.z;
+		
+		​
+		MY_DOMAIN_PROGRAM_INTERPOLATE(vertex)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(normal)
+		MY_DOMAIN_PROGRAM_INTERPOLATE(tangent)
+		​
+		return tessVert(v);
+	}
 	
 #endif
