@@ -26,13 +26,13 @@
 	
 	#define BLADE_SEGMENTS 3
 	
-	struct GeometryOutput
+	struct g2f
 	{
 		float4 pos: SV_POSITION;
 		float2 uv: TEXCOORD0;
 		float3 normal: NORMAL;
 		unityShadowCoord4 _ShadowCoord: TEXCOORD1;
-	}
+	};
 	
 	float4 _BottomColor, _TopColor;
 	half _BendRotationRandom;
@@ -71,9 +71,9 @@
 		);
 	}
 	
-	GeometryOutput DRY(float3 pos, float2 uv, float3 localNormal)
+	g2f DRY(float3 pos, float2 uv, float3 localNormal)
 	{
-		GeometryOutput o;
+		g2f o;
 		o.pos = UnityObjectToClipPos(pos);
 		o.uv = uv;
 		o._ShadowCoord = ComputeScreenPos(o.pos);
@@ -84,7 +84,7 @@
 		return o;
 	}
 	
-	GeometryOutput GenerateGrassVertex(float3 vertexPosition, float width,
+	g2f GenerateGrassVertex(float3 vertexPosition, float width,
 	float height, float forward, float2 uv, float3x3 transformMatrix)
 	{
 		float3 tangentPoint = float3(width, forward, height);
@@ -95,12 +95,12 @@
 	}
 	
 	[maxvertexcount(BLADE_SEGMENTS * 2 + 1)]
-	void geom(triangle v2g i[3], inout TriangleStream < g2t > triStream)
+	void geom(triangle v2g input[3], inout TriangleStream < g2f > triStream)
 	{
-		g2t o;
-		float3 pos = i[0].vertex;
-		float3 vNormal = i[0].normal;
-		float3 vTangent = i[0].tangent;
+
+		float3 pos = input[0].vertex;
+		float3 vNormal = input[0].normal;
+		float4 vTangent = input[0].tangent;
 		float3 vBinormal = cross(vNormal, vTangent) * vTangent.w;
 		
 		float3x3 tangentToLocal = float3x3(
@@ -113,11 +113,11 @@
 		float3x3 facingRotationMatrix = AngleAxis3x3(rand(pos) * UNITY_TWO_PI, float3(0, 0, 1));
 		
 		//x rotation
-		float3x3 bendRotationMatrix = AngleAxis3x3(rand(pos.zzy)) * UNITY_PI * 0.5 * _BendRotationRandom, float3(1, 0, 0));
+		float3x3 bendRotationMatrix = AngleAxis3x3(rand(pos.zzy) * UNITY_PI * 0.5 * _BendRotationRandom, float3(1, 0, 0));
 		
 		//wind
 		float2 uv = pos.xz * _WindDistortionMap_ST.xy + _WindDistortionMap_ST.zw + _WindFrequency * _Time.y;
-		float2 windSample = (tex2Dlod(_WindDistortionMap, flaot4(uv, 0, 0)).xy * 2 - 1) * _WindStrength;
+		float2 windSample = (tex2Dlod(_WindDistortionMap, float4(uv, 0, 0)).xy * 2 - 1) * _WindStrength;
 		float3 wind = normalize(float3(windSample.x, windSample.y, 0));
 		float3x3 windRotation = AngleAxis3x3(UNITY_PI * windSample, wind);
 		
@@ -125,11 +125,11 @@
 		
 		float3x3 transformMatrixForBottom = mul(tangentToLocal, facingRotationMatrix);
 		
-		float height = (rand(pos.zyx) * 2 - 1) * _BladeHeightRnadom + _BladeHeight;
+		float height = (rand(pos.zyx) * 2 - 1) * _BladeHeightRandom + _BladeHeight;
 		float width = (rand(pos.xzy) * 2 - 1) * _BladeWidthRandom + _BladeWidth;
 		
 		float forward = rand(pos.yyz) * _BladeForward;
-		
+
 		for (int i = 0; i < BLADE_SEGMENTS; i ++)
 		{
 			float t = i / (float) BLADE_SEGMENTS;
@@ -140,24 +140,13 @@
 			triStream.Append(GenerateGrassVertex(pos, segmentWidth, segmentHeight, segmentForward, float2(0, t), transformMatrix));
 			triStream.Append(GenerateGrassVertex(pos, -segmentWidth, segmentHeight, segmentForward, float2(1, t), transformMatrix));
 		}
-		
 		triStream.Append(GenerateGrassVertex(pos, 0, height, forward, float2(0.5, 1), transformMatrixForTop));
-		
-		
-		//o.pos = UnityObjectToClipPos(pos + float3(0.5,0,0));
-		//triStream.Append(DRY(pos + mul(transformMatrixForBottom,float3(width,0,0)),float2(1,0)));
-		​
-		//o.pos = UnityObjectToClipPos(pos + float3(-0.5,0,0));
-		//triStream.Append(DRY(pos + mul(transformMatrixForBottom,float3(-width,0,0)),float2(0,0)));
-		​
-		//o.pos = UnityObjectToClipPos(pos + float3(0,1,0));
-		//triStream.Append(DRY(pos + mul(transformMatrixForTop,float3(0,0,height)),float2(0.5,1)));
-		​
-		// triStream.Append(GenerateGrassVertex(pos, width, 0, float2(0, 0),transformMatrixForBottom));
-		​
-		// triStream.Append(GenerateGrassVertex(pos, -width, 0, float2(1, 0), transformMatrixForBottom));
-		​
-		// triStream.Append(GenerateGrassVertex(pos, 0, height, float2(0.5, 1), transformMatrixForTop));
+
+
+		// triStream.Append(DRY(input[0].vertex,float2(0,0),float3(0,1,0)));
+		// triStream.Append(DRY(input[2].vertex,float2(1,0),float3(0,1,0)));
+		// triStream.Append(DRY(input[1].vertex,float2(0,1),float3(0,1,0)));
+		// triStream.RestartStrip();
 	}
 	
 	ENDCG
@@ -173,9 +162,9 @@
 			CGPROGRAM
 			
 			#pragma vertex vert
-			#pragma geomerty geom
 			#pragma hull hull
 			#pragma domain domain
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma target 4.6
 			#pragma multi_compile_fwdbase
@@ -183,7 +172,7 @@
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
 			
-			float4 frag(GeometryOutput i, fixed facing: VFACE): SV_TARGET
+			float4 frag(g2f i, fixed facing: VFACE): SV_TARGET
 			{
 				float shadow = SHADOW_ATTENUATION(i);
 				float3 normal = facing > 0?i.normal: - i.normal;
@@ -208,14 +197,14 @@
 			CGPROGRAM
 			
 			#pragma vertex vert
-			#pragma geometry geom
 			#pragma hull hull
 			#pragma domain domain
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma target 4.6
 			#pragma multi_compile_shadowcaster
 			
-			float4 frag(GeometryOutput i): SV_TARGET
+			float4 frag(g2f i): SV_TARGET
 			{
 				SHADOW_CASTER_FRAGMENT(i)
 			}
