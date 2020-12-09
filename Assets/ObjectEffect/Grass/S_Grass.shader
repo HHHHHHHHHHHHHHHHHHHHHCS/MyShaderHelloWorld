@@ -101,7 +101,7 @@
 		float3 pos = input[0].vertex;
 		float3 vNormal = input[0].normal;
 		float4 vTangent = input[0].tangent;
-		float3 vBinormal = cross(vNormal, vTangent) * vTangent.w;
+		float3 vBinormal = cross(vNormal, vTangent) * vTangent.w * unity_WorldTransformParams.w;
 		
 		float3x3 tangentToLocal = float3x3(
 			vTangent.x, vBinormal.x, vNormal.x,

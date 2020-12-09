@@ -62,7 +62,7 @@
 				//o.tangent = mul(unity_ObjectToWorld, v.tangent);
 				o.normal = UnityObjectToWorldNormal(v.normal);
 				//错误写法：o.bitangent = cross(o.normal, o.tangent);
-				o.bitangent = UnityObjectToWorldNormal(cross(v.normal, v.tangent));
+				o.bitangent = UnityObjectToWorldNormal(cross(v.normal, v.tangent) * v.tangent.w * unity_WorldTransformParams.w);
 				o.pos = mul(unity_ObjectToWorld, v.vertex);
 				return o;
 			}

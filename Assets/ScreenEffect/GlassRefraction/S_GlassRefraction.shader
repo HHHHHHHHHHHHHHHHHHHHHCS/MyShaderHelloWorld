@@ -64,7 +64,7 @@
 				float3 worldPos = mul(unity_ObjectToWorld,v.vertex);
 				fixed3 worldNormal=UnityObjectToWorldNormal(v.normal);
 				fixed3 worldTangent = UnityObjectToWorldDir(v.tangent);
-				fixed3 worldBinormal=cross(worldNormal,worldTangent)*v.tangent.w;
+				fixed3 worldBinormal=cross(worldNormal,worldTangent)*v.tangent.w* unity_WorldTransformParams.w;
 
 				o.TtoW0 = float4(worldTangent.x,worldBinormal.x,worldNormal.x,worldPos.x);
 				o.TtoW1 = float4(worldTangent.y,worldBinormal.y,worldNormal.y,worldPos.y);

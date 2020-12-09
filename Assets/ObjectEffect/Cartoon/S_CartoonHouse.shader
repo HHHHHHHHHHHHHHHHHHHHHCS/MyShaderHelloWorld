@@ -112,7 +112,7 @@
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
 				float3 worldNormal = UnityObjectToWorldNormal(v.normal);
 				float3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
-				float3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w;
+				float3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w * unity_WorldTransformParams.w;
 				
 				o.TtoW0 = float4(worldNormal.x, worldTangent.x, worldBinormal.x, worldPos.x);
 				o.TtoW1 = float4(worldNormal.y, worldTangent.y, worldBinormal.y, worldPos.y);
