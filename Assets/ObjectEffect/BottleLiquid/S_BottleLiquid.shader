@@ -27,9 +27,10 @@
 	}
 	SubShader
 	{
+		Tags {  "RenderType" = "Transparent" "Queue" = "Transparent" }
+
 		Pass
 		{
-			Tags { "RenderType" = "Opaque" }
 			Cull Off
 			CGPROGRAM
 			
@@ -127,7 +128,6 @@
 		
 		Pass
 		{
-			Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			Cull Back
 			Blend SrcAlpha OneMinusSrcAlpha
 			ZWrite Off
