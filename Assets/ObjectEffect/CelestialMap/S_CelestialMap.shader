@@ -132,6 +132,11 @@
 				float2 sp = cruv * rep;
 				float2 p_int0 = floor(sp);
 				float minDist = rep * 10;
+				// float2 fsp = frac(sp);
+				// if (fsp.x < 0.03 || fsp.y < 0.03)
+				// {
+				// 	rgb = lerp(float3(1, 0, 0), rgb, 0);
+				// }
 				for (int m = -XYLimit.x; m < XYLimit.x; m ++)
 				{
 					for (int n = -XYLimit.y; n < XYLimit.y; n ++)
@@ -150,7 +155,6 @@
 						if (Random2(nextP_int0 + newP_int1) > 0.6)
 						{
 							DrawLineWithLimit(rgb, cruv, nextP_int0, newP_int1, 1, 2, 0.415, l);
-							//DrawLineWithLimit(rgb, cruv, nextP_int0, newP_int1, 1, 2, 0.415, l);
 						}
 						nextP_int0 = newP_int0 + int2(0, 1);
 						r = (Random22(nextP_int0) * 2 - 1) * _RandomSize;
@@ -158,7 +162,6 @@
 						if (Random2(nextP_int0 + newP_int1) > 0.6)
 						{
 							DrawLineWithLimit(rgb, cruv, nextP_int0, newP_int1, 1, 2, 0.415, l);
-							//DrawLineWithLimit(rgb, cruv, nextP_int0, newP_int1, 1, 2, 0.415, l);
 						}
 					}
 				}
@@ -192,15 +195,18 @@
 				// 画第7个circle
 				Ring(col.rgb, 0, l, cruv, 0.1625, 1, .7);
 				// 画一个偏心圆
-				RingInterval(col.rgb, 0.1, l, cruv, 0.25, 2, float3(.4, .4, 1), 48);
+				RingInterval(col.rgb, float2(0.1, 0.1), l, cruv, 0.25, 2, float3(.4, .4, 1), 48);
+				
 				//画直线,先是十字
-				s1 = smoothstep(1.0, 0.0, abs(cruv.x - 0 - 1.5 / _ScreenParams.x) * _ScreenParams.x);
+				s1 = smoothstep(1, 0, abs(cruv.x - 0 - 1.5 / _ScreenParams.x) * _ScreenParams.x);
 				s2 = smoothstep(1, 0, abs(saturate(abs(cruv.y - 0) - 0.415)) * _ScreenParams.x);
 				col.rgb = lerp(col.rgb, 0.7, s1 * s2);
 				s1 = smoothstep(1, 0, abs(cruv.y - 0 - 1.5 / _ScreenParams.x) * _ScreenParams.x);
 				s2 = smoothstep(1, 0, abs(saturate(abs(cruv.x - 0) - 0.415)) * _ScreenParams.x);
 				col.rgb = lerp(col.rgb, 0.7, s1 * s2);
+				
 				//画斜线,就是rotate 在限制范围
+				//先把线旋转回来
 				float2 rruv = mul(cruv, Rot(UNITY_PI / 3.0));
 				s1 = smoothstep(0, 1, abs(saturate(abs(rruv.y - 0) - 0.075)) * _ScreenParams.x);
 				s2 = smoothstep(1, 0, abs(saturate(abs(rruv.y - 0) - 0.415)) * _ScreenParams.x);
