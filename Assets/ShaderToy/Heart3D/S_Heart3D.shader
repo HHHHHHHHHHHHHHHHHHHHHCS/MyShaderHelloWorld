@@ -1,4 +1,5 @@
-﻿Shader "ShaderToy/S_Heart3D"
+﻿//https://www.shadertoy.com/view/4lK3Rc
+Shader "ShaderToy/S_Heart3D"
 {
 	Properties { }
 	SubShader
@@ -217,7 +218,7 @@
 			
 			half4 frag(v2f i): SV_Target
 			{
-				float2 uv = i.uv - 0.5;
+				float2 uv = i.uv * 2 - 1;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
 				half3 col = 0;
@@ -243,7 +244,7 @@
 				//暗边
 				col *= 0.2 + 0.8 * pow(16.0 * i.uv.x * i.uv.y * (1.0 - i.uv.x) * (1.0 - i.uv.y), 0.2);
 				
-				return half4(col, 1.0);
+				return half4(pow(col, 2.2), 1.0);
 			}
 			ENDCG
 			
