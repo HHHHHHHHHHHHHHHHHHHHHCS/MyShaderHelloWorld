@@ -1,4 +1,5 @@
-﻿Shader "ShaderToy/S_FoamyWater"
+﻿//https://www.shadertoy.com/view/llcXW7
+Shader "ShaderToy/S_FoamyWater"
 {
 	Properties
 	{
@@ -32,7 +33,7 @@
 			
 			#define TILING_FACTOR 1.0
 			#define MAX_ITER 8
-			
+
 			v2f vert(appdata v)
 			{
 				v2f o;
@@ -52,7 +53,7 @@
 				{
 					float t = time * (1.0 - (3.5 / float(n + 1)));
 					i = p + float2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
-					c += 1.0 / length(float2(p.x / (sin(i.x + t)), p.y / cos(i.y + t)));
+					c += 1.0 / length(float2(p.x / sin(i.x + t), p.y / cos(i.y + t)));
 				}
 				
 				c = 0.2 + c / (inten * MAX_ITER);
@@ -73,7 +74,7 @@
 				float foaminess = smoothstep(0.4, 1.8, dist_center);
 				float clearness = 0.1 + 0.9 * smoothstep(0.1, 0.5, dist_center);
 				
-				//[0,1.x] ->[0,1][0,x]
+				//[0,1.x]=>[0,1.x*PI] ->[0,PI][0,x]
 				float2 p = fmod(uv_square * UNITY_TWO_PI * TILING_FACTOR, UNITY_TWO_PI) - 250.0;
 				
 				float c = WaterHighlight(p, time, foaminess);
@@ -81,7 +82,7 @@
 				float3 water_color = float3(0.0, 0.35, 0.5);
 				float3 color = c;
 				
-				color = clamp(color + water_color, 0.0, 1.0);
+				color = saturate(color + water_color);
 				color = lerp(water_color, color, clearness);
 				
 				return half4(color, 1.0);
