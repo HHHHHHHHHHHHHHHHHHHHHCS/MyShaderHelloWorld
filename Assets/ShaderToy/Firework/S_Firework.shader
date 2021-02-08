@@ -1,4 +1,5 @@
-﻿Shader "ShaderToy/S_Firework"
+﻿//https://www.youtube.com/watch?v=xDxAnguEOn8
+Shader "ShaderToy/S_Firework"
 {
 	Properties { }
 	SubShader

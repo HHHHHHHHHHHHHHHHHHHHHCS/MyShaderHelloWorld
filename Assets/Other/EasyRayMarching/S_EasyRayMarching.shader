@@ -53,7 +53,7 @@
 			{
 				float d = length(p) - 0.5;
 				
-				d = length(float2(length(p.xy) - 0.5, p.z)) - 0.1;
+				//d = length(float2(length(p.xy) - 0.5, p.z)) - 0.1;
 				d = length(float2(length(p.xz) - 0.5, p.y)) - 0.1;
 				
 				return d;

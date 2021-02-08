@@ -1,5 +1,4 @@
-﻿//https://www.shadertoy.com/view/4lK3Rc
-Shader "ShaderToy/S_Heart3D"
+﻿Shader "ShaderToy/S_NewYear"
 {
 	Properties { }
 	SubShader
@@ -16,8 +15,7 @@ Shader "ShaderToy/S_Heart3D"
 			
 			#include "UnityCG.cginc"
 			
-			#define QUALITY 1
-			#define LOOP_COUNT 2
+			
 			
 			struct appdata
 			{
@@ -30,6 +28,50 @@ Shader "ShaderToy/S_Heart3D"
 				float2 uv: TEXCOORD0;
 				float4 vertex: SV_POSITION;
 			};
+			
+			//Firework
+			//-------------------
+			
+			#define NUM_EXPLOSIONS 5.0
+			#define NUM_PARTICLES 100.0
+			
+			float2 Hash12(float t)
+			{
+				float x = frac(sin(t * 674.3) * 453.2);
+				float y = frac(sin((t + x) * 714.3) * 263.2);
+				return float2(x, y);
+			}
+			
+			float2 Hash12_Polar(float t)
+			{
+				float a = frac(sin(t * 674.3) * 453.2) * UNITY_TWO_PI;
+				float d = frac(sin((t + a) * 714.3) * 263.2);
+				return float2(sin(a), cos(a)) * d;
+			}
+			
+			float Explosion(float2 uv, float t)
+			{
+				float sparks = 0.0;
+				for (float i = 0.0; i < NUM_PARTICLES; ++ i)
+				{
+					float2 dir = Hash12_Polar(i + 1.0) * 0.5;
+					float d = length(uv - dir * t);
+					
+					float brightness = lerp(0.0005, 0.002, smoothstep(0.05, 0.0, t));
+					
+					brightness *= sin(t * 20.0 + i) * 0.5 + 0.5;
+					brightness *= smoothstep(1.0, 0.75, t);
+					sparks += brightness / d;
+				}
+				return sparks;
+			}
+			
+			
+			//Number
+			//---------------------------------
+			
+			#define QUALITY 1
+			#define LOOP_COUNT 2
 			
 			float Hash1(float n)
 			{
@@ -59,38 +101,44 @@ Shader "ShaderToy/S_Heart3D"
 				return(a * t + b) * t * t + n;
 			}
 			
+			float SDBox(float3 p, float3 c, float3 size)
+			{
+				return length(max(abs(p - c) - size, 0));
+			}
+			
 			float2 Map(float3 q)
 			{
+				
 				//放大增加准确度
 				q *= 100.0;
 				
 				//x是距离  y是是否碰到 2.0没有碰到  1.0碰到了
 				float2 res = float2(q.y, 2.0);
 				
-				//改变顶点
-				float r = 15.0;
-				q.y -= r;
-				float ani = pow(0.5 + 0.5 * sin(UNITY_TWO_PI * _Time.y + q.y / 25.0), 4.0);
-				q *= 1.0 - 0.2 * float3(1.0, 0.5, 1.0) * ani;
-				q.y -= 1.5 * ani;
+				float d = SDBox(q, float3(-20.0, +25.0, 0.0), float3(6.0, 2.0, 3.0));
+				d = min(d, SDBox(q, float3(-16.0, +21.0, 0.0), float3(2.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(-20.0, +17.0, 0.0), float3(6.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(-24.0, +13.0, 0.0), float3(2.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(-20.0, +9.0, 0.0), float3(6.0, 2.0, 3.0)));
 				
+				d = min(d, SDBox(q, float3(-5.0, +25.0, 0.0), float3(6.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(-9.0, +17.0, 0.0), float3(2.0, 6.0, 3.0)));
+				d = min(d, SDBox(q, float3(-1.0, +17.0, 0.0), float3(2.0, 6.0, 3.0)));
+				d = min(d, SDBox(q, float3(-5.0, +9, 0.0), float3(6.0, 2.0, 3.0)));
 				
-				float x = abs(q.x);
-				//消除不连续性
-				//x = AlmostIdentity(x, 1.0, 0.5);
-				float y = q.y;
-				float z = q.z;
+				d = min(d, SDBox(q, float3(+10.0, +25.0, 0.0), float3(6.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(+14.0, +21.0, 0.0), float3(2.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(+10.0, +17.0, 0.0), float3(6.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(+6.0, +13.0, 0.0), float3(2.0, 2.0, 3.0)));
+				d = min(d, SDBox(q, float3(+10.0, +9.0, 0.0), float3(6.0, 2.0, 3.0)));
 				
-				y = 4.0 + y * 1.2 - x * sqrt(max((20.0 - x) / 15.0, 0.0));
-				z *= 2.0 - y / 15.0;
-				float d = sqrt(x * x + y * y + z * z) - r;
-				//距离更短
-				d = d / 3.0;
-				//小于距离
+				d = min(d, SDBox(q, float3(+23.0, 17.0, 0.0), float3(2.0, 10.0, 3.0)));
+				
 				if (d < res.x)
 				{
 					res = float2(d, 1.0);
 				}
+				
 				res.x /= 100.0;
 				return res;
 			}
@@ -149,7 +197,7 @@ Shader "ShaderToy/S_Heart3D"
 			{
 				//Camera
 				//-----------------------
-				float an = 0.1 * _Time.y;
+				float an = 0;//0.1 * _Time.y;
 				
 				//摄像机点
 				float3 ro = float3(0.4 * sin(an), 0.25, 0.4 * cos(an));
@@ -221,8 +269,23 @@ Shader "ShaderToy/S_Heart3D"
 				float2 uv = i.uv * 2 - 1;
 				uv.x *= _ScreenParams.x / _ScreenParams.y;
 				
-				half3 col = 0;
 				
+				//Firework
+				half3 col0 = 0;
+				for (float z = 0.0; z < NUM_EXPLOSIONS; ++ z)
+				{
+					float t = _Time.y + z / NUM_EXPLOSIONS;
+					float ft = floor(t);
+					half3 color = sin(half3(0.34, 0.54, 0.43) * ft + float3(1.1244, 3.43215, 6.435)) * 0.5 + 0.5;
+					float2 offs = Hash12(z + 1.0 + ft) - 0.5;
+					offs *= float2(1.77, 1.0);
+					//col += 0.0004 / length(uv - offs);
+					col0 += Explosion(uv - offs, frac(t)) * color;
+				}
+				col0 *= 2.0;
+				
+				//Number
+				half3 col1 = 0;
 				#if QUALITY > 1
 					for (int m = 0; m < LOOP_COUNT; ++ m)
 					{
@@ -231,18 +294,18 @@ Shader "ShaderToy/S_Heart3D"
 							//0~1 像素 * 2 = 0~2个像素
 							float2 px = 2 * float2(m, n) / LOOP_COUNT / _ScreenParams.y;
 							
-							col += Render(uv + px);
+							col1 += Render(uv + px);
 						}
 					}
-					col /= float(LOOP_COUNT * LOOP_COUNT);
+					col1 /= float(LOOP_COUNT * LOOP_COUNT);
 				#else
-					col = Render(uv);
+					col1 = Render(uv);
 				#endif
 				
 				//暗边
-				col *= 0.2 + 0.8 * pow(16.0 * i.uv.x * i.uv.y * (1.0 - i.uv.x) * (1.0 - i.uv.y), 0.2);
+				col1 *= 0.2 + 0.8 * pow(16.0 * i.uv.x * i.uv.y * (1.0 - i.uv.x) * (1.0 - i.uv.y), 0.2);
 				
-				return half4(pow(col, 2.2), 1.0);
+				return half4(pow(col0 + col1, 2.2), 1.0);
 			}
 			ENDCG
 			
