@@ -1,0 +1,48 @@
+﻿#pragma kernel BakeToTexture_Empty
+#pragma kernel BakeToTexture
+
+RWStructuredBuffer<float> Result;
+RWStructuredBuffer<float4> Vertices;
+float4x4 ObjectToWorldMatrix;
+float4 PlayerStand;
+float TextureWidthWorldSpace;
+
+[numthreads(16, 16, 4)]
+void BakeToTexture_Empty(uint3 id: SV_DispatchThreadID)
+{
+	Result[id.x + id.y * 256 + id.z * 256 * 256] = 0;
+}
+
+[numthreads(16, 16, 4)]
+void BakeToTexture(uint3 id: SV_DispatchThreadID)
+{
+	float4 v = Vertices[id.x + id.y * 256 + id.z * 256 * 256];
+	float f = v.w;
+	v.w = 1;
+	v = mul(ObjectToWorldMatrix, v);
+	v /= v.w;
+	
+	float3 vInSDF = v - PlayerStand;
+	vInSDF.xz += 0.5 * TextureWidthWorldSpace;
+	vInSDF.y += 0.25 * 0.5 * TextureWidthWorldSpace;
+	
+	float pixelToSpaceDistance = 256.0 / 16.0 / TextureWidthWorldSpace;
+	int3 _zero = vInSDF / pixelToSpaceDistance;
+	int3 _min = floor((vInSDF - f) / pixelToSpaceDistance);
+	int3 _max = floor((vInSDF + f) / pixelToSpaceDistance);
+	
+	for (int i = _min.x; i <= _max.x; i ++)
+	{
+		for (int j = _min.y; j <= _max.y; j ++)
+		{
+			for (int k = _min.z; k <= _max.z; k ++)
+			{
+				float sdf = Result [i + j * 256 + k * 256 * 256];
+				
+				float3 m = (int3(i, k, j) - _zero);
+				sdf = max(sdf, f * saturate(1 - (dot(m, m) * pixelToSpaceDistance / f)));
+				Result[i + j * 256 + k * 256 * 256] = sdf;
+			}
+		}
+	}
+}
