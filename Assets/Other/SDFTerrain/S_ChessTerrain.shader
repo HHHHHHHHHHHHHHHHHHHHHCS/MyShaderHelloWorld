@@ -1,4 +1,4 @@
-﻿Shader "SDFTerrain/S_ChessTerrain"
+﻿Shader "Other/S_ChessTerrain"
 {
 	Properties
 	{
