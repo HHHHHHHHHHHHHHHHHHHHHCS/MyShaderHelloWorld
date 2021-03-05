@@ -1,0 +1,173 @@
+﻿#pragma kernel CSWorley
+#pragma kernel CSNormalize
+
+// static const int threads = 8;
+// static const int minMaxAccuracy = 10000000;
+#define threads 8
+#define minMaxAccuracy 1e + 7
+
+uint _Resolution;
+uint _Count;
+uint _ThreadGroup;
+
+//RWTexture3D<float> _Result;
+RWBuffer<float> _Result;
+RWBuffer<int> _MinMax;
+
+StructuredBuffer<float3> _PointsA;
+StructuredBuffer<float3> _PointsB;
+StructuredBuffer<float3> _PointsC;
+
+int _NumCellsA;
+int _NumCellsB;
+int _NumCellsC;
+
+float _Persistence;
+bool _InvertNoise;
+int _Tile;
+
+
+static const int3 offsets[] = {
+	// center
+	int3(0, 0, 0),
+	// front face
+	int3(0, 0, 1),
+	int3(-1, 1, 1),
+	int3(-1, 0, 1),
+	int3(-1, -1, 1),
+	int3(0, 1, 1),
+	int3(0, -1, 1),
+	int3(1, 1, 1),
+	int3(1, 0, 1),
+	int3(1, -1, 1),
+	// back face
+	int3(0, 0, -1),
+	int3(-1, 1, -1),
+	int3(-1, 0, -1),
+	int3(-1, -1, -1),
+	int3(0, 1, -1),
+	int3(0, -1, -1),
+	int3(1, 1, -1),
+	int3(1, 0, -1),
+	int3(1, -1, -1),
+	// ring around centre
+	int3(-1, 1, 0),
+	int3(-1, 0, 0),
+	int3(-1, -1, 0),
+	int3(0, 1, 0),
+	int3(0, -1, 0),
+	int3(1, 1, 0),
+	int3(1, 0, 0),
+	int3(1, -1, 0)
+};
+
+inline int MaxInt3(int3 v3)
+{
+	return max(v3.x, max(v3.y, v3.z));
+}
+
+inline int MinInt3(int3 v3)
+{
+	return min(v3.x, min(v3.y, v3.z));
+}
+
+inline int GetIdx(uint3 id)
+{
+	uint tc = threads * _ThreadGroup;
+	uint idx = id.x + tc * (id.y + tc * id.z);
+	return idx;
+}
+
+float Worley(StructuredBuffer < float3 > points, int numCells, float3 samplePos)
+{
+	samplePos = frac(samplePos * _Tile);
+	int3 cellID = floor(samplePos * numCells);
+	float minSqrDst = 1.0;
+	// 为了找到最近的点
+	// 为什么是27?  因为上面的offsets是27一个循环
+	const int offsetsCount = 27;
+	for (int cellOffsetIndex = 0; cellOffsetIndex < offsetsCount; cellOffsetIndex ++)
+	{
+		int3 adjID = cellID + offsets[cellOffsetIndex];
+		
+		// 已经到了边界值,无缝切换到相邻的边界
+		if (MinInt3(adjID) == -1 || MaxInt3(adjID) == numCells)
+		{
+			int3 wrappedID = (adjID + numCells) % (uint3)numCells;
+			int adjCellIndex = wrappedID.x + numCells * (wrappedID.y + wrappedID.z * numCells);
+			float3 wrappedPoint = points[adjCellIndex];
+			
+			//因为wrappedPoint已经被偏移了  所以重新寻找最近的点
+			for (int wrapOffsetIndex = 0; wrapOffsetIndex < 27; wrapOffsetIndex ++)
+			{
+				float3 sampleOffset = (samplePos - (wrappedPoint + offsets[wrapOffsetIndex]));
+				minSqrDst = min(minSqrDst, dot(sampleOffset, sampleOffset));
+			}
+		}
+		else
+		{
+			int adjCellIndex = adjID.x + numCells * (adjID.y + adjID.z * numCells);
+			float3 sampleOffset = samplePos - points[adjCellIndex];
+			minSqrDst = min(minSqrDst, dot(sampleOffset, sampleOffset));
+		}
+	}
+	
+	return sqrt(minSqrDst);
+}
+
+
+[numthreads(threads, threads, threads)]
+void CSWorley(uint3 id: SV_DispatchThreadID)
+{
+	uint idx = GetIdx(id);
+	
+	if (idx >= _Count)
+	{
+		return;
+	}
+	
+	float3 pos = id / (float)_Resolution;
+	// Layer 3 levels of noise
+	float layerA = Worley(_PointsA, _NumCellsA, pos);
+	float layerB = Worley(_PointsB, _NumCellsB, pos);
+	float layerC = Worley(_PointsC, _NumCellsC, pos);
+	
+	float noiseSum = layerA + (layerB * _Persistence) + (layerC * _Persistence * _Persistence);
+	float maxVal = 1 + (_Persistence) + (_Persistence * _Persistence);
+	
+	// keep inside range [0,1] as will be clamped in texture
+	
+	/*
+	noiseSum /= maxVal;
+	// Invert
+	if (_InvertNoise)
+	{
+		noiseSum = 1 - noiseSum;
+	}
+	*/
+	
+	// keep track of min max (using int to support atomic operation)
+	int val = (int) (noiseSum * minMaxAccuracy);
+	InterlockedMin(_MinMax[0], val);
+	InterlockedMax(_MinMax[1], val);
+	
+	// Store result in specified channel of texture
+	_Result[idx] = noiseSum;
+}
+
+[numthreads(threads, threads, threads)]
+void CSNormalize(uint3 id: SV_DispatchThreadID)
+{
+	uint idx = GetIdx(id);
+	
+	if (idx >= _Count)
+	{
+		return;
+	}
+	
+	float minVal = (float)_MinMax[0] / minMaxAccuracy;
+	float maxVal = (float)_MinMax[1] / minMaxAccuracy;
+	float normalizedVal = (_Result[idx] - minVal) / (maxVal - minVal);
+	
+	_Result[idx] = normalizedVal;
+}
