@@ -55,7 +55,9 @@
 				float4 resColor = 0;
 				for (int j = 0; j < 5; ++ j)
 				{
-					float2 uv = saturate(i.uv + _BlurFactor * dir * j);
+					//避免翻转用
+					float len = min(_BlurFactor * j, 1.0);
+					float2 uv = saturate(i.uv + len * dir);
 					resColor += tex2D(_MainTex, uv);
 				}
 				resColor *= 0.2;
