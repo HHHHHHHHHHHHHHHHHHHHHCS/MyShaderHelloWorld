@@ -292,11 +292,11 @@
 				return float3(hit.color * light * Transparent(ray, hit, col)) * shadow * ao;
 			}
 			
-			RayHit RayMarching(Ray ray, float depth, int maxInterations, int maxDistance, int atten)
+			RayHit RayMarching(Ray ray, float depth, int maxIterations, int maxDistance, int atten)
 			{
 				RayHit hit = CreateRayHit();
 				float t = 0;
-				for (int i = 0; i < maxInterations; i ++)
+				for (int i = 0; i < maxIterations; i ++)
 				{
 					if(t > maxDistance || t >= depth)
 					{
